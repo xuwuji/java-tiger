@@ -13,33 +13,6 @@ import java.util.concurrent.Executors;
 public class UnsafeThreadLocalTest implements Runnable {
 	private Student student;
 
-	public class Student {
-		private String name;
-		private int age;
-
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		public int getAge() {
-			return age;
-		}
-
-		public void setAge(int age) {
-			this.age = age;
-		}
-
-		@Override
-		public String toString() {
-			return "Student [name=" + name + ", age=" + age + "]";
-		}
-
-	}
-
 	/**
 	 * 在这里由于没有使用threadlocal，student变量是被所有线程共享的，那么多线程的环境下，
 	 * 每个线程都对此变量进行了一次setAge和setName操作
