@@ -1,5 +1,6 @@
 package com.xuwuji.common.java.concurrent.senario.queue;
 
+import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -8,6 +9,8 @@ import java.util.concurrent.locks.ReentrantLock;
  * 
  * also can make the doSth method be synchronized
  * 
+ * using lock
+ * 
  * @author wuxu
  *
  */
@@ -15,6 +18,9 @@ public class WaitingQueue {
 
 	// use lock to control the operation
 	private final Lock lock = new ReentrantLock();
+
+	public WaitingQueue() {
+	}
 
 	/**
 	 * When we want to implement a critical section using locks and guarantee
@@ -41,19 +47,30 @@ public class WaitingQueue {
 
 	public void doSth() {
 		// get lock
-		if (!lock.tryLock()) {
-			doSth();
-		} else {
+		lock.lock();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} finally {
+			lock.unlock();
+		}
+	}
 
-			try {
-				// do sth here..
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			} finally {
-				// lock.unlock();
-			}
+	public static void main(String[] args) {
 
+		// Creates the print queue
+		WaitingQueue printQueue = new WaitingQueue();
+
+		// Creates ten Threads
+		Thread thread[] = new Thread[10];
+		for (int i = 0; i < 10; i++) {
+			thread[i] = new Thread(new Job(printQueue), "Thread " + i);
+		}
+
+		// Starts the Threads
+		for (int i = 0; i < 10; i++) {
+			thread[i].start();
 		}
 	}
 }

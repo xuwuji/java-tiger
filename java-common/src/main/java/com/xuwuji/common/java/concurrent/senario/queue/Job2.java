@@ -1,14 +1,12 @@
 package com.xuwuji.common.java.concurrent.senario.queue;
 
-public class Job implements Runnable {
+public class Job2 implements Runnable {
 
-	private WaitingQueue queue;
+	private WaitingQueue2 queue;
 
-	public Job(WaitingQueue queue) {
+	public Job2(WaitingQueue2 queue) {
 		this.queue = queue;
 	}
-	
-
 
 	public void run() {
 		System.out.printf("%s: is going to do \n", Thread.currentThread().getName());

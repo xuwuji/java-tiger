@@ -31,7 +31,7 @@ public class Storage<T> {
 		notify();
 	}
 
-	public synchronized T get(T object) {
+	public synchronized T get() {
 		while (space.size() == 0) {
 			try {
 				wait();
@@ -39,10 +39,10 @@ public class Storage<T> {
 				e.printStackTrace();
 			}
 		}
-
-		notify();
+		T temp = space.removeLast();
 		System.out.printf("Get: %d: %s\n", space.size(), ((LinkedList<?>) space).getLast());
-		return space.removeLast();
+		notify();
+		return temp;
 	}
 
 	public LinkedList<T> getSpace() {
