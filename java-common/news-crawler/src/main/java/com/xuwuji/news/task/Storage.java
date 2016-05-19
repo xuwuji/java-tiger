@@ -1,3 +1,4 @@
+package com.xuwuji.news.task;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.concurrent.ConcurrentHashMap;

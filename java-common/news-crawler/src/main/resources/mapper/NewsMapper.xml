@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuwuji.news.mapper.NewsMapper">
+
+	<insert id="insertNews" parameterType="News">
+		INSERT INTO
+		news(title,link,category,time,content)
+		VALUES(#{title},#{link},#{category},#{time},#{content})
+	</insert>
+
+	<resultMap type="News" id="NewsResult">
+		<id property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="link" column="link" />
+		<result property="category" column="category" />
+		<result property="time" column="time" />
+	</resultMap>
+
+	<select id="findByCategory" parameterType="String" resultMap="NewsResult">
+		select * from news where category=#{category}
+	</select>
+
+
+	<select id="findByKeyword" parameterType="String" resultMap="NewsResult">
+		select * from news where title like "%"#{keyword}"%"
+	</select>
+</mapper>

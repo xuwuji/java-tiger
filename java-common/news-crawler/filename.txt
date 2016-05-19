@@ -1,0 +1,19 @@
+{
+site:'news',
+site_cname:'新闻',
+site_url:'http://news.qq.com',
+title:'台湾统派团体千人集会 要求蔡英文承认九二共识',
+id:'20160519007513',
+pubtime:'2016-05-19 04:47',
+type:'2',
+article_url:'http://news.qq.com/a/20160519/007513.htm',
+sosokeys:{key1:'九二共识',key2:'蔡英文',key3:'张安乐'},
+tags:['九二共识','蔡英文','张安乐'],
+catalog:'newsgn',
+catalog_full:'news-newsgn-gdxw',
+sub_nav:'gdxw',
+topic:{name:'',cname:'',ztcatalog:''},
+subName:{name:'newsgn',url:'http://news.qq.com/china_index.shtml', cname:'国内新闻'},
+isShowLastAD:'',
+tpl:{dev:'def',ver:'1.0.1.8',time:'20141016',type:'1',stype:''}
+}
