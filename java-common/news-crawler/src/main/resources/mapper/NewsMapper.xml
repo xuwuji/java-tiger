@@ -17,6 +17,7 @@
 		<result property="link" column="link" />
 		<result property="category" column="category" />
 		<result property="time" column="time" />
+		<result property="content" column="content" />
 	</resultMap>
 
 	<select id="findByCategory" parameterType="String" resultMap="NewsResult">

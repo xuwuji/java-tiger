@@ -55,7 +55,7 @@ public class Task implements Runnable {
 		String link = href.attr("href").trim();
 		if (title.length() >= 8 && link.indexOf("http") != -1) {
 			HashMap<String, String> map = getInfo(link);
-			getContent(link);
+			String content = getContent(link);
 			String time = map.get("pubtime");
 			String category = map.get("sub_nav");
 			if (category != null) {
@@ -69,6 +69,7 @@ public class Task implements Runnable {
 				news.setLink(link);
 				news.setCategory(category);
 				news.setTime(time);
+				news.setContent(content);
 				dao.insertNews(news);
 			}
 		}
@@ -79,7 +80,7 @@ public class Task implements Runnable {
 		HashMap<String, String> map = new HashMap<String, String>();
 		String s = doc.toString();
 		// System.out.println(link);
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 2; i++) {
 			try {
 				s = s.substring(s.indexOf("ARTICLE_INFO = window.ARTICLE_INFO"), s.indexOf("</head>"));
 				s = s.substring(s.indexOf("{"), s.indexOf("	</script> ") + 1);
@@ -95,7 +96,7 @@ public class Task implements Runnable {
 				System.out.println(link + " can not get info");
 			}
 			try {
-				Thread.sleep(500);
+				Thread.sleep(50);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -103,12 +104,16 @@ public class Task implements Runnable {
 		return map;
 	}
 
-	private void getContent(String link) throws IOException {
+	private String getContent(String link) throws IOException {
 		Document doc = Jsoup.connect(link).get();
 		Elements attrs = doc.select("[bosszone=\"content\"]");
+		String s = "";
 		for (Element e : attrs) {
-			System.out.println(e);
+			// System.out.println(e);
+			s = e.toString();
+			break;
 		}
+		return s;
 
 	}
 

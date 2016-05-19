@@ -17,12 +17,13 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.xuwuji.news.dao.NewsDao;
+import com.xuwuji.news.model.News;
 
 public class QueryClient {
 
 	public static void main(String[] args) throws ParseException {
 		NewsDao dao = new NewsDao();
-		// System.out.println(dao.findByCategory("NBA"));
+		System.out.println(dao.findByCategory("NBA"));
 
 		// System.out.println(dao.findByKeyword("27"));
 		Document doc;

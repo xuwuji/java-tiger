@@ -7,6 +7,7 @@ public class News {
 	private String link;
 	private String category;
 	private String time;
+	private String content;
 
 	public int getId() {
 		return id;
@@ -48,10 +49,12 @@ public class News {
 		this.time = time;
 	}
 
-	@Override
-	public String toString() {
-		return "News [id=" + id + ", title=" + title + ", link=" + link + ", category=" + category + ", time=" + time
-				+ "]";
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 }
