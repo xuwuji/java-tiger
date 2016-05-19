@@ -39,17 +39,22 @@
 	<bean id="jdbcClient" class="com.xuwuji.spring.jdbc.JDBCClient">
 	</bean>
 
+	<bean id="JdbcTemplateTest" class="com.xuwuji.spring.jdbc.JDBCTemplateTest">
+	</bean>
+
 	<bean id="namedJdbcTemplate"
 		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate"
 		c:classicJdbcTemplate-ref="jdbcTemplate" />
 
 	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate" />
 
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
-		p:dataSource-ref="dataSource" />
+	<bean name="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
 
-
+	<tx:annotation-driven proxy-target-class="false" />
+	<tx:annotation-driven transaction-manager="transactionManager" />
 
 </beans>
 

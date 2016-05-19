@@ -86,7 +86,7 @@ public class TranscationTest {
 			ps.setInt(1, (int) System.currentTimeMillis());
 			ps.executeUpdate();
 			// Submit a malformed SQL statement that breaks
-			SQL = "INSERT INTO auth (username,password,authority)  " + "VALUES ('a', 'a',?)";
+			SQL = "INSERT INTO auth (us1ername,password,authority)  " + "VALUES ('a', 'a',?)";
 			ps = conn.prepareStatement(SQL);
 			ps.setInt(1, (int) System.currentTimeMillis());
 			ps.executeUpdate();
@@ -171,8 +171,8 @@ public class TranscationTest {
 
 	public static void main(String[] args) {
 		TranscationTest test = new TranscationTest();
-		// test.save2();
-		test.select();
+		test.save2();
+		// test.select();
 	}
 
 }

@@ -14,6 +14,10 @@ public class JDBCClient {
 		dao.add();
 	}
 
+	public void insertData1() throws Exception {
+		dao.add1();
+	}
+
 	public static void main(String[] args) {
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("application-context.xml");
 		JDBCClient client = (JDBCClient) ctx.getBean("jdbcClient");
