@@ -5,10 +5,18 @@
 
 <mapper namespace="com.xuwuji.news.mapper.NewsMapper">
 
+	<!-- To execute this statement, MyBatis will perform the following sequence 
+		of actions. 1. Create a PreparedStatement interface with placeholders as 
+		follows: PreparedStatement pstmt = connection.prepareStatement ("NSERT INTO 
+		news(title,link,category,time,content) VALUES(?,?,?,?,?)"); 2. Check the 
+		property type of title in the News object and use the appropriate setXXX 
+		method to set the value. Here title is of the type String, so it will use 
+		the setString() method. pstmt.setInt(1,student.getTitle()); 3. Similarly,do 
+		the same process for the rest properties -->
 	<insert id="insertNews" parameterType="News">
 		INSERT INTO
-		news(title,link,category,time,content)
-		VALUES(#{title},#{link},#{category},#{time},#{content})
+		news(title,link,type,bigCategory,subCategory,time,content)
+		VALUES(#{title},#{link},#{type},#{bigCategory},#{subCategory},#{time},#{content})
 	</insert>
 
 	<resultMap type="News" id="NewsResult">

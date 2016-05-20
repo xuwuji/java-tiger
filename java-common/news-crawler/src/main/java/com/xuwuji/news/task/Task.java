@@ -2,7 +2,6 @@ package com.xuwuji.news.task;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map.Entry;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -24,6 +23,9 @@ public class Task implements Runnable {
 
 	public void run() {
 		String link = storage.getLink();
+		if (link == null) {
+			return;
+		}
 		try {
 			processOriginLink(link);
 		} catch (IOException e) {
@@ -31,19 +33,49 @@ public class Task implements Runnable {
 		}
 	}
 
+	/**
+	 * get all valid hrefs from the original page
+	 * 
+	 * @param origin
+	 * @throws IOException
+	 */
 	public void processOriginLink(String origin) throws IOException {
 		long start = System.currentTimeMillis();
-		Document doc;
-		Elements hrefs = null;
-		doc = Jsoup.connect(origin).get();
-		hrefs = doc.select("a[href]");
-		for (Element e : hrefs) {
+		Document doc = null;
+		// 1. get the doc from this original page
+		/**
+		 * prevent time out at the first time
+		 */
+		for (int i = 0; i < 2; i++) {
 			try {
-				processSubLink(e);
-			} catch (java.net.SocketTimeoutException e1) {
-				System.out.println(e.attr("href").trim() + " time out!!!!!!!!");
-			} catch (IOException e1) {
-				e1.printStackTrace();
+				doc = Jsoup.connect(origin).get();
+				break;
+			} catch (java.net.SocketTimeoutException e) {
+				System.out.println(origin + " times out, trying one more time");
+			} catch (org.jsoup.HttpStatusException e1) {
+				System.out.println(origin + " http status error, trying one more time");
+			}
+		}
+		if (doc == null) {
+			return;
+		}
+
+		// 2. get all valid hrefs from the page
+		Elements hrefs = doc.select("a[href]");
+
+		// 3. process each href
+		for (Element e : hrefs) {
+			// try to process the sub link for the second time if the connection
+			// times out at the first time
+			for (int i = 0; i < 2; i++) {
+				try {
+					processSubLink(e);
+					break;
+				} catch (java.net.SocketTimeoutException e1) {
+					System.out.println(e.attr("href").trim() + " time out, trying one more time");
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 			}
 		}
 		long end = System.currentTimeMillis();
@@ -53,21 +85,41 @@ public class Task implements Runnable {
 	public void processSubLink(Element href) throws IOException {
 		String title = href.text();
 		String link = href.attr("href").trim();
+		// 1.1 check whether it is an article based on its title and link
+		// address
 		if (title.length() >= 8 && link.indexOf("http") != -1) {
+			// 1.2 get info of this article from a particular part of js in the
+			// page, if no info found, then it is not an article
 			HashMap<String, String> map = getInfo(link);
+			if (map.size() == 0) {
+				return;
+			}
+			// 2. get info
 			String content = getContent(link);
 			String time = map.get("pubtime");
-			String category = map.get("sub_nav");
-			if (category != null) {
-				storage.put(title, link);
-				System.out.println(title);
-				System.out.println(link);
-				System.out.println(category);
+			String type = map.get("site_cname");
+			String subCategory = map.get("subCategory");
+			// 3. get its big category, if it is empty, set it to sub_nav
+			String bigCategory = map.get("subName");
+			bigCategory = bigCategory.substring(bigCategory.indexOf("cname:'") + 7, bigCategory.length() - 1);
+			if (bigCategory.equals("")) {
+				bigCategory = map.get("sub_nav");
+			}
+
+			// 4. set info into a news object and persist it
+			if (bigCategory != null) {
+				System.out.println("title: " + title);
+				System.out.println("link: " + link);
+				System.out.println("type: " + type);
+				System.out.println("bigCategory: " + bigCategory);
+				System.out.println("subCategory: " + subCategory);
 				System.out.println("-------\n");
 				News news = new News();
 				news.setTitle(title);
 				news.setLink(link);
-				news.setCategory(category);
+				news.setType(type);
+				news.setBigCategory(bigCategory);
+				news.setSubCategory(subCategory);
 				news.setTime(time);
 				news.setContent(content);
 				dao.insertNews(news);
@@ -75,13 +127,19 @@ public class Task implements Runnable {
 		}
 	}
 
-	public HashMap<String, String> getInfo(String link) throws IOException {
-		Document doc = Jsoup.connect(link).get();
+	/**
+	 * get the info of the article if it has the particular js part
+	 * 
+	 * @param link
+	 * @return
+	 * @throws IOException
+	 */
+	private HashMap<String, String> getInfo(String link) throws IOException {
 		HashMap<String, String> map = new HashMap<String, String>();
-		String s = doc.toString();
-		// System.out.println(link);
 		for (int i = 0; i < 2; i++) {
 			try {
+				Document doc = Jsoup.connect(link).get();
+				String s = doc.toString();
 				s = s.substring(s.indexOf("ARTICLE_INFO = window.ARTICLE_INFO"), s.indexOf("</head>"));
 				s = s.substring(s.indexOf("{"), s.indexOf("	</script> ") + 1);
 				s = s.replace("	", "");
@@ -91,30 +149,46 @@ public class Task implements Runnable {
 					String value = info.substring(info.indexOf(":") + 2, info.length() - 1);
 					map.put(key, value);
 				}
+				map.put("subCategory", getChineseSubCategory(doc));
 				break;
 			} catch (Exception e) {
 				System.out.println(link + " can not get info");
 			}
-			try {
-				Thread.sleep(50);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+		}
+		if (map.size() == 0) {
+			storage.addLink(link);
 		}
 		return map;
 	}
 
+	private String getChineseSubCategory(Document doc) {
+		Elements attrs = doc.select("[bosszone=\"ztTopic\"]");
+		String category = null;
+		for (Element e : attrs) {
+			category = e.text();
+			if (category != null || !category.equals("")) {
+				break;
+			}
+		}
+		return category;
+	}
+
+	/**
+	 * get the content of the article
+	 * 
+	 * @param link
+	 * @return
+	 * @throws IOException
+	 */
 	private String getContent(String link) throws IOException {
 		Document doc = Jsoup.connect(link).get();
 		Elements attrs = doc.select("[bosszone=\"content\"]");
 		String s = "";
 		for (Element e : attrs) {
-			// System.out.println(e);
 			s = e.toString();
 			break;
 		}
 		return s;
-
 	}
 
 	@Deprecated

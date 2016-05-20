@@ -18,7 +18,15 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
  */
 public class SessionFactory {
 
-	private static SqlSessionFactory instance;
+	/**
+	 * connect to different datasource
+	 */
+	// production factory
+	private static SqlSessionFactory PRO_INSTANCE;
+
+	// development factory
+	private static SqlSessionFactory DEV_INSTANCE;
+
 	private static final Properties PROPERTIES = new Properties();
 
 	static {
@@ -30,12 +38,12 @@ public class SessionFactory {
 		}
 	}
 
-	public static SqlSessionFactory getInstance() {
-		if (instance == null) {
+	public static SqlSessionFactory getPROInstance() {
+		if (PRO_INSTANCE == null) {
 			InputStream inputStream = null;
 			try {
 				inputStream = Resources.getResourceAsStream("mybatis-config.xml");
-				instance = new SqlSessionFactoryBuilder().build(inputStream);
+				PRO_INSTANCE = new SqlSessionFactoryBuilder().build(inputStream, "production");
 			} catch (IOException e) {
 				throw new RuntimeException(e.getCause());
 			} finally {
@@ -47,11 +55,35 @@ public class SessionFactory {
 				}
 			}
 		}
-		return instance;
+		return PRO_INSTANCE;
 	}
 
-	public static SqlSession openSession() {
-		return getInstance().openSession();
+	public static SqlSessionFactory getDEVInstance() {
+		if (DEV_INSTANCE == null) {
+			InputStream inputStream = null;
+			try {
+				inputStream = Resources.getResourceAsStream("mybatis-config.xml");
+				DEV_INSTANCE = new SqlSessionFactoryBuilder().build(inputStream, "development");
+			} catch (IOException e) {
+				throw new RuntimeException(e.getCause());
+			} finally {
+				if (inputStream != null) {
+					try {
+						inputStream.close();
+					} catch (IOException e) {
+					}
+				}
+			}
+		}
+		return DEV_INSTANCE;
+	}
+
+	public static SqlSession openPROSession() {
+		return getPROInstance().openSession();
+	}
+
+	public static SqlSession openDEVSession() {
+		return getDEVInstance().openSession();
 	}
 
 }

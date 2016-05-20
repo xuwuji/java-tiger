@@ -11,7 +11,7 @@ import com.xuwuji.news.util.SessionFactory;
 public class NewsDao implements NewsMapper {
 
 	public void insertNews(News news) {
-		SqlSession session = SessionFactory.openSession();
+		SqlSession session = SessionFactory.openDEVSession();
 		try {
 			NewsMapper mapper = session.getMapper(NewsMapper.class);
 			mapper.insertNews(news);
@@ -24,7 +24,7 @@ public class NewsDao implements NewsMapper {
 	}
 
 	public List<News> findByCategory(String category) {
-		SqlSession session = SessionFactory.openSession();
+		SqlSession session = SessionFactory.openDEVSession();
 		try {
 			NewsMapper mapper = session.getMapper(NewsMapper.class);
 			return mapper.findByCategory(category);
@@ -34,7 +34,7 @@ public class NewsDao implements NewsMapper {
 	}
 
 	public List<News> findByKeyword(String keyword) {
-		SqlSession session = SessionFactory.openSession();
+		SqlSession session = SessionFactory.openDEVSession();
 		try {
 			NewsMapper mapper = session.getMapper(NewsMapper.class);
 			return mapper.findByKeyword(keyword);

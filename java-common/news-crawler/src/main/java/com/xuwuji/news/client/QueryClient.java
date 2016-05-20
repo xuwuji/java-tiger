@@ -24,12 +24,14 @@ public class QueryClient {
 	public static void main(String[] args) throws ParseException {
 		NewsDao dao = new NewsDao();
 		System.out.println(dao.findByCategory("NBA"));
-
+		News news = new News();
+		news.setTitle("e");
+		// dao.insertNews(news);
 		// System.out.println(dao.findByKeyword("27"));
 		Document doc;
 		HashMap<String, String> map = new HashMap<String, String>();
 		try {
-			doc = Jsoup.connect("http://news.qq.com/a/20160519/007513.htm").get();
+			doc = Jsoup.connect("http://news.qq.com/a/20160518/075181.htm").get();
 			String s = doc.toString();
 			System.out.println(s.indexOf("ARTICLE_INFO = window.ARTICLE_INFO"));
 			s = s.substring(s.indexOf("ARTICLE_INFO = window.ARTICLE_INFO"), s.indexOf("</head>"));

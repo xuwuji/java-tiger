@@ -11,4 +11,5 @@ public interface NewsMapper {
 	List<News> findByCategory(String category);
 
 	List<News> findByKeyword(String keyword);
+
 }

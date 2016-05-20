@@ -1,5 +1,5 @@
 package com.xuwuji.news.task;
-import java.util.HashMap;
+
 import java.util.LinkedList;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.Lock;
@@ -18,8 +18,13 @@ public class Storage {
 
 	private ConcurrentHashMap<String, String> map = new ConcurrentHashMap<String, String>();
 
-	public synchronized void put(String title, String link) {
-		map.put(title, link);
+	public synchronized void addLink(String link) {
+		lock.lock();
+		try {
+			initList.push(link);
+		} finally {
+			lock.unlock();
+		}
 	}
 
 	public String getLink() {

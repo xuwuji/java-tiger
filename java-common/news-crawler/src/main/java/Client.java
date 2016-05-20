@@ -28,7 +28,7 @@ public class Client {
 		list.add("http://astro.fashion.qq.com/");
 		list.add("http://house.qq.com/");
 		Storage storage = new Storage(list);
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 20; i++) {
 			service.execute(new Task(storage));
 		}
 		service.shutdown();
