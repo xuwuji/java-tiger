@@ -43,4 +43,14 @@ public class NewsDao implements NewsMapper {
 		}
 	}
 
+	public List<String> getTypes() {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			NewsMapper mapper = session.getMapper(NewsMapper.class);
+			return mapper.getTypes();
+		} finally {
+			session.close();
+		}
+	}
+
 }

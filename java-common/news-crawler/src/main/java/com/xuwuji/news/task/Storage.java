@@ -18,7 +18,7 @@ public class Storage {
 
 	private ConcurrentHashMap<String, String> map = new ConcurrentHashMap<String, String>();
 
-	public synchronized void addLink(String link) {
+	public void addLink(String link) {
 		lock.lock();
 		try {
 			initList.push(link);

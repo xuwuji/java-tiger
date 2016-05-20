@@ -28,12 +28,39 @@
 		<result property="content" column="content" />
 	</resultMap>
 
-	<select id="findByCategory" parameterType="String" resultMap="NewsResult">
-		select * from news where category=#{category}
-	</select>
-
+	<resultMap type="News" id="Types">
+		<result property="type" column="type" />
+	</resultMap>
 
 	<select id="findByKeyword" parameterType="String" resultMap="NewsResult">
 		select * from news where title like "%"#{keyword}"%"
+	</select>
+
+	<select id="getTypes" resultType="string">
+		select distinct(type) as type
+		from news;
+	</select>
+
+	<select id="getBigCategoryByType" parameterType="String"
+		resultType="string">
+		select
+		distinct(bigCategory) as bigCategory
+		from news where
+		type=#{type};
+	</select>
+
+	<select id="getsubCategoryByBig" parameterType="String"
+		resultType="string">
+		select distinct(subCategory) as subCategory from news where
+		bigCategory
+		=#{bigCategory}
+	</select>
+
+	<select id="findNewsByCategory" resultMap="NewsResult">
+		select
+		* from news
+		where type=#{type} and
+		bigCategory=#{bigCategory} and
+		subCategory=#{subCategory}
 	</select>
 </mapper>
