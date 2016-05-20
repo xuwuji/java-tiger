@@ -60,7 +60,6 @@
 		select
 		* from news
 		where type=#{type} and
-		bigCategory=#{bigCategory} and
-		subCategory=#{subCategory}
-	</select>
+		bigCategory like "%"#{bigCategory}"% and
+		subCategory like "%"#{subCategory}"% </select>
 </mapper>

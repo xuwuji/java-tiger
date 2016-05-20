@@ -11,7 +11,7 @@ import com.xuwuji.news.model.News;
 
 public class DaoTest {
 
-	//@Test
+	// @Test
 	public void testInsert() {
 		NewsDao dao = new NewsDao();
 		News news = new News();
@@ -27,10 +27,17 @@ public class DaoTest {
 		assertEquals(1, i);
 	}
 
-	@Test
+	// @Test
 	public void getTypes() {
 		NewsDao dao = new NewsDao();
 		News news = new News();
 		System.out.println(dao.getTypes());
+	}
+
+	@Test
+	public void findNewsByCategory() {
+		NewsDao dao = new NewsDao();
+		List<News> list = dao.findNewsByCategory("教育", " ", " ");
+		System.out.println(list.size());
 	}
 }

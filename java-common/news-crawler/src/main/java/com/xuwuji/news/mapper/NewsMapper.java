@@ -10,8 +10,6 @@ public interface NewsMapper {
 
 	void insertNews(News news);
 
-	List<News> findByCategory(String category);
-
 	List<News> findByKeyword(String keyword);
 
 	List<String> getTypes();

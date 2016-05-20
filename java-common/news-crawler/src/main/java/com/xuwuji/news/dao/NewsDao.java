@@ -23,16 +23,6 @@ public class NewsDao implements NewsMapper {
 		}
 	}
 
-	public List<News> findByCategory(String category) {
-		SqlSession session = SessionFactory.openDEVSession();
-		try {
-			NewsMapper mapper = session.getMapper(NewsMapper.class);
-			return mapper.findByCategory(category);
-		} finally {
-			session.close();
-		}
-	}
-
 	public List<News> findByKeyword(String keyword) {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
@@ -48,6 +38,16 @@ public class NewsDao implements NewsMapper {
 		try {
 			NewsMapper mapper = session.getMapper(NewsMapper.class);
 			return mapper.getTypes();
+		} finally {
+			session.close();
+		}
+	}
+
+	public List<News> findNewsByCategory(String type, String bigCategory, String subCategory) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			NewsMapper mapper = session.getMapper(NewsMapper.class);
+			return mapper.findNewsByCategory(type, bigCategory, subCategory);
 		} finally {
 			session.close();
 		}
