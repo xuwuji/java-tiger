@@ -23,7 +23,7 @@ public class QueryClient {
 
 	public static void main(String[] args) throws ParseException {
 		NewsDao dao = new NewsDao();
-		System.out.println(dao.findByCategory("NBA"));
+		// System.out.println(dao.findByCategory("NBA"));
 		News news = new News();
 		news.setTitle("e");
 		// dao.insertNews(news);

@@ -1,8 +1,7 @@
 package com.xuwuji.news.mapper;
 
 import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
+import java.util.Map;
 
 import com.xuwuji.news.model.News;
 
@@ -14,7 +13,6 @@ public interface NewsMapper {
 
 	List<String> getTypes();
 
-	List<News> findNewsByCategory(@Param("type") String type, @Param("bigCategory") String bigCategory,
-			@Param("subCategory") String subCategory);
+	List<News> findNewsByCategory(Map<String, Object> map);
 
 }

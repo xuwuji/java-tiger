@@ -79,4 +79,10 @@ public class News {
 		this.content = content;
 	}
 
+	@Override
+	public String toString() {
+		return "News [id=" + id + ", title=" + title + ", link=" + link + ", type=" + type + ", bigCategory="
+				+ bigCategory + ", subCategory=" + subCategory + ", time=" + time + ", content=" + content + "]";
+	}
+
 }

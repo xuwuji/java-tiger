@@ -1,5 +1,6 @@
 package com.xuwuji.news.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -8,7 +9,7 @@ import com.xuwuji.news.mapper.NewsMapper;
 import com.xuwuji.news.model.News;
 import com.xuwuji.news.util.SessionFactory;
 
-public class NewsDao implements NewsMapper {
+public class NewsDao {
 
 	public void insertNews(News news) {
 		SqlSession session = SessionFactory.openDEVSession();
@@ -47,7 +48,11 @@ public class NewsDao implements NewsMapper {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
 			NewsMapper mapper = session.getMapper(NewsMapper.class);
-			return mapper.findNewsByCategory(type, bigCategory, subCategory);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("type", type);
+			map.put("bigCategory", bigCategory);
+			map.put("subCategory", subCategory);
+			return mapper.findNewsByCategory(map);
 		} finally {
 			session.close();
 		}

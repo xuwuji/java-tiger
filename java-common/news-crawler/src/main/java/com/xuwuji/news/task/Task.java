@@ -147,6 +147,9 @@ public class Task implements Runnable {
 				for (String info : infos) {
 					String key = info.substring(0, info.indexOf(":"));
 					String value = info.substring(info.indexOf(":") + 2, info.length() - 1);
+					if (key.equals("pubtime")) {
+						// value=value.replace("", newChar)
+					}
 					map.put(key, value);
 				}
 				map.put("subCategory", getChineseSubCategory(doc));

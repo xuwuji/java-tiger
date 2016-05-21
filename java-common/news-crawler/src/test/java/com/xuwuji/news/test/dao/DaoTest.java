@@ -2,6 +2,7 @@ package com.xuwuji.news.test.dao;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -37,7 +38,7 @@ public class DaoTest {
 	@Test
 	public void findNewsByCategory() {
 		NewsDao dao = new NewsDao();
-		List<News> list = dao.findNewsByCategory("教育", " ", " ");
-		System.out.println(list.size());
+		ArrayList<News> list = (ArrayList<News>) dao.findNewsByCategory("aa", "bb", "");
+		System.out.println(list);
 	}
 }

@@ -23,7 +23,9 @@
 		<id property="id" column="id" />
 		<result property="title" column="title" />
 		<result property="link" column="link" />
-		<result property="category" column="category" />
+		<result property="type" column="type" />
+		<result property="bigCategory" column="bigCategory" />
+		<result property="subCategory" column="subCategory" />
 		<result property="time" column="time" />
 		<result property="content" column="content" />
 	</resultMap>
@@ -56,10 +58,16 @@
 		=#{bigCategory}
 	</select>
 
-	<select id="findNewsByCategory" resultMap="NewsResult">
+	<select id="findNewsByCategory" parameterType="hashmap"
+		resultMap="NewsResult">
 		select
 		* from news
-		where type=#{type} and
-		bigCategory like "%"#{bigCategory}"% and
-		subCategory like "%"#{subCategory}"% </select>
+		where type=#{type}
+		<if test="bigCategory != ''">
+			AND bigCategory = #{bigCategory}
+		</if>
+		<if test="subCategory != ''">
+			AND subCategory = #{subCategory}
+		</if>
+	</select>
 </mapper>
