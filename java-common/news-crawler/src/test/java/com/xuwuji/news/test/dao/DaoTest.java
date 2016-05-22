@@ -31,11 +31,28 @@ public class DaoTest {
 	// @Test
 	public void getTypes() {
 		NewsDao dao = new NewsDao();
-		News news = new News();
 		System.out.println(dao.getTypes());
 	}
 
 	@Test
+	public void getBigCategoryByType() {
+		NewsDao dao = new NewsDao();
+		for (String type : dao.getTypes()) {
+			System.out.println(dao.getBigCategoryByType(type));
+		}
+	}
+
+	@Test
+	public void getsubCategoryByBig() {
+		NewsDao dao = new NewsDao();
+		for (String type : dao.getTypes()) {
+			for (String bigCategory : dao.getBigCategoryByType(type)) {
+				System.out.println(dao.getsubCategoryByBig(bigCategory));
+			}
+		}
+	}
+
+	// @Test
 	public void findNewsByCategory() {
 		NewsDao dao = new NewsDao();
 		ArrayList<News> list = (ArrayList<News>) dao.findNewsByCategory("aa", "bb", "cc");

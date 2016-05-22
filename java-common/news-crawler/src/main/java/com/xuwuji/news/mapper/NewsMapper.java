@@ -13,6 +13,10 @@ public interface NewsMapper {
 
 	List<String> getTypes();
 
+	List<String> getBigCategoryByType(String type);
+
+	List<String> getsubCategoryByBig(String bigCategory);
+
 	List<News> findNewsByCategory(Map<String, Object> map);
 
 }

@@ -17,19 +17,17 @@ public class Client {
 		list = client.load(list);
 		Storage storage = new Storage(list);
 		ThreadPoolExecutor service = (ThreadPoolExecutor) Executors.newFixedThreadPool(20);
-		while (true) {
-			if (storage.getCount() > 0) {
-				service.execute(new Task(storage));
-			}
+		for (int i = 0; i < 30; i++) {
+			service.execute(new Task(storage));
 		}
 		service.shutdown();
-		System.out.println(storage.getMap().size());
+		// System.out.println(storage.getMap().size());
 	}
 
 	private LinkedList<String> load(LinkedList<String> list) {
 		try {
 			BufferedReader bufferedReader = new BufferedReader(
-					new InputStreamReader(Client.class.getClassLoader().getResourceAsStream("links.txt")));
+					new InputStreamReader(Client.class.getClassLoader().getResourceAsStream("links2.txt")));
 			String lineTxt = null;
 			while ((lineTxt = bufferedReader.readLine()) != null) {
 				// System.out.println(lineTxt);

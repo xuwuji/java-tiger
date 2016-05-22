@@ -22,14 +22,10 @@ public class Task implements Runnable {
 	}
 
 	public void run() {
-		String link = storage.getLink();
-		if (link == null) {
-			return;
-		}
-		try {
+		for (int i = 0; i < 100; i++) {
+			System.out.println("[" + Thread.currentThread().getName() + "] - is running");
+			String link = storage.getLink();
 			processOriginLink(link);
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -39,13 +35,13 @@ public class Task implements Runnable {
 	 * @param origin
 	 * @throws IOException
 	 */
-	public void processOriginLink(String origin) throws IOException {
-		System.out.println(origin + " is processing");
+	public void processOriginLink(String origin) {
+		System.out.println("[" + Thread.currentThread().getName() + "] -" + origin + " is processing");
 		long start = System.currentTimeMillis();
 		Document doc = null;
 		// 1. get the doc from this original page
 		/**
-		 * prevent time out at the first time
+		 * prevent from timing out at the first time
 		 */
 		for (int i = 0; i < 2; i++) {
 			try {
@@ -55,6 +51,10 @@ public class Task implements Runnable {
 				System.out.println(origin + " times out, trying one more time");
 			} catch (org.jsoup.HttpStatusException e1) {
 				System.out.println(origin + " http status error, trying one more time");
+			} catch (org.jsoup.UnsupportedMimeTypeException e2) {
+				System.out.println(origin + " is not a valid url");
+			} catch (IOException e1) {
+				e1.printStackTrace();
 			}
 		}
 		if (doc == null) {
@@ -68,19 +68,31 @@ public class Task implements Runnable {
 		for (Element e : hrefs) {
 			// try to process the sub link for the second time if the connection
 			// times out at the first time
+			if (e == null) {
+				continue;
+			}
 			for (int i = 0; i < 2; i++) {
 				try {
 					processSubLink(e);
 					break;
 				} catch (java.net.SocketTimeoutException e1) {
 					System.out.println(e.attr("href").trim() + " time out, trying one more time");
-				} catch (IOException e1) {
-					e1.printStackTrace();
+				} catch (java.net.SocketException e5) {
+					System.out.println(e.attr("href").trim() + " connection rest");
+				} catch (java.net.MalformedURLException e6) {
+					System.out.println(e.attr("href").trim() + " Illegal character in URL");
+				} catch (org.jsoup.UnsupportedMimeTypeException e2) {
+					System.out.println(e.attr("href").trim() + " is not a valid url");
+				} catch (org.jsoup.HttpStatusException e3) {
+					System.out.println(e.attr("href").trim() + " is not a valid url");
+				} catch (IOException e4) {
+					e4.printStackTrace();
 				}
 			}
 		}
 		long end = System.currentTimeMillis();
-		System.out.println(origin + " has finished, it costs " + (end - start) / 1000);
+		System.out.println("[" + Thread.currentThread().getName() + "] -" + origin + " has finished, it costs "
+				+ (end - start) / 1000);
 	}
 
 	public void processSubLink(Element href) throws IOException {
@@ -91,19 +103,24 @@ public class Task implements Runnable {
 		if (title.length() >= 8 && link.indexOf("http") != -1) {
 			// 1.2 get info of this article from a particular part of js in the
 			// page, if no info found, then it is not an article
-			HashMap<String, String> map = getInfo(link);
+			Document doc = Jsoup.connect(link).get();
+			HashMap<String, String> map = getInfo(link, doc);
 			if (map.size() == 0) {
 				return;
 			}
 			// 2. get info
-			String content = getContent(link);
+			String content = getContent(doc);
 			String time = map.get("pubtime");
 			String type = map.get("site_cname");
 			String subCategory = map.get("subCategory");
 			// 3. get its big category, if it is empty, set it to sub_nav
 			String bigCategory = map.get("subName");
-			bigCategory = bigCategory.substring(bigCategory.indexOf("cname:'") + 7, bigCategory.length() - 1);
-			if (bigCategory.equals("")) {
+			try {
+				bigCategory = bigCategory.substring(bigCategory.indexOf("cname:'") + 7, bigCategory.length() - 1);
+			} catch (java.lang.NullPointerException e) {
+				bigCategory = map.get("sub_nav");
+			}
+			if (bigCategory == null || bigCategory.equals("")) {
 				bigCategory = map.get("sub_nav");
 			}
 
@@ -135,11 +152,10 @@ public class Task implements Runnable {
 	 * @return
 	 * @throws IOException
 	 */
-	private HashMap<String, String> getInfo(String link) throws IOException {
+	private HashMap<String, String> getInfo(String link, Document doc) throws IOException {
 		HashMap<String, String> map = new HashMap<String, String>();
 		for (int i = 0; i < 1; i++) {
 			try {
-				Document doc = Jsoup.connect(link).get();
 				String s = doc.toString();
 				s = s.substring(s.indexOf("ARTICLE_INFO = window.ARTICLE_INFO"), s.indexOf("</head>"));
 				s = s.substring(s.indexOf("{"), s.indexOf("	</script> ") + 1);
@@ -149,16 +165,18 @@ public class Task implements Runnable {
 					String key = info.substring(0, info.indexOf(":"));
 					String value = info.substring(info.indexOf(":") + 2, info.length() - 1);
 					if (key.equals("pubtime")) {
-						// value=value.replace("", newChar)
+						value = value.replace("年", "-").replace("月", "-").replace("日", "-");
 					}
 					map.put(key, value);
 				}
 				map.put("subCategory", getChineseSubCategory(doc));
 				break;
 			} catch (Exception e) {
-				System.out.println(link + " can not get info");
+				// System.out.println(link + " can not get info");
 			}
 		}
+		// if this is not an article, then add this link to the storage as an
+		// original link to be processed
 		if (map.size() == 0) {
 			storage.addLink(link);
 		}
@@ -185,8 +203,7 @@ public class Task implements Runnable {
 	 * @return
 	 * @throws IOException
 	 */
-	private String getContent(String link) throws IOException {
-		Document doc = Jsoup.connect(link).get();
+	private String getContent(Document doc) throws IOException {
 		Elements attrs = doc.select("[bosszone=\"content\"]");
 		String s = "";
 		for (Element e : attrs) {

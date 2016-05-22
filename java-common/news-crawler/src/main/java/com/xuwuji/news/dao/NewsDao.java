@@ -44,6 +44,26 @@ public class NewsDao {
 		}
 	}
 
+	public List<String> getBigCategoryByType(String type) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			NewsMapper mapper = session.getMapper(NewsMapper.class);
+			return mapper.getBigCategoryByType(type);
+		} finally {
+			session.close();
+		}
+	}
+
+	public List<String> getsubCategoryByBig(String bigCategory) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			NewsMapper mapper = session.getMapper(NewsMapper.class);
+			return mapper.getsubCategoryByBig(bigCategory);
+		} finally {
+			session.close();
+		}
+	}
+
 	public List<News> findNewsByCategory(String type, String bigCategory, String subCategory) {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
