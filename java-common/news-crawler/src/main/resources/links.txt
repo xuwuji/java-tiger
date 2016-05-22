@@ -1,15 +1,1 @@
-http://news.qq.com/
-http://mil.qq.com/
-http://ent.qq.com/
-http://ent.qq.com/movie/
-http://auto.qq.com/
-http://tech.qq.com/
-http://edu.qq.com/
-http://abroad.qq.com/
-http://finance.qq.com/
-http://finance.qq.com/money/
-http://stock.qq.com/
 http://sports.qq.com/
-http://sports.qq.com/nba/
-http://astro.fashion.qq.com/
-http://house.qq.com/

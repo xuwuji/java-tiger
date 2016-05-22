@@ -21,7 +21,19 @@ public class Storage {
 	public void addLink(String link) {
 		lock.lock();
 		try {
-			initList.push(link);
+			if (!initList.contains(link)) {
+				System.out.println(link + " is adding to the storage");
+				initList.push(link);
+			}
+		} finally {
+			lock.unlock();
+		}
+	}
+
+	public int getCount() {
+		lock.lock();
+		try {
+			return initList.size();
 		} finally {
 			lock.unlock();
 		}

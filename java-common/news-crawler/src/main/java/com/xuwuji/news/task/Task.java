@@ -40,6 +40,7 @@ public class Task implements Runnable {
 	 * @throws IOException
 	 */
 	public void processOriginLink(String origin) throws IOException {
+		System.out.println(origin + " is processing");
 		long start = System.currentTimeMillis();
 		Document doc = null;
 		// 1. get the doc from this original page
@@ -136,7 +137,7 @@ public class Task implements Runnable {
 	 */
 	private HashMap<String, String> getInfo(String link) throws IOException {
 		HashMap<String, String> map = new HashMap<String, String>();
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 1; i++) {
 			try {
 				Document doc = Jsoup.connect(link).get();
 				String s = doc.toString();
@@ -164,9 +165,10 @@ public class Task implements Runnable {
 		return map;
 	}
 
+	@SuppressWarnings("null")
 	private String getChineseSubCategory(Document doc) {
 		Elements attrs = doc.select("[bosszone=\"ztTopic\"]");
-		String category = null;
+		String category = "";
 		for (Element e : attrs) {
 			category = e.text();
 			if (category != null || !category.equals("")) {
@@ -194,6 +196,7 @@ public class Task implements Runnable {
 		return s;
 	}
 
+	@SuppressWarnings({ "unused", "null" })
 	@Deprecated
 	private String getCategory(String link) throws IOException {
 		// System.out.println(link);
@@ -209,6 +212,7 @@ public class Task implements Runnable {
 		return category;
 	}
 
+	@SuppressWarnings("unused")
 	@Deprecated
 	private String replace(String s) {
 		s = s.substring(s.indexOf("ARTICLE_INFO = window.ARTICLE_INFO"), s.indexOf("</head>"));

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import org.apache.ibatis.datasource.DataSourceFactory;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -19,7 +18,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 public class SessionFactory {
 
 	/**
-	 * connect to different datasource
+	 * connect to different datasources
 	 */
 	// production factory
 	private static SqlSessionFactory PRO_INSTANCE;

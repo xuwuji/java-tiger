@@ -38,7 +38,7 @@ public class DaoTest {
 	@Test
 	public void findNewsByCategory() {
 		NewsDao dao = new NewsDao();
-		ArrayList<News> list = (ArrayList<News>) dao.findNewsByCategory("aa", "bb", "");
+		ArrayList<News> list = (ArrayList<News>) dao.findNewsByCategory("aa", "bb", "cc");
 		System.out.println(list);
 	}
 }
