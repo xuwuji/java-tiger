@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.xuwuji.news.dao.MetaDao;
 import com.xuwuji.news.dao.NewsDao;
 import com.xuwuji.news.model.News;
 
