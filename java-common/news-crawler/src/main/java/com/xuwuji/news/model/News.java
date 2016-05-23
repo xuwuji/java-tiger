@@ -6,14 +6,15 @@ public class News {
 	private String title;
 	private String link;
 	// 新闻，体育，科技...
-	private String type;
+	// private String type;
 	// 篮球，足球，资讯，出国....
-	private String bigCategory;
+	// private String bigCategory;
 	// 留学，NBA，证券新闻....
-	private String subCategory;
+	// private String subCategory;
 	// private String CNsubCategory;
 	private String time;
 	private String content;
+	private int typeId;
 
 	public int getId() {
 		return id;
@@ -39,30 +40,6 @@ public class News {
 		this.link = link;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getBigCategory() {
-		return bigCategory;
-	}
-
-	public void setBigCategory(String bigCategory) {
-		this.bigCategory = bigCategory;
-	}
-
-	public String getSubCategory() {
-		return subCategory;
-	}
-
-	public void setSubCategory(String subCategory) {
-		this.subCategory = subCategory;
-	}
-
 	public String getTime() {
 		return time;
 	}
@@ -79,10 +56,18 @@ public class News {
 		this.content = content;
 	}
 
+	public int getTypeId() {
+		return typeId;
+	}
+
+	public void setTypeId(int typeId) {
+		this.typeId = typeId;
+	}
+
 	@Override
 	public String toString() {
-		return "News [id=" + id + ", title=" + title + ", link=" + link + ", type=" + type + ", bigCategory="
-				+ bigCategory + ", subCategory=" + subCategory + ", time=" + time + ", content=" + content + "]";
+		return "News [id=" + id + ", title=" + title + ", link=" + link + ", time=" + time + ", content=" + content
+				+ ", typeId=" + typeId + "]";
 	}
 
 }

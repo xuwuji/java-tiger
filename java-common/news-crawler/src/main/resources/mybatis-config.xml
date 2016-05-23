@@ -101,6 +101,7 @@
 
 	<mappers>
 		<mapper resource="mapper/NewsMapper.xml" />
+		<mapper resource="mapper/MetaMapper.xml" />
 	</mappers>
 
 

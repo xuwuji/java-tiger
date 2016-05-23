@@ -34,45 +34,31 @@ public class NewsDao {
 		}
 	}
 
-	public List<String> getTypes() {
+	public List<News> findNewsByTypeId(String type, String bigCategory, String subCategory) {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
 			NewsMapper mapper = session.getMapper(NewsMapper.class);
-			return mapper.getTypes();
-		} finally {
-			session.close();
-		}
-	}
-
-	public List<String> getBigCategoryByType(String type) {
-		SqlSession session = SessionFactory.openDEVSession();
-		try {
-			NewsMapper mapper = session.getMapper(NewsMapper.class);
-			return mapper.getBigCategoryByType(type);
-		} finally {
-			session.close();
-		}
-	}
-
-	public List<String> getsubCategoryByBig(String bigCategory) {
-		SqlSession session = SessionFactory.openDEVSession();
-		try {
-			NewsMapper mapper = session.getMapper(NewsMapper.class);
-			return mapper.getsubCategoryByBig(bigCategory);
-		} finally {
-			session.close();
-		}
-	}
-
-	public List<News> findNewsByCategory(String type, String bigCategory, String subCategory) {
-		SqlSession session = SessionFactory.openDEVSession();
-		try {
-			NewsMapper mapper = session.getMapper(NewsMapper.class);
+			MetaDao metaDao = new MetaDao();
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("type", type);
-			map.put("bigCategory", bigCategory);
-			map.put("subCategory", subCategory);
-			return mapper.findNewsByCategory(map);
+			List<Integer> ids = metaDao.findId(type, bigCategory, subCategory);
+			System.out.println(ids);
+			map.put("typeId", ids);
+			return mapper.findNewsByTypeId(map);
+		} finally {
+			session.close();
+		}
+	}
+
+	public List<HashMap<String, Object>> findNewsByTypeId2(String type, String bigCategory, String subCategory) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			NewsMapper mapper = session.getMapper(NewsMapper.class);
+			MetaDao metaDao = new MetaDao();
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			List<Integer> ids = metaDao.findId(type, bigCategory, subCategory);
+			System.out.println(ids);
+			map.put("typeId", ids);
+			return mapper.findNewsByTypeId2(map);
 		} finally {
 			session.close();
 		}

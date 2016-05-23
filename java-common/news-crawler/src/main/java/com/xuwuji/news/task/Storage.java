@@ -47,8 +47,7 @@ public class Storage {
 			// 1.check if this url is processed or not
 			if (!processedSet.contains(link)) {
 				// 2. if it is not, add this link to processing list
-				// System.out.println("[" + Thread.currentThread().getName() +
-				// "] -" + link + " is adding to the storage");
+				System.out.println("[" + Thread.currentThread().getName() + "] -" + link + " is adding to the storage");
 				processingList.push(link);
 			}
 		} finally {

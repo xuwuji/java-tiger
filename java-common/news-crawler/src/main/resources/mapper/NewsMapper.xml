@@ -15,60 +15,47 @@
 		the same process for the rest properties -->
 	<insert id="insertNews" parameterType="News">
 		INSERT INTO
-		news(title,link,type,bigCategory,subCategory,time,content)
-		VALUES(#{title},#{link},#{type},#{bigCategory},#{subCategory},#{time},#{content})
+		news(title,link,time,content,typeId)
+		VALUES(#{title},#{link},#{time},#{content},#{typeId})
 	</insert>
 
 	<resultMap type="News" id="NewsResult">
 		<id property="id" column="id" />
 		<result property="title" column="title" />
 		<result property="link" column="link" />
-		<result property="type" column="type" />
-		<result property="bigCategory" column="bigCategory" />
-		<result property="subCategory" column="subCategory" />
 		<result property="time" column="time" />
 		<result property="content" column="content" />
-	</resultMap>
-
-	<resultMap type="News" id="Types">
-		<result property="type" column="type" />
+		<result property="typeId" column="typeId" />
 	</resultMap>
 
 	<select id="findByKeyword" parameterType="String" resultMap="NewsResult">
 		select * from news where title like "%"#{keyword}"%"
 	</select>
 
-	<select id="getTypes" resultType="string">
-		select distinct(type) as type
-		from news_meta;
-	</select>
-
-	<select id="getBigCategoryByType" parameterType="String"
-		resultType="string">
-		select
-		distinct(bigCategory) as bigCategory
-		from news_meta
-		where
-		type=#{type};
-	</select>
-
-	<select id="getsubCategoryByBig" parameterType="String"
-		resultType="string">
-		select distinct(subCategory) as subCategory from news where
-		bigCategory
-		=#{bigCategory}
-	</select>
 
 	<select id="findNewsByCategory" parameterType="hashmap"
 		resultMap="NewsResult">
 		select
 		* from news
-		where type=#{type}
-		<if test="bigCategory != ''">
-			AND bigCategory = #{bigCategory}
-		</if>
-		<if test="subCategory != ''">
-			AND subCategory = #{subCategory}
-		</if>
+		where typeId in
+		<foreach item="id" collection="typeId" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</select>
+
+
+	<!-- Let us see another example of a <select> mapped statement showing how 
+		to populate query results into HashMap as follows. In this case, the column 
+		names will be the key and the column value will be the value. -->
+	<select id="findNewsByCategory2" parameterType="hashmap"
+		resultType="map">
+		select
+		* from news
+		where typeId in
+		<foreach item="id" collection="typeId" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
 	</select>
 </mapper>

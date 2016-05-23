@@ -1,6 +1,7 @@
 package com.xuwuji.news.task;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.jsoup.Jsoup;
@@ -8,17 +9,20 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.xuwuji.news.dao.MetaDao;
 import com.xuwuji.news.dao.NewsDao;
 import com.xuwuji.news.model.News;
 
 public class Task implements Runnable {
 
 	private Storage storage;
-	private NewsDao dao;
+	private NewsDao newsDao;
+	private MetaDao metaDao;
 
 	public Task(Storage storage) {
 		this.storage = storage;
-		dao = new NewsDao();
+		newsDao = new NewsDao();
+		metaDao = new MetaDao();
 	}
 
 	public void run() {
@@ -53,6 +57,8 @@ public class Task implements Runnable {
 				System.out.println(origin + " http status error, trying one more time");
 			} catch (org.jsoup.UnsupportedMimeTypeException e2) {
 				System.out.println(origin + " is not a valid url");
+			} catch (java.net.UnknownHostException e3) {
+				System.out.println(origin + " host unknown");
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -135,12 +141,19 @@ public class Task implements Runnable {
 				News news = new News();
 				news.setTitle(title);
 				news.setLink(link);
-				news.setType(type);
-				news.setBigCategory(bigCategory);
-				news.setSubCategory(subCategory);
+				// news.setType(type);
+				// news.setBigCategory(bigCategory);
+				// news.setSubCategory(subCategory);
 				news.setTime(time);
 				news.setContent(content);
-				dao.insertNews(news);
+				ArrayList<Integer> id = (ArrayList<Integer>) metaDao.findId(type, bigCategory, subCategory);
+				if (id.size() == 0) {
+					metaDao.insert(type, bigCategory, subCategory);
+					news.setTypeId(metaDao.findId(type, bigCategory, subCategory).get(0));
+				} else {
+					news.setTypeId(id.get(0));
+				}
+				newsDao.insertNews(news);
 			}
 		}
 	}

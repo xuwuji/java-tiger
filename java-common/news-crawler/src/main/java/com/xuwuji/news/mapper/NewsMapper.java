@@ -1,5 +1,6 @@
 package com.xuwuji.news.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,12 +12,7 @@ public interface NewsMapper {
 
 	List<News> findByKeyword(String keyword);
 
-	List<String> getTypes();
+	List<News> findNewsByTypeId(Map<String, Object> map);
 
-	List<String> getBigCategoryByType(String type);
-
-	List<String> getsubCategoryByBig(String bigCategory);
-
-	List<News> findNewsByCategory(Map<String, Object> map);
-
+	List<HashMap<String, Object>> findNewsByTypeId2(Map<String, Object> map);
 }
