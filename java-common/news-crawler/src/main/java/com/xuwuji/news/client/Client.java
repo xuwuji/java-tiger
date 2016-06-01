@@ -1,4 +1,5 @@
 package com.xuwuji.news.client;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -22,7 +23,6 @@ public class Client {
 			service.execute(new Task(storage));
 		}
 		service.shutdown();
-		// System.out.println(storage.getMap().size());
 	}
 
 	private LinkedList<String> load(LinkedList<String> list) {
@@ -31,7 +31,6 @@ public class Client {
 					new InputStreamReader(Client.class.getClassLoader().getResourceAsStream("links2.txt")));
 			String lineTxt = null;
 			while ((lineTxt = bufferedReader.readLine()) != null) {
-				// System.out.println(lineTxt);
 				list.add(lineTxt);
 			}
 		} catch (FileNotFoundException e) {

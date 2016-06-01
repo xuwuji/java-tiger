@@ -24,8 +24,7 @@ public class Storage {
 		// 1. if the list is empty, the task has to wait for a new link
 		while (processingList.size() == 0) {
 			try {
-				// System.out.println("[" + Thread.currentThread().getName() +
-				// "] - is waiting for the the link");
+				System.out.println("[" + Thread.currentThread().getName() + "] - is waiting for the the link");
 				wait();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -33,8 +32,7 @@ public class Storage {
 		}
 		// 2. get the link
 		String link = processingList.poll();
-		// System.out.println("[" + Thread.currentThread().getName() + "] - gets
-		// the link");
+		System.out.println("[" + Thread.currentThread().getName() + "] - gets the link " + link);
 		// 3. add the link into the processed set
 		processedSet.add(link);
 		// notifyAll();

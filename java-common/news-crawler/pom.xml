@@ -33,6 +33,11 @@
 			<artifactId>cglib-nodep</artifactId>
 			<version>3.2.2</version>
 		</dependency>
+		<dependency>
+			<groupId>com.xuwuji</groupId>
+			<artifactId>java-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 
 
 

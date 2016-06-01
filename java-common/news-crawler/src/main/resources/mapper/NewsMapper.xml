@@ -15,16 +15,17 @@
 		the same process for the rest properties -->
 	<insert id="insertNews" parameterType="News">
 		INSERT INTO
-		news(title,link,time,content,typeId)
-		VALUES(#{title},#{link},#{time},#{content},#{typeId})
+		news(title,link,time,content,commentNum,typeId)
+		VALUES(#{title},#{link},#{time},#{content},#{commentNum},#{typeId})
 	</insert>
 
-	<resultMap type="News" id="NewsResult">
+	<resultMap id="NewsResult" type="News">
 		<id property="id" column="id" />
 		<result property="title" column="title" />
 		<result property="link" column="link" />
 		<result property="time" column="time" />
 		<result property="content" column="content" />
+		<result property="commentNum" column="commentNum" />
 		<result property="typeId" column="typeId" />
 	</resultMap>
 
@@ -32,6 +33,12 @@
 		select * from news where title like "%"#{keyword}"%"
 	</select>
 
+	<select id="findHotNews" parameterType="String" resultMap="NewsResult">
+		select distinct * from news where
+		time > #{time} order by commentNum
+		DESC limit
+		10;
+	</select>
 
 	<select id="findNewsByCategory" parameterType="hashmap"
 		resultMap="NewsResult">
@@ -58,4 +65,7 @@
 			#{id}
 		</foreach>
 	</select>
+
+
+
 </mapper>

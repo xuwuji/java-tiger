@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.xuwuji.common.java.util.HttpUtil;
 import com.xuwuji.news.dao.MetaDao;
 import com.xuwuji.news.dao.NewsDao;
 import com.xuwuji.news.model.News;
@@ -47,18 +50,20 @@ public class Task implements Runnable {
 		/**
 		 * prevent from timing out at the first time
 		 */
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 5; i++) {
 			try {
 				doc = Jsoup.connect(origin).get();
 				break;
 			} catch (java.net.SocketTimeoutException e) {
-				System.out.println(origin + " times out, trying one more time");
+				System.out.println(
+						"[" + Thread.currentThread().getName() + "] -" + origin + " times out, trying one more time");
 			} catch (org.jsoup.HttpStatusException e1) {
-				System.out.println(origin + " http status error, trying one more time");
+				System.out.println("[" + Thread.currentThread().getName() + "] -" + origin
+						+ " http status error, trying one more time");
 			} catch (org.jsoup.UnsupportedMimeTypeException e2) {
-				System.out.println(origin + " is not a valid url");
+				System.out.println("[" + Thread.currentThread().getName() + "] -" + origin + " is not a valid url");
 			} catch (java.net.UnknownHostException e3) {
-				System.out.println(origin + " host unknown");
+				System.out.println("[" + Thread.currentThread().getName() + "] -" + origin + " host unknown");
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -72,25 +77,32 @@ public class Task implements Runnable {
 
 		// 3. process each href
 		for (Element e : hrefs) {
-			// try to process the sub link for the second time if the connection
-			// times out at the first time
+
 			if (e == null) {
 				continue;
 			}
+
+			// try to process the sub link for the second time if the connection
+			// times out at the first time
 			for (int i = 0; i < 2; i++) {
 				try {
 					processSubLink(e);
 					break;
 				} catch (java.net.SocketTimeoutException e1) {
-					System.out.println(e.attr("href").trim() + " time out, trying one more time");
+					System.out.println("[" + Thread.currentThread().getName() + "] -" + e.attr("href").trim()
+							+ " time out, trying one more time");
 				} catch (java.net.SocketException e5) {
-					System.out.println(e.attr("href").trim() + " connection rest");
+					System.out.println("[" + Thread.currentThread().getName() + "] -" + e.attr("href").trim()
+							+ " connection rest");
 				} catch (java.net.MalformedURLException e6) {
-					System.out.println(e.attr("href").trim() + " Illegal character in URL");
+					System.out.println("[" + Thread.currentThread().getName() + "] -" + e.attr("href").trim()
+							+ " Illegal character in URL");
 				} catch (org.jsoup.UnsupportedMimeTypeException e2) {
-					System.out.println(e.attr("href").trim() + " is not a valid url");
+					System.out.println("[" + Thread.currentThread().getName() + "] -" + e.attr("href").trim()
+							+ " is not a valid url");
 				} catch (org.jsoup.HttpStatusException e3) {
-					System.out.println(e.attr("href").trim() + " is not a valid url");
+					System.out.println("[" + Thread.currentThread().getName() + "] -" + e.attr("href").trim()
+							+ " is not a valid url");
 				} catch (IOException e4) {
 					e4.printStackTrace();
 				}
@@ -119,6 +131,7 @@ public class Task implements Runnable {
 			String time = map.get("pubtime");
 			String type = map.get("site_cname");
 			String subCategory = map.get("subCategory");
+			String comment_num = map.get("comment_num");
 			// 3. get its big category, if it is empty, set it to sub_nav
 			String bigCategory = map.get("subName");
 			try {
@@ -137,15 +150,14 @@ public class Task implements Runnable {
 				System.out.println("type: " + type);
 				System.out.println("bigCategory: " + bigCategory);
 				System.out.println("subCategory: " + subCategory);
+				System.out.println("comment_num: " + comment_num);
 				System.out.println("-------\n");
 				News news = new News();
 				news.setTitle(title);
 				news.setLink(link);
-				// news.setType(type);
-				// news.setBigCategory(bigCategory);
-				// news.setSubCategory(subCategory);
 				news.setTime(time);
 				news.setContent(content);
+				news.setCommentNum(Integer.valueOf(comment_num));
 				ArrayList<Integer> id = (ArrayList<Integer>) metaDao.findId(type, bigCategory, subCategory);
 				if (id.size() == 0) {
 					metaDao.insert(type, bigCategory, subCategory);
@@ -167,9 +179,14 @@ public class Task implements Runnable {
 	 */
 	private HashMap<String, String> getInfo(String link, Document doc) throws IOException {
 		HashMap<String, String> map = new HashMap<String, String>();
+		String cmt_id = "";
 		for (int i = 0; i < 1; i++) {
 			try {
 				String s = doc.toString();
+				if (s.indexOf("cmt_id = ") != -1) {
+					cmt_id = s.substring(s.indexOf("cmt_id = ") + 9, s.indexOf("cmt_id = ") + 20);
+					cmt_id = cmt_id.replace("\"", "").replace(" ", "").replace(";", "");
+				}
 				s = s.substring(s.indexOf("ARTICLE_INFO = window.ARTICLE_INFO"), s.indexOf("</head>"));
 				s = s.substring(s.indexOf("{"), s.indexOf("	</script> ") + 1);
 				s = s.replace("	", "");
@@ -183,9 +200,9 @@ public class Task implements Runnable {
 					map.put(key, value);
 				}
 				map.put("subCategory", getChineseSubCategory(doc));
+				map.put("comment_num", this.getCommentNum(cmt_id));
 				break;
 			} catch (Exception e) {
-				// System.out.println(link + " can not get info");
 			}
 		}
 		// if this is not an article, then add this link to the storage as an
@@ -247,5 +264,25 @@ public class Task implements Runnable {
 	private String replace(String s) {
 		s = s.substring(s.indexOf("ARTICLE_INFO = window.ARTICLE_INFO"), s.indexOf("</head>"));
 		return s;
+	}
+
+	private String getCommentNum(String cmt_id) {
+		if (cmt_id.equals("")) {
+			return "0";
+		}
+		String url = "http://coral.qq.com/article/{id}/commentnum?callback=_cbSum";
+		url = url.replace("{id}", cmt_id);
+		JSONParser parser = new JSONParser();
+		String number = "";
+		try {
+			String response = HttpUtil.getHttpResponse(url);
+			response = response.substring(response.indexOf("({") + 1, response.length() - 1);
+			JSONObject o = (JSONObject) parser.parse(response);
+			JSONObject data = (JSONObject) o.get("data");
+			number = (String) data.get("commentnum");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return number;
 	}
 }

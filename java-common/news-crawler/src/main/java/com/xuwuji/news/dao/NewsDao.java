@@ -64,4 +64,14 @@ public class NewsDao {
 		}
 	}
 
+	public List<News> findHotNews(String time) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			NewsMapper mapper = session.getMapper(NewsMapper.class);
+			return mapper.findHotNews(time);
+		} finally {
+			session.close();
+		}
+	}
+
 }

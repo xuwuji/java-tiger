@@ -14,6 +14,7 @@ public class News {
 	// private String CNsubCategory;
 	private String time;
 	private String content;
+	private int commentNum;
 	private int typeId;
 
 	public int getId() {
@@ -64,10 +65,18 @@ public class News {
 		this.typeId = typeId;
 	}
 
+	public int getCommentNum() {
+		return commentNum;
+	}
+
+	public void setCommentNum(int commentNum) {
+		this.commentNum = commentNum;
+	}
+
 	@Override
 	public String toString() {
 		return "News [id=" + id + ", title=" + title + ", link=" + link + ", time=" + time + ", content=" + content
-				+ ", typeId=" + typeId + "]";
+				+ ", commentNum=" + commentNum + ", typeId=" + typeId + "]";
 	}
 
 }

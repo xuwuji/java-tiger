@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.joda.time.DateTime;
 import org.junit.Test;
 
+import com.xuwuji.common.java.util.TimeUtil;
 import com.xuwuji.news.dao.NewsDao;
 import com.xuwuji.news.model.News;
 
@@ -29,7 +31,7 @@ public class NewsDaoTest {
 		assertEquals(1, i);
 	}
 
-	@Test
+	// @Test
 	public void findNewsByTypeId() {
 		NewsDao dao = new NewsDao();
 		ArrayList<News> list = (ArrayList<News>) dao.findNewsByTypeId("教育", "", "");
@@ -38,11 +40,21 @@ public class NewsDaoTest {
 		}
 	}
 
-	@Test
+	// @Test
 	public void findNewsByTypeId2() {
 		NewsDao dao = new NewsDao();
 		for (HashMap<String, Object> map : dao.findNewsByTypeId2("教育", "", "")) {
 			System.out.println(map.get("title"));
+		}
+	}
+
+	@Test
+	public void findHotNews() {
+		NewsDao dao = new NewsDao();
+		String time = TimeUtil.getDateTime(DateTime.now().minusDays(1));
+		System.out.println(time);
+		for (News news : dao.findHotNews(time)) {
+			System.out.println(news.getTitle());
 		}
 	}
 
