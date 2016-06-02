@@ -48,7 +48,7 @@ public class NewsDaoTest {
 		}
 	}
 
-	@Test
+	// @Test
 	public void findHotNews() {
 		NewsDao dao = new NewsDao();
 		String time = TimeUtil.getDateTime(DateTime.now().minusDays(1));
@@ -56,6 +56,12 @@ public class NewsDaoTest {
 		for (News news : dao.findHotNews(time)) {
 			System.out.println(news.getTitle());
 		}
+	}
+
+	@Test
+	public void findByTitle() {
+		NewsDao dao = new NewsDao();
+		System.out.println(dao.findByTitle("日本黑免税店专坑中国人 曝光后受害者不减反增").size());
 	}
 
 }

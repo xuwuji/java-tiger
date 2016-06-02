@@ -119,6 +119,12 @@ public class Task implements Runnable {
 		// 1.1 check whether it is an article based on its title and link
 		// address
 		if (title.length() >= 8 && link.indexOf("http") != -1) {
+
+			// check if this article is already in the db
+			if (newsDao.findByTitle(title).size() != 0) {
+				return;
+			}
+
 			// 1.2 get info of this article from a particular part of js in the
 			// page, if no info found, then it is not an article
 			Document doc = Jsoup.connect(link).get();

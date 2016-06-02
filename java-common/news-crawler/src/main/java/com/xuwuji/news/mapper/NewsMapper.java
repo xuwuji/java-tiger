@@ -17,4 +17,8 @@ public interface NewsMapper {
 	List<HashMap<String, Object>> findNewsByTypeId2(Map<String, Object> map);
 
 	List<News> findHotNews(String time);
+
+	List<News> findByTitle(String title);
+
+	News findById(int id);
 }

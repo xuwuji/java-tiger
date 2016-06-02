@@ -52,5 +52,6 @@
 		<module>spring-common</module>
 		<module>news-crawler</module>
 		<module>concurrent</module>
+		<module>backend</module>
 	</modules>
 </project>

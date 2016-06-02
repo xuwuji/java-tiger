@@ -34,6 +34,16 @@ public class NewsDao {
 		}
 	}
 
+	public List<News> findByTitle(String title) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			NewsMapper mapper = session.getMapper(NewsMapper.class);
+			return mapper.findByTitle(title);
+		} finally {
+			session.close();
+		}
+	}
+
 	public List<News> findNewsByTypeId(String type, String bigCategory, String subCategory) {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
@@ -69,6 +79,16 @@ public class NewsDao {
 		try {
 			NewsMapper mapper = session.getMapper(NewsMapper.class);
 			return mapper.findHotNews(time);
+		} finally {
+			session.close();
+		}
+	}
+
+	public News findById(int id) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			NewsMapper mapper = session.getMapper(NewsMapper.class);
+			return mapper.findById(id);
 		} finally {
 			session.close();
 		}

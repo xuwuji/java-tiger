@@ -40,6 +40,15 @@
 		10;
 	</select>
 
+	<select id="findByTitle" parameterType="String" resultMap="NewsResult">
+		select * from news where title=#{title};
+	</select>
+
+	<select id="findById" parameterType="int" resultType="News">
+		select *
+		from news where id=#{id};
+	</select>
+
 	<select id="findNewsByCategory" parameterType="hashmap"
 		resultMap="NewsResult">
 		select

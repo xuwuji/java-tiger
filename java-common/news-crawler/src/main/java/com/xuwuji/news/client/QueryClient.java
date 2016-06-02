@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,7 @@ import com.xuwuji.news.dao.NewsDao;
 import com.xuwuji.news.enumType.TimeRange;
 import com.xuwuji.news.model.News;
 
-class QueryClient {
+public class QueryClient {
 
 	private NewsDao dao;
 
@@ -34,6 +33,8 @@ class QueryClient {
 			time = TimeUtil.getDateTime(DateTime.now().minusDays(7));
 		case Month:
 			time = TimeUtil.getDateTime(DateTime.now().minusDays(30));
+		case All:
+			time = "";
 		}
 		ArrayList<News> list = (ArrayList<News>) dao.findHotNews(time);
 		return list;
@@ -46,20 +47,21 @@ class QueryClient {
 		}
 
 		File file = new File(TimeUtil.getSimpleDateTime(DateTime.now()) + "/" + news.getTitle() + ".html");
+
 		if (!file.exists()) {
 			file.createNewFile();
-		}
-		try {
-			FileWriter fw = new FileWriter(file.getAbsoluteFile());
-			BufferedWriter bw = new BufferedWriter(fw);
-			String html = "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><title>{title}</title></head><body>{body}</body></html>";
-			html = html.replace("{title}", news.getTitle()).replace("{body}", news.getContent());
-			bw.write(html);
-			bw.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			try {
+				FileWriter fw = new FileWriter(file.getAbsoluteFile());
+				BufferedWriter bw = new BufferedWriter(fw);
+				String html = "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><title>{title}</title></head><body>{body}</body></html>";
+				html = html.replace("{title}", news.getTitle()).replace("{body}", news.getContent());
+				bw.write(html);
+				bw.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -68,7 +70,6 @@ class QueryClient {
 		ArrayList<News> list = (ArrayList<News>) client.getHotNews(TimeRange.Day);
 		for (News news : list) {
 			System.out.println(news.getTitle());
-			// System.out.println(news.getContent());
 			client.writeHtml(news);
 		}
 	}
