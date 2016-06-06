@@ -6,9 +6,20 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import com.xuwuji.news.mapper.MetaMapper;
+import com.xuwuji.news.model.Category;
 import com.xuwuji.news.util.SessionFactory;
 
 public class MetaDao {
+
+	private static MetaDao instance = new MetaDao();
+
+	private MetaDao() {
+
+	}
+
+	public static MetaDao getInstance() {
+		return instance;
+	}
 
 	public List<Integer> findId(String type, String bigCategory, String subCategory) {
 		SqlSession session = SessionFactory.openDEVSession();
@@ -42,19 +53,21 @@ public class MetaDao {
 	 * @param subCategory
 	 */
 	public void insert(String type, String bigCategory, String subCategory) {
-		SqlSession session = SessionFactory.openDEVSession();
-		try {
-			MetaMapper mapper = session.getMapper(MetaMapper.class);
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("type", type);
-			map.put("bigCategory", bigCategory);
-			map.put("subCategory", subCategory);
-			mapper.insert(map);
-			session.commit();
-		} catch (Exception e) {
-			session.rollback();
-		} finally {
-			session.close();
+		synchronized (MetaDao.class) {
+			SqlSession session = SessionFactory.openDEVSession();
+			try {
+				MetaMapper mapper = session.getMapper(MetaMapper.class);
+				HashMap<String, Object> map = new HashMap<String, Object>();
+				map.put("type", type);
+				map.put("bigCategory", bigCategory);
+				map.put("subCategory", subCategory);
+				mapper.insert(map);
+				session.commit();
+			} catch (Exception e) {
+				session.rollback();
+			} finally {
+				session.close();
+			}
 		}
 	}
 
@@ -83,6 +96,16 @@ public class MetaDao {
 		try {
 			MetaMapper mapper = session.getMapper(MetaMapper.class);
 			return mapper.getsubCategoryByBig(bigCategory);
+		} finally {
+			session.close();
+		}
+	}
+
+	public List<Category> selectAll() {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			MetaMapper mapper = session.getMapper(MetaMapper.class);
+			return mapper.selectAll();
 		} finally {
 			session.close();
 		}

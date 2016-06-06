@@ -2,6 +2,9 @@ package com.xuwuji.backend.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +25,7 @@ public class IndexController {
 	QueryClient client = new QueryClient();
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public ModelAndView index() {
+	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
 		return new ModelAndView("index");
 	}
 

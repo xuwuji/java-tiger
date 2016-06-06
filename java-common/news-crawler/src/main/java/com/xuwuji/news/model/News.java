@@ -5,13 +5,7 @@ public class News {
 	private int id;
 	private String title;
 	private String link;
-	// 新闻，体育，科技...
-	// private String type;
-	// 篮球，足球，资讯，出国....
-	// private String bigCategory;
-	// 留学，NBA，证券新闻....
-	// private String subCategory;
-	// private String CNsubCategory;
+
 	private String time;
 	private String content;
 	private int commentNum;

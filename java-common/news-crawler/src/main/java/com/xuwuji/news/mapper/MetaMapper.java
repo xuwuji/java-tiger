@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.xuwuji.news.model.Category;
+
 public interface MetaMapper {
 
 	// 1.第一种是在xml中定义为传入map，之后把参数put进map中
@@ -21,5 +23,8 @@ public interface MetaMapper {
 	List<String> getBigCategoryByType(String type);
 
 	List<String> getsubCategoryByBig(String bigCategory);
+
+	// get all news meta
+	List<Category> selectAll();
 
 }

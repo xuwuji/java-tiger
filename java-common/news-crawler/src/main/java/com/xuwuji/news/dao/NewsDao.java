@@ -48,9 +48,8 @@ public class NewsDao {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
 			NewsMapper mapper = session.getMapper(NewsMapper.class);
-			MetaDao metaDao = new MetaDao();
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			List<Integer> ids = metaDao.findId(type, bigCategory, subCategory);
+			List<Integer> ids = MetaDao.getInstance().findId(type, bigCategory, subCategory);
 			System.out.println(ids);
 			map.put("typeId", ids);
 			return mapper.findNewsByTypeId(map);
@@ -63,9 +62,8 @@ public class NewsDao {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
 			NewsMapper mapper = session.getMapper(NewsMapper.class);
-			MetaDao metaDao = new MetaDao();
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			List<Integer> ids = metaDao.findId(type, bigCategory, subCategory);
+			List<Integer> ids = MetaDao.getInstance().findId(type, bigCategory, subCategory);
 			System.out.println(ids);
 			map.put("typeId", ids);
 			return mapper.findNewsByTypeId2(map);

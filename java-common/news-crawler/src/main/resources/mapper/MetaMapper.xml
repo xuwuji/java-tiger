@@ -5,6 +5,12 @@
 
 <mapper namespace="com.xuwuji.news.mapper.MetaMapper">
 
+	<resultMap type="Category" id="categoryResult">
+		<id property="id" column="id"></id>
+		<result property="type" column="type"></result>
+		<result property="bigCategory" column="bigCategory"></result>
+		<result property="subCategory" column="subCategory"></result>
+	</resultMap>
 
 	<select id="findId" parameterType="hashmap" resultType="Integer">
 		select
@@ -59,6 +65,11 @@
 		select distinct(subCategory) as subCategory from news where
 		bigCategory
 		=#{bigCategory}
+	</select>
+
+
+	<select id="selectAll" resultMap="categoryResult">
+		select * from news_meta;
 	</select>
 
 </mapper>

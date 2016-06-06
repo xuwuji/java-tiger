@@ -12,6 +12,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.xuwuji.common.java.util.HttpUtil;
+import com.xuwuji.news.cache.CategoryCache;
 import com.xuwuji.news.dao.MetaDao;
 import com.xuwuji.news.dao.NewsDao;
 import com.xuwuji.news.model.News;
@@ -25,7 +26,7 @@ public class Task implements Runnable {
 	public Task(Storage storage) {
 		this.storage = storage;
 		newsDao = new NewsDao();
-		metaDao = new MetaDao();
+		metaDao = MetaDao.getInstance();
 	}
 
 	public void run() {
@@ -164,12 +165,23 @@ public class Task implements Runnable {
 				news.setTime(time);
 				news.setContent(content);
 				news.setCommentNum(Integer.valueOf(comment_num));
-				ArrayList<Integer> id = (ArrayList<Integer>) metaDao.findId(type, bigCategory, subCategory);
-				if (id.size() == 0) {
-					metaDao.insert(type, bigCategory, subCategory);
-					news.setTypeId(metaDao.findId(type, bigCategory, subCategory).get(0));
+
+				// 1.search in cache
+				Integer typeId = CategoryCache.getInstance().get(type + bigCategory + subCategory);
+				if (typeId != null) {
+					news.setTypeId(typeId);
 				} else {
-					news.setTypeId(id.get(0));
+					// 2.search in db
+					ArrayList<Integer> list = (ArrayList<Integer>) metaDao.findId(type, bigCategory, subCategory);
+					// 2.1 if it is not in db, insert the meta record
+					if (list.size() == 0) {
+						MetaDao.getInstance().insert(type, bigCategory, subCategory);
+						news.setTypeId(metaDao.findId(type, bigCategory, subCategory).get(0));
+					}
+					// 2.2 if it is in db, got the id
+					else {
+						news.setTypeId(list.get(0));
+					}
 				}
 				newsDao.insertNews(news);
 			}

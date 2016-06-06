@@ -29,12 +29,16 @@ public class QueryClient {
 		switch (range) {
 		case Day:
 			time = TimeUtil.getDateTime(DateTime.now().minusDays(1));
+			break;
 		case Week:
 			time = TimeUtil.getDateTime(DateTime.now().minusDays(7));
+			break;
 		case Month:
 			time = TimeUtil.getDateTime(DateTime.now().minusDays(30));
+			break;
 		case All:
 			time = "";
+			break;
 		}
 		ArrayList<News> list = (ArrayList<News>) dao.findHotNews(time);
 		return list;
@@ -69,7 +73,7 @@ public class QueryClient {
 		QueryClient client = new QueryClient();
 		ArrayList<News> list = (ArrayList<News>) client.getHotNews(TimeRange.Day);
 		for (News news : list) {
-			System.out.println(news.getTitle());
+			System.out.println(news.getTitle() + "----" + news.getLink());
 			client.writeHtml(news);
 		}
 	}

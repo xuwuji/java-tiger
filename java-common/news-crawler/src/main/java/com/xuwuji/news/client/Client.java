@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
+import com.xuwuji.news.cache.CategoryCache;
 import com.xuwuji.news.task.Storage;
 import com.xuwuji.news.task.Task;
 
@@ -15,6 +16,7 @@ public class Client {
 
 	public static void main(String[] args) throws IOException {
 		Client client = new Client();
+		CategoryCache.init();
 		LinkedList<String> list = new LinkedList<String>();
 		list = client.load(list);
 		Storage storage = new Storage(list);
