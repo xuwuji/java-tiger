@@ -47,8 +47,8 @@
 	</insert>
 
 	<select id="getTypes" resultType="string">
-		select distinct(type) as type
-		from news_meta;
+		select type,count(*) from
+		news_meta group by type order by count(*) DESC limit 10;
 	</select>
 
 	<select id="getBigCategoryByType" parameterType="String"

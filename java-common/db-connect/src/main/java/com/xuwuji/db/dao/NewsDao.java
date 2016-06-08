@@ -73,11 +73,11 @@ public class NewsDao {
 		}
 	}
 
-	public List<News> findHotNews(String time) {
+	public List<News> findHotNews(String time, String type) {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
 			NewsMapper mapper = session.getMapper(NewsMapper.class);
-			return mapper.findHotNews(time);
+			return mapper.findHotNews(time, type);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -99,7 +99,7 @@ public class NewsDao {
 
 	public static void main(String[] args) {
 		NewsDao dao = new NewsDao();
-		System.out.println(dao.findHotNews(""));
+		System.out.println(dao.findHotNews("", ""));
 	}
 
 }

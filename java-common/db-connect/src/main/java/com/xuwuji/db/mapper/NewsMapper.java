@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.xuwuji.db.model.News;
 
 public interface NewsMapper {
@@ -16,7 +18,7 @@ public interface NewsMapper {
 
 	List<HashMap<String, Object>> findNewsByTypeId2(Map<String, Object> map);
 
-	List<News> findHotNews(String time);
+	List<News> findHotNews(@Param("time") String time, @Param("type") String type);
 
 	List<News> findByTitle(String title);
 

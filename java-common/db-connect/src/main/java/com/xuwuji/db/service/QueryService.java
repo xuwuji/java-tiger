@@ -19,7 +19,7 @@ public class QueryService {
 		dao = new NewsDao();
 	}
 
-	public List<News> getHotNews(TimeRange range) {
+	public List<News> getHotNews(TimeRange range, String type) {
 		String time = "";
 		switch (range) {
 		case Day:
@@ -35,13 +35,13 @@ public class QueryService {
 			time = "";
 			break;
 		}
-		ArrayList<News> list = (ArrayList<News>) dao.findHotNews(time);
+		ArrayList<News> list = (ArrayList<News>) dao.findHotNews(time, type);
 		return list;
 	}
 
 	public static void main(String[] args) throws IOException {
 		QueryService client = new QueryService();
-		ArrayList<News> list = (ArrayList<News>) client.getHotNews(TimeRange.Day);
+		ArrayList<News> list = (ArrayList<News>) client.getHotNews(TimeRange.Day, "");
 		for (News news : list) {
 			System.out.println(news.getTitle() + "----" + news.getLink());
 		}

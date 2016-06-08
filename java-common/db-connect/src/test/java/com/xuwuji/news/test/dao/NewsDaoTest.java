@@ -53,7 +53,7 @@ public class NewsDaoTest {
 		NewsDao dao = new NewsDao();
 		String time = TimeUtil.getDateTime(DateTime.now().minusDays(1));
 		System.out.println(time);
-		for (News news : dao.findHotNews(time)) {
+		for (News news : dao.findHotNews(time, "")) {
 			System.out.println(news.getTitle());
 		}
 	}

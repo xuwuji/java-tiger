@@ -33,12 +33,18 @@
 		select * from news where title like "%"#{keyword}"%"
 	</select>
 
-	<select id="findHotNews" parameterType="String" resultMap="NewsResult">
+	<select id="findHotNews" parameterType="hashmap" resultMap="NewsResult">
 		select distinct * from news where
-		time > #{time} order by commentNum
+		time > #{time}
+		<if test="type!=''">
+			and typeId in (select id from news_meta where
+			type=#{type})
+		</if>
+		order by commentNum
 		DESC limit
 		10;
 	</select>
+
 
 	<select id="findByTitle" parameterType="String" resultMap="NewsResult">
 		select * from news where title=#{title};
