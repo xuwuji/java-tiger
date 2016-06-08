@@ -58,7 +58,7 @@
 
     <body onload="startTime()">
 
-        <h1>CALENDAR, DATE & TIME WIDGET</h1>
+        <h1>热点新闻</h1>
 
         <div class="content">
 
@@ -112,11 +112,11 @@
                         var daym = mydate.getDate()
                         if (daym < 10)
                             daym = "0" + daym
-                        var dayarray = new Array("Sunday", "Monday", "Tuesday",
-                            "Wednesday", "Thursday", "Friday", "Saturday")
-                        var montharray = new Array("January", "February", "March",
-                            "April", "May", "June", "July", "August",
-                            "September", "October", "November", "December")
+                        var dayarray = new Array("星期日", "星期一", "星期二",
+                            "星期三", "星期四", "星期五", "星期六")
+                        var montharray = new Array("一月", "二月", "三月",
+                            "四月", "五月", "六月", "七月", "八月",
+                            "九月", "十月", "十一月", "十二月")
                         document
                             .write("" + dayarray[day] + ", " + montharray[month] + " " + daym + ", " + year + "")
 
@@ -163,9 +163,9 @@
         }
 
         function fixNewsContent(data) {
-            str = '';
+            var str = '';
             $.each(data, function(index, news) {
-                str = str + '<li> <a href=\'' + news.link + '\'>' + news.title + '</li>'
+                str =  '<li> <a href=\'' + news.link + '\'>' + news.title + '</a></li>'+str;
                 console.log(news.title);
             });
             $('#newsContent').html(str);

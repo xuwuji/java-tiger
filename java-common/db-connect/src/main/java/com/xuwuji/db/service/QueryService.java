@@ -35,6 +35,7 @@ public class QueryService {
 			time = "";
 			break;
 		}
+		System.out.println(time);
 		ArrayList<News> list = (ArrayList<News>) dao.findHotNews(time, type);
 		return list;
 	}

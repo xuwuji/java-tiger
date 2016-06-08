@@ -225,7 +225,8 @@ public class Task implements Runnable {
 		}
 		// if this is not an article, then add this link to the storage as an
 		// original link to be processed
-		if (map.size() == 0) {
+		if (map.size() == 0 && link.indexOf("v.qq.com") == -1 && link.indexOf("class.qq.com") == -1
+				&& link.indexOf("qq") != -1) {
 			storage.addLink(link);
 		}
 		return map;

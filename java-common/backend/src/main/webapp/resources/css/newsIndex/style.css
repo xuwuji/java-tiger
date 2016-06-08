@@ -404,7 +404,7 @@ ul.reminder {
 
 @media screen and (max-width:1680px) {
 	.content {
-		width: 70%;
+		width: 90%;
 	}
 	ul.reminder {
 		padding-left: 197px;

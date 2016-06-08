@@ -3,6 +3,8 @@ package com.xuwuji.backend.controller;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.xuwuji.common.java.algorithm.StringUtil;
 import com.xuwuji.db.dao.MetaDao;
 import com.xuwuji.db.dao.NewsDao;
 import com.xuwuji.db.model.News;
@@ -37,15 +40,20 @@ public class IndexController {
 	@ResponseBody
 	public ArrayList<News> getHotNews(@RequestParam("time") String time, @RequestParam("type") String type)
 			throws UnsupportedEncodingException {
-		System.out.println(type);
 		type = URLDecoder.decode(type, "UTF-8");
 		System.out.println(type);
-		ArrayList<News> list = (ArrayList<News>) client.getHotNews(TimeRange.All, type);
-		for (News news : list) {
-			news.setContent("");
+		ArrayList<News> list = (ArrayList<News>) client.getHotNews(TimeRange.Day, type);
+		System.out.println(list.size());
+		ArrayList<News> result = new ArrayList<News>();
+		HashSet<String> set = new HashSet<String>();
+		for (int i = 0; i < list.size(); i++) {
+			if (!set.contains(list.get(i).getLink())) {
+				set.add(list.get(i).getLink());
+				result.add(list.get(i));
+			}
 		}
-		// System.out.println(client.getHotNews(TimeRange.Day).size());
-		return list;
+		Collections.reverse(result);
+		return result;
 	}
 
 	@RequestMapping(value = "/page", method = RequestMethod.GET)

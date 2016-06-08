@@ -42,7 +42,7 @@
 		</if>
 		order by commentNum
 		DESC limit
-		10;
+		15;
 	</select>
 
 
@@ -80,7 +80,4 @@
 			#{id}
 		</foreach>
 	</select>
-
-
-
 </mapper>

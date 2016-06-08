@@ -40,7 +40,8 @@ public class QueryClient {
 			time = "";
 			break;
 		}
-		ArrayList<News> list = (ArrayList<News>) dao.findHotNews(time);
+		System.out.println(time);
+		ArrayList<News> list = (ArrayList<News>) dao.findHotNews(time, "");
 		return list;
 	}
 
