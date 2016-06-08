@@ -11,11 +11,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.xuwuji.common.java.util.HttpUtil;
+import com.xuwuji.db.dao.MetaDao;
+import com.xuwuji.db.dao.NewsDao;
+import com.xuwuji.db.model.News;
 import com.xuwuji.news.cache.CategoryCache;
-import com.xuwuji.news.dao.MetaDao;
-import com.xuwuji.news.dao.NewsDao;
-import com.xuwuji.news.model.News;
+import com.xuwuji.news.util.HttpUtil;
 
 public class Task implements Runnable {
 

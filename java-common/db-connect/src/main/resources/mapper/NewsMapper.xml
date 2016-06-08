@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuwuji.db.mapper.NewsMapper">
+
+	<!-- To execute this statement, MyBatis will perform the following sequence 
+		of actions. 1. Create a PreparedStatement interface with placeholders as 
+		follows: PreparedStatement pstmt = connection.prepareStatement ("NSERT INTO 
+		news(title,link,category,time,content) VALUES(?,?,?,?,?)"); 2. Check the 
+		property type of title in the News object and use the appropriate setXXX 
+		method to set the value. Here title is of the type String, so it will use 
+		the setString() method. pstmt.setInt(1,student.getTitle()); 3. Similarly,do 
+		the same process for the rest properties -->
+	<insert id="insertNews" parameterType="News">
+		INSERT INTO
+		news(title,link,time,content,commentNum,typeId)
+		VALUES(#{title},#{link},#{time},#{content},#{commentNum},#{typeId})
+	</insert>
+
+	<resultMap id="NewsResult" type="News">
+		<id property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="link" column="link" />
+		<result property="time" column="time" />
+		<result property="content" column="content" />
+		<result property="commentNum" column="commentNum" />
+		<result property="typeId" column="typeId" />
+	</resultMap>
+
+	<select id="findByKeyword" parameterType="String" resultMap="NewsResult">
+		select * from news where title like "%"#{keyword}"%"
+	</select>
+
+	<select id="findHotNews" parameterType="String" resultMap="NewsResult">
+		select distinct * from news where
+		time > #{time} order by commentNum
+		DESC limit
+		10;
+	</select>
+
+	<select id="findByTitle" parameterType="String" resultMap="NewsResult">
+		select * from news where title=#{title};
+	</select>
+
+	<select id="findById" parameterType="int" resultType="News">
+		select *
+		from news where id=#{id};
+	</select>
+
+	<select id="findNewsByCategory" parameterType="hashmap"
+		resultMap="NewsResult">
+		select
+		* from news
+		where typeId in
+		<foreach item="id" collection="typeId" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</select>
+
+
+	<!-- Let us see another example of a <select> mapped statement showing how 
+		to populate query results into HashMap as follows. In this case, the column 
+		names will be the key and the column value will be the value. -->
+	<select id="findNewsByCategory2" parameterType="hashmap"
+		resultType="map">
+		select
+		* from news
+		where typeId in
+		<foreach item="id" collection="typeId" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</select>
+
+
+
+</mapper>

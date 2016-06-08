@@ -2,8 +2,8 @@ package com.xuwuji.news.cache;
 
 import java.util.HashMap;
 
-import com.xuwuji.news.dao.MetaDao;
-import com.xuwuji.news.model.Category;
+import com.xuwuji.db.dao.MetaDao;
+import com.xuwuji.db.model.Category;
 
 public class CategoryCache {
 

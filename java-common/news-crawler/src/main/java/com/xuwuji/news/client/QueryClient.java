@@ -11,10 +11,10 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
-import com.xuwuji.common.java.util.TimeUtil;
-import com.xuwuji.news.dao.NewsDao;
+import com.xuwuji.db.dao.NewsDao;
+import com.xuwuji.db.model.News;
+import com.xuwuji.db.util.TimeUtil;
 import com.xuwuji.news.enumType.TimeRange;
-import com.xuwuji.news.model.News;
 
 public class QueryClient {
 

@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.xuwuji</groupId>
-		<artifactId>java-common</artifactId>
+		<artifactId>java-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>news-crawler</artifactId>
@@ -35,11 +35,8 @@
 		</dependency>
 		<dependency>
 			<groupId>com.xuwuji</groupId>
-			<artifactId>java-common</artifactId>
+			<artifactId>db-connect</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-
-
-
 	</dependencies>
 </project>

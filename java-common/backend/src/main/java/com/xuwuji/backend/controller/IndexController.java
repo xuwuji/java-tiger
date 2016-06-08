@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,16 +12,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.xuwuji.news.dao.NewsDao;
-import com.xuwuji.news.enumType.TimeRange;
-import com.xuwuji.news.model.News;
-import com.xuwuji.news.client.QueryClient;
+import com.xuwuji.db.dao.NewsDao;
+import com.xuwuji.db.model.News;
+import com.xuwuji.db.service.QueryService;
+import com.xuwuji.db.util.TimeRange;
 
 @Controller
 public class IndexController {
 
 	NewsDao dao = new NewsDao();
-	QueryClient client = new QueryClient();
+	QueryService client = new QueryService();
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
@@ -32,11 +31,11 @@ public class IndexController {
 	@RequestMapping(value = "/hotnews", method = RequestMethod.GET)
 	@ResponseBody
 	public ArrayList<News> getHotNews() {
-		ArrayList<News> list = (ArrayList<News>) client.getHotNews(TimeRange.All);
+		ArrayList<News> list = (ArrayList<News>) client.getHotNews(TimeRange.Day);
 		for (News news : list) {
 			news.setContent("");
 		}
-		System.out.println(client.getHotNews(TimeRange.All).size());
+		System.out.println(client.getHotNews(TimeRange.Day).size());
 		return list;
 	}
 

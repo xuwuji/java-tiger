@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuwuji.db.mapper.MetaMapper">
+
+	<resultMap type="Category" id="categoryResult">
+		<id property="id" column="id"></id>
+		<result property="type" column="type"></result>
+		<result property="bigCategory" column="bigCategory"></result>
+		<result property="subCategory" column="subCategory"></result>
+	</resultMap>
+
+	<select id="findId" parameterType="hashmap" resultType="Integer">
+		select
+		id from news_meta
+		<if test="type!=''">
+			where type=#{type}
+			<if test="bigCategory != ''">
+				AND bigCategory = #{bigCategory}
+			</if>
+			<if test="subCategory != ''">
+				AND subCategory = #{subCategory}
+			</if>
+		</if>
+	</select>
+
+	<select id="findId2" resultType="Integer" parameterType="hashmap">
+		select
+		id from news_meta
+		<if test="type!=''">
+			where type=#{param1}
+			<if test="bigCategory != ''">
+				AND bigCategory =#{param2}
+			</if>
+			<if test="subCategory != ''">
+				AND subCategory = #{param3}
+			</if>
+		</if>
+	</select>
+
+	<insert id="insert" parameterType="hashmap" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into news_meta (type, bigCategory,subCategory)
+		values(#{type},#{bigCategory},#{subCategory})
+	</insert>
+
+	<select id="getTypes" resultType="string">
+		select distinct(type) as type
+		from news_meta;
+	</select>
+
+	<select id="getBigCategoryByType" parameterType="String"
+		resultType="string">
+		select
+		distinct(bigCategory) as bigCategory
+		from news_meta
+		where
+		type=#{type};
+	</select>
+
+	<select id="getsubCategoryByBig" parameterType="String"
+		resultType="string">
+		select distinct(subCategory) as subCategory from news where
+		bigCategory
+		=#{bigCategory}
+	</select>
+
+
+	<select id="selectAll" resultMap="categoryResult">
+		select * from news_meta;
+	</select>
+
+</mapper>
