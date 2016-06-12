@@ -104,6 +104,9 @@ public class Task implements Runnable {
 				} catch (org.jsoup.HttpStatusException e3) {
 					System.out.println("[" + Thread.currentThread().getName() + "] -" + e.attr("href").trim()
 							+ " is not a valid url");
+				} catch (java.io.EOFException e5) {
+					System.out.println("[" + Thread.currentThread().getName() + "] -" + e.attr("href").trim()
+							+ " is eof exception");
 				} catch (IOException e4) {
 					e4.printStackTrace();
 				}
@@ -201,9 +204,16 @@ public class Task implements Runnable {
 		for (int i = 0; i < 1; i++) {
 			try {
 				String s = doc.toString();
-				if (s.indexOf("cmt_id = ") != -1) {
-					cmt_id = s.substring(s.indexOf("cmt_id = ") + 9, s.indexOf("cmt_id = ") + 20);
-					cmt_id = cmt_id.replace("\"", "").replace(" ", "").replace(";", "");
+				if (s.indexOf("var cmt_id='") != -1) {
+					cmt_id = s.substring(s.indexOf("var cmt_id='") + 12, s.indexOf("var cmt_id='") + 20);
+					cmt_id = cmt_id.replace("\"", "").replace(" ", "").replace(";", "").replace("\n", "")
+							.replace("'", "").replace("\t", "");
+				} else {
+					if (s.indexOf("cmt_id = ") != -1) {
+						cmt_id = s.substring(s.indexOf("cmt_id = ") + 9, s.indexOf("cmt_id = ") + 20);
+						cmt_id = cmt_id.replace("\"", "").replace(" ", "").replace(";", "").replace("\n", "")
+								.replace("'", "").replace("\t", "");
+					}
 				}
 				s = s.substring(s.indexOf("ARTICLE_INFO = window.ARTICLE_INFO"), s.indexOf("</head>"));
 				s = s.substring(s.indexOf("{"), s.indexOf("	</script> ") + 1);
@@ -291,6 +301,7 @@ public class Task implements Runnable {
 		}
 		String url = "http://coral.qq.com/article/{id}/commentnum?callback=_cbSum";
 		url = url.replace("{id}", cmt_id);
+		System.out.println(url);
 		JSONParser parser = new JSONParser();
 		String number = "";
 		try {
@@ -298,9 +309,14 @@ public class Task implements Runnable {
 			response = response.substring(response.indexOf("({") + 1, response.length() - 1);
 			JSONObject o = (JSONObject) parser.parse(response);
 			JSONObject data = (JSONObject) o.get("data");
-			number = (String) data.get("commentnum");
+			if (data.get("commentnum") != null) {
+				number = (String) data.get("commentnum");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		if (number.equals("")) {
+			return "0";
 		}
 		return number;
 	}

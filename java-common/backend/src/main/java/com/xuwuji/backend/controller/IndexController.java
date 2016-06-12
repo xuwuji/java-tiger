@@ -9,6 +9,10 @@ import java.util.HashSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.xuwuji.common.java.algorithm.StringUtil;
 import com.xuwuji.db.dao.MetaDao;
 import com.xuwuji.db.dao.NewsDao;
 import com.xuwuji.db.model.News;
@@ -49,7 +52,19 @@ public class IndexController {
 		for (int i = 0; i < list.size(); i++) {
 			if (!set.contains(list.get(i).getLink())) {
 				set.add(list.get(i).getLink());
-				result.add(list.get(i));
+				News news = list.get(i);
+				Document doc = Jsoup.parse(news.getContent());
+				Elements elements = doc.getElementsByTag("img");
+				String imgLink = "";
+				for (Element e : elements) {
+					imgLink = e.attr("src");
+					if (imgLink.indexOf("http") != -1) {
+						break;
+					}
+				}
+				news.setImgLink(imgLink);
+				news.setContent("");
+				result.add(news);
 			}
 		}
 		Collections.reverse(result);

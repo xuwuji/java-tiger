@@ -10,6 +10,15 @@ public class News {
 	private String content;
 	private int commentNum;
 	private int typeId;
+	private String imgLink;
+
+	public String getImgLink() {
+		return imgLink;
+	}
+
+	public void setImgLink(String imgLink) {
+		this.imgLink = imgLink;
+	}
 
 	public int getId() {
 		return id;
