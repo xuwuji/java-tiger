@@ -48,7 +48,6 @@ public class IndexController {
 	public ArrayList<News> getHotNews(@RequestParam("time") String time, @RequestParam("type") String type)
 			throws UnsupportedEncodingException {
 		type = URLDecoder.decode(type, "UTF-8");
-		System.out.println(type);
 		ArrayList<News> list = (ArrayList<News>) client.getHotNews(TimeRange.Day, type);
 		System.out.println(list.size());
 		ArrayList<News> result = new ArrayList<News>();

@@ -2,7 +2,6 @@ package com.xuwuji.db.dao;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -11,6 +10,7 @@ import com.xuwuji.db.model.News;
 import com.xuwuji.db.util.SessionFactory;
 
 public class NewsDao {
+	MetaDao dao = new MetaDao();
 
 	public void insertNews(News news) {
 		SqlSession session = SessionFactory.openDEVSession();
@@ -50,7 +50,7 @@ public class NewsDao {
 		try {
 			NewsMapper mapper = session.getMapper(NewsMapper.class);
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			List<Integer> ids = MetaDao.getInstance().findId(type, bigCategory, subCategory);
+			List<Integer> ids = dao.findId(type, bigCategory, subCategory);
 			System.out.println(ids);
 			map.put("typeId", ids);
 			return mapper.findNewsByTypeId(map);
@@ -64,7 +64,7 @@ public class NewsDao {
 		try {
 			NewsMapper mapper = session.getMapper(NewsMapper.class);
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			List<Integer> ids = MetaDao.getInstance().findId(type, bigCategory, subCategory);
+			List<Integer> ids = dao.findId(type, bigCategory, subCategory);
 			System.out.println(ids);
 			map.put("typeId", ids);
 			return mapper.findNewsByTypeId2(map);

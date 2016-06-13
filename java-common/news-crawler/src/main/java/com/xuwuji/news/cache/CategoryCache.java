@@ -11,8 +11,10 @@ public class CategoryCache {
 
 	public static HashMap<String, Integer> map = new HashMap<String, Integer>();
 
-	private CategoryCache() {
+	private MetaDao dao;
 
+	private CategoryCache() {
+		dao = new MetaDao();
 	}
 
 	public static void init() {
@@ -35,7 +37,7 @@ public class CategoryCache {
 	}
 
 	private void refresh() {
-		for (Category c : MetaDao.getInstance().selectAll()) {
+		for (Category c : dao.selectAll()) {
 			map.put(c.getType() + c.getBigCategory() + c.getSubCategory(), c.getId());
 		}
 	}

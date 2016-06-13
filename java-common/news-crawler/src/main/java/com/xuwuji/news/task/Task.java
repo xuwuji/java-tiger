@@ -26,7 +26,7 @@ public class Task implements Runnable {
 	public Task(Storage storage) {
 		this.storage = storage;
 		newsDao = new NewsDao();
-		metaDao = MetaDao.getInstance();
+		metaDao = new MetaDao();
 	}
 
 	public void run() {
@@ -178,7 +178,7 @@ public class Task implements Runnable {
 					ArrayList<Integer> list = (ArrayList<Integer>) metaDao.findId(type, bigCategory, subCategory);
 					// 2.1 if it is not in db, insert the meta record
 					if (list.size() == 0) {
-						MetaDao.getInstance().insert(type, bigCategory, subCategory);
+						metaDao.insert(type, bigCategory, subCategory);
 						news.setTypeId(metaDao.findId(type, bigCategory, subCategory).get(0));
 					}
 					// 2.2 if it is in db, got the id

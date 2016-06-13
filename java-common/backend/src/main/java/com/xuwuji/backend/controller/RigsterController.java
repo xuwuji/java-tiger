@@ -18,6 +18,11 @@ public class RigsterController {
 	@Autowired
 	private UserDao dao;
 
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	public ModelAndView index() {
+		return new ModelAndView("register/register");
+	}
+
 	@ResponseBody
 	@RequestMapping(value = "/action", method = RequestMethod.POST)
 	public ModelAndView register(@RequestParam("username") String username, @RequestParam("password") String password) {
@@ -28,14 +33,14 @@ public class RigsterController {
 			System.out.println(encodePassword);
 			if (!nameIsDuplicated(username)) {
 				dao.insert(username, encodePassword);
-				return new ModelAndView("welcome");
+				return new ModelAndView("register/welcome").addObject("WelMessage", username);
 			} else {
-				return new ModelAndView("failed");
+				return new ModelAndView("register/fail");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return new ModelAndView("failed");
+		return new ModelAndView("register/fail");
 	}
 
 	// check if a username has already been used

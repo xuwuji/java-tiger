@@ -29,19 +29,26 @@ public class PermissionCotroller {
 
 	@ResponseBody
 	@RequestMapping(value = "/action", method = RequestMethod.POST)
-	private boolean login(@RequestParam("username") String username, @RequestParam("password") String password,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+	private ModelAndView login(@RequestParam("username") String username, @RequestParam("password") String password,
+			@RequestParam("remember") String remember, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		System.out.println(username);
+		System.out.println(password);
 		String encodePassword = EncryptUtil.encode(password);
 		if (dao.getId(username, encodePassword).size() != 0) {
-			Cookie cookie = new Cookie("backend", username + "-" + encodePassword);
-			// 7 days expired
-			cookie.setMaxAge(60 * 60 * 24 * 7);
-			cookie.setPath("/");
-			response.addCookie(cookie);
-			return true;
+			// remember the user for next login based on cookie
+			if (remember.indexOf("on") != -1) {
+				Cookie cookie = new Cookie("backend", username + "-" + encodePassword);
+				// 7 days expired
+				cookie.setMaxAge(60 * 60 * 24 * 7);
+				cookie.setPath("/");
+				response.addCookie(cookie);
+				return new ModelAndView("index");
+			}
 		} else {
-			return false;
+			return new ModelAndView("login").addObject("ErrorMessage", "wrong username or password");
 		}
+		return new ModelAndView("login").addObject("ErrorMessage", "please provide username and password");
 	}
 
 	@ResponseBody
