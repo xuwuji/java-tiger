@@ -19,8 +19,8 @@ import com.xuwuji.db.model.User;
 @Controller
 @RequestMapping(value = "/login")
 public class PermissionCotroller {
-
-	private UserDao dao = new UserDao();
+	@Autowired
+	private UserDao dao;
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {

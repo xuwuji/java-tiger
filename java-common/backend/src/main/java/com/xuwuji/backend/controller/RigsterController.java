@@ -15,7 +15,8 @@ import com.xuwuji.db.dao.UserDao;
 @RequestMapping(value = "/register")
 public class RigsterController {
 
-	private UserDao dao = new UserDao();
+	@Autowired
+	private UserDao dao;
 
 	@ResponseBody
 	@RequestMapping(value = "/action", method = RequestMethod.POST)

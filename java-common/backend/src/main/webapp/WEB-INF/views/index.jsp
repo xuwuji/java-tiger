@@ -344,6 +344,7 @@
             };
 
             var jssor_slider1 = new $JssorSlider$(containerId, jssor_1_options);
+    
         };
 
         //responsive code begin

@@ -11,16 +11,6 @@ import com.xuwuji.db.util.SessionFactory;
 
 public class MetaDao {
 
-	private static MetaDao instance = new MetaDao();
-
-	private MetaDao() {
-
-	}
-
-	public static MetaDao getInstance() {
-		return instance;
-	}
-
 	public List<Integer> findId(String type, String bigCategory, String subCategory) {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
@@ -112,7 +102,8 @@ public class MetaDao {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(MetaDao.getInstance().selectAll());
+		MetaDao dao = new MetaDao();
+		System.out.println(dao.selectAll());
 	}
 
 }
