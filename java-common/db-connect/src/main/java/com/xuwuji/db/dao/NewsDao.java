@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xuwuji.db.mapper.NewsMapper;
 import com.xuwuji.db.model.News;
 import com.xuwuji.db.util.SessionFactory;
@@ -26,10 +28,17 @@ public class NewsDao {
 	}
 
 	public List<News> findByKeyword(String keyword) {
+		PageHelper.startPage(3, 10);
+		PageHelper.orderBy("commentNum DESC");
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
 			NewsMapper mapper = session.getMapper(NewsMapper.class);
-			return mapper.findByKeyword(keyword);
+			List<News> list = mapper.findByKeyword(keyword);
+			PageInfo page = new PageInfo(list);
+			System.out.println(page.getFirstPage());
+			System.out.println(page.getLastPage());
+			System.out.println(page.getOrderBy());
+			return list;
 		} finally {
 			session.close();
 		}
@@ -99,7 +108,10 @@ public class NewsDao {
 
 	public static void main(String[] args) {
 		NewsDao dao = new NewsDao();
-		System.out.println(dao.findHotNews("", ""));
+		// System.out.println(dao.findHotNews("", ""));
+		for (News news : dao.findByKeyword("NBA")) {
+			System.out.println(news.getTitle() + news.getCommentNum());
+		}
 	}
 
 }

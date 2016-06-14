@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Scope;
 
 import com.xuwuji.db.dao.MetaDao;
 import com.xuwuji.db.dao.NewsDao;
+import com.xuwuji.db.dao.SearchDao;
 import com.xuwuji.db.dao.UserDao;
 import com.xuwuji.db.service.QueryService;
 
@@ -37,6 +38,11 @@ public class BackendConfig {
 	@Bean
 	public QueryService client() {
 		return new QueryService();
+	}
+
+	@Bean
+	public SearchDao searchDao() {
+		return new SearchDao();
 	}
 
 }

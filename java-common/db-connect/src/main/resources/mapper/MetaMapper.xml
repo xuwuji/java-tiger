@@ -5,6 +5,8 @@
 
 <mapper namespace="com.xuwuji.db.mapper.MetaMapper">
 
+	<cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true" />
+
 	<resultMap type="Category" id="categoryResult">
 		<id property="id" column="id"></id>
 		<result property="type" column="type"></result>

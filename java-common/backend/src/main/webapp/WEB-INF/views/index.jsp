@@ -178,6 +178,36 @@
 
         <div class="content">
 
+            <div class="row">
+                <div class="col-xs-8 col-xs-offset-2">
+                    <div class="input-group">
+                        <div class="input-group-btn search-panel">
+
+
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span id="search_concept">Filter by</span> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#contains">Contains</a></li>
+                                <li><a href="#its_equal">It's equal</a></li>
+                                <li><a href="#greather_than">Greather than ></a></li>
+                                <li><a href="#less_than">Less than < </a></li>
+                                <li class="divider"></li>
+                                <li><a href="#all">Anything</a></li>
+                            </ul>
+                        </div>
+                        <input type="hidden" name="search_param" value="all" id="search_param">
+                        <input type="text" class="form-control" name="x" placeholder="Search term...">
+                        <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <br>
             <!--slider-->
             <div class="calender">
                 <div id="jssor_1" style="position: relative; margin: 0 auto; top: 0px; left: 0px; width: 600px; height: 500px; overflow: hidden; visibility: hidden;">
@@ -299,6 +329,22 @@
             getDailyHotNews(2, '');
         });
 
+
+
+
+        $(document).ready(function(e) {
+            $('.search-panel .dropdown-menu').find('a').click(function(e) {
+                e.preventDefault();
+                var param = $(this).attr("href").replace("#", "");
+                var concept = $(this).text();
+                $('.search-panel span#search_concept').text(concept);
+                $('.input-group #search_param').val(param);
+            });
+        });
+
+
+
+
         jssor_slider1_starter = function(containerId) {
             var jssor_1_SlideshowTransitions = [{
                 $Duration: 1200,
@@ -344,7 +390,7 @@
             };
 
             var jssor_slider1 = new $JssorSlider$(containerId, jssor_1_options);
-    
+
         };
 
         //responsive code begin
@@ -410,7 +456,19 @@
                     });
                     typePart = typePart + '</li>';
                     $('#typeContent').html(typePart);
+                    $('#searchTypeContent').html(typePart);
                 });
+        }
+
+
+        function searchDropDown() {
+            $('.search-panel .dropdown-menu').find('a').click(function(e) {
+                e.preventDefault();
+                var param = $(this).attr("href").replace("#", "");
+                var concept = $(this).text();
+                $('.search-panel span#search_concept').text(concept);
+                $('.input-group #search_param').val(param);
+            });
         }
 
     </script>
