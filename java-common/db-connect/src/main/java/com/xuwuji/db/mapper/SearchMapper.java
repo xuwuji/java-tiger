@@ -14,4 +14,6 @@ public interface SearchMapper {
 	void insertRecord(@Param("keyword") String keyword, @Param("time") String time);
 
 	List<HashMap<String, Object>> selectHot();
+
+	void insertKW(@Param("keyword") String keyword, @Param("NewsId") Integer NewsId);
 }

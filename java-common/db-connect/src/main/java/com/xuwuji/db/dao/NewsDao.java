@@ -14,14 +14,14 @@ import com.xuwuji.db.util.SessionFactory;
 public class NewsDao {
 	MetaDao dao = new MetaDao();
 
-	public void insertNews(News news) {
+	public int insertNews(News news) {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
 			NewsMapper mapper = session.getMapper(NewsMapper.class);
 			mapper.insertNews(news);
+			int id = news.getId();
 			session.commit();
-		} catch (Exception e) {
-			session.rollback();
+			return id;
 		} finally {
 			session.close();
 		}
@@ -108,6 +108,9 @@ public class NewsDao {
 
 	public static void main(String[] args) {
 		NewsDao dao = new NewsDao();
+		News tnews = new News();
+		tnews.setTitle("aaa");
+		dao.insertNews(tnews);
 		// System.out.println(dao.findHotNews("", ""));
 		for (News news : dao.findByKeyword("NBA")) {
 			System.out.println(news.getTitle() + news.getCommentNum());

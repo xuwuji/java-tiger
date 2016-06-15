@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.ansj.domain.Result;
+import org.ansj.splitWord.analysis.ToAnalysis;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.jsoup.Jsoup;
@@ -13,6 +15,7 @@ import org.jsoup.select.Elements;
 
 import com.xuwuji.db.dao.MetaDao;
 import com.xuwuji.db.dao.NewsDao;
+import com.xuwuji.db.dao.SearchDao;
 import com.xuwuji.db.model.News;
 import com.xuwuji.news.cache.CategoryCache;
 import com.xuwuji.news.util.HttpUtil;
@@ -22,11 +25,13 @@ public class Task implements Runnable {
 	private Storage storage;
 	private NewsDao newsDao;
 	private MetaDao metaDao;
+	private SearchDao searchDao;
 
 	public Task(Storage storage) {
 		this.storage = storage;
 		newsDao = new NewsDao();
 		metaDao = new MetaDao();
+		searchDao = new SearchDao();
 	}
 
 	public void run() {
@@ -186,7 +191,10 @@ public class Task implements Runnable {
 						news.setTypeId(list.get(0));
 					}
 				}
-				newsDao.insertNews(news);
+				int id = newsDao.insertNews(news);
+				for (String kw : this.separate(title)) {
+					searchDao.insertKW(kw, id);
+				}
 			}
 		}
 	}
@@ -319,5 +327,17 @@ public class Task implements Runnable {
 			return "0";
 		}
 		return number;
+	}
+
+	private String[] separate(String str) {
+		Result r = ToAnalysis.parse(str);
+		String[] list = new String[r.size()];
+		for (int i = 0; i < r.size(); i++) {
+			String kw = r.get(i).getName();
+			if (!kw.equals(" ") && !kw.equals("") && !kw.equals(":")) {
+				list[i] = kw;
+			}
+		}
+		return list;
 	}
 }

@@ -71,9 +71,20 @@ public class SearchDao {
 		}
 	}
 
+	public void insertKW(String kw, int NewsId) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			SearchMapper mapper = session.getMapper(SearchMapper.class);
+			mapper.insertKW(kw, NewsId);
+			session.commit();
+		} finally {
+			session.close();
+		}
+	}
+
 	public static void main(String[] args) {
 		SearchDao dao = new SearchDao();
-		for (News news : dao.findByKeyword("格林", 1, OrderBy.time)) {
+		for (News news : dao.findByKeyword("明星", 1, OrderBy.time)) {
 			System.out.println(news.getTitle() + " " + news.getTime());
 		}
 		PageInfo page = dao.getPageInfoByKeyword("NBA");
@@ -82,8 +93,9 @@ public class SearchDao {
 		System.out.println(page.getLastPage());
 		System.out.println(page.getTotal());
 
-		dao.insertRecord("test", "d");
-		System.out.println(dao.findHot());
+		// dao.insertRecord("test", "d");
+		// dao.insertKW("test", 1);
+		// System.out.println(dao.findHot());
 
 	}
 

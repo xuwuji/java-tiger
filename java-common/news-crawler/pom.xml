@@ -8,6 +8,14 @@
 	</parent>
 	<artifactId>news-crawler</artifactId>
 
+	<!-- 增加新的maven源 -->
+	<repositories>
+		<repository>
+			<id>mvn-repo</id>
+			<url>http://maven.nlpcn.org/</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<!-- http://mvnrepository.com/artifact/org.mybatis/mybatis -->
 		<dependency>

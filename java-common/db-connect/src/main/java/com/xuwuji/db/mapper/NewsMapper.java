@@ -10,7 +10,7 @@ import com.xuwuji.db.model.News;
 
 public interface NewsMapper {
 
-	void insertNews(News news);
+	int insertNews(News news);
 
 	List<News> findByKeyword(String keyword);
 

@@ -17,18 +17,23 @@
 		<result property="typeId" column="typeId" />
 	</resultMap>
 
-	<select id="findByKeywordByLike" parameterType="String"
-		resultMap="NewsResult">
-		select * from news where title like "%"#{keyword}"%"
+	<select id="findByKeyword" parameterType="String" resultMap="NewsResult">
+		select * from news where id in (select NewsId from news_KW where
+		keyword =#{keyword})
 	</select>
 
-	<select id="findByKeyword" parameterType="String" resultMap="NewsResult">
-		select * from news where match(title,content) against(#{keyword})
-	</select>
+	<!-- <select id="findByKeyword" parameterType="String" resultMap="NewsResult"> 
+		select * from news where match(title,content) against(#{keyword}) </select> -->
 
 	<insert id="insertRecord" parameterType="hashmap">
 		insert into
 		search_record (keyword,time) values(#{keyword},#{time});
+	</insert>
+
+	<insert id="insertKW" parameterType="hashmap">
+		insert into
+		news_KW
+		(keyword,NewsId) values(#{keyword},#{NewsId});
 	</insert>
 
 	<select id="selectHot" resultType="hashmap">

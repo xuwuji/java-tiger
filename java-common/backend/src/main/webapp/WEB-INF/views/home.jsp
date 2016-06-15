@@ -27,7 +27,7 @@
                 <i> </i>
                 <div class="s-bar">
                     <form action="${pageContext.request.contextPath}/search/index" method="get">
-                        <input type="text" value="标题／关键词" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search Template';}" name="keyword">
+                        <input type="text" value="标题／关键词" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '标题／关键词';}" name="keyword">
                         <input type="hidden" name="pageNum" id="search-text" size="15" />
                         <input type="hidden" name="orderBy" id="search-text" size="15" />
                         <input type="submit" value="查询" />
@@ -96,14 +96,14 @@
             }
 
             function getType() {
-                var typePart = '<li onclick=getDailyHotNews(1,\'' + '\')><a>全部类别</a></li>';
+                var typePart = '<li onclick=getDailyHotNews(\'' + '\')><a>全部类别</a></li>';
                 $.ajax({
                     type: "GET",
                     url: "${pageContext.request.contextPath}/news/type",
                 }).done(
                     function(data) {
                         $.each(data, function(index, type) {
-                            typePart = typePart + '<li onclick=getDailyHotNews(1,\'' + type + '\')><a> ' + type + '</a></li>'
+                            typePart = typePart + '<li onclick=getDailyHotNews(\'' + type + '\')><a> ' + type + '</a></li>'
                             console.log(type);
                         });
                         typePart = typePart + '</li>';

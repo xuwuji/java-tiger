@@ -13,8 +13,10 @@
 		method to set the value. Here title is of the type String, so it will use 
 		the setString() method. pstmt.setInt(1,student.getTitle()); 3. Similarly,do 
 		the same process for the rest properties -->
-	<insert id="insertNews" parameterType="News">
-		INSERT INTO
+	<insert id="insertNews" parameterType="News" keyProperty="id"
+		useGeneratedKeys="true">
+		INSERT
+		INTO
 		news(title,link,time,content,commentNum,typeId)
 		VALUES(#{title},#{link},#{time},#{content},#{commentNum},#{typeId})
 	</insert>
