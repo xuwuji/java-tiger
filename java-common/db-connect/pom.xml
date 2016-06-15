@@ -7,6 +7,14 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>db-connect</artifactId>
+	<!-- 增加新的maven源 -->
+	<repositories>
+		<repository>
+			<id>mvn-repo</id>
+			<url>http://maven.nlpcn.org/</url>
+		</repository>
+	</repositories>
+
 
 	<dependencies>
 		<!-- http://mvnrepository.com/artifact/org.mybatis/mybatis -->
@@ -44,6 +52,10 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.ansj</groupId>
+			<artifactId>ansj_seg</artifactId>
+			<version>5.0.0</version>
+		</dependency>
 	</dependencies>
 </project>

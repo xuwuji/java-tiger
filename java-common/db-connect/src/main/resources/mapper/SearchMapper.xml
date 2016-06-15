@@ -17,8 +17,13 @@
 		<result property="typeId" column="typeId" />
 	</resultMap>
 
-	<select id="findByKeyword" parameterType="String" resultMap="NewsResult">
+	<select id="findByKeywordByLike" parameterType="String"
+		resultMap="NewsResult">
 		select * from news where title like "%"#{keyword}"%"
+	</select>
+
+	<select id="findByKeyword" parameterType="String" resultMap="NewsResult">
+		select * from news where match(title,content) against(#{keyword})
 	</select>
 
 	<insert id="insertRecord" parameterType="hashmap">

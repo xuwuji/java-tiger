@@ -26,7 +26,7 @@ public class SearchController {
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ModelAndView home() {
-		ModelAndView model = new ModelAndView("/search/home");
+		ModelAndView model = new ModelAndView("/home");
 		model.addObject("hotKW", searchDao.findHot());
 		return model;
 	}
@@ -60,6 +60,7 @@ public class SearchController {
 		model.addObject("pageNum", page);
 		model.addObject("keyword", keyword);
 		model.addObject("orderBy", orderBy);
+		// save this search behavior to db
 		searchDao.insertRecord(keyword, TimeUtil.currentTimewithMinutes());
 		return model;
 	}
