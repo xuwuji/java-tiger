@@ -57,7 +57,7 @@
                 <div id="content">
                     <c:forEach items="${searchResult }" var="item">
                         <div class="post">
-                            <c:set var="pageUrl" scope="session" value="${pageContext.request.contextPath}/page/${item.id}" />
+                            <c:set var="pageUrl" scope="session" value="${pageContext.request.contextPath}/news/${item.id}" />
                             <h2 class="title"><a href="${pageUrl}"> ${item.title}</a></h2>
                             <p class="meta">${item.time}
                                 <a href="#"></a>
