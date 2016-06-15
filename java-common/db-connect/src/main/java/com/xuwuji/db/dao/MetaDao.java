@@ -3,6 +3,9 @@ package com.xuwuji.db.dao;
 import java.util.HashMap;
 import java.util.List;
 
+import org.ansj.domain.Result;
+import org.ansj.domain.Term;
+import org.ansj.splitWord.analysis.ToAnalysis;
 import org.apache.ibatis.session.SqlSession;
 
 import com.xuwuji.db.mapper.MetaMapper;
@@ -102,6 +105,12 @@ public class MetaDao {
 	}
 
 	public static void main(String[] args) {
+		String str = "读图 9岁女孩参加高考 被赞神童";
+		Result r = ToAnalysis.parse(str);
+		for (Term t : r) {
+			System.out.println(t.getName());
+		}
+		
 		MetaDao dao = new MetaDao();
 		System.out.println(dao.selectAll());
 	}
