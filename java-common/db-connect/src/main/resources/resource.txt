@@ -30,3 +30,33 @@ Mybatis 缓存
 </mapper>
 
 需要注意的是global caching的作用域是针对Mapper的Namespace而言的,也就是说只在有在这个Namespace内的查询才能共享这个cache.
+
+
+3.整合分布式缓存ehcache框架
+
+如果不整合分布式缓存，那么缓存的数据只会在本机进行缓存
+
+所以要对所有服务器中的缓存进行集中管理，从而使用分布式缓存管理框架，相当于所有服务器都从一个地方拿缓存。
+
+mybatis提供一个cache接口，通过接口实现里面的方法，与ehcache进行操作，放数据放入至缓存中。
+
+如果用redis，也是同样的道理。
+
+mybatis默认的cache实现类为mybatis本身自带的PerpetualCache
+如果要和ehcache进行整合， 就要把cache的type设为ehcache的实现类
+	
+<mapper namespace="com.xuwuji.db.mapper.SearchMapper">
+<cache type="org.mybatis.caches.ehcache.EhcacheCache" eviction="FIFO" flushInterval="60000" size="512" readOnly="true" />
+		
+之后需要ehcache的配置文件xml
+
+4.二级缓存应用
+（1）实时性要求不高
+（2）降低数据库访问量
+
+通过flushInterval设置多久刷新缓存
+
+局限性就是对细粒度缓存支持不好，比如缓存了一万条记录，其中某一条纪录进行了commit操作，那么所有的记录就会全部清空
+
+5.与spring整合
+用spring去管理sqlsessionfactory

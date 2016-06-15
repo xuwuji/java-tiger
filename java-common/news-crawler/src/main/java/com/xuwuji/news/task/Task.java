@@ -193,7 +193,11 @@ public class Task implements Runnable {
 				}
 				int id = newsDao.insertNews(news);
 				for (String kw : this.separate(title)) {
-					searchDao.insertKW(kw, id);
+					try {
+						searchDao.insertKW(kw, id);
+					} catch (Exception e) {
+
+					}
 				}
 			}
 		}
