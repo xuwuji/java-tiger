@@ -15,6 +15,7 @@ import com.github.pagehelper.PageInfo;
 import com.xuwuji.db.dao.SearchDao;
 import com.xuwuji.db.model.News;
 import com.xuwuji.db.util.OrderBy;
+import com.xuwuji.db.util.TimeUtil;
 
 @Controller
 @RequestMapping(value = "/search")
@@ -23,17 +24,44 @@ public class SearchController {
 	@Autowired
 	private SearchDao searchDao;
 
+	@RequestMapping(value = "", method = RequestMethod.GET)
+	public ModelAndView home() {
+		ModelAndView model = new ModelAndView("/search/home");
+		model.addObject("hotKW", searchDao.findHot());
+		return model;
+	}
+
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
-	public ModelAndView searchPage(@RequestParam("keyword") String keyword, @RequestParam("pageNum") String pageNum) {
-		List<News> list = searchDao.findByKeyword(keyword, Integer.valueOf(pageNum), OrderBy.commentNum);
+	public ModelAndView searchPage(@RequestParam("keyword") String keyword, @RequestParam("pageNum") String pageNum,
+			@RequestParam("orderBy") String orderBy) {
+		int page = 1;
+		if (!pageNum.equals("")) {
+			page = Integer.valueOf(pageNum);
+		}
+		OrderBy order = null;
+		if (orderBy.equals("time")) {
+			order = OrderBy.time;
+		} else {
+			order = OrderBy.commentNum;
+		}
+		List<News> list = searchDao.findByKeyword(keyword, page, order);
 		System.out.println(list.size());
 		ArrayList<News> result = new ArrayList<News>();
 		for (News n : list) {
 			System.out.println(n.getTitle());
-			n.setContent("");
+			// n.setContent("");
 			result.add(n);
 		}
-		return new ModelAndView("search/index").addObject("searchResult", result);
+		PageInfo info = searchDao.getPageInfoByKeyword(keyword);
+		ModelAndView model = new ModelAndView("search/index");
+		model.addObject("searchResult", result);
+		model.addObject("totalNum", info.getLastPage());
+		model.addObject("pageNum", page);
+		model.addObject("keyword", keyword);
+		model.addObject("orderBy", orderBy);
+		searchDao.insertRecord(keyword, TimeUtil.currentTimewithMinutes());
+		return model;
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })

@@ -79,11 +79,12 @@ public class IndexController {
 		return new ModelAndView("page");
 	}
 
-	@RequestMapping(value = "/news/{id}", method = RequestMethod.GET)
-	@ResponseBody
-	public News findNewsById(@PathVariable("id") String id) {
+	@RequestMapping(value = "/page/{id}", method = RequestMethod.GET)
+	public ModelAndView findNewsById(@PathVariable("id") String id) {
+		ModelAndView model = new ModelAndView("page/detail");
 		News news = newsDao.findById(Integer.valueOf(id));
-		return news;
+		model.addObject("news", news);
+		return model;
 	}
 
 	@ResponseBody

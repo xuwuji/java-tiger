@@ -1,6 +1,9 @@
 package com.xuwuji.db.dao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -42,6 +45,32 @@ public class SearchDao {
 		}
 	}
 
+	public void insertRecord(String kw, String time) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			SearchMapper mapper = session.getMapper(SearchMapper.class);
+			mapper.insertRecord(kw, time);
+			session.commit();
+		} finally {
+			session.close();
+		}
+	}
+
+	public ArrayList<String> findHot() {
+		SqlSession session = SessionFactory.openDEVSession();
+		ArrayList<String> list = new ArrayList<String>();
+		try {
+			SearchMapper mapper = session.getMapper(SearchMapper.class);
+			List<HashMap<String, Object>> result = mapper.selectHot();
+			for (HashMap<String, Object> map : result) {
+				list.add((String) map.get("keyword"));
+			}
+			return list;
+		} finally {
+			session.close();
+		}
+	}
+
 	public static void main(String[] args) {
 		SearchDao dao = new SearchDao();
 		for (News news : dao.findByKeyword("格林", 1, OrderBy.time)) {
@@ -52,6 +81,10 @@ public class SearchDao {
 		System.out.println(page.getFirstPage());
 		System.out.println(page.getLastPage());
 		System.out.println(page.getTotal());
+
+		dao.insertRecord("test", "d");
+		System.out.println(dao.findHot());
+
 	}
 
 }
