@@ -7,12 +7,15 @@ import org.ansj.domain.Result;
 import org.ansj.domain.Term;
 import org.ansj.splitWord.analysis.ToAnalysis;
 import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import com.xuwuji.db.mapper.MetaMapper;
 import com.xuwuji.db.model.Category;
 import com.xuwuji.db.util.SessionFactory;
 
 public class MetaDao {
+
+	private SessionFactory sessionFactory;
 
 	public List<Integer> findId(String type, String bigCategory, String subCategory) {
 		SqlSession session = SessionFactory.openDEVSession();
