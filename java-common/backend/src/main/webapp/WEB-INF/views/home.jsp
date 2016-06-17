@@ -22,6 +22,66 @@
         </head>
 
         <body>
+            <!--nav -->
+            <div>
+                <nav class="navbar navbar-inverse">
+                    <div class="container-fluid">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="#">#</a>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav">
+                                <li class="active"><a href="#"># <span class="sr-only">(current)</span></a></li>
+                                <li><a href="#">#</a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"># <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#">One more separated link</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <form class="navbar-form navbar-left" role="search">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Search">
+                                </div>
+                                <button type="submit" class="btn btn-default">Submit</button>
+                            </form>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li id="loginUsername"><a href="${pageContext.request.contextPath}/login/index" id="loginUsername">登录</a></li>
+                                <li id="registerButton"><a href="${pageContext.request.contextPath}/register/index" id="loginUsername">注册</a></li>
+                                <li id="commandButton" style="display:none">
+                                    <ul class="nav navbar-nav">
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">操作 <span class="caret"></span></a>
+                                            <ul class="dropdown-menu" id="commands">
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </div>
+            <!--nav ends here-->
+
             <!--search start here-->
             <div class="search">
                 <i> </i>
@@ -51,9 +111,9 @@
                     </div>
                     <!--select news category-->
                     <div class="dropdown btn-group">
-                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">全部类别
-                            <span class="caret"></span></button>
-                        <ul class="dropdown-menu" id="typeContent">
+                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="typeButton">全部类别
+                        </button>
+                        <ul class=" dropdown-menu" id="typeContent">
                         </ul>
                     </div>
                     <!--select news category end-->
@@ -65,24 +125,32 @@
             </div>
             <!--hot news end here-->
 
-            <div class="copyright ">
+            <div class="copyright">
                 <p>2015 &copy Xu,Wuji All rights reserved</p>
             </div>
         </body>
+
         <script type="text/javascript">
             $(document).ready(function() {
                 getDailyHotNews('');
                 getType();
+                login();
             });
 
             function getDailyHotNews(type) {
                 $
                     .ajax({
                         type: "GET",
-                        url: "${pageContext.request.contextPath}/news/hotnews?time=&type=" + type,
-                        contentType: "charset=utf-8",
+                        url: "${pageContext.request.contextPath}/news/dailyHotnews?time=&type=" + type,
+                        contentType: " charset=utf-8 ",
                     }).done(function(data) {
                         fixNewsContent(data);
+                        if (type === '') {
+                            fixButton("全部类别");
+                        } else {
+                            fixButton(type);
+                        }
+
                     });
             }
 
@@ -109,6 +177,33 @@
                         typePart = typePart + '</li>';
                         $('#typeContent').html(typePart);
                         console.log(typePart);
+                    });
+            }
+
+
+            function fixButton(type) {
+                $('#typeButton').html(type);
+            }
+
+            function login() {
+                $.ajax({
+                    type: "GET",
+                    url: "${pageContext.request.contextPath}/login/checkStatus",
+                }).done(
+                    function(data) {
+                        console.log(data);
+                        if (data === "") {
+                            console.log("not login");
+                        } else {
+                            var str = "<a href=\"${pageContext.request.contextPath}/user/" + data.username + "\" >" + data.username + "</a>"
+                            console.log(data.username + " login");
+                            $('#loginUsername').html(str);
+                            $('#registerButton').attr("style", "display:none");
+                            $('#commandButton').attr("style", "");
+                            var commands = "<li><a href=\"${pageContext.request.contextPath}/user/" + data.username + "\">个人信息</a></li><li role = \"separator\" class = \"divider\"> </li> <li> <a href = \"${pageContext.request.contextPath}/login/logout\"> 退出 </a></li>";
+                            $('#commands').html(commands);
+
+                        }
                     });
             }
 

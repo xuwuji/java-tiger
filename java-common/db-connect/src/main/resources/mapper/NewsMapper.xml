@@ -5,6 +5,9 @@
 
 <mapper namespace="com.xuwuji.db.mapper.NewsMapper">
 
+	<cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true"
+		type="org.mybatis.caches.redis.RedisCache" />
+
 	<!-- To execute this statement, MyBatis will perform the following sequence 
 		of actions. 1. Create a PreparedStatement interface with placeholders as 
 		follows: PreparedStatement pstmt = connection.prepareStatement ("NSERT INTO 

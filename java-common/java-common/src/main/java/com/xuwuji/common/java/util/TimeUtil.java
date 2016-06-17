@@ -18,6 +18,10 @@ public class TimeUtil {
 		return DateTimeFormat.forPattern("yyyy-MM-dd-HH:mm");
 	}
 
+	public static DateTimeFormatter getDateFormatter2() {
+		return DateTimeFormat.forPattern("yyyy-MM-dd-HH");
+	}
+
 	public static DateTimeFormatter getSimpleDateFormatter() {
 		return DateTimeFormat.forPattern("yyyy-MM-dd");
 	}
@@ -26,7 +30,7 @@ public class TimeUtil {
 		return DateTimeFormat.forPattern("HH:mm:ss");
 	}
 
-	public static String getDateTime(DateTime time) {
+	public static String getDateTimewithMinutes(DateTime time) {
 		String result = time.toString(getDateFormatter());
 		return result;
 	}
@@ -48,12 +52,12 @@ public class TimeUtil {
 
 	public static String converUnix(long unixTime) {
 		DateTime time = new DateTime(unixTime * 1000L);
-		return getDateTime(time);
+		return getDateTimewithMinutes(time);
 	}
 
 	public static String converLongUnix(long unixTime) {
 		DateTime time = new DateTime(unixTime);
-		return getDateTime(time);
+		return getDateTimewithMinutes(time);
 	}
 
 	public static String converSimpleUnix(long unixTime) {
@@ -63,7 +67,12 @@ public class TimeUtil {
 
 	public static String currentTimewithMinutes() {
 		// TODO Auto-generated method stub
-		return getDateTime(DateTime.now());
+		return getDateTimewithMinutes(DateTime.now());
+	}
+
+	public static String currentTimewithHours() {
+		// TODO Auto-generated method stub
+		return DateTime.now().toString(getDateFormatter2());
 	}
 
 	public static String currentTimewithoutMinutes() {

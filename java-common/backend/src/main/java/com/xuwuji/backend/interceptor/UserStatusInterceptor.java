@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.xuwuji.backend.cache.UserStatusCacheUtil;
 import com.xuwuji.db.dao.UserDao;
 import com.xuwuji.db.model.User;
 
@@ -21,6 +22,8 @@ import com.xuwuji.db.model.User;
  */
 public class UserStatusInterceptor implements HandlerInterceptor {
 
+	@Autowired
+	private UserStatusCacheUtil userCacheUtil;
 	private UserDao dao = new UserDao();
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -36,15 +39,14 @@ public class UserStatusInterceptor implements HandlerInterceptor {
 					String[] strs = c.getValue().split("-");
 					String username = strs[0];
 					String password = strs[1];
-					System.out.println(username + " is logging...");
-					// System.out.println(password);
-					User user = new User();
-					user.setUsername(username);
-					user.setPassword(password);
+					System.out.println(username + " is trying to log...");
 					if (dao.getId(username, password).size() != 0) {
+						userCacheUtil.setLastLogin(username);
+						User user = new User();
 						int id = dao.getId(username, password).get(0).getId();
-						// System.out.println(id);
 						user.setId(id);
+						user.setUsername(username);
+						user.setPassword(password);
 						request.setAttribute("user", user);
 					}
 					break;

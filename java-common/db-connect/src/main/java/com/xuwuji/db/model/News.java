@@ -1,6 +1,8 @@
 package com.xuwuji.db.model;
 
-public class News {
+import java.io.Serializable;
+
+public class News implements Serializable {
 
 	private int id;
 	private String title;
