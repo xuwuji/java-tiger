@@ -23,4 +23,6 @@ public interface NewsMapper {
 	List<News> findByTitle(String title);
 
 	News findById(int id);
+
+	News findInfoById(int id);
 }

@@ -34,6 +34,15 @@
 		<result property="typeId" column="typeId" />
 	</resultMap>
 
+	<resultMap id="NewsResultWithoutContent" type="News">
+		<id property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="link" column="link" />
+		<result property="time" column="time" />
+		<result property="commentNum" column="commentNum" />
+		<result property="typeId" column="typeId" />
+	</resultMap>
+
 	<select id="findByKeyword" parameterType="String" resultMap="NewsResult">
 		select * from news where title like "%"#{keyword}"%"
 	</select>
@@ -55,8 +64,17 @@
 		select * from news where title=#{title};
 	</select>
 
+
 	<select id="findById" parameterType="int" resultType="News">
-		select *
+		select
+		*
+		from news where id=#{id};
+	</select>
+
+	<select id="findInfoById" parameterType="int"
+		resultMap="NewsResultWithoutContent">
+		select
+		title,link,id,time,commentNum
 		from news where id=#{id};
 	</select>
 

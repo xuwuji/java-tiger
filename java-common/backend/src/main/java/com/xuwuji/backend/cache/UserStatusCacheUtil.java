@@ -47,4 +47,8 @@ public class UserStatusCacheUtil {
 		jedis.mset(LASTCOMMANDTIME + username, TimeUtil.currentTimewithMinutes());
 	}
 
+	public void addSession() {
+
+	}
+
 }

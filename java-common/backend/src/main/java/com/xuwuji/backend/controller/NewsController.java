@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.xuwuji.backend.cache.HistoryCacheUtil;
 import com.xuwuji.backend.cache.NewsCacheUtil;
 import com.xuwuji.common.java.util.TimeUtil;
 import com.xuwuji.db.dao.MetaDao;
@@ -39,6 +44,8 @@ public class NewsController {
 	QueryService client;
 	@Autowired
 	NewsCacheUtil newsCacheUtil;
+	@Autowired
+	HistoryCacheUtil historyCacheUtil;
 
 	@RequestMapping(value = "/hotnews", method = RequestMethod.GET)
 	@ResponseBody
@@ -84,8 +91,16 @@ public class NewsController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ModelAndView findNewsById(@PathVariable("id") String id) {
+	public ModelAndView findNewsById(@PathVariable("id") String id, HttpServletRequest request,
+			HttpServletResponse response) {
 		ModelAndView model = new ModelAndView("page/detail");
+		Cookie[] cookies = request.getCookies();
+		for (Cookie c : cookies) {
+			if (c.getName().equals("backend")) {
+				historyCacheUtil.addHistory(c.getValue().split("-")[0], id);
+				break;
+			}
+		}
 		News news = newsDao.findById(Integer.valueOf(id));
 		model.addObject("news", news);
 		return model;

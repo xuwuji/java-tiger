@@ -13,7 +13,7 @@
     <body>
         <div id="logo">
             <h1>
-			<a href="#">Search </a>
+			<a href="${pageContext.request.contextPath}">徐无忌新闻客户端 </a>
 		</h1>
             <p>
                 <em> Design by Xu,Wuji</em>

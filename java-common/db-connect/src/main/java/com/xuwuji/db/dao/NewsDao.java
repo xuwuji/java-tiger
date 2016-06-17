@@ -106,6 +106,16 @@ public class NewsDao {
 		}
 	}
 
+	public News findInfoById(int id) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			NewsMapper mapper = session.getMapper(NewsMapper.class);
+			return mapper.findInfoById(id);
+		} finally {
+			session.close();
+		}
+	}
+
 	public static void main(String[] args) {
 		NewsDao dao = new NewsDao();
 		News tnews = new News();
