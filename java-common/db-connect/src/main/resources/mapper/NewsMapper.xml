@@ -41,6 +41,9 @@
 		<result property="time" column="time" />
 		<result property="commentNum" column="commentNum" />
 		<result property="typeId" column="typeId" />
+		<association property="type" javaType="String">
+			<result property="type" column="type"></result>
+		</association>
 	</resultMap>
 
 	<select id="findByKeyword" parameterType="String" resultMap="NewsResult">
@@ -73,9 +76,10 @@
 
 	<select id="findInfoById" parameterType="int"
 		resultMap="NewsResultWithoutContent">
-		select
-		title,link,id,time,commentNum
-		from news where id=#{id};
+		select news.title,
+		news.time,news.link,news.commentNum,news_meta.type from news,
+		news_meta where
+		news.id=#{id} and news.typeId=news_meta.id;
 	</select>
 
 	<select id="findNewsByCategory" parameterType="hashmap"

@@ -11,7 +11,10 @@ public class UserController {
 
 	@RequestMapping(value = "/user/{username}", method = RequestMethod.GET)
 	public ModelAndView userDetail(@PathVariable("username") String username) {
-		return new ModelAndView("/user/detail");
+
+		ModelAndView model = new ModelAndView("/user/profile");
+		model.addObject("username", username);
+		return model;
 	}
 
 }

@@ -13,6 +13,7 @@ public class News implements Serializable {
 	private int commentNum;
 	private int typeId;
 	private String imgLink;
+	private String type;
 
 	public String getImgLink() {
 		return imgLink;
@@ -78,10 +79,18 @@ public class News implements Serializable {
 		this.commentNum = commentNum;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	@Override
 	public String toString() {
 		return "News [id=" + id + ", title=" + title + ", link=" + link + ", time=" + time + ", content=" + content
-				+ ", commentNum=" + commentNum + ", typeId=" + typeId + "]";
+				+ ", commentNum=" + commentNum + ", typeId=" + typeId + ", imgLink=" + imgLink + ", type=" + type + "]";
 	}
 
 }
