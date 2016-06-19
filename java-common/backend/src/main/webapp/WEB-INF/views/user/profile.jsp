@@ -37,14 +37,14 @@
                             <span class="icon-bar"></span>
                         </button>
                         <a class="navbar-brand" href="#">个人中心</a>
-                        <a class="navbar-brand" href="#">首页</a>
+                        <a class="navbar-brand" href="${pageContext.request.contextPath}">首页</a>
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="#">Dashboard</a></li>
                             <li><a href="#">Settings</a></li>
                             <li><a href="#">Profile</a></li>
-                            <li><a href="#">Help</a></li>
+                            <li><a href="${pageContext.request.contextPath}/login/logout">退出</a></li>
                         </ul>
                         <form class="navbar-form navbar-right">
                             <input type="text" class="form-control" placeholder="Search...">
@@ -107,18 +107,12 @@
                                 <thead>
                                     <tr>
                                         <th>标题</th>
-                                        <th>时间</th>
+                                        <th>类别</th>
+                                        <th>浏览时间</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Row 1 Data 1</td>
-                                        <td>Row 1 Data 2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Row 2 Data 1</td>
-                                        <td>Row 2 Data 2</td>
-                                    </tr>
+
                                 </tbody>
                             </table>
                         </div>
@@ -128,7 +122,6 @@
         </body>
         <script type="text/javascript">
             $(document).ready(function() {
-                // $('#table_id').DataTable();
                 getHistory();
             });
 
@@ -136,12 +129,19 @@
             function getHistory() {
                 $.ajax({
                         type: "GET",
-                        url: "${pageContext.request.contextPath}/history/",
+                        url: "${pageContext.request.contextPath}/history",
                     })
                     .done(function(data) {
                         console.log(data);
                         $('#table_id').DataTable({
-                            data: data
+                            data: data,
+                            columns: [{
+                                data: '0'
+                            }, {
+                                data: '1'
+                            }, {
+                                data: '2'
+                            }]
                         });
                     });
             }

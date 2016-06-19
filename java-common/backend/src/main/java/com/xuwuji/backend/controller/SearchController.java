@@ -27,7 +27,7 @@ public class SearchController {
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ModelAndView home() {
 		ModelAndView model = new ModelAndView("/home");
-		model.addObject("hotKW", searchDao.findHot());
+		model.addObject("hotKW", searchDao.findHotKW());
 		return model;
 	}
 

@@ -30,25 +30,23 @@ public class HistoryController {
 	public List<String[]> getHistory(HttpServletRequest request, HttpServletResponse response) {
 		User user = (User) request.getAttribute("user");
 		System.out.println(user);
-		// List<News> result = new ArrayList<News>();
-		List<String[]> result = new ArrayList<String[]>();
+		List<String[]> result = null;
 		if (user != null) {
-			List<String> ids = historyCacheUtil.getLatestWatchedHistory(user.getUsername());
-			System.out.println(ids);
-			for (String id : ids) {
-				News news = new News();
-				System.out.println(id);
+			result = new ArrayList<String[]>();
+			List<String> records = historyCacheUtil.getAllWatchedHistory(user.getUsername());
+			System.out.println(records);
+			for (String record : records) {
+				String[] strs = record.split("@");
+				String id = strs[0];
+				String time = strs[1];
 				News n = newsDao.findInfoById(Integer.valueOf(id));
-				System.out.println(n);
-				String[] strs = new String[2];
-				strs[0] = n.getTitle();
-				strs[1] = n.getType();
-				// news.setTitle(n.getTitle());
-				// news.setType(n.getType());
-				result.add(strs);
+				String[] info = new String[3];
+				info[0] = n.getTitle();
+				info[1] = n.getType();
+				info[2] = time;
+				result.add(info);
 			}
 		}
-		System.out.println(result);
 		return result;
 	}
 

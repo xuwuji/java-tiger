@@ -18,7 +18,7 @@ public class IndexController {
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
-		return new ModelAndView("home").addObject("hotKW", searchDao.findHot());
+		return new ModelAndView("home").addObject("hotKW", searchDao.findHotKW());
 	}
 
 }

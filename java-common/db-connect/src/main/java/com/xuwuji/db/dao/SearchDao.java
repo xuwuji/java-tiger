@@ -56,7 +56,7 @@ public class SearchDao {
 		}
 	}
 
-	public ArrayList<String> findHot() {
+	public ArrayList<String> findHotKW() {
 		SqlSession session = SessionFactory.openDEVSession();
 		ArrayList<String> list = new ArrayList<String>();
 		try {

@@ -34,7 +34,7 @@
 		<result property="typeId" column="typeId" />
 	</resultMap>
 
-	<resultMap id="NewsResultWithoutContent" type="News">
+	<resultMap id="NewsResultInfo" type="News">
 		<id property="id" column="id" />
 		<result property="title" column="title" />
 		<result property="link" column="link" />
@@ -75,7 +75,7 @@
 	</select>
 
 	<select id="findInfoById" parameterType="int"
-		resultMap="NewsResultWithoutContent">
+		resultMap="NewsResultInfo">
 		select news.title,
 		news.time,news.link,news.commentNum,news_meta.type from news,
 		news_meta where

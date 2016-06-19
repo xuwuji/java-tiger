@@ -42,9 +42,9 @@
                             <ul class="nav navbar-nav">
                                 <li class="active"><a href="#"># <span class="sr-only">(current)</span></a></li>
                                 <li><a href="#">#</a></li>
-                           
+
                             </ul>
-                        
+
                             <ul class="nav navbar-nav navbar-right">
                                 <li id="loginUsername"><a href="${pageContext.request.contextPath}/login/index" id="loginUsername">登录</a></li>
                                 <li id="registerButton"><a href="${pageContext.request.contextPath}/register/index" id="loginUsername">注册</a></li>
@@ -179,12 +179,12 @@
                         if (data === "") {
                             console.log("not login");
                         } else {
-                            var str = "<a href=\"${pageContext.request.contextPath}/user/" + data.username + "\" >" + data.username + "</a>"
+                            var str = "<a href=\"${pageContext.request.contextPath}/user/profile\">" + data.username + " </a>"
                             console.log(data.username + " login");
                             $('#loginUsername').html(str);
                             $('#registerButton').attr("style", "display:none");
                             $('#commandButton').attr("style", "");
-                            var commands = "<li><a href=\"${pageContext.request.contextPath}/user/" + data.username + "\">个人信息</a></li><li role = \"separator\" class = \"divider\"> </li> <li> <a href = \"${pageContext.request.contextPath}/login/logout\"> 退出 </a></li>";
+                            var commands = "<li><a href=\"${pageContext.request.contextPath}/user/profile\">个人信息</a></li><li role = \"separator\" class = \"divider\"> </li> <li> <a href = \"${pageContext.request.contextPath}/login/logout\"> 退出 </a></li>";
                             $('#commands').html(commands);
 
                         }

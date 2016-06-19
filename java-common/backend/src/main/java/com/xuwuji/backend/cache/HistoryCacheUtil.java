@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.xuwuji.common.java.util.TimeUtil;
+
 import redis.clients.jedis.Jedis;
 
 @Service
@@ -17,7 +19,8 @@ public class HistoryCacheUtil {
 
 	public void addHistory(String username, String NewsId) {
 		String key = HISTORY + username;
-		jedis.lpush(key, NewsId);
+		String value = NewsId + "@" + TimeUtil.currentTimewithMinutes();
+		jedis.lpush(key, value);
 	}
 
 	public List<String> getLatestWatchedHistory(String username) {
@@ -33,8 +36,8 @@ public class HistoryCacheUtil {
 	}
 
 	public List<String> getAllWatchedHistory(String username) {
-		String key = HISTORY + "@" + username;
-		int length = jedis.get(key).length();
+		String key = HISTORY + username;
+		Long length = jedis.llen(key);
 		List<String> list = new ArrayList<String>();
 		list = jedis.lrange(key, 0, length);
 		return list;

@@ -36,6 +36,7 @@
 			<mvc:mapping path="/login/**" />
 			<mvc:mapping path="/history/**" />
 			<mvc:mapping path="" />
+			<mvc:mapping path="/user/**" />
 			<!-- <mvc:exclude-mapping path="/permission/pubsvc/**" /> -->
 			<bean class="com.xuwuji.backend.interceptor.UserStatusInterceptor" />
 		</mvc:interceptor>
