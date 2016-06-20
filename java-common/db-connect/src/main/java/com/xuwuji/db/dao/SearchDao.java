@@ -82,21 +82,4 @@ public class SearchDao {
 		}
 	}
 
-	public static void main(String[] args) {
-		SearchDao dao = new SearchDao();
-		for (News news : dao.findByKeyword("明星", 1, OrderBy.time)) {
-			System.out.println(news.getTitle() + " " + news.getTime());
-		}
-		PageInfo page = dao.getPageInfoByKeyword("NBA");
-		System.out.println(page.getPageNum());
-		System.out.println(page.getFirstPage());
-		System.out.println(page.getLastPage());
-		System.out.println(page.getTotal());
-
-		// dao.insertRecord("test", "d");
-		// dao.insertKW("test", 1);
-		// System.out.println(dao.findHot());
-
-	}
-
 }

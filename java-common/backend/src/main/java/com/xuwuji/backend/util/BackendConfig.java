@@ -49,13 +49,20 @@ public class BackendConfig {
 		return new SearchDao();
 	}
 
-	@SuppressWarnings("resource")
 	@Bean
-	@Scope("prototype")
-	public Jedis jedis() {
+	public JedisPool jedisPool() {
+		JedisPoolConfig config = new JedisPoolConfig();
+		config.setMaxIdle(200);
+		config.setMaxWaitMillis(1000);
+		config.setTestOnBorrow(true);
+		config.setTestOnReturn(true);
 		JedisPool pool = new JedisPool(new JedisPoolConfig(), "localhost");
-		Jedis jedis = pool.getResource();
-		return jedis;
+		return pool;
+	}
+
+	@Bean
+	public QiNiuService qiniuService() {
+		return new QiNiuService();
 	}
 
 }

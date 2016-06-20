@@ -5,6 +5,7 @@ public class User {
 	private int id;
 	private String username;
 	private String password;
+	private String imgLink;
 
 	public int getId() {
 		return id;
@@ -30,9 +31,17 @@ public class User {
 		this.password = password;
 	}
 
+	public String getImgLink() {
+		return imgLink;
+	}
+
+	public void setImgLink(String imgLink) {
+		this.imgLink = imgLink;
+	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + "]";
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", imgLink=" + imgLink + "]";
 	}
 
 }

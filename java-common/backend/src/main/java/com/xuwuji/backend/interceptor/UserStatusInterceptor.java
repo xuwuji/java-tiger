@@ -28,13 +28,11 @@ public class UserStatusInterceptor implements HandlerInterceptor {
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		System.out.println(request.getCharacterEncoding());
 		Cookie[] cookies = request.getCookies();
 		System.out.println("in the interceptor...");
 		if (cookies != null) {
 			System.out.println("checking cookie...");
 			for (Cookie c : cookies) {
-				System.out.println(c.getName());
 				if (c.getName().equals("backend")) {
 					String[] strs = c.getValue().split("-");
 					String username = strs[0];

@@ -41,4 +41,15 @@ public class UserDao {
 		}
 	}
 
+	public void updateImg(int id, String imgLink) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			UserMapper mapper = session.getMapper(UserMapper.class);
+			mapper.updateImg(id, imgLink);
+			session.commit();
+		} finally {
+			session.close();
+		}
+	}
+
 }

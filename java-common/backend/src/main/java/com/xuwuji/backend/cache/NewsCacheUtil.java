@@ -13,16 +13,18 @@ import com.xuwuji.db.dao.NewsDao;
 import com.xuwuji.db.model.News;
 
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 @Service
 public class NewsCacheUtil {
 
 	@Autowired
-	private Jedis jedis;
+	private JedisPool jedisPool;
 	@Autowired
 	NewsDao dao;
 
 	private void cacheHotNews(String time, String key) {
+		Jedis jedis = jedisPool.getResource();
 		String[] strs = key.split("@");
 		String type = "";
 		if (strs.length == 4) {
@@ -33,6 +35,7 @@ public class NewsCacheUtil {
 			String value = news.getId() + "@" + news.getTitle() + "@" + news.getCommentNum() + "@" + news.getTime();
 			jedis.zadd(key, news.getCommentNum(), value);
 		}
+		jedis.close();
 	}
 
 	/**
@@ -42,12 +45,14 @@ public class NewsCacheUtil {
 	 * @return
 	 */
 	public List<News> getDailyCacheHotNews(String type) {
+		Jedis jedis = jedisPool.getResource();
 		String now = TimeUtil.currentTimewithHours();
 		String key = "news@24@" + now + "@" + type;
 		if (!jedis.exists(key)) {
 			String past24hours = TimeUtil.getDateTimewithMinutes(DateTime.now().minusDays(1));
 			cacheHotNews(past24hours, key);
 		}
+		jedis.close();
 		return getList(key);
 	}
 
@@ -58,6 +63,7 @@ public class NewsCacheUtil {
 	 * @return
 	 */
 	public List<News> getAllCacheHotNews(String type) {
+		Jedis jedis = jedisPool.getResource();
 		String today = TimeUtil.currentTimewithoutMinutes();
 		String key = "news@all@" + today + "@" + type;
 		if (!jedis.exists(key)) {
@@ -67,6 +73,7 @@ public class NewsCacheUtil {
 	}
 
 	private List<News> getList(String key) {
+		Jedis jedis = jedisPool.getResource();
 		List<News> list = new ArrayList<News>();
 		Set<String> set = jedis.zrangeByScore(key, 0, 10000000);
 		for (String str : set) {
@@ -78,13 +85,7 @@ public class NewsCacheUtil {
 			news.setTime(strs[3]);
 			list.add(news);
 		}
-		// jedis.close();
+		jedis.close();
 		return list;
 	}
-
-	public static void main(String[] args) {
-		NewsCacheUtil util = new NewsCacheUtil();
-		util.getAllCacheHotNews("科技");
-	}
-
 }

@@ -107,18 +107,4 @@ public class MetaDao {
 		}
 	}
 
-	public static void main(String[] args) {
-		String str = "读图 9岁女孩参加高考 被赞神童";
-		Result r = ToAnalysis.parse(str);
-		for (Term t : r) {
-			String kw = t.getName();
-			if (!kw.equals(" ")) {
-				System.out.println(kw);
-			}
-		}
-
-		MetaDao dao = new MetaDao();
-		System.out.println(dao.selectAll());
-	}
-
 }

@@ -12,7 +12,6 @@
             <meta name="keywords" content="News Home, Design By Xu,Wuji" />
 
             <title>个人主页</title>
-            <!-- Custom Theme files -->
             <script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.3.min.js"></script>
             <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
             <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -41,9 +40,6 @@
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#">Dashboard</a></li>
-                            <li><a href="#">Settings</a></li>
-                            <li><a href="#">Profile</a></li>
                             <li><a href="${pageContext.request.contextPath}/login/logout">退出</a></li>
                         </ul>
                         <form class="navbar-form navbar-right">
@@ -69,36 +65,22 @@
                             <li><a href="">Another nav item</a></li>
                             <li><a href="">More navigation</a></li>
                         </ul>
-                        <ul class="nav nav-sidebar">
-                            <li><a href="">Nav item again</a></li>
-                            <li><a href="">One more nav</a></li>
-                            <li><a href="">Another nav item</a></li>
-                        </ul>
                     </div>
                     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                        <h1 class="page-header">Dashboard</h1>
+                        <h1 class="page-header">#</h1>
 
                         <div class="row placeholders">
                             <div class="col-xs-6 col-sm-3 placeholder">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-                                <h4>Label</h4>
-                                <span class="text-muted">Something else</span>
+                                <form id="update_img_form" action="${pageContext.request.contextPath}/user/profile/img/update" method="post" enctype="multipart/form-data">
+                                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail" id="profileImg">
+                                    <br>
+                                    <input type="file" id="product_image_url" name="img" />
+                                    <br>
+                                    <h4><button  type="submit"  onclick="updateProfileImg">更换头像</button></h4>
+                                </form>
+                                <span class="text-muted">大小不要超过50k</span>
                             </div>
-                            <div class="col-xs-6 col-sm-3 placeholder">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-                                <h4>Label</h4>
-                                <span class="text-muted">Something else</span>
-                            </div>
-                            <div class="col-xs-6 col-sm-3 placeholder">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-                                <h4>Label</h4>
-                                <span class="text-muted">Something else</span>
-                            </div>
-                            <div class="col-xs-6 col-sm-3 placeholder">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-                                <h4>Label</h4>
-                                <span class="text-muted">Something else</span>
-                            </div>
+
                         </div>
 
                         <h2 class="sub-header">浏览历史</h2>
@@ -123,6 +105,7 @@
         <script type="text/javascript">
             $(document).ready(function() {
                 getHistory();
+                displayProfileImg();
             });
 
 
@@ -141,9 +124,29 @@
                                 data: '1'
                             }, {
                                 data: '2'
-                            }]
-                        });
+                            }],
+                            order: [
+                                [2, "desc"]
+                            ]
+                        })
                     });
+            }
+
+            function displayProfileImg() {
+                $.ajax({
+                        type: "GET",
+                        url: "${pageContext.request.contextPath}/user/profile/img",
+                    })
+                    .done(function(data) {
+                        console.log(data);
+                        $('#profileImg').attr("src", data);
+                    });
+            }
+
+
+            function updateProfileImg() {
+                var $form = $('#update_img_form');
+                $form.submit();
             }
 
         </script>

@@ -15,7 +15,7 @@
 
             <div id="logo">
                 <h1>
-			<a href="${pageContext.request.contextPath}/search/">Search </a>
+			<a href="${pageContext.request.contextPath}">首页 </a>
 		</h1>
                 <p>
                     <em> Design by Xu,Wuji</em>

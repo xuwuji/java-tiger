@@ -14,4 +14,6 @@ public interface UserMapper {
 
 	void insertOneRecord(@Param("username") String username, @Param("password") String password);
 
+	void updateImg(@Param("id") int id, @Param("imgLink") String imgLink);
+
 }

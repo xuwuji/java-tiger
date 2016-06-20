@@ -27,4 +27,8 @@
 		(username,password) values(#{username},#{password});
 	</insert>
 
+	<update id="updateImg" parameterType="hashmap">
+		update user set imgLink=#{imgLink} where id=#{id};
+	</update>
+
 </mapper>

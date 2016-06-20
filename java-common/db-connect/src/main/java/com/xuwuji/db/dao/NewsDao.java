@@ -116,16 +116,4 @@ public class NewsDao {
 		}
 	}
 
-	public static void main(String[] args) {
-		NewsDao dao = new NewsDao();
-		News tnews = new News();
-		tnews.setTitle("aaa");
-		// dao.insertNews(tnews);
-		// System.out.println(dao.findHotNews("", ""));
-		for (News news : dao.findByKeyword("NBA")) {
-			// System.out.println(news.getTitle() + news.getCommentNum());
-		}
-		System.out.println(dao.findInfoById(7112));
-	}
-
 }
