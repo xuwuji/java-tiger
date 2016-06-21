@@ -5,7 +5,7 @@
 
 <mapper namespace="com.xuwuji.db.mapper.SearchMapper">
 	<!-- mybatis默认的cache实现类为mybatis本身自带的PerpetualCache， 如果要和ehcache进行整合， 就要把cache的type设为ehcache的实现类 -->
-	<cache type="org.mybatis.caches.ehcache.EhcacheCache" eviction="FIFO"
+	<cache type="org.mybatis.caches.redis.RedisCache" eviction="FIFO"
 		flushInterval="60000" size="512" readOnly="true" />
 
 	<resultMap id="NewsResult" type="News">

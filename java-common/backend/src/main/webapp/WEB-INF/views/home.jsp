@@ -22,6 +22,18 @@
         </head>
 
         <body>
+            <script type="text/javascript">
+                var msg = "${anotherLocationLoginMsg}";
+                console.log('msg:' + msg);
+                if (msg === '') {
+
+                } else {
+                    alert(msg);
+                }
+
+            </script>
+
+
             <!--nav -->
             <div>
                 <nav class="navbar navbar-inverse">
@@ -176,11 +188,11 @@
                 }).done(
                     function(data) {
                         console.log(data);
-                        if (data === "") {
+                        if (data === '') {
                             console.log("not login");
                         } else {
-                            var str = "<a href=\"${pageContext.request.contextPath}/user/profile\">" + data.username + " </a>"
-                            console.log(data.username + " login");
+                            var str = "<a href=\"${pageContext.request.contextPath}/user/profile\">" + data + " </a>"
+                            console.log(data + " login");
                             $('#loginUsername').html(str);
                             $('#registerButton').attr("style", "display:none");
                             $('#commandButton').attr("style", "");

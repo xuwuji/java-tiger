@@ -5,7 +5,7 @@
 
 <mapper namespace="com.xuwuji.db.mapper.MetaMapper">
 
-	<cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true" />
+	<cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true" type="org.mybatis.caches.redis.RedisCache"/>
 
 	<resultMap type="Category" id="categoryResult">
 		<id property="id" column="id"></id>

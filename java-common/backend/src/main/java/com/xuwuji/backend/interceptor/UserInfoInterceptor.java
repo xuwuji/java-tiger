@@ -4,48 +4,42 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.xuwuji.backend.cache.UserStatusCacheUtil;
 import com.xuwuji.db.dao.UserDao;
-import com.xuwuji.db.model.User;
 
 /**
  * interceptor to check users' status
  * 
- * check them have already login
+ * check if there is an user info cookie existing.
  * 
  * @author wuxu
  *
  */
-public class UserStatusInterceptor implements HandlerInterceptor {
+public class UserInfoInterceptor implements HandlerInterceptor {
 
 	@Autowired
-	private UserStatusCacheUtil userCacheUtil;
-	private UserDao dao = new UserDao();
+	private UserDao dao;
+	static Logger logger = Logger.getLogger(UserInfoInterceptor.class);
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		logger.info("in the user info interceptor...");
 		Cookie[] cookies = request.getCookies();
-		System.out.println("in the interceptor...");
 		if (cookies != null) {
-			System.out.println("checking cookie...");
 			for (Cookie c : cookies) {
-				if (c.getName().equals("backend")) {
+				if (c.getName().equals("backendInfo")) {
 					String[] strs = c.getValue().split("-");
 					String username = strs[0];
 					String password = strs[1];
-					System.out.println(username + " is trying to log...");
+					logger.info(username + " is trying to log...");
 					if (dao.getId(username, password).size() != 0) {
-						userCacheUtil.setLastLogin(username);
-						User user = new User();
 						int id = dao.getId(username, password).get(0).getId();
-						user.setId(id);
-						user.setUsername(username);
-						user.setPassword(password);
-						request.setAttribute("user", user);
+						request.setAttribute("username", username);
+						request.setAttribute("userid", id);
 					}
 					break;
 				}

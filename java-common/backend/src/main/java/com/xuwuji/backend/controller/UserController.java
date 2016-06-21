@@ -18,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.xuwuji.backend.util.QiNiuService;
 import com.xuwuji.common.java.util.TimeUtil;
 import com.xuwuji.db.dao.UserDao;
-import com.xuwuji.db.model.User;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -32,12 +31,9 @@ public class UserController {
 
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
 	public ModelAndView userDetail(HttpServletRequest request, HttpServletResponse response) {
-		User user = (User) request.getAttribute("user");
-		if (user == null) {
-			return new ModelAndView("redirect:/login/index");
-		}
+		String username = (String) request.getAttribute("username");
 		ModelAndView model = new ModelAndView("/user/profile");
-		model.addObject("username", user.getUsername());
+		model.addObject("username", username);
 		return model;
 	}
 
@@ -47,7 +43,7 @@ public class UserController {
 	@RequestMapping(value = "/profile/img/update", method = RequestMethod.POST)
 	public ModelAndView uploadImg(HttpServletRequest request, @RequestParam("img") MultipartFile file) {
 		String ImageName = file.getOriginalFilename();
-		int id = ((User) request.getAttribute("user")).getId();
+		int id = (Integer) request.getAttribute("userid");
 		try {
 			InputStream fileStream = file.getInputStream();
 			if (qiniuService.contains(ImageName)) {
@@ -66,8 +62,8 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "/profile/img", method = RequestMethod.GET)
 	public String displayImg(HttpServletRequest request) {
-		User user = (User) request.getAttribute("user");
-		String imgLink = userDao.checkName(user.getUsername()).get(0).getImgLink();
+		String username = (String) request.getAttribute("username");
+		String imgLink = userDao.checkName(username).get(0).getImgLink();
 		return imgLink;
 	}
 
