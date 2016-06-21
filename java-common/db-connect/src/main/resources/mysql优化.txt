@@ -1,12 +1,13 @@
-1.表的设计
+数据库优化
 （1）范式
-（2）索引
+（2）SQL优化
+（3）索引
 四种：普通索引、主键索引、唯一索引（unique）、全文索引
-（3）分表
+（4）分表
 a.水平分割
 b.垂直分割
-（4）读写分离
-（5）存储过程
+（5）读写分离
+（6）存储过程
 程序  ——》dbms（数据库管理系统）——》数据库（文件）
 
 在程序中我们写了一句sql，发送给dbms，sql语句在dbms中进行编译，之后在其中执行，并将结果返回的同时进行缓存
@@ -14,11 +15,53 @@ b.垂直分割
 但是编译很耗时间，所以可以将sql编译成二进制的代码，存在dbms中，之后快速操作，比如分页／触发器已经编译好的对象
 
 下次不用sql语句，直接在客户端中调用存储过程，操作数据库，并且利用模块化编程，但是移植性差
-（6）mysql配置优化
+（7）mysql配置优化
 a.配置最大并发数
 my.conf中max_connections
 b.调整缓存大小
+（8）mysql服务器硬件升级
+（9）定时清除不需要的数据
+（10）定时进行碎片整理，如果引擎是MYISAM的一定要进行整理，不然会越来越大
 
+
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+
+范式
+首先符合一范式，才满足二范式，进一步才满足三范式
+
+（1）一范式：属性（表的列）具有原子性，不可以再继续分解。
+Student  Age  Subject
+Adam     15   Biology, Maths
+应该拆成两条数据
+Adam     15   Biology
+Adam     15    Maths
+（2）二范式：每条记录都是唯一，不会有完全相同的数据，比如设置一个自增的主键
+（3）三范式：表中不应该有冗余数据，就是说表的信息如果能够被推倒出来，就不应该被单独地当成一个字段
+student表：id Student  Age  SubjectId Subject SubjectTeacher
+Subject表：id Subject SubjectTeacher
+这里再student表就会有冗余，其实只要通过SubjectId字段，再去Subject表里找，就可以得到Subject SubjectTeacher
+
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+
+SQL语句优化
+
+（1）如何从大型项目中，定位执行速度比较慢的sql语句（定位慢查询）
+
+a.mysql数据库的一些运行状态查询：show [session/global] status
+	默认为session表示当前会话,也就是当前窗口，若想看mysql从启动到现在所有的状态，用global
+
+在结果中有：
+当前连接数：Connections
+运行了多久：Uptime
+执行了多少次select／update／delete语句：com_select/insert.....
+有多少次慢查询：Slow_queries
+
+mysql默认认为10秒以上才认为是慢查询,修改mysql慢查询定义：
+show variables
+show variables like 'long_query_time';
+long_query_time | 10.000000 |
+set long_query_time = 1; 设置1秒以上就认为是慢查询
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
 
 2.索引
 （1）普通索引
