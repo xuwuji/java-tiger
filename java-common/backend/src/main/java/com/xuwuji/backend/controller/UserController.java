@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.xuwuji.backend.cache.UserStatusCacheUtil;
 import com.xuwuji.backend.util.QiNiuService;
 import com.xuwuji.common.java.util.TimeUtil;
 import com.xuwuji.db.dao.UserDao;
@@ -28,12 +29,15 @@ public class UserController {
 	QiNiuService qiniuService;
 	@Autowired
 	UserDao userDao;
+	@Autowired
+	UserStatusCacheUtil userStatusCacheUtil;
 
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
 	public ModelAndView userDetail(HttpServletRequest request, HttpServletResponse response) {
 		String username = (String) request.getAttribute("username");
 		ModelAndView model = new ModelAndView("/user/profile");
 		model.addObject("username", username);
+		model.addObject("lastLoginTime", userStatusCacheUtil.getLastLogin(username));
 		return model;
 	}
 

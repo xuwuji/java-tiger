@@ -1,0 +1,40 @@
+1.表的设计
+（1）范式
+（2）索引
+四种：普通索引、主键索引、唯一索引（unique）、全文索引
+（3）分表
+a.水平分割
+b.垂直分割
+（4）读写分离
+（5）存储过程
+程序  ——》dbms（数据库管理系统）——》数据库（文件）
+
+在程序中我们写了一句sql，发送给dbms，sql语句在dbms中进行编译，之后在其中执行，并将结果返回的同时进行缓存
+
+但是编译很耗时间，所以可以将sql编译成二进制的代码，存在dbms中，之后快速操作，比如分页／触发器已经编译好的对象
+
+下次不用sql语句，直接在客户端中调用存储过程，操作数据库，并且利用模块化编程，但是移植性差
+（6）mysql配置优化
+a.配置最大并发数
+my.conf中max_connections
+b.调整缓存大小
+
+
+2.索引
+（1）普通索引
+这是最基本的索引，它没有任何限制，MyIASM中默认的BTREE类型的索引，也是我们大多数情况下用到的索引。
+a.直接创建索引
+CREATE INDEX index_name ON table(column(length))
+b.修改表结构的方式添加索引
+ALTER TABLE table_name ADD INDEX index_name ON (column(length))
+c.创建表的时候同时创建索引
+CREATE TABLE `table` (
+`id` int(11) NOT NULL AUTO_INCREMENT ,
+`title` char(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+`content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL ,
+`time` int(10) NULL DEFAULT NULL ,
+PRIMARY KEY (`id`),
+INDEX index_name (title(length))
+)
+d.删除索引
+DROP INDEX index_name ON table

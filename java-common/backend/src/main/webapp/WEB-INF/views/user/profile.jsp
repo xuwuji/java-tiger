@@ -67,7 +67,8 @@
                         </ul>
                     </div>
                     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                        <h1 class="page-header">#</h1>
+                        <h1>欢迎回来</h1>
+                        <h5 class="page-header">您上一次登录时间为：${lastLoginTime} </h5>
 
                         <div class="row placeholders">
                             <div class="col-xs-6 col-sm-3 placeholder">
