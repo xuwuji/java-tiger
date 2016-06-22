@@ -115,5 +115,26 @@ public class NewsDao {
 			session.close();
 		}
 	}
+	
+	public String findContentById(int id) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			NewsMapper mapper = session.getMapper(NewsMapper.class);
+			return mapper.findContentById(id);
+		} finally {
+			session.close();
+		}
+	}
+
+	public void insertNewsContent(int id, String content) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			NewsMapper mapper = session.getMapper(NewsMapper.class);
+			mapper.insertNewsContent(id, content);
+			session.commit();
+		} finally {
+			session.close();
+		}
+	}
 
 }

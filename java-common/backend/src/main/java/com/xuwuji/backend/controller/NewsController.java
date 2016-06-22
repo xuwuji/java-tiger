@@ -102,6 +102,8 @@ public class NewsController {
 			}
 		}
 		News news = newsDao.findById(Integer.valueOf(id));
+		String content = newsDao.findContentById(Integer.valueOf(id));
+		news.setContent(content);
 		model.addObject("news", news);
 		return model;
 	}

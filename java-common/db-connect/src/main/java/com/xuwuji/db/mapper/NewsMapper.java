@@ -25,4 +25,8 @@ public interface NewsMapper {
 	News findById(int id);
 
 	News findInfoById(int id);
+
+	void insertNewsContent(@Param("id") int id, @Param("content") String content);
+
+	String findContentById(@Param("id") int id);
 }

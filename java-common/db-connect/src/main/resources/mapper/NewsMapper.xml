@@ -20,9 +20,18 @@
 		useGeneratedKeys="true">
 		INSERT
 		INTO
-		news(title,link,time,content,commentNum,typeId)
-		VALUES(#{title},#{link},#{time},#{content},#{commentNum},#{typeId})
+		news(title,link,time,commentNum,typeId)
+		VALUES(#{title},#{link},#{time},#{commentNum},#{typeId})
 	</insert>
+
+	<insert id="insertNewsContent" parameterType="hashmap">
+		INSERT
+		INTO
+		news_content(id,content)
+		VALUES(#{id},#{content})
+	</insert>
+
+
 
 	<resultMap id="NewsResult" type="News">
 		<id property="id" column="id" />
@@ -73,6 +82,14 @@
 		*
 		from news where id=#{id};
 	</select>
+	
+	<select id="findContentById" parameterType="int" resultType="String">
+		select
+		content
+		from news_content where id=#{id};
+	</select>
+	
+	
 
 	<select id="findInfoById" parameterType="int"
 		resultMap="NewsResultInfo">
