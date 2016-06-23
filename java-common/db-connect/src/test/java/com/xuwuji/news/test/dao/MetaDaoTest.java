@@ -8,7 +8,7 @@ import com.xuwuji.db.dao.MetaDao;
 import com.xuwuji.db.model.Category;
 
 public class MetaDaoTest {
-	MetaDao dao = MetaDao.getInstance();
+	MetaDao dao = new MetaDao();
 
 	// @Test
 	public void findId() {

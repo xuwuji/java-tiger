@@ -1,0 +1,83 @@
+一、JDBC是什么?
+
+JDBC API是一个Java API，可以访问任何类型表列数据，特别是存储在关系数据库中的数据。JDBC代表Java数据库连接。
+
+JDBC库中所包含的API任务通常与数据库使用：
+
+（1）连接到数据库 class.for(数据库提供的连接到自己的驱动)
+实例化时，在DriverManager中进行注册（这个步骤是隐式的，在加载驱动的时候就会自动注册）
+
+以下是java.sql.driver的官方说明：
+The Java SQL framework allows for multiple database drivers.
+
+Each driver should supply a class that implements the Driver interface
+（每个数据库的驱动需要实现java本身提供的driver接口）
+
+The DriverManager will try to load as many drivers as it can find and then for any given connection request
+it will ask each driver in turn to try to connect to the target URL.
+
+It is strongly recommended that each Driver class should be small and standalone 
+so that the Driver class can be loaded and queried without bringing in vast quantities of supporting code.
+
+When a Driver class is loaded, it should create an instance of itself and register it with the DriverManager. 
+
+This means that a user can load and register a driver by doing Class.forName("foo.bah.Driver")
+
+static {
+        try {
+            java.sql.DriverManager.registerDriver(new Driver());
+        } catch (SQLException E) {
+            throw new RuntimeException("Can't register driver!");
+        }
+    }
+
+（2）在DriverManager注册后，通过它来得到对数据库的连接java.sql.connection
+
+ public static Connection getConnection(String url,
+        String user, String password) throws SQLException {
+        java.util.Properties info = new java.util.Properties();
+
+        if (user != null) {
+            info.put("user", user);
+        }
+        if (password != null) {
+            info.put("password", password);
+        }
+
+        return (getConnection(url, info, Reflection.getCallerClass()));
+    }
+
+DriverManager.getConnection(url,user,password);
+mysql url: "jdbc:mysql://localhost:3306/wechat?useUnicode=true&characterEncoding=gb2312"
+
+（3）创建SQL语句
+1.statement用法：
+statement=connection.CreateStatement();
+resultSet rs=stmt.executeQuery(sql);
+
+2.PrepareStatement的用法
+prepareStatementt=conn.PreparedStatement(sql);
+resultSet rs=ptmt.executeQuery();
+
+Statement 是PreparedStatement的父类
+
+i.PreparedStatement是预编译的,对于批量处理可以大大提高效率. 也叫JDBC存储过程
+
+ii.使用 Statement 对象。在对数据库只执行一次性存取的时侯，用 Statement 对象进行处理。PreparedStatement 对象的开销比Statement大，对于一次性操作并不会带来额外的好处。
+iii.statement每次执行sql语句，相关数据库都要执行sql语句的编译，preparedstatement是预编译得, preparedstatement支持批处理
+
+PreparedStatement对象不仅包含了SQL语句，而且大多数情况下这个语句已经被预编译过，因而当其执行时，只需DBMS运行SQL语句，而不必先编译。
+当你需要执行Statement对象多次的时候，PreparedStatement对象将会大大降低运行时间，当然也加快了访问数据库的速度。
+
+iv.PreparedStatement提高了安全性,如果你使用预编译语句.你传入的任何内容就不会和原来的语句发生任何匹配的关系
+只要全使用预编译语句,你就用不着对传入的数据做任何过虑.而如果使用普通的statement,有可能要对drop,;等做费尽心机的判断和过虑
+
+（4）在数据库中执行SQL查询
+
+（5）查看和修改记录
+
+（6）处理事务
+conn.rollback();
+conn.setAutoCommit(true);
+
+
