@@ -8,6 +8,28 @@
 	<cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true"
 		type="org.mybatis.caches.redis.RedisCache" />
 
+	<resultMap id="NewsResult" type="News">
+		<id property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="link" column="link" />
+		<result property="time" column="time" />
+		<result property="content" column="content" />
+		<result property="commentNum" column="commentNum" />
+		<result property="typeId" column="typeId" />
+	</resultMap>
+
+	<resultMap id="NewsResultInfo" type="News">
+		<id property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="link" column="link" />
+		<result property="time" column="time" />
+		<result property="commentNum" column="commentNum" />
+		<result property="typeId" column="typeId" />
+		<association property="type" javaType="String">
+			<result property="type" column="type"></result>
+		</association>
+	</resultMap>
+
 	<!-- To execute this statement, MyBatis will perform the following sequence 
 		of actions. 1. Create a PreparedStatement interface with placeholders as 
 		follows: PreparedStatement pstmt = connection.prepareStatement ("NSERT INTO 
@@ -30,30 +52,6 @@
 		news_content(id,content)
 		VALUES(#{id},#{content})
 	</insert>
-
-
-
-	<resultMap id="NewsResult" type="News">
-		<id property="id" column="id" />
-		<result property="title" column="title" />
-		<result property="link" column="link" />
-		<result property="time" column="time" />
-		<result property="content" column="content" />
-		<result property="commentNum" column="commentNum" />
-		<result property="typeId" column="typeId" />
-	</resultMap>
-
-	<resultMap id="NewsResultInfo" type="News">
-		<id property="id" column="id" />
-		<result property="title" column="title" />
-		<result property="link" column="link" />
-		<result property="time" column="time" />
-		<result property="commentNum" column="commentNum" />
-		<result property="typeId" column="typeId" />
-		<association property="type" javaType="String">
-			<result property="type" column="type"></result>
-		</association>
-	</resultMap>
 
 	<select id="findByKeyword" parameterType="String" resultMap="NewsResult">
 		select * from news where title like "%"#{keyword}"%"
@@ -82,19 +80,18 @@
 		*
 		from news where id=#{id};
 	</select>
-	
+
 	<select id="findContentById" parameterType="int" resultType="String">
 		select
 		content
 		from news_content where id=#{id};
 	</select>
-	
-	
 
-	<select id="findInfoById" parameterType="int"
-		resultMap="NewsResultInfo">
-		select news.title,
-		news.time,news.link,news.commentNum,news_meta.type from news,
+	<select id="findInfoById" parameterType="int" resultMap="NewsResultInfo">
+		select
+		news.title,
+		news.time,news.link,news.commentNum,news_meta.type from
+		news,
 		news_meta where
 		news.id=#{id} and news.typeId=news_meta.id;
 	</select>
@@ -109,7 +106,6 @@
 			#{id}
 		</foreach>
 	</select>
-
 
 	<!-- Let us see another example of a <select> mapped statement showing how 
 		to populate query results into HashMap as follows. In this case, the column 

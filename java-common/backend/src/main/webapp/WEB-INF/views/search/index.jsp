@@ -6,9 +6,10 @@
 
         <head>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-            <title>Insert title here</title>
+            <title>${keyword}</title>
             <script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.3.min.js"></script>
             <link href="${pageContext.request.contextPath}/resources/css/search/style.css" rel="stylesheet" />
+            <link href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
         </head>
 
         <body>
@@ -55,11 +56,13 @@
 
             <div id="page">
                 <div id="content">
-                    <c:forEach items="${searchResult }" var="item">
+                    <c:forEach items="${searchResult}" var="item">
                         <div class="post">
                             <c:set var="pageUrl" scope="session" value="${pageContext.request.contextPath}/news/${item.id}" />
                             <h2 class="title"><a href="${pageUrl}"> ${item.title}</a></h2>
-                            <p class="meta">${item.time}
+                            <p class="meta"><i class="fa fa-calendar"></i> ${item.time}
+                                <i class="fa fa-calendar"></i> ${item.time}
+                                <i class="fa fa-calendar"></i> ${item.time}
                                 <a href="#"></a>
                             </p>
                             <div class="entry">

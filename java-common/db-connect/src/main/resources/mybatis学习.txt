@@ -60,3 +60,9 @@ mybatis默认的cache实现类为mybatis本身自带的PerpetualCache
 
 5.与spring整合
 用spring去管理sqlsessionfactory
+
+6.mybatis延迟加载
+
+resultMap可以实现关联映射
+
+先从简单的表进行查询，再从关联表去关联查询，提高数据库性能
