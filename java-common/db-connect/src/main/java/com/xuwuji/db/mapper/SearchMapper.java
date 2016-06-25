@@ -11,6 +11,8 @@ public interface SearchMapper {
 
 	List<News> findByKeyword(String keyword);
 
+	List<News> findByKeywordAndCategory(@Param("keyword") String keyword, @Param("category") String category);
+
 	void insertRecord(@Param("keyword") String keyword, @Param("time") String time);
 
 	List<HashMap<String, Object>> selectHot();

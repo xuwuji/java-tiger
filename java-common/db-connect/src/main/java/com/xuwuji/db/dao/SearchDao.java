@@ -45,6 +45,21 @@ public class SearchDao {
 		}
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public PageInfo getPageInfoByKeywordAndCategory(String keyword, String category) {
+		PageHelper.startPage(1, 10);
+		SqlSession session = SessionFactory.openDEVSession();
+		List<News> list = null;
+		try {
+			SearchMapper mapper = session.getMapper(SearchMapper.class);
+			list = mapper.findByKeywordAndCategory(keyword, category);
+			PageInfo page = new PageInfo(list);
+			return page;
+		} finally {
+			session.close();
+		}
+	}
+
 	public void insertRecord(String kw, String time) {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {

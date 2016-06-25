@@ -36,7 +36,6 @@
 			<mvc:mapping path="/login/**" />
 			<mvc:mapping path="/history/**" />
 			<mvc:mapping path="/user/**" />
-			<!-- <mvc:exclude-mapping path="/permission/pubsvc/**" /> -->
 			<bean class="com.xuwuji.backend.interceptor.UserInfoInterceptor" />
 		</mvc:interceptor>
 		<mvc:interceptor>
@@ -44,13 +43,11 @@
 			<mvc:mapping path="/login/**" />
 			<mvc:mapping path="/history/**" />
 			<mvc:mapping path="/user/**" />
-			<!-- <mvc:exclude-mapping path="/permission/pubsvc/**" /> -->
 			<bean class="com.xuwuji.backend.interceptor.SessionInterceptor" />
 		</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/history/**" />
 			<mvc:mapping path="/user/**" />
-			<!-- <mvc:exclude-mapping path="/permission/pubsvc/**" /> -->
 			<bean class="com.xuwuji.backend.interceptor.CheckStatusInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>

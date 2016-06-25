@@ -14,6 +14,7 @@
 		<result property="link" column="link" />
 		<result property="time" column="time" />
 		<result property="content" column="content" />
+		<result property="introduce" column="introduce" />
 		<result property="commentNum" column="commentNum" />
 		<result property="typeId" column="typeId" />
 	</resultMap>
@@ -24,6 +25,7 @@
 		<result property="link" column="link" />
 		<result property="time" column="time" />
 		<result property="commentNum" column="commentNum" />
+		<result property="introduce" column="introduce" />
 		<result property="typeId" column="typeId" />
 		<association property="type" javaType="String">
 			<result property="type" column="type"></result>
@@ -42,8 +44,8 @@
 		useGeneratedKeys="true">
 		INSERT
 		INTO
-		news(title,link,time,commentNum,typeId)
-		VALUES(#{title},#{link},#{time},#{commentNum},#{typeId})
+		news(title,link,time,commentNum,typeId,imgLink,introduce)
+		VALUES(#{title},#{link},#{time},#{commentNum},#{typeId},#{imgLink},#{introduce})
 	</insert>
 
 	<insert id="insertNewsContent" parameterType="hashmap">
@@ -77,8 +79,9 @@
 
 	<select id="findById" parameterType="int" resultType="News">
 		select
-		*
-		from news where id=#{id};
+		news.*,news_meta.type
+		from news,news_meta where news.id=#{id} and
+		news.typeId=news_meta.id;
 	</select>
 
 	<select id="findContentById" parameterType="int" resultType="String">

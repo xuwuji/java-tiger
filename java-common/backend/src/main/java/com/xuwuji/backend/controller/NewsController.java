@@ -60,16 +60,6 @@ public class NewsController {
 			if (!set.contains(list.get(i).getLink())) {
 				set.add(list.get(i).getLink());
 				News news = list.get(i);
-				Document doc = Jsoup.parse(news.getContent());
-				Elements elements = doc.getElementsByTag("img");
-				String imgLink = "";
-				for (Element e : elements) {
-					imgLink = e.attr("src");
-					if (imgLink.indexOf("http") != -1) {
-						break;
-					}
-				}
-				news.setImgLink(imgLink);
 				news.setContent("");
 				result.add(news);
 			}

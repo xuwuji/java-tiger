@@ -172,6 +172,21 @@ public class Task implements Runnable {
 				news.setLink(link);
 				news.setTime(time);
 				news.setContent(content);
+				Document contentDoc = Jsoup.parse(content);
+				Elements elements = contentDoc.getElementsByTag("img");
+				String imgLink = "";
+				for (Element e : elements) {
+					imgLink = e.attr("src");
+					if (imgLink.indexOf("http") != -1) {
+						break;
+					}
+				}
+				Elements pelements = contentDoc.getElementsByTag("p");
+				for (Element e : pelements) {
+					String introduce = e.text();
+					news.setIntroduce(introduce);
+				}
+				news.setImgLink(imgLink);
 				news.setCommentNum(Integer.valueOf(comment_num));
 
 				// 1.search in cache

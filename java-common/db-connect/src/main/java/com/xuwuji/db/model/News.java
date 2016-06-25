@@ -14,6 +14,15 @@ public class News implements Serializable {
 	private int typeId;
 	private String imgLink;
 	private String type;
+	private String introduce;
+
+	public String getIntroduce() {
+		return introduce;
+	}
+
+	public void setIntroduce(String introduce) {
+		this.introduce = introduce;
+	}
 
 	public String getImgLink() {
 		return imgLink;
