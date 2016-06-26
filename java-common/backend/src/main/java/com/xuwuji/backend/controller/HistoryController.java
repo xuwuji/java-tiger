@@ -33,14 +33,19 @@ public class HistoryController {
 		List<String> records = historyCacheUtil.getAllWatchedHistory(username);
 		for (String record : records) {
 			String[] strs = record.split("@");
-			String id = strs[0];
-			String time = strs[1];
-			News n = newsDao.findInfoById(Integer.valueOf(id));
-			String[] info = new String[3];
-			info[0] = n.getTitle();
-			info[1] = n.getType();
-			info[2] = time;
-			result.add(info);
+			int id = 0;
+			try {
+				id = Integer.valueOf(strs[0]);
+				String time = strs[1];
+				News n = newsDao.findInfoById(id);
+				String[] info = new String[3];
+				info[0] = n.getTitle();
+				info[1] = n.getType();
+				info[2] = time;
+				result.add(info);
+			} catch (NumberFormatException e) {
+				System.out.println(strs[0] + "is not valid");
+			}
 		}
 		return result;
 	}
