@@ -256,6 +256,7 @@ public class Task implements Runnable {
 					map.put(key, value);
 				}
 				map.put("subCategory", getChineseSubCategory(doc));
+				System.out.println(cmt_id);
 				map.put("comment_num", this.getCommentNum(cmt_id));
 				break;
 			} catch (Exception e) {
