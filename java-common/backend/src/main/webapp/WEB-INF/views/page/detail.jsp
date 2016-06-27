@@ -33,19 +33,27 @@
             </p>
         </div>
         <div id="page">
-            <div id="content" style="width:98%">
+            <div id="content" style="width:100%">
                 <div class="post">
                     <h2 class="title">${news.title}</h2>
+                    <!--meta-->
                     <p class="meta" style="margin-top: 10px;">
                         <i class="fa fa-calendar"></i> ${news.time} &nbsp&nbsp&nbsp&nbsp<i class="fa fa-bars"></i> ${news.type} &nbsp&nbsp&nbsp&nbsp<i class="fa fa-commenting"></i> ${news.commentNum}
                         <a href="#"></a>
                     </p>
-                    <div>${news.content}</div>
+                    <!--meta-->
+                    <div id="newsContent">${news.content}</div>
                 </div>
             </div>
             <!-- end #content -->
             <div style="clear: both;">&nbsp;</div>
         </div>
     </body>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#Cnt-Main-Article-QQ').css('width', '90%').css('margin', '0 auto');
+        });
+
+    </script>
 
     </html>

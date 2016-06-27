@@ -76,7 +76,7 @@ public class NewsController {
 		if (list.size() == 0) {
 			list = (ArrayList<News>) newsCacheUtil.getAllCacheHotNews(type);
 		}
-		System.out.println(list.size());
+		// System.out.println(list.size());
 		return list;
 	}
 
@@ -86,7 +86,7 @@ public class NewsController {
 		ModelAndView model = new ModelAndView("page/detail");
 		Cookie[] cookies = request.getCookies();
 		for (Cookie c : cookies) {
-			if (c.getName().equals("backend")) {
+			if (c.getName().equals("backendInfo")) {
 				historyCacheUtil.addHistory(c.getValue().split("-")[0], id);
 				break;
 			}

@@ -92,7 +92,7 @@
                                     <span><a href="${firstPageUrl}">首页</a></span>
                                     <span><a href="${url}">上一页</a></span>
                                 </c:if>
-                                &nbsp;&nbsp;当前第 <span id="currentPage">${pageNum}</span>页&nbsp;&nbsp;
+                                &nbsp;&nbsp;当前第<span id="currentPage">${pageNum}</span>页&nbsp;&nbsp;
                                 <c:if test="${current < total}">
                                     <c:set var="url" scope="session" value="${pageContext.request.contextPath}/search/index?keyword=${keyword}&pageNum=${next}&orderBy=${orderBy}" />
                                     <c:set var="lastPageUrl" scope="session" value="${pageContext.request.contextPath}/search/index?keyword=${keyword}&pageNum=${totalNum}&orderBy=${orderBy}" />

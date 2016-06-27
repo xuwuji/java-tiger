@@ -12,16 +12,14 @@
             <meta name="keywords" content="News Home, Design By Xu,Wuji" />
 
             <title>Home</title>
-            <!-- Custom Theme files -->
             <script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.3.min.js"></script>
             <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-
             <link href="${pageContext.request.contextPath}/resources/css/search/home/style.css" rel="stylesheet" type="text/css" media="all" />
-            <!-- Custom Theme files -->
             <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
         </head>
 
         <body>
+           <!--check if the account is log in another location-->
             <script type="text/javascript">
                 var msg = "${anotherLocationLoginMsg}";
                 console.log('msg:' + msg);
@@ -83,7 +81,7 @@
                 <i> </i>
                 <div class="s-bar">
                     <form action="${pageContext.request.contextPath}/search/index" method="get">
-                        <input type="text" value="标题／关键词" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '标题／关键词';}" name="keyword">
+                        <input type="text" value="标题／关键词" onfocus="this.value ='';" onblur="if (this.value == '') {this.value = '标题／关键词';}" name="keyword">
                         <input type="hidden" name="pageNum" id="search-text" size="15" />
                         <input type="hidden" name="orderBy" id="search-text" size="15" />
                         <input type="submit" value="查询" />
@@ -146,7 +144,6 @@
                         } else {
                             fixButton(type);
                         }
-
                     });
             }
 
