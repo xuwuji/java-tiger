@@ -45,6 +45,8 @@ public class HistoryController {
 				result.add(info);
 			} catch (NumberFormatException e) {
 				System.out.println(strs[0] + "is not valid");
+			} catch (NullPointerException e) {
+				System.out.println(id + " is not a valid news id");
 			}
 		}
 		return result;

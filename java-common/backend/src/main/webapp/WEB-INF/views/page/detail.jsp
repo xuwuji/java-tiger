@@ -49,11 +49,11 @@
             <div style="clear: both;">&nbsp;</div>
         </div>
     </body>
+    
     <script type="text/javascript">
         $(document).ready(function() {
             $('#Cnt-Main-Article-QQ').css('width', '90%').css('margin', '0 auto');
         });
-
     </script>
 
     </html>

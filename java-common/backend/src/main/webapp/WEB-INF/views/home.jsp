@@ -19,7 +19,7 @@
         </head>
 
         <body>
-           <!--check if the account is log in another location-->
+            <!--check if the account is log in another location-->
             <script type="text/javascript">
                 var msg = "${anotherLocationLoginMsg}";
                 console.log('msg:' + msg);
@@ -32,10 +32,14 @@
             </script>
 
 
+
+
+
+
             <!--nav -->
-            <div>
+            <div id="pagenav">
                 <nav class="navbar navbar-inverse">
-                    <div class="container-fluid">
+                    <div class="container">
                         <!-- Brand and toggle get grouped for better mobile display -->
                         <div class="navbar-header">
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -44,17 +48,12 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <a class="navbar-brand" href="#">#</a>
+                            <a href="${pageContext.request.contextPath}" class="navbar-brand">Homepage&nbsp&nbsp</a>
+                            <a href="#" class="navbar-brand">Blog&nbsp&nbsp</a><a href="#" class="navbar-brand">Photos&nbsp&nbsp</a><a href="#" class="navbar-brand">About&nbsp&nbsp</a><a href="#" class="navbar-brand">Links&nbsp&nbsp</a><a href="#" class="navbar-brand">Contact</a>
                         </div>
 
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                            <ul class="nav navbar-nav">
-                                <li class="active"><a href="#"># <span class="sr-only">(current)</span></a></li>
-                                <li><a href="#">#</a></li>
-
-                            </ul>
-
                             <ul class="nav navbar-nav navbar-right">
                                 <li id="loginUsername"><a href="${pageContext.request.contextPath}/login/index" id="loginUsername">登录</a></li>
                                 <li id="registerButton"><a href="${pageContext.request.contextPath}/register/index" id="loginUsername">注册</a></li>
@@ -75,7 +74,7 @@
                 </nav>
             </div>
             <!--nav ends here-->
-
+       
             <!--search start here-->
             <div class="search">
                 <i> </i>
@@ -88,7 +87,7 @@
                     </form>
                 </div>
                 <p>
-                    热门搜索:
+                    <abbr class="initialism" title="搜索次数最高的内容">热门搜索</abbr>:
                     <c:forEach items="${hotKW}" var="kw">
                         <c:set var="kwUrl" scope="session" value="${pageContext.request.contextPath}/search/index?keyword=${kw}&pageNum=1&orderBy=" />
                         <a href="${kwUrl}">${kw}</a>
@@ -105,22 +104,24 @@
                     </div>
                     <!--select news category-->
                     <div class="dropdown btn-group">
-                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="typeButton">全部类别
-                        </button>
+                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="typeButton">全部类别</button>
                         <ul class=" dropdown-menu" id="typeContent">
                         </ul>
                     </div>
                     <!--select news category end-->
                     <br>
                     <br>
-                    <ul id="hotNews">
-                    </ul>
+
+                    <ol id="hotNews">
+                    </ol>
                 </div>
             </div>
             <!--hot news end here-->
 
             <div class="copyright">
-                <p>2015 &copy Xu,Wuji All rights reserved</p>
+                <p>
+                    2015 &copy <cite><strong><em>Xu,Wuji</em></strong></cite> All rights reserved
+                </p>
             </div>
         </body>
 
@@ -149,10 +150,13 @@
 
             function fixNewsContent(data) {
                 var str = '';
-                $.each(data, function(index, news) {
-                    str = '<p> <a href=\'${pageContext.request.contextPath}/news/' + news.id + '\'>' + news.title + '</a></p>' + str;
-                    console.log(news.title);
-                });
+                $
+                    .each(
+                        data,
+                        function(index, news) {
+                            str = '<p> <a href=\'${pageContext.request.contextPath}/news/' + news.id + '\'>' + news.title + '</a></p>' + str;
+                            console.log(news.title);
+                        });
                 $('#hotNews').html(str);
             }
 
@@ -173,31 +177,33 @@
                     });
             }
 
-
             function fixButton(type) {
                 $('#typeButton').html(type);
             }
 
             function login() {
-                $.ajax({
-                    type: "GET",
-                    url: "${pageContext.request.contextPath}/login/checkStatus",
-                }).done(
-                    function(data) {
-                        console.log(data);
-                        if (data === '') {
-                            console.log("not login");
-                        } else {
-                            var str = "<a href=\"${pageContext.request.contextPath}/user/profile\">" + data + " </a>"
-                            console.log(data + " login");
-                            $('#loginUsername').html(str);
-                            $('#registerButton').attr("style", "display:none");
-                            $('#commandButton').attr("style", "");
-                            var commands = "<li><a href=\"${pageContext.request.contextPath}/user/profile\">个人信息</a></li><li role = \"separator\" class = \"divider\"> </li> <li> <a href = \"${pageContext.request.contextPath}/login/logout\"> 退出 </a></li>";
-                            $('#commands').html(commands);
+                $
+                    .ajax({
+                        type: "GET",
+                        url: "${pageContext.request.contextPath}/login/checkStatus",
+                    })
+                    .done(
+                        function(data) {
+                            //console.log(data);
+                            if (data === '') {
+                                console.log("not login");
+                            } else {
+                                var str = "<a href=\"${pageContext.request.contextPath}/user/profile\">" + $.trim(data) + "</a>"
+                                    //console.log(data + " login");
+                                $('#loginUsername').html(str);
+                                $('#registerButton').attr("style",
+                                    "display:none");
+                                $('#commandButton').attr("style", "");
+                                var commands = "<li><a href=\"${pageContext.request.contextPath}/user/profile\">个人信息</a></li><li role = \"separator\" class = \"divider\"> </li> <li> <a href = \"${pageContext.request.contextPath}/login/logout\"> 退出 </a></li>";
+                                $('#commands').html(commands);
 
-                        }
-                    });
+                            }
+                        });
             }
 
         </script>
