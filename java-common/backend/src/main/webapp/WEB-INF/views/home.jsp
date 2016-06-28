@@ -5,12 +5,12 @@
         <html>
 
         <head>
+            <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/favicon.ico" type="image/x-icon" />
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
             <meta name="keywords" content="News Home, Design By Xu,Wuji" />
-
             <title>Home</title>
             <script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.3.min.js"></script>
             <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
@@ -38,22 +38,45 @@
 
             <!--nav -->
             <div id="pagenav">
-                <nav class="navbar navbar-inverse">
+                <nav class="navbar navbar-inverse" style="background-color:black">
+                    <img src="${pageContext.request.contextPath}/resources/img/logo.png" class="pull-left" style="width:50px;height:50px">
                     <div class="container">
-                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <!-- 响应式，当在移动端，把导航栏的几个按钮合并在一个按钮中显示-->
                         <div class="navbar-header">
-                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                                <span class="sr-only">Toggle navigation</span>
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navi_menu">
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <a href="${pageContext.request.contextPath}" class="navbar-brand">Homepage&nbsp&nbsp</a>
-                            <a href="#" class="navbar-brand">Blog&nbsp&nbsp</a><a href="#" class="navbar-brand">Photos&nbsp&nbsp</a><a href="#" class="navbar-brand">About&nbsp&nbsp</a><a href="#" class="navbar-brand">Links&nbsp&nbsp</a><a href="#" class="navbar-brand">Contact</a>
                         </div>
 
-                        <!-- Collect the nav links, forms, and other content for toggling -->
-                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <div id="navi_menu">
+                            <ul class="nav navbar-nav">
+                                <li class="active"><a href="${pageContext.request.contextPath}">Home</a></li>
+                                <li><a href="#">Blog</a></li>
+                                <li class="divider"></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               Photo
+               <b class="caret"></b>
+            </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">jmeter</a></li>
+                                        <li><a href="#">EJB</a></li>
+                                        <li><a href="#">Jasper Report</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">分离的链接</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">另一个分离的链接</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">About</a></li>
+                                <li><a href="#">Links</a></li>
+                                <li><a href="#">Contact</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="collapse navbar-collapse">
                             <ul class="nav navbar-nav navbar-right">
                                 <li id="loginUsername"><a href="${pageContext.request.contextPath}/login/index" id="loginUsername">登录</a></li>
                                 <li id="registerButton"><a href="${pageContext.request.contextPath}/register/index" id="loginUsername">注册</a></li>
@@ -74,7 +97,7 @@
                 </nav>
             </div>
             <!--nav ends here-->
-       
+
             <!--search start here-->
             <div class="search">
                 <i> </i>
@@ -196,6 +219,7 @@
                                 var str = "<a href=\"${pageContext.request.contextPath}/user/profile\">" + $.trim(data) + "</a>"
                                     //console.log(data + " login");
                                 $('#loginUsername').html(str);
+
                                 $('#registerButton').attr("style",
                                     "display:none");
                                 $('#commandButton').attr("style", "");

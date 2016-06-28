@@ -48,6 +48,7 @@ public class SearchController {
 			page = Integer.valueOf(pageNum);
 		}
 		List<News> list = this.getSearchResult(keyword, pageNum, orderBy);
+		System.out.println("order by: " + orderBy);
 		System.out.println(list.size());
 		ArrayList<News> result = new ArrayList<News>();
 		HashSet<String> categories = new HashSet<String>();

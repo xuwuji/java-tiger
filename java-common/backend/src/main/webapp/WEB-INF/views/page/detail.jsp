@@ -4,6 +4,7 @@
     <html>
 
     <head>
+     <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/favicon.ico" type="image/x-icon" />          
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>${news.title}</title>
         <script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.3.min.js"></script>
