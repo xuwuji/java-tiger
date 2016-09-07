@@ -5,8 +5,8 @@
 
 <mapper namespace="com.xuwuji.db.mapper.SearchMapper">
 	<!-- mybatis默认的cache实现类为mybatis本身自带的PerpetualCache， 如果要和ehcache进行整合， 就要把cache的type设为ehcache的实现类 -->
-	<cache type="org.mybatis.caches.redis.RedisCache" eviction="FIFO"
-		flushInterval="60000" size="512" readOnly="true" />
+	<!-- <cache type="org.mybatis.caches.redis.RedisCache" eviction="FIFO" flushInterval="60000" 
+		size="512" readOnly="true" /> -->
 
 	<resultMap id="NewsResult" type="News">
 		<id property="id" column="id" />
@@ -25,12 +25,13 @@
 		news.typeId=news_meta.id) as type from news where id in (select NewsId
 		from news_KW where keyword =#{keyword})
 	</select>
-	
-	
-	<select id="findByKeywordAndCategory" parameterType="hashmap" resultMap="NewsResult">
+
+
+	<select id="findByKeywordAndCategory" parameterType="hashmap"
+		resultMap="NewsResult">
 		select news.* ,(select news_meta.type from news_meta where
 		news.typeId=news_meta.id) as type from news where id in (select NewsId
-		from news_KW where keyword =#{keyword}) 
+		from news_KW where keyword =#{keyword})
 	</select>
 
 	<!-- <select id="findByKeyword" parameterType="String" resultMap="NewsResult"> 
@@ -53,6 +54,12 @@
 		group by keyword order
 		by count DESC
 		limit 10;
+	</select>
+
+	<select id="autofill" resultType="hashmap" parameterType="string">
+		select
+		distinct(keyword) from news_KW where
+		keyword like #{key}"%";
 	</select>
 
 </mapper>

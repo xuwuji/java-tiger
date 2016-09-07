@@ -1,0 +1,37 @@
+<div class=" post type-post status-publish format-standard hentry category-uncategorized" ng-repeat="c in content">
+    <!--POST THUMBNAIL START-->
+    <div class="post_image">
+        <!--CALL TO POST IMAGE-->
+
+        <div class="imgwrap">
+            <a href="http://10.9.251.145/alpaca/index.php/2016/01/21/intall-scala-2-11-in-ubuntu-12-04/"><img src="http://10.9.251.145/alpaca/wp-content/themes/optimizer/assets/images/blank_img.png" alt="intall scala 2.11 in ubuntu 12.04" class="optimizer_thumbnail" /></a>
+        </div>
+
+    </div>
+    <!--POST THUMBNAIL END-->
+
+    <!--POST CONTENT START-->
+    <div class="post_content">
+        <h2 class="postitle"><a href="http://10.9.251.145/alpaca/index.php/2016/01/21/intall-scala-2-11-in-ubuntu-12-04/" title="intall scala 2.11 in ubuntu 12.04">{{c.title}}</a></h2>
+
+        <!--META INFO START-->
+        <div class="single_metainfo">
+            <!--DATE-->
+            <i class="fa-calendar"></i><a class="comm_date">{{c.time | date:'medium'}}</a>
+            <!--AUTHOR-->
+            <i class="fa-user"></i><a class='auth_meta' href="http://10.9.251.145/alpaca/index.php/author/yanjunzhou/">{{c.author}}</a>
+            <!--COMMENTS COUNT-->
+            <i class="fa-comments"></i>
+            <div class="meta_comm"><a href="http://10.9.251.145/alpaca/index.php/2016/01/21/intall-scala-2-11-in-ubuntu-12-04/#respond">{{c.comment}}</a></div>
+            <!--CATEGORY-->
+            <i class="fa-th-list"></i>
+            <div class="catag_list"><a href="http://10.9.251.145/alpaca/index.php/category/uncategorized/" rel="category tag">{{c.category}}</a></div>
+        </div>
+        <!--META INFO START-->
+
+        <p>{{c.intro}}</p>
+    </div>
+    <!--POST CONTENT END-->
+    <!--Read More Button-->
+    <div class="blog_mo"><a href="http://10.9.251.145/alpaca/index.php/2016/01/21/intall-scala-2-11-in-ubuntu-12-04/">+ Read More</a></div>
+</div>
