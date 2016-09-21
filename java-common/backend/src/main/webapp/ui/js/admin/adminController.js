@@ -1,4 +1,4 @@
-var adminApp = angular.module('admin', ['ngRoute', 'ckeditor', 'ngSanitize']);
+var adminApp = angular.module('admin', ['ngRoute', 'ckeditor', 'ngSanitize', 'angular-bind-html-compile']);
 
 
 adminApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
@@ -17,7 +17,7 @@ adminApp.controller('writeController', ['$scope', '$routeParams', '$sce', functi
     };
 
     $scope.content = $sce.trustAsHtml($scope.content);
-
+    $scope.test = '<input checked="checked" name="da" required="required " type="checkbox "/>';
 
     $scope.$watch('content', function (oldV, newV, scope) {
         console.log($scope.content);

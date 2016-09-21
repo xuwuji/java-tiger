@@ -9,7 +9,8 @@
             <span class="input-group-addon"> Category:</span>
             <input type="text" class="form-control" />
         </div>
-        <div ng-bind-html="content"></div>
+        <div bind-html-compile="content"></div>
+
         <div ckeditor="options" ng-model="content" ready="onReady()"></div>
         <div style=" width: 25%;margin: 0 auto;padding-top:20px ">
             <!--            <button type="button" class="btn btn-info">preview</button>-->

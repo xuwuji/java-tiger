@@ -23,7 +23,15 @@ indexApp.config(['$routeProvider', '$locationProvider', function ($routeProvider
 
 indexApp.controller('postController', ['$scope', '$http', function ($scope, $http) {
 
-    $scope.content = getContent1();
+    //$scope.content = getContent1();
+
+    $http({
+        method: 'GET',
+        url: 'http://localhost:9000/getAllPost'
+    }).then(function (response) {
+        console.log(response);
+        $scope.content=response.data
+    });
 
     $scope.pageInfo = {
         current: 1,
