@@ -1,6 +1,7 @@
 package com.xuwuji.backend.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -163,6 +164,13 @@ public class SearchController {
 		PageInfo info = searchDao.getPageInfoByKeyword(keyword);
 		info.setList(null);
 		return info;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/autofill", method = RequestMethod.GET)
+	public HashSet<String> autoFill(@RequestParam("key") String key) {
+		HashSet<String> list = searchDao.autoFill(key);
+		return list;
 	}
 
 }

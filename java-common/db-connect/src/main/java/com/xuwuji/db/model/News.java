@@ -7,7 +7,6 @@ public class News implements Serializable {
 	private int id;
 	private String title;
 	private String link;
-
 	private String time;
 	private String content;
 	private int commentNum;

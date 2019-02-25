@@ -2,6 +2,7 @@ package com.xuwuji.db.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -92,6 +93,21 @@ public class SearchDao {
 			SearchMapper mapper = session.getMapper(SearchMapper.class);
 			mapper.insertKW(kw, NewsId);
 			session.commit();
+		} finally {
+			session.close();
+		}
+	}
+
+	public HashSet<String> autoFill(String key) {
+		SqlSession session = SessionFactory.openDEVSession();
+		HashSet<String> set = new HashSet<String>();
+		try {
+			SearchMapper mapper = session.getMapper(SearchMapper.class);
+			System.out.println(mapper.autofill(key));
+			for (HashMap<String, Object> map : mapper.autofill(key)) {
+				set.add((String) map.get("keyword"));
+			}
+			return set;
 		} finally {
 			session.close();
 		}

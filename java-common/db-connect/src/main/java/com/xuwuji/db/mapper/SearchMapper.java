@@ -18,4 +18,6 @@ public interface SearchMapper {
 	List<HashMap<String, Object>> selectHot();
 
 	void insertKW(@Param("keyword") String keyword, @Param("NewsId") Integer NewsId);
+
+	List<HashMap<String, Object>> autofill(String key);
 }
