@@ -24,7 +24,7 @@ import com.xuwuji.db.util.OrderBy;
 import com.xuwuji.db.util.TimeUtil;
 
 @Controller
-@RequestMapping(value = "/search")
+@RequestMapping(value = "/search1")
 public class SearchController {
 
 	@Autowired
