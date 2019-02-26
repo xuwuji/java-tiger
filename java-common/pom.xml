@@ -66,6 +66,6 @@
 		<module>backend</module>
 		<module>java-common</module>
 		<module>db-connect</module>
-		<module>ui</module>
+		<!--<module>ui</module>-->
 	</modules>
 </project>
