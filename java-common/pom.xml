@@ -60,9 +60,9 @@
 
 	</dependencies>
 	<modules>
-		<module>spring-common</module>
-		<module>news-crawler</module>
-		<module>concurrent</module>
+		<!--<module>spring-common</module>-->
+		<!--<module>news-crawler</module>-->
+		<!--<module>concurrent</module>-->
 		<module>backend</module>
 		<module>java-common</module>
 		<module>db-connect</module>
