@@ -363,7 +363,7 @@
 	});
 
 	//编辑操作
-	function editCategory(id) {
+	function editProduct(id) {
 		var row = $table.bootstrapTable('getRowByUniqueId', id);
 		$("#editModal").modal().on("shown.bs.modal", function() {
 			$('#edit-categoryName').val(row.name);
@@ -397,11 +397,11 @@
 			});
 
 	//删除操作
-	function deleteCategory(id) {
-		var parentCategoryId = $(".selectpicker").val();
+	function deleteProduct(id) {
+		var categoryId = $("#selectpicker-child").val();
 		if (confirm("确定删除此分类吗？")) {
 			$.ajax({
-				url : "/backend/admin/category/delete", //url
+				url : "/backend/admin/product/delete",
 				type : "post",
 				data : {
 					id : id,
@@ -410,15 +410,15 @@
 				success : function(status) {
 					alert(status);
 					$table.bootstrapTable('destroy');
-					initTable(parentCategoryId);
+					initTable(categoryId);
 				}
 			});
 		}
 	}
 
 	//上架操作
-	function reActiveCategory(id) {
-		var parentCategoryId = $(".selectpicker").val();
+	function reActiveProduct(id) {
+		var categoryId = $("#selectpicker-child").val();
 		if (confirm("确定重新上架吗？")) {
 			$.ajax({
 				url : "/backend/admin/category/reActive", //url
@@ -430,7 +430,7 @@
 				success : function(status) {
 					alert(status);
 					$table.bootstrapTable('destroy');
-					initTable(parentCategoryId);
+					initTable(categoryId);
 				}
 			});
 		}
@@ -439,14 +439,14 @@
 	/* 批量上架 */
 	$('#btn-batch-reactive').on("click", function() {
 		var rows = $table.bootstrapTable('getSelections');
-		var parentCategoryId = $(".selectpicker").val();
+		var categoryId = $("#selectpicker-child").val();
 		var ids = '';
 		for (var i = 0; i < rows.length; i++) {
 			ids += rows[i].id + ',';
 		}
 		ids = ids.substring(0, ids.length - 1);
 		$.ajax({
-			url : "/backend/admin/category/reActive", //url
+			url : "/backend/admin/product/reActive", //url
 			type : "post",
 			data : {
 				id : ids,
@@ -463,16 +463,14 @@
 	/* 批量删除 */
 	$('#btn-batch-delete').on("click", function() {
 		var rows = $table.bootstrapTable('getSelections');
-		var parentCategoryId = $(".selectpicker").val();
-		console.log(rows);
-		console.log(parentCategoryId);
+		var categoryId = $("#selectpicker-child").val();
 		var ids = '';
 		for (var i = 0; i < rows.length; i++) {
 			ids += rows[i].id + ',';
 		}
 		ids = ids.substring(0, ids.length - 1);
 		$.ajax({
-			url : "/backend/admin/category/delete", //url
+			url : "/backend/admin/product/delete", //url
 			type : "post",
 			data : {
 				id : ids,
@@ -521,7 +519,6 @@
 		var categoryId = $("#selectpicker-child").val();
 		console.log(categoryId);
 		$.ajax({
-			//url : "/backend/category/getProductsByCategory?id=" + categoryId+"&sort=0", 
 			url : "/backend/category/getProductsByCategory/" + categoryId, //url
 			type : "get",
 			success : function(status) {
