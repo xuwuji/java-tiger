@@ -16,21 +16,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.xuwuji.eshop.model.Category;
+import com.xuwuji.eshop.model.Img;
 import com.xuwuji.eshop.model.ParentCategory;
 
 /**
- * category子分类控制
+ * product管理
  * 
  * @author xuwuji
  *
  */
 @Controller
-@RequestMapping(value = "/admin/category")
-public class AdminCategoryController {
+@RequestMapping(value = "/admin/product")
+public class AdminProductController {
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
-		return new ModelAndView("/eshop/category");
+		return new ModelAndView("/eshop/product");
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -38,12 +39,17 @@ public class AdminCategoryController {
 	public void add(HttpServletRequest request, HttpServletResponse response) {
 		String name = request.getParameter("name");
 		String desc = request.getParameter("desc");
+		String price = request.getParameter("price");
+		String inventory = request.getParameter("inventory");
+		String salesCount = request.getParameter("salesCount");
+		String mainImgUrl = request.getParameter("mainImgUrl");
 		String parentCategoryId = request.getParameter("parentCategoryId");
-		String imgUrl = request.getParameter("imgUrl");
+		String categoryId = request.getParameter("categoryId");
+		String brandNameCN = request.getParameter("brandNameCN");
+		String brandNameEN = request.getParameter("brandNameEN");
 		System.out.println(name);
 		System.out.println(desc);
 		System.out.println(parentCategoryId);
-		System.out.println(imgUrl);
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
@@ -62,7 +68,7 @@ public class AdminCategoryController {
 		}
 		System.out.println(id);
 	}
-	
+
 	@RequestMapping(value = "/reActive", method = RequestMethod.POST)
 	@ResponseBody
 	public void reActive(HttpServletRequest request, HttpServletResponse response) {
@@ -83,10 +89,18 @@ public class AdminCategoryController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	@ResponseBody
 	public void update(HttpServletRequest request, HttpServletResponse response) {
-		String id = request.getParameter("id");
 		String name = request.getParameter("name");
-		System.out.println(id);
+		String desc = request.getParameter("desc");
+		String price = request.getParameter("price");
+		String inventory = request.getParameter("inventory");
+		String salesCount = request.getParameter("salesCount");
+		String mainImgUrl = request.getParameter("mainImgUrl");
+		String parentCategoryId = request.getParameter("parentCategoryId");
+		String categoryId = request.getParameter("categoryId");
+		String brandId = request.getParameter("brandId");
 		System.out.println(name);
+		System.out.println(desc);
+		System.out.println(parentCategoryId);
 
 	}
 

@@ -220,7 +220,7 @@
 				$.ajax({
 					url : "/backend/admin/parentCategory/update",
 					type : "post",
-					dataType : "json",
+					//dataType : "json",
 					data : {
 						id : editModalParentCategoryId,
 						name : editModalParentCategoryName
@@ -238,7 +238,7 @@
 			$.ajax({
 				url : "/backend/admin/parentCategory/delete", //url
 				type : "post",
-				dataType : "json",
+				//dataType : "json",
 				data : {
 					id : id,
 					type : "single"
@@ -264,7 +264,7 @@
 		$.ajax({
 			url : "/backend/admin/parentCategory/delete", //url
 			type : "post",
-			dataType : "json",
+			//dataType : "json",
 			data : {
 				id : ids,
 				type : "batch"
