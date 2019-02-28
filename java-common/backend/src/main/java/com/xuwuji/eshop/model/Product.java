@@ -14,20 +14,18 @@ public class Product {
 	private String name;
 	private String desc;
 	private double price;
-	// 库存
 	private int inventory;
-	// 销量
 	private int salesCount;
 	private Img mainImg;
 	private String mainImgUrl;
 	private String mainImgId;
 	private List<Img> imgs;
 	private List<String> imgIds;
-	// 主分类 {@link} ParentCategory
 	private String parentCategoryId;
-	// 细分类 {@link} Category
 	private String categoryId;
 	private String brandId;
+	private String brandNameCN;
+	private String brandNamEN;
 
 	public Product() {
 
@@ -143,6 +141,22 @@ public class Product {
 
 	public void setBrandId(String brandId) {
 		this.brandId = brandId;
+	}
+
+	public String getBrandNameCN() {
+		return brandNameCN;
+	}
+
+	public void setBrandNameCN(String brandNameCN) {
+		this.brandNameCN = brandNameCN;
+	}
+
+	public String getBrandNamEN() {
+		return brandNamEN;
+	}
+
+	public void setBrandNamEN(String brandNamEN) {
+		this.brandNamEN = brandNamEN;
 	}
 
 }
