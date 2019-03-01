@@ -31,7 +31,7 @@
 		can give the package name where MyBatis can scan and register aliases using 
 		uncapitalized, nonquali ed class names of the Bean. -->
 	<typeAliases>
-		<package name="com.xuwuji.db.eshop.model" />
+		<package name="com.xuwuji.eshop.model" />
 	</typeAliases>
 
 	<!-- MyBatis supports configuring multiple dataSource environments so that 
@@ -131,7 +131,7 @@
 	</environments>
 
 	<mappers>
-		<mapper resource="eshopMapper/NewsMapper.xml" />
+		<mapper resource="mapper/ParentCategoryMapper.xml" />
 	</mappers>
 
 

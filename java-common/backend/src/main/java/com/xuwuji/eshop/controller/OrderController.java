@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,7 +34,7 @@ public class OrderController {
 
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode rootNode = mapper.readTree(orderJsonStr);
-		// ÂæóÂà∞orderÁöÑnodeÔºåÁÑ∂ÂêéËøõË°åËß£Êûê
+		// µ√µΩorderµƒnode£¨»ª∫ÛΩ¯––Ω‚Œˆ
 		JsonNode orderNode = mapper.readTree(rootNode.iterator().next().asText());
 		Order order = new Order();
 		order.setWechatId(orderNode.get("wechatId").asText());
@@ -60,13 +61,46 @@ public class OrderController {
 		return order;
 	}
 
+	@RequestMapping(value = "/getOrderInfoById/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Order> getOrderInfoById(@PathVariable("id") String id, HttpServletRequest request,
+			HttpServletResponse response) {
+		System.out.println("getOrderInfoById");
+		ArrayList<Order> orders = new ArrayList<Order>();
+		List<OrderItem> orderItemsList = new ArrayList<OrderItem>();
+		OrderItem item = new OrderItem();
+		item.setCount(10);
+		item.setName("channel");
+		item.setMainImgUrl("http://i1.bvimg.com/677237/ac5d93a8cd171dfe.jpg");
+		item.setId(20);
+		item.setOrderId("23124124124");
+		OrderItem item2 = new OrderItem();
+		item2.setCount(30);
+		item2.setName("channel");
+		item2.setMainImgUrl("http://i1.bvimg.com/677237/4919e3469f3e4e6b.jpg");
+		item2.setId(30);
+		item2.setOrderId("23124124124");
+		orderItemsList.add(item);
+		orderItemsList.add(item2);
+		Order order = new Order();
+		order.setAddress("dasd");
+		order.setStatus("0");
+		order.setAmount(100);
+		order.setOrderId("23124124124");
+		order.setTime(new Date());
+		order.setOrderItemsList(orderItemsList);
+		order.setTime(new Date());
+		orders.add(order);
+		return orders;
+	}
+
 	@RequestMapping(value = "/getOrderInfoByUserAndStatus", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Order> getOrderInfoByUserAndStatus(@RequestParam("openId") String openId,
 			@RequestParam("orderStatus") String orderStatus, HttpServletRequest request, HttpServletResponse response) {
 		ArrayList<Order> orders = new ArrayList<Order>();
-		//String openId = (String) request.getAttribute("openId");
-		//String orderStatus = (String) request.getAttribute("orderStatus");
+		// String openId = (String) request.getAttribute("openId");
+		// String orderStatus = (String) request.getAttribute("orderStatus");
 		if (orderStatus == null || orderStatus.isEmpty()) {
 			orderStatus = "0";
 		}

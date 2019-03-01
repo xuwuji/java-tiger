@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.xuwuji.eshop.db.mapper.ParentCategoryMapper">
+
+	<!-- <cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true" 
+		type="org.mybatis.caches.redis.RedisCache" /> -->
+
+	<resultMap type="ParentCategory" id="parentCategoryResult">
+		<id property="id" column="id"></id>
+		<result property="name" column="type"></result>
+	</resultMap>
+
+	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into parentCategory (name,state)
+		values(#{name},'0')
+	</insert>
+
+	<update id="disable" parameterType="hashmap">
+		update parentCategory set
+		state='0'
+		where id=#{id};
+	</update>
+
+	<update id="reActive" parameterType="hashmap">
+		update parentCategory set
+		state='1'
+		where id=#{id};
+	</update>
+	
+	<select id="getAll" resultType="ParentCategory">
+		select * from
+		parentCategory;
+	</select>
+
+</mapper>

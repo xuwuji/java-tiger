@@ -164,8 +164,9 @@
 			title : '操作',
 			field : 'id',
 			formatter : function(id) {
-				var html = '<a href="javascript:editBook(' + id + ')">编辑</a>';
-				html += '　<a href="javascript:deleteBook(' + id + ')">删除</a>';
+				var html = '<a href="javascript:edit(' + id + ')">编辑</a>';
+				html += '　<a href="javascript:disable(' + id + ')">下架</a>';
+				html += '　<a href="javascript:reActive(' + id + ')">上架</a>';
 				return html;
 			}
 		}
@@ -199,7 +200,7 @@
 			});
 
 	//编辑操作
-	function editBook(id) {
+	function edit(id) {
 		var row = $table.bootstrapTable('getRowByUniqueId', id);
 		$("#editModal").modal().on("shown.bs.modal", function() {
 			$('#editModalParentCategoryName').val(row.name);
@@ -232,13 +233,30 @@
 				});
 			});
 
-	//删除操作
-	function deleteBook(id) {
-		if (confirm("确定删除此分类吗？")) {
+	//下架操作
+	function disable(id) {
+		if (confirm("确定下架此分类吗？")) {
 			$.ajax({
-				url : "/backend/admin/parentCategory/delete", //url
+				url : "/backend/admin/parentCategory/disable", //url
 				type : "post",
-				//dataType : "json",
+				data : {
+					id : id,
+					type : "single"
+				},
+				success : function(status) {
+					//alert(status);
+					$table.bootstrapTable('refresh');
+				}
+			});
+		}
+	}
+
+	//上架操作
+	function reActive(id) {
+		if (confirm("确定上架此分类吗？")) {
+			$.ajax({
+				url : "/backend/admin/parentCategory/reActive", //url
+				type : "post",
 				data : {
 					id : id,
 					type : "single"
@@ -255,14 +273,14 @@
 	$('#btn-batch-delete').on("click", function() {
 		var rows = $table.bootstrapTable('getSelections');
 		console.log(rows);
-		var ids='';
+		var ids = '';
 		for (var i = 0; i < rows.length; i++) {
 			//console.log(rows[i]);
 			ids += rows[i].id + ',';
 		}
 		ids = ids.substring(0, ids.length - 1);
 		$.ajax({
-			url : "/backend/admin/parentCategory/delete", //url
+			url : "/backend/admin/parentCategory/disable", //url
 			type : "post",
 			//dataType : "json",
 			data : {

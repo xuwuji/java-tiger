@@ -8,10 +8,12 @@ public class Category {
 	private String desc;
 	private String name;
 	private List<Product> products;
-	// å±äºé‚£ä¸€ä¸ªå¤§çš„åˆ†ç±»
+	// ÊôÓÚÄÄÄÇÒ»¸ö´óµÄ·ÖÀà
 	private String parentCategoryId;
 	private String imgId;
 	private String imgUrl;
+	// {@link ActiveStateEnum}
+	private String activeStatus;
 
 	public int getId() {
 		return id;
@@ -67,6 +69,14 @@ public class Category {
 
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
+	}
+
+	public String getActiveStatus() {
+		return activeStatus;
+	}
+
+	public void setActiveStatus(String activeStatus) {
+		this.activeStatus = activeStatus;
 	}
 
 }

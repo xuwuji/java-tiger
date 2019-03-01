@@ -1,4 +1,4 @@
-package com.xuwuji.db.util;
+package com.xuwuji.eshop.db.util;
 
 import java.io.IOException;
 import java.io.InputStream;

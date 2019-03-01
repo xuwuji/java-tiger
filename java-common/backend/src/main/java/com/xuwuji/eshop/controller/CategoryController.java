@@ -22,7 +22,7 @@ import com.xuwuji.eshop.model.Product;
 public class CategoryController {
 
 	/**
-	 * è·å–æŸä¸€ç±»åˆ«çš„æ‰€æœ‰äº§å“
+	 * get »ñÈ¡Ä³Ò»Àà±ğµÄËùÓĞ²úÆ·
 	 * 
 	 * @param id
 	 * @param request
@@ -35,15 +35,15 @@ public class CategoryController {
 			HttpServletRequest request, HttpServletResponse response) {
 		List<Product> products = new ArrayList<Product>();
 		Product product1 = new Product();
-		product1.setName("é˜¿ç›å°¼å”‡é‡‰çº¢ç®¡405");
+		product1.setName("°¢ÂêÄá´½ÓÔºì¹Ü405");
 		product1.setMainImgUrl("http://i2.bvimg.com/677237/cc92d8022c69f686.jpg");
 		product1.setPrice(1.00);
 		Product product2 = new Product();
-		product2.setName("diorè¿ªå¥¥é­…æƒ‘è“é‡‘");
+		product2.setName("diorµÏ°Â÷È»óÀ¶½ğ");
 		product2.setMainImgUrl("http://i2.bvimg.com/677237/03f00d1fa6c72ddc.jpg");
 		product2.setPrice(2);
 		Product product3 = new Product();
-		product3.setName("é›…è¯—å…°é»› å°æ£•ç“¶å¯†é›†ä¿®æŠ¤çœ¼ç²¾åçœ¼éœœ æŠ—çš± ç´§è‡´è½®å»“ æ·¡çœ¼è¢‹å»å¹²ç‡¥");
+		product3.setName("ÑÅÊ«À¼÷ì Ğ¡×ØÆ¿ÃÜ¼¯ĞŞ»¤ÑÛ¾«»ªÑÛËª ¿¹Öå ½ôÖÂÂÖÀª µ­ÑÛ´üÈ¥¸ÉÔï");
 		product3.setMainImgUrl("http://i2.bvimg.com/677237/4a2151eaf802b7f6.jpg");
 		product3.setPrice(3);
 		products.add(product1);
@@ -56,22 +56,58 @@ public class CategoryController {
 		products.add(product2);
 		products.add(product3);
 		if (sort == null || sort.equals("0")) {
-			// é»˜è®¤ç»¼åˆæ’åº
+			// Ä¬ÈÏ×ÛºÏÅÅĞò
 
 		} else if (sort.equals("1")) {
-			// æœ€æ–°æ’åºï¼Œæ·»åŠ æ—¶é—´æœ€æ–°åœ¨å‰
+			// ×îĞÂÅÅĞò£¬Ìí¼ÓÊ±¼ä×îĞÂÔÚÇ°
 
 		} else if (sort.equals("2")) {
-			// ä»·æ ¼æ’åºï¼Œä»ä½åˆ°é«˜
-			
+			// ¼Û¸ñÅÅĞò£¬´ÓµÍµ½¸ß
+
 		} else if (sort.equals("3")) {
-			// é”€é‡æ’åºï¼Œä»é«˜åˆ°ä½
+			// ÏúÁ¿ÅÅĞò£¬´Ó¸ßµ½µÍ
 		}
 		return products;
 	}
 
 	/**
-	 * æŸä¸€å¤§ç±»ä¸‹çš„æ‰€æœ‰å­ç±»
+	 * get »ñÈ¡Ä³Ò»Àà±ğµÄËùÓĞ²úÆ·
+	 * 
+	 * @param id
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/getProductsByCategory/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Product> getProductsByCategoryId(@PathVariable("id") String id, HttpServletResponse response) {
+		List<Product> products = new ArrayList<Product>();
+		Product product1 = new Product();
+		product1.setName("°¢ÂêÄá´½ÓÔºì¹Ü405");
+		product1.setMainImgUrl("http://i2.bvimg.com/677237/cc92d8022c69f686.jpg");
+		product1.setPrice(1.00);
+		Product product2 = new Product();
+		product2.setName("diorµÏ°Â÷È»óÀ¶½ğ");
+		product2.setMainImgUrl("http://i2.bvimg.com/677237/03f00d1fa6c72ddc.jpg");
+		product2.setPrice(2);
+		Product product3 = new Product();
+		product3.setName("ÑÅÊ«À¼÷ì Ğ¡×ØÆ¿ÃÜ¼¯ĞŞ»¤ÑÛ¾«»ªÑÛËª ¿¹Öå ½ôÖÂÂÖÀª µ­ÑÛ´üÈ¥¸ÉÔï");
+		product3.setMainImgUrl("http://i2.bvimg.com/677237/4a2151eaf802b7f6.jpg");
+		product3.setPrice(3);
+		products.add(product1);
+		products.add(product2);
+		products.add(product3);
+		products.add(product1);
+		products.add(product2);
+		products.add(product3);
+		products.add(product1);
+		products.add(product2);
+		products.add(product3);
+		return products;
+	}
+
+	/**
+	 * Ä³Ò»´óÀàÏÂµÄËùÓĞ×ÓÀà
 	 * 
 	 * @param request
 	 * @param response
@@ -81,22 +117,23 @@ public class CategoryController {
 	@ResponseBody
 	public List<Category> getCategoryByParent(@PathVariable("id") String id, HttpServletRequest request,
 			HttpServletResponse response) {
+		System.out.println("getCategoryByParent");
 		List<Category> list = new ArrayList<Category>();
 		Category p1 = new Category();
 		p1.setId(1);
-		p1.setName("å£çº¢è½°è½°è½°è½°çº¢çº¢ç«ç«å“ˆ");
+		p1.setName("¿Úºìºäºäºäºäºìºì»ğ»ğ¹ş");
 		p1.setImgUrl("http://i2.bvimg.com/677237/cc92d8022c69f686.jpg");
 		Category p2 = new Category();
 		p2.setId(2);
-		p2.setName("è…®çº¢");
+		p2.setName("Èùºì");
 		p2.setImgUrl("http://i2.bvimg.com/677237/0bd325eec9cfc236.jpg");
 		Category p3 = new Category();
 		p3.setId(3);
-		p3.setName("çœ¼å½±");
+		p3.setName("ÑÛÓ°");
 		p3.setImgUrl("http://i2.bvimg.com/677237/bbfc8004ae1002ec.jpg");
 		Category p4 = new Category();
 		p4.setId(4);
-		p4.setName("ç«æ¯›è†");
+		p4.setName("½ŞÃ«¸à");
 		p4.setImgUrl("http://i2.bvimg.com/677237/397b36648587defc.jpg");
 		list.add(p1);
 		list.add(p2);
@@ -167,16 +204,16 @@ public class CategoryController {
 		List<ParentCategory> list = new ArrayList<ParentCategory>();
 		ParentCategory p1 = new ParentCategory();
 		p1.setId(1);
-		p1.setName("ç¾å¦†");
+		p1.setName("ÃÀ×±");
 		ParentCategory p2 = new ParentCategory();
 		p2.setId(2);
-		p2.setName("æŠ¤è‚¤");
+		p2.setName("»¤·ô");
 		ParentCategory p3 = new ParentCategory();
 		p3.setId(3);
-		p3.setName("ä¸ªäººæŠ¤ç†");
+		p3.setName("¸öÈË»¤Àí");
 		ParentCategory p4 = new ParentCategory();
 		p4.setId(4);
-		p4.setName("æ¯å©´å¹¼å„¿");
+		p4.setName("Ä¸Ó¤Ó×¶ù");
 		list.add(p1);
 		list.add(p2);
 		list.add(p3);
