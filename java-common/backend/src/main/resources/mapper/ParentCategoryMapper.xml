@@ -12,6 +12,7 @@
 	<resultMap type="ParentCategory" id="parentCategoryResult">
 		<id property="id" column="id"></id>
 		<result property="name" column="type"></result>
+		<result property="state" column="state"></result>
 	</resultMap>
 
 	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"

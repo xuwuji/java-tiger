@@ -3,7 +3,7 @@ package com.xuwuji.eshop.model;
 import java.util.List;
 
 /**
- * 商品信息
+ *
  * 
  * @author xuwuji
  *
@@ -12,7 +12,7 @@ public class Product {
 
 	private int id;
 	private String name;
-	private String desc;
+	private String description;
 	private double price;
 	private int inventory;
 	private int salesCount;
@@ -25,7 +25,8 @@ public class Product {
 	private String categoryId;
 	private String brandId;
 	private String brandNameCN;
-	private String brandNamEN;
+	private String brandNameEN;
+	private String state;
 
 	public Product() {
 
@@ -47,12 +48,12 @@ public class Product {
 		this.name = name;
 	}
 
-	public String getDesc() {
-		return desc;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public double getPrice() {
@@ -151,12 +152,20 @@ public class Product {
 		this.brandNameCN = brandNameCN;
 	}
 
-	public String getBrandNamEN() {
-		return brandNamEN;
+	public String getBrandNameEN() {
+		return brandNameEN;
 	}
 
-	public void setBrandNamEN(String brandNamEN) {
-		this.brandNamEN = brandNamEN;
+	public void setBrandNameEN(String brandNameEN) {
+		this.brandNameEN = brandNameEN;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 
 }

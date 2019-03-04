@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuwuji.eshop.db.mapper.CategoryMapper">
+
+	<!-- <cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true" 
+		type="org.mybatis.caches.redis.RedisCache" /> -->
+
+	<resultMap type="Category" id="categoryResult">
+		<id property="id" column="id"></id>
+		<result property="name" column="type"></result>
+		<result property="description" column="type"></result>
+		<result property="parentCategoryId" column="parentCategoryId"></result>
+		<result property="imgUrl" column="imgUrl"></result>
+		<result property="state" column="type"></result>
+	</resultMap>
+
+	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into category (name,description,parentCategoryId,
+		imgUrl,state)
+		values(#{name},#{description},#{parentCategoryId},#{imgUrl},'0')
+	</insert>
+
+	<update id="disable" parameterType="hashmap">
+		update category set
+		state='0'
+		where id=#{id};
+	</update>
+
+	<update id="reActive" parameterType="hashmap">
+		update category set
+		state='1'
+		where id=#{id};
+	</update>
+
+	<select id="getAll" resultType="Category">
+		select * from
+		category;
+	</select>
+
+
+	<update id="update" parameterType="hashmap">
+		update category set
+		name=#{name},description=#{description},parentCategoryId=#{parentCategoryId},
+		imgUrl=#{imgUrl}
+		where id=#{id};
+	</update>
+
+	<select id="getByParent" resultType="Category"
+		parameterType="hashmap">
+		select * from
+		category where
+		parentCategoryId=#{parentCategoryId}; ;
+	</select>
+</mapper>

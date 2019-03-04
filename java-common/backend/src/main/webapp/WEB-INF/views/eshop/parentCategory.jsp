@@ -42,8 +42,8 @@
 	</div>
 
 	<div id="toolbar" class="btn-group">
-		<button id="btn-batch-delete" type="button" class="btn">
-			<span aria-hidden="true" class="icon icon-plus-sign"></span>批量删除
+		<button id="btn-batch-disable" type="button" class="btn">
+			<span aria-hidden="true" class="icon icon-plus-sign"></span>批量下架
 		</button>
 	</div>
 	<!--bootstrap-table表格-->
@@ -141,7 +141,7 @@
 		//queryParams : oTableInit.queryParams,//传递参数（*）
 		sidePagination : "client", //分页方式：client客户端分页，server服务端分页（*）
 		pageNumber : 1, //初始化加载第一页，默认第一页
-		pageSize : 5, //每页的记录行数（*）
+		pageSize : 10, //每页的记录行数（*）
 		pageList : [ 10, 25, 50, 100 ], //可供选择的每页的行数（*）
 		search : true, //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
 		showColumns : true, //是否显示所有的列
@@ -158,8 +158,23 @@
 			align : 'center'
 		}, {
 			field : 'name',
-			title : 'name',
+			title : '名称',
 			align : 'center'
+		}, {
+			field : 'state',
+			title : '状态',
+			align : 'center',
+			formatter : function(value, row, index) {
+				if (row.state) {
+					if (row.state == '0') {
+						return "已下架";
+					} else if (row.state == '1') {
+						return "已上架";
+					} else {
+						return "错误数据";
+					}
+				}
+			}
 		}, {
 			title : '操作',
 			field : 'id',
@@ -193,7 +208,6 @@
 							+ parentCategoryName, //url
 					type : "get",
 					success : function(status) {
-						//alert(status);
 						$table.bootstrapTable('refresh');
 					}
 				});
@@ -227,7 +241,6 @@
 						name : editModalParentCategoryName
 					},
 					success : function(status) {
-						//alert(status);
 						$table.bootstrapTable('refresh');
 					}
 				});
@@ -244,7 +257,6 @@
 					type : "single"
 				},
 				success : function(status) {
-					//alert(status);
 					$table.bootstrapTable('refresh');
 				}
 			});
@@ -262,7 +274,6 @@
 					type : "single"
 				},
 				success : function(status) {
-					//alert(status);
 					$table.bootstrapTable('refresh');
 				}
 			});
@@ -270,30 +281,25 @@
 	}
 
 	/* 批量删除 */
-	$('#btn-batch-delete').on("click", function() {
+	$('#btn-batch-disable').on("click", function() {
 		var rows = $table.bootstrapTable('getSelections');
 		console.log(rows);
 		var ids = '';
 		for (var i = 0; i < rows.length; i++) {
-			//console.log(rows[i]);
 			ids += rows[i].id + ',';
 		}
 		ids = ids.substring(0, ids.length - 1);
 		$.ajax({
 			url : "/backend/admin/parentCategory/disable", //url
 			type : "post",
-			//dataType : "json",
 			data : {
 				id : ids,
 				type : "batch"
 			},
 			success : function(status) {
-				//alert(status);
 				$table.bootstrapTable('refresh');
 			}
 		});
-		//$table.bootstrapTable('refresh');
-
 	});
 </script>
 </html>

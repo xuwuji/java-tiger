@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.xuwuji.eshop.db.dao.CategoryDao;
 import com.xuwuji.eshop.model.Category;
 import com.xuwuji.eshop.model.ParentCategory;
 import com.xuwuji.eshop.model.Product;
@@ -20,6 +22,8 @@ import com.xuwuji.eshop.model.Product;
 @Controller
 @RequestMapping(value = "/category")
 public class CategoryController {
+	@Autowired
+	private CategoryDao categoryDao;
 
 	/**
 	 * get 获取某一类别的所有产品
@@ -118,83 +122,10 @@ public class CategoryController {
 	public List<Category> getCategoryByParent(@PathVariable("id") String id, HttpServletRequest request,
 			HttpServletResponse response) {
 		System.out.println("getCategoryByParent");
+		System.out.println("id:"+id);
 		List<Category> list = new ArrayList<Category>();
-		Category p1 = new Category();
-		p1.setId(1);
-		p1.setName("口红轰轰轰轰红红火火哈");
-		p1.setImgUrl("http://i2.bvimg.com/677237/cc92d8022c69f686.jpg");
-		Category p2 = new Category();
-		p2.setId(2);
-		p2.setName("腮红");
-		p2.setImgUrl("http://i2.bvimg.com/677237/0bd325eec9cfc236.jpg");
-		Category p3 = new Category();
-		p3.setId(3);
-		p3.setName("眼影");
-		p3.setImgUrl("http://i2.bvimg.com/677237/bbfc8004ae1002ec.jpg");
-		Category p4 = new Category();
-		p4.setId(4);
-		p4.setName("睫毛膏");
-		p4.setImgUrl("http://i2.bvimg.com/677237/397b36648587defc.jpg");
-		list.add(p1);
-		list.add(p2);
-		list.add(p3);
-		list.add(p4);
-		list.add(p1);
-		list.add(p2);
-		list.add(p3);
-		list.add(p4);
-		list.add(p1);
-		list.add(p2);
-		list.add(p3);
-		list.add(p4);
-		list.add(p1);
-		list.add(p2);
-		list.add(p3);
-		list.add(p4);
-		list.add(p1);
-		list.add(p2);
-		list.add(p3);
-		list.add(p4);
-		list.add(p1);
-		list.add(p2);
-		list.add(p3);
-		list.add(p4);
-		list.add(p1);
-		list.add(p2);
-		list.add(p3);
-		list.add(p4);
-		list.add(p1);
-		list.add(p2);
-		list.add(p3);
-		list.add(p4);
-		list.add(p1);
-		list.add(p2);
-		list.add(p3);
-		list.add(p4);
-		list.add(p1);
-		list.add(p2);
-		list.add(p3);
-		list.add(p4);
-		list.add(p1);
-		list.add(p2);
-		list.add(p3);
-		list.add(p4);
-		list.add(p1);
-		list.add(p2);
-		list.add(p3);
-		list.add(p4);
-
-		if (id.equals("2")) {
-			list = new ArrayList<Category>();
-			list.add(p1);
-		} else if (id.equals("3")) {
-			list = new ArrayList<Category>();
-			list.add(p2);
-		} else if (id.equals("4")) {
-			list = new ArrayList<Category>();
-			list.add(p3);
-		}
-
+		list=categoryDao.getByParent(id);
+		System.out.println(list);
 		return list;
 	}
 

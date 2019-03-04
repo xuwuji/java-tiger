@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.jboss.netty.util.internal.StringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.xuwuji.eshop.db.dao.CategoryDao;
+import com.xuwuji.eshop.db.dao.ParentCategoryDao;
 import com.xuwuji.eshop.model.Category;
 import com.xuwuji.eshop.model.ParentCategory;
 
@@ -27,6 +30,8 @@ import com.xuwuji.eshop.model.ParentCategory;
 @Controller
 @RequestMapping(value = "/admin/category")
 public class AdminCategoryController {
+	@Autowired
+	private CategoryDao categoryDao;
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
@@ -40,44 +45,50 @@ public class AdminCategoryController {
 		String desc = request.getParameter("desc");
 		String parentCategoryId = request.getParameter("parentCategoryId");
 		String imgUrl = request.getParameter("imgUrl");
-		System.out.println(name);
-		System.out.println(desc);
-		System.out.println(parentCategoryId);
 		System.out.println(imgUrl);
+		System.out.println(parentCategoryId);
+		Category category = new Category();
+		category.setDescription(desc);
+		category.setName(name);
+		category.setImgUrl(imgUrl);
+		category.setParentCategoryId(parentCategoryId);
+		categoryDao.add(category);
 	}
 
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	@RequestMapping(value = "/disable", method = RequestMethod.POST)
 	@ResponseBody
 	public void delete(HttpServletRequest request, HttpServletResponse response) {
 		String id = request.getParameter("id");
 		String type = request.getParameter("type");
 		// 单条删除
 		if (type.equals("single")) {
-
+			categoryDao.disable(id);
 		}
 		// 批量删除
 		else if (type.equals("batch")) {
 			List<String> ids = Arrays.asList(id.split(","));
-			System.out.println(ids);
+			for (String i : ids) {
+				categoryDao.disable(i);
+			}
 		}
-		System.out.println(id);
 	}
-	
+
 	@RequestMapping(value = "/reActive", method = RequestMethod.POST)
 	@ResponseBody
 	public void reActive(HttpServletRequest request, HttpServletResponse response) {
 		String id = request.getParameter("id");
 		String type = request.getParameter("type");
-		// 单条删除
+		// 单条上架
 		if (type.equals("single")) {
-
+			categoryDao.reActive(id);
 		}
-		// 批量删除
+		// 批量上架
 		else if (type.equals("batch")) {
 			List<String> ids = Arrays.asList(id.split(","));
-			System.out.println(ids);
+			for (String i : ids) {
+				categoryDao.reActive(i);
+			}
 		}
-		System.out.println(id);
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
@@ -85,9 +96,16 @@ public class AdminCategoryController {
 	public void update(HttpServletRequest request, HttpServletResponse response) {
 		String id = request.getParameter("id");
 		String name = request.getParameter("name");
-		System.out.println(id);
-		System.out.println(name);
-
+		String desc = request.getParameter("desc");
+		String parentCategoryId = request.getParameter("parentCategoryId");
+		String imgUrl = request.getParameter("imgUrl");
+		Category category = new Category();
+		category.setId(Integer.valueOf(id));
+		category.setDescription(desc);
+		category.setName(name);
+		category.setImgUrl(imgUrl);
+		category.setParentCategoryId(parentCategoryId);
+		categoryDao.update(category);
 	}
 
 }

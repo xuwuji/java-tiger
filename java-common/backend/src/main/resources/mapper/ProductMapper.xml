@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuwuji.eshop.db.mapper.ProductMapper">
+
+	<resultMap type="Product" id="productResult">
+		<id property="id" column="id"></id>
+		<result property="name" column="type"></result>
+		<result property="description" column="type"></result>
+		<result property="inventory" column="type"></result>
+		<result property="salesCount" column="type"></result>
+		<result property="mainImgUrl" column="type"></result>
+		<result property="parentCategoryId" column="type"></result>
+		<result property="categoryId" column="type"></result>
+		<result property="brandNameCN" column="type"></result>
+		<result property="brandNamEN" column="type"></result>
+		<result property="state" column="type"></result>
+	</resultMap>
+
+	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into product
+		(name,description,inventory,salesCount,mainImgUrl,parentCategoryId,categoryId,
+		brandNameCN,brandNamEN,state)
+		values(#{name},#{description},#{inventory},#{salesCount},#{mainImgUrl},#{parentCategoryId},#{categoryId},#{brandNameCN},#{brandNameEN},'0')
+	</insert>
+
+	<update id="disable" parameterType="hashmap">
+		update product set
+		state='0'
+		where id=#{id};
+	</update>
+
+	<update id="reActive" parameterType="hashmap">
+		update product set
+		state='1'
+		where id=#{id};
+	</update>
+
+	<update id="update" parameterType="hashmap">
+		update category set
+		name=#{name},description=#{description},inventory=#{inventory},
+		salesCount=#{salesCount},mainImgUrl=#{mainImgUrl},parentCategoryId=#{parentCategoryId},
+		categoryId=#{categoryId},brandNameCN=#{brandNameCN},brandNamEN=#{brandNamEN},
+		where id=#{id};
+	</update>
+
+	<select id="getByCategory" resultType="Product"
+		parameterType="hashmap">
+		select * from
+		product where
+		categoryId=#{categoryId}; ;
+	</select>
+</mapper>

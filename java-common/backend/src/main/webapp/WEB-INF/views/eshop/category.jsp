@@ -56,12 +56,12 @@
 	</div>
 
 	<div class="btn-group">
-		<button id="btn-batch-delete" type="button" class="btn">
-			<span aria-hidden="true" class="icon icon-plus-sign"></span>批量删除
+		<button id="btn-batch-disable" type="button" class="btn">
+			<span aria-hidden="true" class="icon icon-plus-sign"></span>批量下架
 		</button>
 	</div>
 	<div class="btn-group">
-		<button id="btn-batch-delete" type="button" class="btn">
+		<button id="btn-batch-reactive" type="button" class="btn">
 			<span aria-hidden="true" class="icon icon-plus-sign"></span>批量上架
 		</button>
 	</div>
@@ -123,6 +123,11 @@
 					<h4 class="modal-title" id="myModalLabel">编辑</h4>
 				</div>
 				<div class="modal-body">
+					<div class="form-group">
+						<label for="txt_departmentname">子类id</label> <input type="text"
+							data-bind="value:Name" class="form-control" id="edit-categoryId"
+							disabled="disabled">
+					</div>
 					<div class="form-group">
 						<label for="txt_departmentname">子类名称</label> <input type="text"
 							class="form-control" id="edit-categoryName" placeholder="名称">
@@ -196,13 +201,13 @@
 						align : 'center'
 					},
 					{
-						field : 'desc',
+						field : 'description',
 						title : '介绍',
 						align : 'center'
 					},
 					{
-						field : '父类id',
-						title : 'parentCategoryId',
+						field : 'parentCategoryId',
+						title : '父类id',
 						align : 'center'
 					},
 					{
@@ -216,9 +221,20 @@
 						align : 'center'
 					},
 					{
-						field : 'activeStatus',
+						field : 'state',
 						title : '状态',
-						align : 'center'
+						align : 'center',
+						formatter : function(value, row, index) {
+							if (row.state) {
+								if (row.state == '0') {
+									return "已下架";
+								} else if (row.state == '1') {
+									return "已上架";
+								} else {
+									return "错误数据";
+								}
+							}
+						}
 					},
 					{
 						title : '操作',
@@ -272,35 +288,37 @@
 	function editCategory(id) {
 		var row = $table.bootstrapTable('getRowByUniqueId', id);
 		$("#editModal").modal().on("shown.bs.modal", function() {
+			$('#edit-categoryId').val(row.id);
 			$('#edit-categoryName').val(row.name);
-			$('#edit-categoryDesc').val(row.desc);
+			$('#edit-categoryDesc').val(row.description);
 			$('#edit-categoryImgUrl').val(row.imgUrl);
 		});
 		console.log(row);
 	}
 
 	/* 提交变更 */
-	$('#btn_edit_submit').on(
-			"click",
-			function() {
-				console.log($('#editModalParentCategoryId').val());
-				var editModalParentCategoryId = $('#editModalParentCategoryId')
-						.val();
-				var editModalParentCategoryName = $(
-						'#editModalParentCategoryName').val();
-				$.ajax({
-					url : "/backend/admin/category/update",
-					type : "post",
-					data : {
-						id : editModalParentCategoryId,
-						name : editModalParentCategoryName
-					},
-					success : function(status) {
-						$table.bootstrapTable('destroy');
-						initTable(parentCategoryId);
-					}
-				});
-			});
+	$('#btn_edit_submit').on("click", function() {
+		var id = $('#edit-categoryId').val();
+		var parentCategoryId = $(".selectpicker").val();
+		var name = $('#edit-categoryName').val();
+		var desc = $('#edit-categoryDesc').val();
+		var imgUrl = $('#edit-categoryImgUrl').val();
+		$.ajax({
+			url : "/backend/admin/category/update",
+			type : "post",
+			data : {
+				id : id,
+				name : name,
+				desc : desc,
+				imgUrl : imgUrl,
+				parentCategoryId : parentCategoryId,
+			},
+			success : function(status) {
+				$table.bootstrapTable('destroy');
+				initTable(parentCategoryId);
+			}
+		});
+	});
 
 	//删除操作
 	function deleteCategory(id) {
@@ -314,7 +332,6 @@
 					type : "single"
 				},
 				success : function(status) {
-					alert(status);
 					$table.bootstrapTable('destroy');
 					initTable(parentCategoryId);
 				}
@@ -334,7 +351,6 @@
 					type : "single"
 				},
 				success : function(status) {
-					alert(status);
 					$table.bootstrapTable('destroy');
 					initTable(parentCategoryId);
 				}
@@ -366,8 +382,8 @@
 		});
 	});
 
-	/* 批量删除 */
-	$('#btn-batch-delete').on("click", function() {
+	/* 批量下架 */
+	$('#btn-batch-disable').on("click", function() {
 		var rows = $table.bootstrapTable('getSelections');
 		var parentCategoryId = $(".selectpicker").val();
 		console.log(rows);
@@ -378,17 +394,15 @@
 		}
 		ids = ids.substring(0, ids.length - 1);
 		$.ajax({
-			url : "/backend/admin/category/delete", //url
+			url : "/backend/admin/category/disable", //url
 			type : "post",
 			data : {
 				id : ids,
 				type : "batch"
 			},
 			success : function(status) {
-				alert("ds");
 				$table.bootstrapTable('destroy');
 				initTable(parentCategoryId);
-				console.log(parentCategoryId);
 			}
 		});
 	});

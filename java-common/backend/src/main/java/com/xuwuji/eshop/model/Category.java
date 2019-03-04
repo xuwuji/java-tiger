@@ -5,7 +5,7 @@ import java.util.List;
 public class Category {
 
 	private int id;
-	private String desc;
+	private String description;
 	private String name;
 	private List<Product> products;
 	// 属于哪那一个大的分类
@@ -13,7 +13,7 @@ public class Category {
 	private String imgId;
 	private String imgUrl;
 	// {@link ActiveStateEnum}
-	private String activeStatus;
+	private String state;
 
 	public int getId() {
 		return id;
@@ -23,12 +23,12 @@ public class Category {
 		this.id = id;
 	}
 
-	public String getDesc() {
-		return desc;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public String getName() {
@@ -71,12 +71,19 @@ public class Category {
 		this.imgUrl = imgUrl;
 	}
 
-	public String getActiveStatus() {
-		return activeStatus;
+	public String getState() {
+		return state;
 	}
 
-	public void setActiveStatus(String activeStatus) {
-		this.activeStatus = activeStatus;
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	@Override
+	public String toString() {
+		return "Category [id=" + id + ", description=" + description + ", name=" + name + ", products=" + products
+				+ ", parentCategoryId=" + parentCategoryId + ", imgId=" + imgId + ", imgUrl=" + imgUrl + ", state="
+				+ state + "]";
 	}
 
 }
