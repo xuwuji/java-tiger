@@ -5,9 +5,6 @@
 
 <mapper namespace="com.xuwuji.eshop.db.mapper.CategoryMapper">
 
-	<!-- <cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true" 
-		type="org.mybatis.caches.redis.RedisCache" /> -->
-
 	<resultMap type="Category" id="categoryResult">
 		<id property="id" column="id"></id>
 		<result property="name" column="type"></result>
@@ -15,13 +12,14 @@
 		<result property="parentCategoryId" column="parentCategoryId"></result>
 		<result property="imgUrl" column="imgUrl"></result>
 		<result property="state" column="type"></result>
+		<result property="recommend" column="type"></result>
 	</resultMap>
 
 	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
 		keyProperty="id">
 		insert into category (name,description,parentCategoryId,
-		imgUrl,state)
-		values(#{name},#{description},#{parentCategoryId},#{imgUrl},'0')
+		imgUrl,state,recommend)
+		values(#{name},#{description},#{parentCategoryId},#{imgUrl},'0','0');
 	</insert>
 
 	<update id="disable" parameterType="hashmap">
@@ -36,9 +34,27 @@
 		where id=#{id};
 	</update>
 
+	<update id="disRecommend" parameterType="hashmap">
+		update category set
+		recommend='0'
+		where id=#{id};
+	</update>
+
+	<update id="recommend" parameterType="hashmap">
+		update category set
+		recommend='1'
+		where id=#{id};
+	</update>
+
 	<select id="getAll" resultType="Category">
 		select * from
 		category;
+	</select>
+
+	<select id="getRecommend" resultType="Category">
+		select * from
+		category where
+		recommend='1';
 	</select>
 
 
@@ -49,14 +65,13 @@
 		where id=#{id};
 	</update>
 
-	<select id="getByParent" resultType="Category"
-		parameterType="hashmap">
+	<select id="getByParent" resultType="Category" parameterType="hashmap">
 		select * from
 		category where
 		parentCategoryId=#{parentCategoryId}; ;
 	</select>
-	
-		<select id="getActiveByParent" resultType="Category"
+
+	<select id="getActiveByParent" resultType="Category"
 		parameterType="hashmap">
 		select * from
 		category where

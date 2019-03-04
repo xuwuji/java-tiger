@@ -13,10 +13,16 @@ public interface CategoryMapper {
 
 	public void reActive(HashMap<String, Object> map);
 
+	public void disRecommend(HashMap<String, Object> map);
+
+	public void recommend(HashMap<String, Object> map);
+
 	public void update(HashMap<String, Object> map);
 
 	public List<Category> getByParent(HashMap<String, Object> map);
-	
+
 	public List<Category> getActiveByParent(HashMap<String, Object> map);
+
+	public List<Category> getRecommend();
 
 }

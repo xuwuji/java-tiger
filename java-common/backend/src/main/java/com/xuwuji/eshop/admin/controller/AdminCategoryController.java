@@ -22,7 +22,7 @@ import com.xuwuji.eshop.model.Category;
 import com.xuwuji.eshop.model.ParentCategory;
 
 /**
- * category子分类控制
+ * 
  * 
  * @author xuwuji
  *
@@ -60,12 +60,9 @@ public class AdminCategoryController {
 	public void delete(HttpServletRequest request, HttpServletResponse response) {
 		String id = request.getParameter("id");
 		String type = request.getParameter("type");
-		// 单条删除
 		if (type.equals("single")) {
 			categoryDao.disable(id);
-		}
-		// 批量删除
-		else if (type.equals("batch")) {
+		} else if (type.equals("batch")) {
 			List<String> ids = Arrays.asList(id.split(","));
 			for (String i : ids) {
 				categoryDao.disable(i);
@@ -78,15 +75,42 @@ public class AdminCategoryController {
 	public void reActive(HttpServletRequest request, HttpServletResponse response) {
 		String id = request.getParameter("id");
 		String type = request.getParameter("type");
-		// 单条上架
 		if (type.equals("single")) {
 			categoryDao.reActive(id);
-		}
-		// 批量上架
-		else if (type.equals("batch")) {
+		} else if (type.equals("batch")) {
 			List<String> ids = Arrays.asList(id.split(","));
 			for (String i : ids) {
 				categoryDao.reActive(i);
+			}
+		}
+	}
+
+	@RequestMapping(value = "/disRecommend", method = RequestMethod.POST)
+	@ResponseBody
+	public void disRecommend(HttpServletRequest request, HttpServletResponse response) {
+		String id = request.getParameter("id");
+		String type = request.getParameter("type");
+		if (type.equals("single")) {
+			categoryDao.disRecommend(id);
+		} else if (type.equals("batch")) {
+			List<String> ids = Arrays.asList(id.split(","));
+			for (String i : ids) {
+				categoryDao.disRecommend(i);
+			}
+		}
+	}
+
+	@RequestMapping(value = "/recommend", method = RequestMethod.POST)
+	@ResponseBody
+	public void recommend(HttpServletRequest request, HttpServletResponse response) {
+		String id = request.getParameter("id");
+		String type = request.getParameter("type");
+		if (type.equals("single")) {
+			categoryDao.recommend(id);
+		} else if (type.equals("batch")) {
+			List<String> ids = Arrays.asList(id.split(","));
+			for (String i : ids) {
+				categoryDao.recommend(i);
 			}
 		}
 	}

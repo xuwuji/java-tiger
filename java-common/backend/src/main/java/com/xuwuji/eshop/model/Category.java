@@ -8,12 +8,12 @@ public class Category {
 	private String description;
 	private String name;
 	private List<Product> products;
-	// 属于哪那一个大的分类
 	private String parentCategoryId;
 	private String imgId;
 	private String imgUrl;
 	// {@link ActiveStateEnum}
 	private String state;
+	private String recommend;
 
 	public int getId() {
 		return id;
@@ -79,11 +79,19 @@ public class Category {
 		this.state = state;
 	}
 
+	public String getRecommend() {
+		return recommend;
+	}
+
+	public void setRecommend(String recommend) {
+		this.recommend = recommend;
+	}
+
 	@Override
 	public String toString() {
 		return "Category [id=" + id + ", description=" + description + ", name=" + name + ", products=" + products
 				+ ", parentCategoryId=" + parentCategoryId + ", imgId=" + imgId + ", imgUrl=" + imgUrl + ", state="
-				+ state + "]";
+				+ state + ", recommend=" + recommend + "]";
 	}
 
 }

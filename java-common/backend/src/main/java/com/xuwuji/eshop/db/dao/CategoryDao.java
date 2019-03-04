@@ -65,6 +65,38 @@ public class CategoryDao {
 		}
 	};
 
+	public void disRecommend(String id) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			CategoryMapper mapper = session.getMapper(CategoryMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("id", id);
+			mapper.disRecommend(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+	};
+
+	public void recommend(String id) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			CategoryMapper mapper = session.getMapper(CategoryMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("id", id);
+			mapper.recommend(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+	};
+
 	public void update(Category category) {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
@@ -121,4 +153,19 @@ public class CategoryDao {
 		return result;
 	}
 
+	public List<Category> getRecommend() {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<Category> result = new ArrayList<Category>();
+		try {
+			CategoryMapper mapper = session.getMapper(CategoryMapper.class);
+			result = mapper.getRecommend();
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
 }

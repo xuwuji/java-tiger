@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuwuji.eshop.db.mapper.BannerItemMapper">
+
+	<resultMap type="BannerItem" id="bannerItemResult">
+		<id property="id" column="id"></id>
+		<result property="name" column="type"></result>
+		<result property="imgUrl" column="type"></result>
+		<result property="redirectUrl" column="type"></result>
+		<result property="bannerId" column="type"></result>
+		<result property="state" column="state"></result>
+	</resultMap>
+
+	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into bannerItem
+		(name,imgUrl,redirectUrl,bannerId,state)
+		values(#{name},#{imgUrl},#{redirectUrl},#{bannerId},'0')
+	</insert>
+
+	<update id="update" parameterType="hashmap">
+		update bannerItem set
+		name=#{name},imgUrl=#{imgUrl},redirectUrl=#{redirectUrl},
+		bannerId=#{bannerId}
+		where id=#{id};
+	</update>
+
+	<update id="disable" parameterType="hashmap">
+		update bannerItem set
+		state='0'
+		where id=#{id};
+	</update>
+
+	<update id="reActive" parameterType="hashmap">
+		update bannerItem set
+		state='1'
+		where id=#{id};
+	</update>
+
+	<select id="getAll" resultType="BannerItem">
+		select * from
+		bannerItem;
+	</select>
+
+	<select id="getActiveAllByBannerId" parameterType="hashmap"
+		resultType="BannerItem">
+		select * from
+		bannerItem where bannerId=#{bannerId} and
+		state='1';
+	</select>
+
+</mapper>
