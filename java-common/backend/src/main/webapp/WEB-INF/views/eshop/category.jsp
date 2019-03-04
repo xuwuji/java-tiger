@@ -320,12 +320,12 @@
 		});
 	});
 
-	//删除操作
+	//下架
 	function deleteCategory(id) {
 		var parentCategoryId = $(".selectpicker").val();
 		if (confirm("确定删除此分类吗？")) {
 			$.ajax({
-				url : "/backend/admin/category/delete", //url
+				url : "/backend/admin/category/disable", //url
 				type : "post",
 				data : {
 					id : id,

@@ -63,12 +63,12 @@
 	</div>
 
 	<div class="btn-group">
-		<button id="btn-batch-delete" type="button" class="btn">
-			<span aria-hidden="true" class="icon icon-plus-sign"></span>批量删除
+		<button id="btn-batch-disable" type="button" class="btn">
+			<span aria-hidden="true" class="icon icon-plus-sign"></span>批量下架
 		</button>
 	</div>
 	<div class="btn-group">
-		<button id="btn-batch-delete" type="button" class="btn">
+		<button id="btn-batch-reActive" type="button" class="btn">
 			<span aria-hidden="true" class="icon icon-plus-sign"></span>批量上架
 		</button>
 	</div>
@@ -101,7 +101,7 @@
 					</div>
 					<div class="form-group">
 						<label for="txt_departmentname">商品价格</label> <input type="text"
-							class="form-control" id="productPrice" placeholder="图片Url">
+							class="form-control" id="productPrice" placeholder="商品价格">
 					</div>
 					<div class="form-group">
 						<label for="txt_departmentname">商品库存</label> <input type="text"
@@ -123,6 +123,16 @@
 					<div class="form-group">
 						<label for="txt_departmentname">品牌英文名</label> <input type="text"
 							class="form-control" id="productBrandNameEN" placeholder="品牌英文名">
+					</div>
+					<div class="form-group">
+						<label for="txt_departmentname">大类id</label> <input type="text"
+							class="form-control" id="add-parentCategoryId" placeholder="大类id"
+							disabled="disabled">
+					</div>
+					<div class="form-group">
+						<label for="txt_departmentname">子类id</label> <input type="text"
+							class="form-control" id="add-categoryId" placeholder="子类id"
+							disabled="disabled">
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -153,6 +163,11 @@
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
+						<label for="txt_departmentname">商品id</label> <input type="text"
+							class="form-control" id="edit-productId" placeholder="商品id"
+							disabled="disabled">
+					</div>
+					<div class="form-group">
 						<label for="txt_departmentname">商品名称</label> <input type="text"
 							class="form-control" id="edit-productName" placeholder="名称">
 					</div>
@@ -162,7 +177,7 @@
 					</div>
 					<div class="form-group">
 						<label for="txt_departmentname">商品价格</label> <input type="text"
-							class="form-control" id="edit-productPrice" placeholder="图片Url">
+							class="form-control" id="edit-productPrice" placeholder="商品价格">
 					</div>
 					<div class="form-group">
 						<label for="txt_departmentname">商品库存</label> <input type="text"
@@ -188,6 +203,16 @@
 						<label for="txt_departmentname">品牌英文名</label> <input type="text"
 							class="form-control" id="edit-productBrandNameEN"
 							placeholder="品牌英文名">
+					</div>
+					<div class="form-group">
+						<label for="txt_departmentname">大类id</label> <input type="text"
+							class="form-control" id="edit-parentCategoryId"
+							placeholder="大类id" disabled="disabled">
+					</div>
+					<div class="form-group">
+						<label for="txt_departmentname">子类id</label> <input type="text"
+							class="form-control" id="edit-categoryId" placeholder="子类id"
+							disabled="disabled">
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -251,7 +276,7 @@
 						align : 'center'
 					},
 					{
-						field : 'desc',
+						field : 'description',
 						title : '介绍',
 						align : 'center'
 					},
@@ -296,9 +321,20 @@
 						align : 'center'
 					},
 					{
-						field : 'activeStatus',
+						field : 'state',
 						title : '状态',
-						align : 'center'
+						align : 'center',
+						formatter : function(value, row, index) {
+							if (row.state) {
+								if (row.state == '0') {
+									return "已下架";
+								} else if (row.state == '1') {
+									return "已上架";
+								} else {
+									return "错误数据";
+								}
+							}
+						}
 					},
 					{
 						title : '操作',
@@ -322,24 +358,25 @@
 	$('#btn-add').on("click", function() {
 		$table.bootstrapTable('refresh');
 		$("#myModal").modal().on("shown.bs.modal", function() {
-
+			var parentCategoryId = $("#selectpicker-parent").val();
+			var categoryId = $("#selectpicker-child").val();
+			$('#add-parentCategoryId').val(parentCategoryId);
+			$('#add-categoryId').val(categoryId);
 		});
 	});
 
 	/* 提交新建的 */
 	$('#btn_submit').on("click", function() {
-		var parentCategoryId = $("#selectpicker-parent").val();
-		var categoryId = $("#selectpicker-child").val();
+		var parentCategoryId = $("#add-parentCategoryId").val();
+		var categoryId = $("#add-categoryId").val();
 		var name = $('#productName').val();
 		var desc = $('#productDesc').val();
 		var price = $('#productPrice').val();
 		var inventory = $('#productInventory').val();
 		var salesCount = $('#productSalesCount').val();
 		var mainImgUrl = $('#productMainImgUrl').val();
-		var parentCategoryId = $('#productParentCategoryId').val();
-		var categoryId = $('#productCategoryId').val();
 		var brandNameCN = $('#productBrandNameCN').val();
-		var brandNamEN = $('#productBrandNamEN').val();
+		var brandNameEN = $('#productBrandNameEN').val();
 		$.ajax({
 			url : "/backend/admin/product/add",
 			type : "post",
@@ -353,7 +390,7 @@
 				parentCategoryId : parentCategoryId,
 				categoryId : categoryId,
 				brandNameCN : brandNameCN,
-				brandNamEN : brandNamEN,
+				brandNameEN : brandNameEN,
 			},
 			success : function(status) {
 				$table.bootstrapTable('destroy');
@@ -366,49 +403,73 @@
 	function editProduct(id) {
 		var row = $table.bootstrapTable('getRowByUniqueId', id);
 		$("#editModal").modal().on("shown.bs.modal", function() {
-			$('#edit-categoryName').val(row.name);
-			$('#edit-categoryDesc').val(row.desc);
-			$('#edit-categoryImgUrl').val(row.imgUrl);
+
+			var parentCategoryId = $("#selectpicker-parent").val();
+			var categoryId = $("#selectpicker-child").val();
+			$('#edit-parentCategoryId').val(parentCategoryId);
+			$('#edit-categoryId').val(categoryId);
+			$('#edit-productId').val(row.id);
+			$('#edit-productName').val(row.name);
+			$('#edit-productDesc').val(row.description);
+			$('#edit-productPrice').val(row.price);
+			$('#edit-productSalesCount').val(row.salesCount);
+			$('#edit-productInventory').val(row.inventory);
+			$('#edit-productMainImgUrl').val(row.mainImgUrl);
+			$('#edit-productBrandNameCN').val(row.brandNameCN);
+			$('#edit-productBrandNameEN').val(row.brandNameEN);
 		});
 		console.log(row);
 	}
 
 	/* 提交变更 */
-	$('#btn_edit_submit').on(
-			"click",
-			function() {
-				console.log($('#editModalParentCategoryId').val());
-				var editModalParentCategoryId = $('#editModalParentCategoryId')
-						.val();
-				var editModalParentCategoryName = $(
-						'#editModalParentCategoryName').val();
-				$.ajax({
-					url : "/backend/admin/category/update",
-					type : "post",
-					data : {
-						id : editModalParentCategoryId,
-						name : editModalParentCategoryName
-					},
-					success : function(status) {
-						$table.bootstrapTable('destroy');
-						initTable(parentCategoryId);
-					}
-				});
-			});
+	$('#btn_edit_submit').on("click", function() {
+		console.log($('#editModalParentCategoryId').val());
+		var parentCategoryId = $("#edit-parentCategoryId").val();
+		var categoryId = $("#edit-categoryId").val();
+		var name = $('#edit-productName').val();
+		var desc = $('#edit-productDesc').val();
+		var price = $('#edit-productPrice').val();
+		var inventory = $('#edit-productInventory').val();
+		var salesCount = $('#edit-productSalesCount').val();
+		var mainImgUrl = $('#edit-productMainImgUrl').val();
+		var brandNameCN = $('#edit-productBrandNameCN').val();
+		var brandNameEN = $('#edit-productBrandNameEN').val();
+		var id = $('#edit-productId').val();
+		$.ajax({
+			url : "/backend/admin/product/update",
+			type : "post",
+			data : {
+				id : id,
+				name : name,
+				desc : desc,
+				price : price,
+				inventory : inventory,
+				salesCount : salesCount,
+				mainImgUrl : mainImgUrl,
+				parentCategoryId : parentCategoryId,
+				categoryId : categoryId,
+				brandNameCN : brandNameCN,
+				brandNameEN : brandNameEN,
+			},
+			success : function(status) {
+				$table.bootstrapTable('destroy');
+				initTable(categoryId);
+			}
+		});
+	});
 
 	//删除操作
 	function deleteProduct(id) {
 		var categoryId = $("#selectpicker-child").val();
 		if (confirm("确定删除此分类吗？")) {
 			$.ajax({
-				url : "/backend/admin/product/delete",
+				url : "/backend/admin/product/disable",
 				type : "post",
 				data : {
 					id : id,
 					type : "single"
 				},
 				success : function(status) {
-					alert(status);
 					$table.bootstrapTable('destroy');
 					initTable(categoryId);
 				}
@@ -421,14 +482,13 @@
 		var categoryId = $("#selectpicker-child").val();
 		if (confirm("确定重新上架吗？")) {
 			$.ajax({
-				url : "/backend/admin/category/reActive", //url
+				url : "/backend/admin/product/reActive", //url
 				type : "post",
 				data : {
 					id : id,
 					type : "single"
 				},
 				success : function(status) {
-					alert(status);
 					$table.bootstrapTable('destroy');
 					initTable(categoryId);
 				}
@@ -437,7 +497,7 @@
 	}
 
 	/* 批量上架 */
-	$('#btn-batch-reactive').on("click", function() {
+	$('#btn-batch-reActive').on("click", function() {
 		var rows = $table.bootstrapTable('getSelections');
 		var categoryId = $("#selectpicker-child").val();
 		var ids = '';
@@ -454,14 +514,13 @@
 			},
 			success : function(status) {
 				$table.bootstrapTable('destroy');
-				initTable(parentCategoryId);
-				console.log(parentCategoryId);
+				initTable(categoryId);
 			}
 		});
 	});
 
-	/* 批量删除 */
-	$('#btn-batch-delete').on("click", function() {
+	/* 批量下架 */
+	$('#btn-batch-disable').on("click", function() {
 		var rows = $table.bootstrapTable('getSelections');
 		var categoryId = $("#selectpicker-child").val();
 		var ids = '';
@@ -470,17 +529,15 @@
 		}
 		ids = ids.substring(0, ids.length - 1);
 		$.ajax({
-			url : "/backend/admin/product/delete", //url
+			url : "/backend/admin/product/disable", //url
 			type : "post",
 			data : {
 				id : ids,
 				type : "batch"
 			},
 			success : function(status) {
-				alert("ds");
 				$table.bootstrapTable('destroy');
-				initTable(parentCategoryId);
-				console.log(parentCategoryId);
+				initTable(categoryId);
 			}
 		});
 	});

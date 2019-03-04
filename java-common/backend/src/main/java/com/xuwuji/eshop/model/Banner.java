@@ -3,7 +3,7 @@ package com.xuwuji.eshop.model;
 import java.util.List;
 
 /**
- * 局部框
+ * 
  * 
  * @author xuwuji
  *

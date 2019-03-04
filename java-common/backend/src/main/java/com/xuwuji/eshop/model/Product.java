@@ -168,4 +168,13 @@ public class Product {
 		this.state = state;
 	}
 
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
+				+ ", inventory=" + inventory + ", salesCount=" + salesCount + ", mainImg=" + mainImg + ", mainImgUrl="
+				+ mainImgUrl + ", mainImgId=" + mainImgId + ", imgs=" + imgs + ", imgIds=" + imgIds
+				+ ", parentCategoryId=" + parentCategoryId + ", categoryId=" + categoryId + ", brandId=" + brandId
+				+ ", brandNameCN=" + brandNameCN + ", brandNameEN=" + brandNameEN + ", state=" + state + "]";
+	}
+
 }

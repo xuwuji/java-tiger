@@ -1,7 +1,7 @@
 package com.xuwuji.eshop.model;
 
 /**
- * 局部框中的每一项内容
+ * 
  * 
  * @author xuwuji
  *

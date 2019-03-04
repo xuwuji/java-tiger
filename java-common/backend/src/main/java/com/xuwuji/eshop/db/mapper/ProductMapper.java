@@ -16,5 +16,9 @@ public interface ProductMapper {
 	public void update(HashMap<String, Object> map);
 
 	public List<Product> getByCategory(HashMap<String, Object> map);
+	
+	public List<Product> getActiveByCategory(HashMap<String, Object> map);
+	
+	public Product getById(HashMap<String, Object> map);
 
 }

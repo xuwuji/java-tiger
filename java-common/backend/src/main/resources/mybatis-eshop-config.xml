@@ -133,6 +133,7 @@
 	<mappers>
 		<mapper resource="mapper/ParentCategoryMapper.xml" />
 		<mapper resource="mapper/CategoryMapper.xml" />
+		<mapper resource="mapper/ProductMapper.xml" />
 	</mappers>
 
 

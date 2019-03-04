@@ -65,22 +65,6 @@ public class CategoryDao {
 		}
 	};
 
-	public List<Category> getAll() {
-		SqlSession session = SessionFactory.openDEVSession();
-		List<Category> result = new ArrayList<Category>();
-		try {
-			CategoryMapper mapper = session.getMapper(CategoryMapper.class);
-			result = mapper.getAll();
-			session.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-			session.rollback();
-		} finally {
-			session.close();
-		}
-		return result;
-	}
-
 	public void update(Category category) {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
@@ -109,6 +93,24 @@ public class CategoryDao {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("parentCategoryId", parentId);
 			result = mapper.getByParent(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+
+	public List<Category> getActiveByParent(String parentId) {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<Category> result = new ArrayList<Category>();
+		try {
+			CategoryMapper mapper = session.getMapper(CategoryMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("parentCategoryId", parentId);
+			result = mapper.getActiveByParent(map);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();

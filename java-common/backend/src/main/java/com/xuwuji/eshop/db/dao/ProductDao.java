@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import com.xuwuji.eshop.db.mapper.ProductMapper;
 import com.xuwuji.eshop.db.util.SessionFactory;
-import com.xuwuji.eshop.model.Category;
 import com.xuwuji.eshop.model.Product;
 
 @Component
@@ -20,6 +19,16 @@ public class ProductDao {
 		try {
 			ProductMapper mapper = session.getMapper(ProductMapper.class);
 			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("name", product.getName());
+			map.put("description", product.getDescription());
+			map.put("price", product.getPrice());
+			map.put("inventory", product.getInventory());
+			map.put("salesCount", product.getSalesCount());
+			map.put("mainImgUrl", product.getMainImgUrl());
+			map.put("parentCategoryId", product.getParentCategoryId());
+			map.put("categoryId", product.getCategoryId());
+			map.put("brandNameCN", product.getBrandNameCN());
+			map.put("brandNameEN", product.getBrandNameEN());
 			mapper.add(map);
 			session.commit();
 		} catch (Exception e) {
@@ -62,13 +71,22 @@ public class ProductDao {
 		}
 	};
 
-
 	public void update(Product product) {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
 			ProductMapper mapper = session.getMapper(ProductMapper.class);
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("id", category.getId());
+			map.put("id", product.getId());
+			map.put("name", product.getName());
+			map.put("description", product.getDescription());
+			map.put("price", product.getPrice());
+			map.put("inventory", product.getInventory());
+			map.put("salesCount", product.getSalesCount());
+			map.put("mainImgUrl", product.getMainImgUrl());
+			map.put("parentCategoryId", product.getParentCategoryId());
+			map.put("categoryId", product.getCategoryId());
+			map.put("brandNameCN", product.getBrandNameCN());
+			map.put("brandNameEN", product.getBrandNameEN());
 			mapper.update(map);
 			session.commit();
 		} catch (Exception e) {
@@ -79,14 +97,50 @@ public class ProductDao {
 		}
 	}
 
-	public List<Category> getByCategory(String categoryId) {
+	public List<Product> getByCategory(String categoryId) {
 		SqlSession session = SessionFactory.openDEVSession();
-		List<Category> result = new ArrayList<Category>();
+		List<Product> result = new ArrayList<Product>();
 		try {
 			ProductMapper mapper = session.getMapper(ProductMapper.class);
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("categoryId", categoryId);
 			result = mapper.getByCategory(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+
+	public List<Product> getActiveByCategory(String categoryId) {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<Product> result = new ArrayList<Product>();
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("categoryId", categoryId);
+			result = mapper.getActiveByCategory(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+
+	public Product getById(String productId) {
+		SqlSession session = SessionFactory.openDEVSession();
+		Product result = new Product();
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("id", productId);
+			result = mapper.getById(map);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();

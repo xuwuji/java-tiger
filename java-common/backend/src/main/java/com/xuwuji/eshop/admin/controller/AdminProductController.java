@@ -65,6 +65,7 @@ public class AdminProductController {
 		product.setBrandNameEN(brandNameEN);
 		product.setCategoryId(categoryId);
 		product.setMainImgUrl(mainImgUrl);
+		System.out.print(product);
 		productDao.add(product);
 	}
 
@@ -73,11 +74,11 @@ public class AdminProductController {
 	public void delete(HttpServletRequest request, HttpServletResponse response) {
 		String id = request.getParameter("id");
 		String type = request.getParameter("type");
-		// 单条删除
+		// 单条下架
 		if (type.equals("single")) {
 			productDao.disable(id);
 		}
-		// 批量删除
+		// 批量下架
 		else if (type.equals("batch")) {
 			List<String> ids = Arrays.asList(id.split(","));
 			for (String i : ids) {
@@ -92,11 +93,11 @@ public class AdminProductController {
 	public void reActive(HttpServletRequest request, HttpServletResponse response) {
 		String id = request.getParameter("id");
 		String type = request.getParameter("type");
-		// 单条上线
+		// 单条上架
 		if (type.equals("single")) {
 			productDao.reActive(id);
 		}
-		// 批量删除
+		// 批量上架
 		else if (type.equals("batch")) {
 			List<String> ids = Arrays.asList(id.split(","));
 			for (String i : ids) {
@@ -108,6 +109,7 @@ public class AdminProductController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	@ResponseBody
 	public void update(HttpServletRequest request, HttpServletResponse response) {
+		String id = request.getParameter("id");
 		String name = request.getParameter("name");
 		String desc = request.getParameter("desc");
 		String price = request.getParameter("price");
@@ -118,10 +120,20 @@ public class AdminProductController {
 		String categoryId = request.getParameter("categoryId");
 		String brandNameCN = request.getParameter("brandNameCN");
 		String brandNameEN = request.getParameter("brandNameEN");
-		System.out.println(name);
-		System.out.println(desc);
-		System.out.println(parentCategoryId);
-
+		Product product = new Product();
+		product.setId(Integer.valueOf(id));
+		product.setName(name);
+		product.setDescription(desc);
+		product.setParentCategoryId(parentCategoryId);
+		product.setPrice(Double.valueOf(price));
+		product.setSalesCount(Integer.valueOf(salesCount));
+		product.setInventory(Integer.valueOf(inventory));
+		product.setBrandNameCN(brandNameCN);
+		product.setBrandNameEN(brandNameEN);
+		product.setCategoryId(categoryId);
+		product.setMainImgUrl(mainImgUrl);
+		System.out.print(product);
+		productDao.update(product);
 	}
 
 }

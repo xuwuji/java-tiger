@@ -55,4 +55,11 @@
 		category where
 		parentCategoryId=#{parentCategoryId}; ;
 	</select>
+	
+		<select id="getActiveByParent" resultType="Category"
+		parameterType="hashmap">
+		select * from
+		category where
+		parentCategoryId=#{parentCategoryId} and state='1'; ;
+	</select>
 </mapper>

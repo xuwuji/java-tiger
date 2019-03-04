@@ -78,4 +78,20 @@ public class ParentCategoryDao {
 		return result;
 	}
 
+	public List<ParentCategory> getActiveAll() {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<ParentCategory> result = new ArrayList<ParentCategory>();
+		try {
+			ParentCategoryMapper mapper = session.getMapper(ParentCategoryMapper.class);
+			result = mapper.getActiveAll();
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+
 }

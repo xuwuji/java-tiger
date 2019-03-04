@@ -9,22 +9,23 @@
 		<id property="id" column="id"></id>
 		<result property="name" column="type"></result>
 		<result property="description" column="type"></result>
+		<result property="price" column="type"></result>
 		<result property="inventory" column="type"></result>
 		<result property="salesCount" column="type"></result>
 		<result property="mainImgUrl" column="type"></result>
 		<result property="parentCategoryId" column="type"></result>
 		<result property="categoryId" column="type"></result>
 		<result property="brandNameCN" column="type"></result>
-		<result property="brandNamEN" column="type"></result>
+		<result property="brandNameEN" column="type"></result>
 		<result property="state" column="type"></result>
 	</resultMap>
 
 	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
 		keyProperty="id">
 		insert into product
-		(name,description,inventory,salesCount,mainImgUrl,parentCategoryId,categoryId,
-		brandNameCN,brandNamEN,state)
-		values(#{name},#{description},#{inventory},#{salesCount},#{mainImgUrl},#{parentCategoryId},#{categoryId},#{brandNameCN},#{brandNameEN},'0')
+		(name,description,price,inventory,salesCount,mainImgUrl,parentCategoryId,categoryId,
+		brandNameCN,brandNameEN,state)
+		values(#{name},#{description},#{price},#{inventory},#{salesCount},#{mainImgUrl},#{parentCategoryId},#{categoryId},#{brandNameCN},#{brandNameEN},'0')
 	</insert>
 
 	<update id="disable" parameterType="hashmap">
@@ -40,10 +41,10 @@
 	</update>
 
 	<update id="update" parameterType="hashmap">
-		update category set
-		name=#{name},description=#{description},inventory=#{inventory},
+		update product set
+		name=#{name},description=#{description},price=#{price},inventory=#{inventory},
 		salesCount=#{salesCount},mainImgUrl=#{mainImgUrl},parentCategoryId=#{parentCategoryId},
-		categoryId=#{categoryId},brandNameCN=#{brandNameCN},brandNamEN=#{brandNamEN},
+		categoryId=#{categoryId},brandNameCN=#{brandNameCN},brandNameEN=#{brandNameEN}
 		where id=#{id};
 	</update>
 
@@ -53,4 +54,20 @@
 		product where
 		categoryId=#{categoryId}; ;
 	</select>
+
+	<select id="getActiveByCategory" resultType="Product"
+		parameterType="hashmap">
+		select * from
+		product where
+		categoryId=#{categoryId} and
+		state='1' ;
+	</select>
+
+	<select id="getById" resultType="Product"
+		parameterType="hashmap">
+		select * from
+		product where
+		id=#{id};
+	</select>
+
 </mapper>
