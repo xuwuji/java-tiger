@@ -26,5 +26,11 @@ public interface ProductMapper {
 	public void updateBannerItem(HashMap<String, Object> map);
 	
 	public void updateBrand(HashMap<String, Object> map);
+	
+	public List<Product> getActiveByKW(HashMap<String, Object> map);
+	
+	public List<Product> getActiveByBannerItem(HashMap<String, Object> map);
+
+	
 
 }

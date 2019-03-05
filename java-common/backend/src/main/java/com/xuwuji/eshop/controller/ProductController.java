@@ -15,14 +15,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xuwuji.eshop.db.dao.ProductDao;
-import com.xuwuji.eshop.model.Img;
 import com.xuwuji.eshop.model.Product;
+import com.xuwuji.eshop.model.SortEnum;
+import com.xuwuji.eshop.util.ProductUtil;
 
 @Controller
 @RequestMapping(value = "/product")
 public class ProductController {
 	@Autowired
 	private ProductDao productDao;
+
+	@Autowired
+	private ProductUtil productUtil;
 
 	/**
 	 * get 获取某一类别的所有产品
@@ -32,12 +36,14 @@ public class ProductController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value = "/getActiveProductsByCategory", method = RequestMethod.GET)
+	@RequestMapping(value = "/getActiveProductsByCategoryId", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Product> getProductsByCategoryId(@RequestParam("id") String id, @RequestParam("sort") String sort,
 			HttpServletRequest request, HttpServletResponse response) {
 		List<Product> products = new ArrayList<Product>();
+		SortEnum sortRequset = SortEnum.getByCode(sort);
 		products = productDao.getActiveByCategory(id);
+		products = productUtil.sort(products, sortRequset);
 		return products;
 	}
 
@@ -59,5 +65,24 @@ public class ProductController {
 		Product product = productDao.getById(id);
 		return product;
 	}
-
+	
+	
+	/**
+	 * get 获取某一类别的所有产品
+	 * 
+	 * @param id
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/getActiveByBannerItem", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Product> getActiveByBannerItem(@RequestParam("id") String id, @RequestParam("sort") String sort,
+			HttpServletRequest request, HttpServletResponse response) {
+		List<Product> products = new ArrayList<Product>();
+		SortEnum sortRequset = SortEnum.getByCode(sort);
+		products = productDao.getActiveByBannerItem(id);
+		products = productUtil.sort(products, sortRequset);
+		return products;
+	}
 }

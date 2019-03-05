@@ -87,11 +87,51 @@
 		state='1' ;
 	</select>
 
+	<select id="getActiveByCategoryOrderById" resultType="Product"
+		parameterType="hashmap">
+		select * from
+		product where
+		categoryId=#{categoryId} and
+		state='1' order by id desc;
+	</select>
+
+	<select id="getActiveByCategoryOrderByPrice"
+		resultType="Product" parameterType="hashmap">
+		select * from
+		product where
+		categoryId=#{categoryId} and
+		state='1' order by price desc;
+	</select>
+
+	<select id="getActiveByCategoryOrderBySalesCount"
+		resultType="Product" parameterType="hashmap">
+		select * from
+		product where
+		categoryId=#{categoryId} and
+		state='1' order by salesCount desc;
+	</select>
+
 	<select id="getById" resultType="Product"
 		parameterType="hashmap">
 		select * from
 		product where
 		id=#{id};
+	</select>
+
+	<select id="getActiveByKW" resultType="Product"
+		parameterType="hashmap">
+		select * from
+		product where name like CONCAT('%',#{KW},'%')
+		and state
+		='1';
+	</select>
+	
+	<select id="getActiveByBannerItem" resultType="Product"
+		parameterType="hashmap">
+		select * from
+		product where bannerItemId=#{bannerItemId}
+		and state
+		='1';
 	</select>
 
 </mapper>
