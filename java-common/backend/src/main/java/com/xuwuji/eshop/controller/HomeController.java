@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xuwuji.eshop.db.dao.BannerDao;
 import com.xuwuji.eshop.db.dao.CategoryDao;
+import com.xuwuji.eshop.db.dao.ProductDao;
 import com.xuwuji.eshop.model.Banner;
 import com.xuwuji.eshop.model.BannerItem;
 import com.xuwuji.eshop.model.Category;
@@ -29,6 +30,8 @@ public class HomeController {
 	private BannerDao bannerDao;
 	@Autowired
 	private CategoryDao categoryDao;
+	@Autowired
+	private ProductDao productDao;
 
 	@RequestMapping(value = "/banner/{id}", method = RequestMethod.GET)
 	@ResponseBody
@@ -68,6 +71,10 @@ public class HomeController {
 	public List<Category> getProductPartData(HttpServletRequest request, HttpServletResponse response) {
 		List<Category> categories = new ArrayList<Category>();
 		categories = categoryDao.getRecommend();
+		for (Category c : categories) {
+			int categoryId = c.getId();
+			c.setProducts(productDao.getActiveByCategory(String.valueOf(categoryId)));
+		}
 		return categories;
 	}
 

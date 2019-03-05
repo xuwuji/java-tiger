@@ -18,6 +18,10 @@
 		<result property="brandNameCN" column="type"></result>
 		<result property="brandNameEN" column="type"></result>
 		<result property="state" column="type"></result>
+		<result property="bannerItemId" column="type"></result>
+		<result property="bannerItemName" column="type"></result>
+		<result property="country" column="type"></result>
+		<result property="brandId" column="type"></result>
 	</resultMap>
 
 	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
@@ -40,6 +44,18 @@
 		where id=#{id};
 	</update>
 
+	<update id="updateBannerItem" parameterType="hashmap">
+		update product set
+		bannerItemId=#{bannerItemId}
+		where id=#{id};
+	</update>
+
+	<update id="updateBrand" parameterType="hashmap">
+		update product set
+		brandId=#{brandId}
+		where id=#{id};
+	</update>
+
 	<update id="update" parameterType="hashmap">
 		update product set
 		name=#{name},description=#{description},price=#{price},inventory=#{inventory},
@@ -53,6 +69,14 @@
 		select * from
 		product where
 		categoryId=#{categoryId}; ;
+	</select>
+
+	<select id="getDetailByCategory" resultType="Product"
+		parameterType="hashmap">
+		select * from product as p left join (select
+		banneritem.id,banneritem.name as bannerItemName, banneritem.bannerId
+		from banneritem ) b on p.bannerItemId= b.id where
+		p.categoryId=#{categoryId};
 	</select>
 
 	<select id="getActiveByCategory" resultType="Product"

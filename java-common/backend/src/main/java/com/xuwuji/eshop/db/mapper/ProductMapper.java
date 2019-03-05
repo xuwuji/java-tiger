@@ -17,8 +17,14 @@ public interface ProductMapper {
 
 	public List<Product> getByCategory(HashMap<String, Object> map);
 	
+	public List<Product> getDetailByCategory(HashMap<String, Object> map);
+
 	public List<Product> getActiveByCategory(HashMap<String, Object> map);
-	
+
 	public Product getById(HashMap<String, Object> map);
+
+	public void updateBannerItem(HashMap<String, Object> map);
+	
+	public void updateBrand(HashMap<String, Object> map);
 
 }

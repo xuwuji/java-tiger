@@ -27,6 +27,9 @@ public class Product {
 	private String brandNameCN;
 	private String brandNameEN;
 	private String state;
+	private String bannerItemId;
+	private String bannerItemName;
+	private String country;
 
 	public Product() {
 
@@ -168,13 +171,38 @@ public class Product {
 		this.state = state;
 	}
 
+	public String getBannerItemId() {
+		return bannerItemId;
+	}
+
+	public void setBannerItemId(String bannerItemId) {
+		this.bannerItemId = bannerItemId;
+	}
+
+	public String getBannerItemName() {
+		return bannerItemName;
+	}
+
+	public void setBannerItemName(String bannerItemName) {
+		this.bannerItemName = bannerItemName;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
 				+ ", inventory=" + inventory + ", salesCount=" + salesCount + ", mainImg=" + mainImg + ", mainImgUrl="
 				+ mainImgUrl + ", mainImgId=" + mainImgId + ", imgs=" + imgs + ", imgIds=" + imgIds
 				+ ", parentCategoryId=" + parentCategoryId + ", categoryId=" + categoryId + ", brandId=" + brandId
-				+ ", brandNameCN=" + brandNameCN + ", brandNameEN=" + brandNameEN + ", state=" + state + "]";
+				+ ", brandNameCN=" + brandNameCN + ", brandNameEN=" + brandNameEN + ", state=" + state
+				+ ", bannerItemId=" + bannerItemId + "]";
 	}
 
 }

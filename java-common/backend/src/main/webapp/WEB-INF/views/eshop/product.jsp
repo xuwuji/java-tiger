@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>welcome</title>
+<title>商品管理</title>
 
 <!--引入JavaScript-->
 <%-- <script
@@ -70,6 +70,16 @@
 	<div class="btn-group">
 		<button id="btn-batch-reActive" type="button" class="btn">
 			<span aria-hidden="true" class="icon icon-plus-sign"></span>批量上架
+		</button>
+	</div>
+	<div class="btn-group">
+		<button id="btn-batch-banner" type="button" class="btn">
+			<span aria-hidden="true" class="icon icon-plus-sign"></span>批量修改banner
+		</button>
+	</div>
+	<div class="btn-group">
+		<button id="btn-batch-brand" type="button" class="btn">
+			<span aria-hidden="true" class="icon icon-plus-sign"></span>批量修改品牌
 		</button>
 	</div>
 
@@ -227,6 +237,103 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- banner的modal -->
+	<div class="modal fade" id="bannerModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">编辑</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="txt_departmentname">商品id</label> <input type="text"
+							class="form-control" id="banner-id" placeholder="商品id"
+							disabled="disabled">
+					</div>
+					<div class="form-group">
+						<label for="txt_departmentname">修改类型</label> <input type="text"
+							class="form-control" id="banner-type" placeholder="商品id"
+							disabled="disabled">
+					</div>
+					<!--<div class="form-group">
+						<label for="txt_departmentname">商品名称</label> <input type="text"
+							class="form-control" id="banner-name" placeholder="商品名称"
+							disabled="disabled">
+					</div>
+					<div class="form-group">
+						<label for="txt_departmentname">商品bannerItem名称</label> <input
+							type="text" class="form-control" id="banner-bannerItem"
+							placeholder="名称">
+					</div> -->
+					<div class="form-group">
+						<label for="txt_departmentname">banner位</label>
+						<!-- 查询banner item -->
+						<select id="selectpicker-banner">
+						</select>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭
+					</button>
+					<button type="button" id="btn_update_banner"
+						class="btn btn-primary" data-dismiss="modal">
+						<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>修改banner
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 品牌的modal -->
+	<div class="modal fade" id="brandModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">编辑</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="txt_departmentname">商品id</label> <input type="text"
+							class="form-control" id="brand-id" placeholder="商品id"
+							disabled="disabled">
+					</div>
+					<div class="form-group">
+						<label for="txt_departmentname">修改类型</label> <input type="text"
+							class="form-control" id="brand-type" placeholder="商品id"
+							disabled="disabled">
+					</div>
+					<div class="form-group">
+						<label for="txt_departmentname">品牌</label>
+						<!-- 查询banner item -->
+						<select id="selectpicker-brand">
+						</select>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						id="close_brand">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭
+					</button>
+					<button type="button" id="btn_update_brand" class="btn btn-primary"
+						data-dismiss="modal">
+						<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>修改品牌
+					</button>
+				</div>
+			</div>
+		</div>
 	</div>
 
 </body>
@@ -242,7 +349,7 @@
 	//根据子分类id加载所有商品然后进行操作
 	function initTable(categoryId) {
 		$table.bootstrapTable({
-			url : '/backend/category/getProductsByCategory/' + categoryId, //请求后台的URL（*）
+			url : '/backend/admin/product/getDetailByCategory/' + categoryId, //请求后台的URL（*）
 			method : 'get', //请求方式（*）
 			toolbar : '#toolbar', //工具按钮用哪个容器
 			striped : true, //是否显示行间隔色
@@ -321,6 +428,11 @@
 						align : 'center'
 					},
 					{
+						field : 'bannerItemName',
+						title : 'banner位',
+						align : 'center',
+					},
+					{
 						field : 'state',
 						title : '状态',
 						align : 'center',
@@ -346,6 +458,10 @@
 									+ ')">下架</a>';
 							html += '　<a href="javascript:reActiveProduct('
 									+ id + ')">上架</a>';
+							html += '　<a href="javascript:updateBannerItem('
+									+ id + ')">修改banner位</a>';
+							html += '　<a href="javascript:updateBrand(' + id
+									+ ')">修改品牌</a>';
 							return html;
 						}
 					}
@@ -353,6 +469,142 @@
 			]
 		});
 	}
+	function updateBrand(id) {
+		var row = $table.bootstrapTable('getRowByUniqueId', id);
+		var id = row.id;
+		var type = 'single';
+		openBrandModal(id, type);
+	}
+
+	/* 批量提交brand修改*/
+	$('#btn-batch-brand').on("click", function() {
+		var rows = $table.bootstrapTable('getSelections');
+		var ids = '';
+		for (var i = 0; i < rows.length; i++) {
+			ids += rows[i].id + ',';
+		}
+		var type = 'batch';
+		openBrandModal(ids, type);
+	});
+
+	$('#close_brand').on(
+			"click",
+			function() {
+				$('#selectpicker-brand').selectpicker('destroy').removeAttr(
+						"multiple");
+			});
+
+	function openBrandModal(id, type) {
+		$("#brandModal").modal().on("shown.bs.modal", function() {
+			$("#brand-id").val(id);
+			$("#brand-type").val(type);
+		});
+	}
+
+	$
+			.ajax({
+				"type" : 'get',
+				"url" : '/backend/admin/brand/getAll',
+				"dataType" : "json",
+				"success" : function(data) {
+					var depart_list = data;
+					var opts = "";
+					for (var depart_index = 0; depart_index < depart_list.length; depart_index++) {
+						var item = depart_list[depart_index];
+						opts += "<option value='"+item.id+"'>" + item.brandCN
+								+ "</option>";
+					}
+					$('#selectpicker-brand').append(opts);
+					$('#selectpicker-brand').selectpicker("refresh");
+				}
+			});
+
+	/* 提交brand修改*/
+	$('#btn_update_brand').on("click", function(id) {
+		var brandId = $('#selectpicker-brand').val();
+		var categoryId = $("#selectpicker-child").val();
+		var id = $("#brand-id").val();
+		var type = $("#brand-type").val();
+		$.ajax({
+			url : "/backend/admin/product/updateBrand",
+			type : "post",
+			data : {
+				id : id,
+				brandId : brandId,
+				type : type
+			},
+			success : function(status) {
+				$table.bootstrapTable('destroy');
+				initTable(categoryId);
+			}
+		});
+	});
+
+	function openBannerModal(id, type) {
+		$("#bannerModal").modal().on("shown.bs.modal", function() {
+			$("#banner-id").val(id);
+			$("#banner-type").val(type);
+		});
+	}
+
+	$
+			.ajax({
+				"type" : 'get',
+				"url" : '/backend/admin/banner/getAll',
+				"dataType" : "json",
+				"success" : function(data) {
+					var depart_list = data;
+					var opts = "";
+					for (var depart_index = 0; depart_index < depart_list.length; depart_index++) {
+						var item = depart_list[depart_index];
+						opts += "<option value='"+item.id+"'>" + item.name
+								+ "</option>";
+					}
+
+					// 查询界面
+					$('#selectpicker-banner').append(opts);
+					$('#selectpicker-banner').selectpicker("refresh");
+				}
+			});
+
+	/* 批量提交banner修改*/
+	$('#btn-batch-banner').on("click", function() {
+		var rows = $table.bootstrapTable('getSelections');
+		var ids = '';
+		for (var i = 0; i < rows.length; i++) {
+			ids += rows[i].id + ',';
+		}
+		var type = 'batch';
+		openBannerModal(ids, type);
+	});
+
+	function updateBannerItem(id) {
+		var row = $table.bootstrapTable('getRowByUniqueId', id);
+		var id = row.id;
+		var type = 'single';
+		openBannerModal(id, type);
+	}
+
+	/* 提交banner修改*/
+	$('#btn_update_banner').on("click", function(id) {
+		var bannerItemId = $('#selectpicker-banner').val();
+		var categoryId = $("#selectpicker-child").val();
+		var id = $("#banner-id").val();
+		var type = $("#banner-type").val();
+		$.ajax({
+			url : "/backend/admin/product/updateBannerItem",
+			type : "post",
+			data : {
+				id : id,
+				bannerItemId : bannerItemId,
+				type : type
+			},
+			success : function(status) {
+				$table.bootstrapTable('destroy');
+				initTable(categoryId);
+			}
+		});
+	});
 
 	/* 展开modal，新增一个分类 */
 	$('#btn-add').on("click", function() {
@@ -403,7 +655,6 @@
 	function editProduct(id) {
 		var row = $table.bootstrapTable('getRowByUniqueId', id);
 		$("#editModal").modal().on("shown.bs.modal", function() {
-
 			var parentCategoryId = $("#selectpicker-parent").val();
 			var categoryId = $("#selectpicker-child").val();
 			$('#edit-parentCategoryId').val(parentCategoryId);
@@ -418,7 +669,6 @@
 			$('#edit-productBrandNameCN').val(row.brandNameCN);
 			$('#edit-productBrandNameEN').val(row.brandNameEN);
 		});
-		console.log(row);
 	}
 
 	/* 提交变更 */

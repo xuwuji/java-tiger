@@ -71,6 +71,40 @@ public class ProductDao {
 		}
 	};
 
+	public void updateBannerItem(String id, String bannerItemId) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("id", id);
+			map.put("bannerItemId", bannerItemId);
+			mapper.updateBannerItem(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+	};
+
+	public void updateBrand(String id, String brandId) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("id", id);
+			map.put("brandId", brandId);
+			mapper.updateBrand(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+	};
+
 	public void update(Product product) {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
@@ -105,6 +139,24 @@ public class ProductDao {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("categoryId", categoryId);
 			result = mapper.getByCategory(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+
+	public List<Product> getDetailByCategory(String categoryId) {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<Product> result = new ArrayList<Product>();
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("categoryId", categoryId);
+			result = mapper.getDetailByCategory(map);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();

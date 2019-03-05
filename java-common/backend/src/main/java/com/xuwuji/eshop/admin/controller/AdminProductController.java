@@ -1,26 +1,20 @@
 package com.xuwuji.eshop.admin.controller;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.jboss.netty.util.internal.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.xuwuji.eshop.db.dao.ParentCategoryDao;
 import com.xuwuji.eshop.db.dao.ProductDao;
-import com.xuwuji.eshop.model.Category;
-import com.xuwuji.eshop.model.Img;
-import com.xuwuji.eshop.model.ParentCategory;
 import com.xuwuji.eshop.model.Product;
 
 /**
@@ -39,6 +33,13 @@ public class AdminProductController {
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
 		return new ModelAndView("/eshop/product");
+	}
+
+	@RequestMapping(value = "/getDetailByCategory/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Product> getDetailByCategory(@PathVariable("id") String id, HttpServletRequest request,
+			HttpServletResponse response) {
+		return productDao.getDetailByCategory(id);
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -102,6 +103,44 @@ public class AdminProductController {
 			List<String> ids = Arrays.asList(id.split(","));
 			for (String i : ids) {
 				productDao.reActive(i);
+			}
+		}
+	}
+
+	@RequestMapping(value = "/updateBannerItem", method = RequestMethod.POST)
+	@ResponseBody
+	public void updateBannerItem(HttpServletRequest request, HttpServletResponse response) {
+		String id = request.getParameter("id");
+		String type = request.getParameter("type");
+		String bannerItemId = request.getParameter("bannerItemId");
+		// 单条上架
+		if (type.equals("single")) {
+			productDao.updateBannerItem(id, bannerItemId);
+		}
+		// 批量上架
+		else if (type.equals("batch")) {
+			List<String> ids = Arrays.asList(id.split(","));
+			for (String i : ids) {
+				productDao.updateBannerItem(i, bannerItemId);
+			}
+		}
+	}
+
+	@RequestMapping(value = "/updateBrand", method = RequestMethod.POST)
+	@ResponseBody
+	public void updateBrand(HttpServletRequest request, HttpServletResponse response) {
+		String id = request.getParameter("id");
+		String type = request.getParameter("type");
+		String brandId = request.getParameter("brandId");
+		// 单条上架
+		if (type.equals("single")) {
+			productDao.updateBrand(id, brandId);
+		}
+		// 批量上架
+		else if (type.equals("batch")) {
+			List<String> ids = Arrays.asList(id.split(","));
+			for (String i : ids) {
+				productDao.updateBrand(i, brandId);
 			}
 		}
 	}

@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AdminIndexController {
 
-	@RequestMapping(value = "/adminIndex", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/index", method = RequestMethod.GET)
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
 		return new ModelAndView("/eshop/index");
 	}

@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>welcome</title>
+<title>banner管理</title>
 
 <!--引入JavaScript-->
 <%-- <script
@@ -203,10 +203,10 @@
 			title : 'banner位',
 			align : 'center',
 			formatter : function(value, row, index) {
-				if (row.state) {
-					if (row.state == '0') {
+				if (row.bannerId) {
+					if (row.bannerId == '0') {
 						return "首页轮播位";
-					} else if (row.state == '1') {
+					} else if (row.bannerId == '1') {
 						return "首页推荐分类栏";
 					} else {
 						return "错误数据";

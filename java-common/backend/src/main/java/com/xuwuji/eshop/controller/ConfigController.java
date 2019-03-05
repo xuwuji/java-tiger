@@ -18,7 +18,7 @@ public class ConfigController {
 	@ResponseBody
 	public Config geBaseConfig(HttpServletRequest request, HttpServletResponse response) {
 		Config config = new Config();
-		config.setNoticeMsg("娆㈣繋鏉ュ埌灏忔煷鐨勫簵锝炴湁闂娆㈣繋鍦ㄧ嚎楠氭壈寰愬皬鏌达綖");
+		config.setNoticeMsg("欢迎在线联系徐小柴~");
 		config.setXxcUrl("http://www.baidu.com");
 		return config;
 	}

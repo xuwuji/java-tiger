@@ -45,6 +45,20 @@
 		bannerItem;
 	</select>
 
+	<select id="getAllActive" resultType="BannerItem">
+		select * from
+		bannerItem
+		where
+		state='1';
+	</select>
+
+	<select id="getById" resultType="BannerItem">
+		select * from
+		bannerItem
+		where
+		id=#{id};
+	</select>
+
 	<select id="getActiveAllByBannerId" parameterType="hashmap"
 		resultType="BannerItem">
 		select * from

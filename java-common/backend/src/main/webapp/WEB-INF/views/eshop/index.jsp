@@ -46,6 +46,8 @@
 		
 		
 		
+		
+		
             addEventListener("load", function() {
                 setTimeout(hideURLbar, 0);
             }, false);
@@ -55,6 +57,8 @@
             }
 
         
+	
+	
 	
 	
 	
@@ -192,13 +196,22 @@
 }
 </style>
 
-	<h1 ><a href="${pageContext.request.contextPath}/admin/parentCategory/index">主类别管理</a></h1>
-	<h1>子类别管理</h1>
-	<h1>商品管理</h1>
-	<h1>主题管理</h1>
-	<h1>推荐管理</h1>
-	<h1>Banner管理</h1>
-	<h1>订单管理</h1>
+	<h1>
+		<a
+			href="${pageContext.request.contextPath}/admin/parentCategory/index">主类别管理</a>
+	</h1>
+	<h1><a
+			href="${pageContext.request.contextPath}/admin/category/index">分类管理</a></h1>
+	<h1><a
+			href="${pageContext.request.contextPath}/admin/product/index">商品管理</a></h1>
+	<h1><a
+			href="${pageContext.request.contextPath}/admin/brand/index">品牌管理</a></h1>
+	<h1><a
+			href="${pageContext.request.contextPath}/admin/product/index">推荐管理</a></h1>
+	<h1><a
+			href="${pageContext.request.contextPath}/admin/banner/index">Banner管理</a></h1>
+	<h1><a
+			href="${pageContext.request.contextPath}/admin/order/index">订单管理</a></h1>
 
 	<div class="content">
 

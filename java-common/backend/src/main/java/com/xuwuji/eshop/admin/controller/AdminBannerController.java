@@ -9,8 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -97,8 +99,25 @@ public class AdminBannerController {
 		System.out.println("banner/getAll");
 		List<BannerItem> list = new ArrayList<BannerItem>();
 		list = bannerDao.getAll();
-		System.out.println(list.get(0).getRedirectUrl());
-		System.out.println(list);
+		return list;
+	}
+
+	@RequestMapping(value = "/getById/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public List<BannerItem> getById(@PathVariable("id") String id, HttpServletRequest request,
+			HttpServletResponse response) {
+		System.out.println("banner/getById");
+		List<BannerItem> list = new ArrayList<BannerItem>();
+		list = bannerDao.getById(id);
+		return list;
+	}
+
+	@RequestMapping(value = "/getAllActive", method = RequestMethod.GET)
+	@ResponseBody
+	public List<BannerItem> getAllActive(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("banner/getAllActive");
+		List<BannerItem> list = new ArrayList<BannerItem>();
+		list = bannerDao.getAllActive();
 		return list;
 	}
 

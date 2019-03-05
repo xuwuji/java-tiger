@@ -103,6 +103,40 @@ public class BannerDao {
 		return result;
 	}
 
+	public List<BannerItem> getById(String id) {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<BannerItem> result = new ArrayList<BannerItem>();
+		try {
+			BannerItemMapper mapper = session.getMapper(BannerItemMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("id", id);
+			result = mapper.getById(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+
+	public List<BannerItem> getAllActive() {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<BannerItem> result = new ArrayList<BannerItem>();
+		try {
+			BannerItemMapper mapper = session.getMapper(BannerItemMapper.class);
+			result = mapper.getAllActive();
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+
 	public List<BannerItem> getActiveAllByBannerId(String bannerId) {
 		SqlSession session = SessionFactory.openDEVSession();
 		List<BannerItem> result = new ArrayList<BannerItem>();
