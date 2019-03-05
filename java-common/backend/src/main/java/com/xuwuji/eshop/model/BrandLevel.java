@@ -1,14 +1,14 @@
 package com.xuwuji.eshop.model;
 
 /**
- * 品牌等级
+ * 
  * 
  * @author xuwuji
  *
  */
 public enum BrandLevel {
 
-	LOW("低端", "0"), MIDUMM("中端", "1"), HIGH("高端", "2"), SUPERHIGH("超高端", "3");
+	LOW("low", "0"), MEDIUM("medium", "1"), HIGH("high", "2"), SUPERHIGH("superhigh", "3");
 
 	private String desc;
 	private String code;

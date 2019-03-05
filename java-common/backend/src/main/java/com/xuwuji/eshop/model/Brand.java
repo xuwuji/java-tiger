@@ -1,17 +1,19 @@
 package com.xuwuji.eshop.model;
 
-/*
- * 品牌名
+/**
  * 
+ * @author xuwuji
+ *
  */
 public class Brand {
 
 	private int id;
-	private String name;
-	private String englishName;
+	private String brandEN;
+	private String brandCN;
 	// {@link} BrandLevel
-	private String level;
+	private String brandLevel;
 	private String country;
+	private String state;
 
 	public int getId() {
 		return id;
@@ -21,28 +23,28 @@ public class Brand {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getBrandEN() {
+		return brandEN;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setBrandEN(String brandEN) {
+		this.brandEN = brandEN;
 	}
 
-	public String getEnglishName() {
-		return englishName;
+	public String getBrandCN() {
+		return brandCN;
 	}
 
-	public void setEnglishName(String englishName) {
-		this.englishName = englishName;
+	public void setBrandCN(String brandCN) {
+		this.brandCN = brandCN;
 	}
 
-	public String getLevel() {
-		return level;
+	public String getBrandLevel() {
+		return brandLevel;
 	}
 
-	public void setLevel(String level) {
-		this.level = level;
+	public void setBrandLevel(String brandLevel) {
+		this.brandLevel = brandLevel;
 	}
 
 	public String getCountry() {
@@ -51,6 +53,14 @@ public class Brand {
 
 	public void setCountry(String country) {
 		this.country = country;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 
 }

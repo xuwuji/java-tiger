@@ -135,6 +135,7 @@
 		<mapper resource="mapper/CategoryMapper.xml" />
 		<mapper resource="mapper/ProductMapper.xml" />
 		<mapper resource="mapper/BannerItemMapper.xml" />
+		<mapper resource="mapper/BrandMapper.xml" />
 	</mappers>
 
 
