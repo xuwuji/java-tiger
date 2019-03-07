@@ -20,7 +20,7 @@ public class Product {
 	private String mainImgUrl;
 	private String mainImgId;
 	private List<Img> imgs;
-	private List<String> imgIds;
+	private List<String> imgUrls;
 	private String parentCategoryId;
 	private String categoryId;
 	private String brandId;
@@ -111,12 +111,12 @@ public class Product {
 		this.imgs = imgs;
 	}
 
-	public List<String> getImgIds() {
-		return imgIds;
+	public List<String> getImgUrls() {
+		return imgUrls;
 	}
 
-	public void setImgIds(List<String> imgIds) {
-		this.imgIds = imgIds;
+	public void setImgUrls(List<String> imgUrls) {
+		this.imgUrls = imgUrls;
 	}
 
 	public String getMainImgUrl() {
@@ -198,8 +198,6 @@ public class Product {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	
-	
 
 	public String getImgUrl1() {
 		return imgUrl1;
@@ -237,10 +235,12 @@ public class Product {
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
 				+ ", inventory=" + inventory + ", salesCount=" + salesCount + ", mainImg=" + mainImg + ", mainImgUrl="
-				+ mainImgUrl + ", mainImgId=" + mainImgId + ", imgs=" + imgs + ", imgIds=" + imgIds
+				+ mainImgUrl + ", mainImgId=" + mainImgId + ", imgs=" + imgs + ", imgUrls=" + imgUrls
 				+ ", parentCategoryId=" + parentCategoryId + ", categoryId=" + categoryId + ", brandId=" + brandId
 				+ ", brandNameCN=" + brandNameCN + ", brandNameEN=" + brandNameEN + ", state=" + state
-				+ ", bannerItemId=" + bannerItemId + "]";
+				+ ", bannerItemId=" + bannerItemId + ", bannerItemName=" + bannerItemName + ", country=" + country
+				+ ", imgUrl1=" + imgUrl1 + ", imgUrl2=" + imgUrl2 + ", imgUrl3=" + imgUrl3 + ", imgUrl4=" + imgUrl4
+				+ "]";
 	}
 
 }

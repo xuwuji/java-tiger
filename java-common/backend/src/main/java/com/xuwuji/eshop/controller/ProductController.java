@@ -63,10 +63,14 @@ public class ProductController {
 			id = "1";
 		}
 		Product product = productDao.getById(id);
+		List<String> imgUrls = new ArrayList<String>();
+		for (int i = 1; i < 5; i++) {
+			imgUrls.add("product/" + id + "-" + i + ".jpg");
+		}
+		product.setImgUrls(imgUrls);
 		return product;
 	}
-	
-	
+
 	/**
 	 * get 获取某一类别的所有产品
 	 * 
