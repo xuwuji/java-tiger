@@ -11,7 +11,7 @@
  Target Server Version : 80015
  File Encoding         : 65001
 
- Date: 05/03/2019 17:49:29
+ Date: 07/03/2019 16:42:13
 */
 
 SET NAMES utf8mb4;
@@ -31,7 +31,7 @@ CREATE TABLE `banneritem`  (
   `createTime` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `lastModifyTime` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of banneritem
@@ -41,5 +41,6 @@ INSERT INTO `banneritem` VALUES (2, 'http://i2.bvimg.com/677237/70961c7589fd8413
 INSERT INTO `banneritem` VALUES (3, 'http://i2.bvimg.com/677237/96c1e06e5a9648ad.png', 'ddd', '1', '女王节', '1', '2019-03-05 14:22:01', NULL);
 INSERT INTO `banneritem` VALUES (4, 'http://i2.bvimg.com/677237/bf408bce5768689b.png', 'ddd', '1', '护发', '1', '2019-03-05 14:22:01', NULL);
 INSERT INTO `banneritem` VALUES (5, 'http://i2.bvimg.com/677237/e014088815434b3e.png', 'ddd', '1', '清洁', '1', '2019-03-05 14:22:01', NULL);
+INSERT INTO `banneritem` VALUES (6, 'bannerItem/6.jpg', 'sdds', '0', '口红推荐', '1', '2019-03-07 16:39:08', '2019-03-07 16:39:08');
 
 SET FOREIGN_KEY_CHECKS = 1;
