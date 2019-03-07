@@ -18,18 +18,16 @@ public class ProductDao {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
 			ProductMapper mapper = session.getMapper(ProductMapper.class);
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("name", product.getName());
-			map.put("description", product.getDescription());
-			map.put("price", product.getPrice());
-			map.put("inventory", product.getInventory());
-			map.put("salesCount", product.getSalesCount());
-			map.put("mainImgUrl", product.getMainImgUrl());
-			map.put("parentCategoryId", product.getParentCategoryId());
-			map.put("categoryId", product.getCategoryId());
-			map.put("brandNameCN", product.getBrandNameCN());
-			map.put("brandNameEN", product.getBrandNameEN());
-			mapper.add(map);
+			mapper.add(product);
+			int id = product.getId();
+			HashMap<String, Object> imgMap = new HashMap<String, Object>();
+			imgMap.put("id", id);
+			imgMap.put("mainImgUrl", "product/" + id + "-0.jpg");
+			imgMap.put("imgUrl1", "product/" + id + "-1.jpg");
+			imgMap.put("imgUrl2", "product/" + id + "-2.jpg");
+			imgMap.put("imgUrl3", "product/" + id + "-3.jpg");
+			imgMap.put("imgUrl4", "product/" + id + "-4.jpg");
+			mapper.updateImgUrl(imgMap);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -202,8 +200,7 @@ public class ProductDao {
 		}
 		return result;
 	}
-	
-	
+
 	public List<Product> getActiveByKW(String KW) {
 		SqlSession session = SessionFactory.openDEVSession();
 		List<Product> result = new ArrayList<Product>();

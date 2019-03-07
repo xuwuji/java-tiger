@@ -44,13 +44,13 @@ public class AdminCategoryController {
 		String name = request.getParameter("name");
 		String desc = request.getParameter("desc");
 		String parentCategoryId = request.getParameter("parentCategoryId");
-		String imgUrl = request.getParameter("imgUrl");
-		System.out.println(imgUrl);
-		System.out.println(parentCategoryId);
+		//String imgUrl = request.getParameter("imgUrl");
+		//System.out.println(imgUrl);
+		//System.out.println(parentCategoryId);
 		Category category = new Category();
 		category.setDescription(desc);
 		category.setName(name);
-		category.setImgUrl(imgUrl);
+		//category.setImgUrl(imgUrl);
 		category.setParentCategoryId(parentCategoryId);
 		categoryDao.add(category);
 	}

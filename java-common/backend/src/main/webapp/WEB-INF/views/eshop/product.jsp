@@ -121,11 +121,11 @@
 						<label for="txt_departmentname">商品销售量</label> <input type="text"
 							class="form-control" id="productSalesCount" placeholder="销售量">
 					</div>
-					<div class="form-group">
+				<!-- 	<div class="form-group">
 						<label for="txt_departmentname">商品主图Url</label> <input type="text"
 							class="form-control" id="productMainImgUrl" placeholder="商品主图Url">
-					</div>
-					<div class="form-group">
+					</div> -->
+					<!-- <div class="form-group">
 						<label for="txt_departmentname">品牌中文名</label> <input type="text"
 							class="form-control" id="productBrandNameCN" placeholder="品牌中文名">
 					</div>
@@ -133,7 +133,7 @@
 					<div class="form-group">
 						<label for="txt_departmentname">品牌英文名</label> <input type="text"
 							class="form-control" id="productBrandNameEN" placeholder="品牌英文名">
-					</div>
+					</div> -->
 					<div class="form-group">
 						<label for="txt_departmentname">大类id</label> <input type="text"
 							class="form-control" id="add-parentCategoryId" placeholder="大类id"
@@ -198,12 +198,12 @@
 							class="form-control" id="edit-productSalesCount"
 							placeholder="销售量">
 					</div>
-					<div class="form-group">
+				<!-- 	<div class="form-group">
 						<label for="txt_departmentname">商品主图Url</label> <input type="text"
 							class="form-control" id="edit-productMainImgUrl"
 							placeholder="商品主图Url">
-					</div>
-					<div class="form-group">
+					</div> -->
+					<!-- <div class="form-group">
 						<label for="txt_departmentname">品牌中文名</label> <input type="text"
 							class="form-control" id="edit-productBrandNameCN"
 							placeholder="品牌中文名">
@@ -213,7 +213,7 @@
 						<label for="txt_departmentname">品牌英文名</label> <input type="text"
 							class="form-control" id="edit-productBrandNameEN"
 							placeholder="品牌英文名">
-					</div>
+					</div> -->
 					<div class="form-group">
 						<label for="txt_departmentname">大类id</label> <input type="text"
 							class="form-control" id="edit-parentCategoryId"
@@ -402,11 +402,11 @@
 						title : '销量',
 						align : 'center'
 					},
-					{
+					/* {
 						field : 'mainImgUrl',
 						title : '主图url',
 						align : 'center'
-					},
+					}, */
 					{
 						field : 'parentCategoryId',
 						title : '大分类Id',
@@ -417,7 +417,7 @@
 						title : '分类Id',
 						align : 'center'
 					},
-					{
+					/* {
 						field : 'brandNameCN',
 						title : '品牌中文名',
 						align : 'center'
@@ -426,7 +426,7 @@
 						field : 'brandNameEN',
 						title : '品牌英文名',
 						align : 'center'
-					},
+					}, */
 					{
 						field : 'bannerItemName',
 						title : 'banner位',
@@ -626,9 +626,9 @@
 		var price = $('#productPrice').val();
 		var inventory = $('#productInventory').val();
 		var salesCount = $('#productSalesCount').val();
-		var mainImgUrl = $('#productMainImgUrl').val();
-		var brandNameCN = $('#productBrandNameCN').val();
-		var brandNameEN = $('#productBrandNameEN').val();
+		//var mainImgUrl = $('#productMainImgUrl').val();
+		//var brandNameCN = $('#productBrandNameCN').val();
+		//var brandNameEN = $('#productBrandNameEN').val();
 		$.ajax({
 			url : "/backend/admin/product/add",
 			type : "post",
@@ -638,11 +638,11 @@
 				price : price,
 				inventory : inventory,
 				salesCount : salesCount,
-				mainImgUrl : mainImgUrl,
+				//mainImgUrl : mainImgUrl,
 				parentCategoryId : parentCategoryId,
 				categoryId : categoryId,
-				brandNameCN : brandNameCN,
-				brandNameEN : brandNameEN,
+				//brandNameCN : brandNameCN,
+				//brandNameEN : brandNameEN,
 			},
 			success : function(status) {
 				$table.bootstrapTable('destroy');
@@ -665,9 +665,9 @@
 			$('#edit-productPrice').val(row.price);
 			$('#edit-productSalesCount').val(row.salesCount);
 			$('#edit-productInventory').val(row.inventory);
-			$('#edit-productMainImgUrl').val(row.mainImgUrl);
-			$('#edit-productBrandNameCN').val(row.brandNameCN);
-			$('#edit-productBrandNameEN').val(row.brandNameEN);
+			//$('#edit-productMainImgUrl').val(row.mainImgUrl);
+			//$('#edit-productBrandNameCN').val(row.brandNameCN);
+			//$('#edit-productBrandNameEN').val(row.brandNameEN);
 		});
 	}
 
@@ -681,9 +681,9 @@
 		var price = $('#edit-productPrice').val();
 		var inventory = $('#edit-productInventory').val();
 		var salesCount = $('#edit-productSalesCount').val();
-		var mainImgUrl = $('#edit-productMainImgUrl').val();
-		var brandNameCN = $('#edit-productBrandNameCN').val();
-		var brandNameEN = $('#edit-productBrandNameEN').val();
+		//var mainImgUrl = $('#edit-productMainImgUrl').val();
+		//var brandNameCN = $('#edit-productBrandNameCN').val();
+		//var brandNameEN = $('#edit-productBrandNameEN').val();
 		var id = $('#edit-productId').val();
 		$.ajax({
 			url : "/backend/admin/product/update",
@@ -695,11 +695,11 @@
 				price : price,
 				inventory : inventory,
 				salesCount : salesCount,
-				mainImgUrl : mainImgUrl,
+				//mainImgUrl : mainImgUrl,
 				parentCategoryId : parentCategoryId,
 				categoryId : categoryId,
-				brandNameCN : brandNameCN,
-				brandNameEN : brandNameEN,
+				//brandNameCN : brandNameCN,
+				//brandNameEN : brandNameEN,
 			},
 			success : function(status) {
 				$table.bootstrapTable('destroy');

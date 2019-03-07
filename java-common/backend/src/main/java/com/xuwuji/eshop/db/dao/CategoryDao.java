@@ -18,12 +18,12 @@ public class CategoryDao {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
 			CategoryMapper mapper = session.getMapper(CategoryMapper.class);
+			mapper.add(category);
+			int id = category.getId();
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("name", category.getName());
-			map.put("description", category.getDescription());
-			map.put("parentCategoryId", category.getParentCategoryId());
-			map.put("imgUrl", category.getImgUrl());
-			mapper.add(map);
+			map.put("id", id);
+			map.put("imgUrl", "category/" + id + ".jpg");
+			mapper.updateImg(map);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();

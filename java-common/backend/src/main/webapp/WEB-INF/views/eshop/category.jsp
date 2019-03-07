@@ -92,10 +92,10 @@
 						<label for="txt_departmentname">子类介绍</label> <input type="text"
 							class="form-control" id="categoryDesc" placeholder="介绍">
 					</div>
-					<div class="form-group">
+				<!-- 	<div class="form-group">
 						<label for="txt_departmentname">图片Url</label> <input type="text"
 							class="form-control" id="categoryImgUrl" placeholder="图片Url">
-					</div>
+					</div> -->
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">
 							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭
@@ -136,10 +136,10 @@
 						<label for="txt_departmentname">子类介绍</label> <input type="text"
 							class="form-control" id="edit-categoryDesc" placeholder="介绍">
 					</div>
-					<div class="form-group">
+				<!-- 	<div class="form-group">
 						<label for="txt_departmentname">图片Url</label> <input type="text"
 							class="form-control" id="edit-categoryImgUrl" placeholder="图片Url">
-					</div>
+					</div> -->
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">
 							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭
@@ -217,11 +217,11 @@
 								title : '图片的Id',
 								align : 'center'
 							},
-							{
+						/* 	{
 								field : 'imgUrl',
 								title : '显示图片url',
 								align : 'center'
-							},
+							}, */
 							{
 								field : 'recommend',
 								title : '首页是否推荐',
@@ -289,14 +289,14 @@
 		var parentCategoryId = $(".selectpicker").val();
 		var categoryName = $('#categoryName').val();
 		var categoryDesc = $('#categoryDesc').val();
-		var categoryImgUrl = $('#categoryImgUrl').val();
+		//var categoryImgUrl = $('#categoryImgUrl').val();
 		$.ajax({
 			url : "/backend/admin/category/add",
 			type : "post",
 			data : {
 				name : categoryName,
 				desc : categoryDesc,
-				imgUrl : categoryImgUrl,
+				//imgUrl : categoryImgUrl,
 				parentCategoryId : parentCategoryId,
 			},
 			success : function(status) {
@@ -313,7 +313,7 @@
 			$('#edit-categoryId').val(row.id);
 			$('#edit-categoryName').val(row.name);
 			$('#edit-categoryDesc').val(row.description);
-			$('#edit-categoryImgUrl').val(row.imgUrl);
+			//$('#edit-categoryImgUrl').val(row.imgUrl);
 		});
 		console.log(row);
 	}
@@ -324,7 +324,7 @@
 		var parentCategoryId = $(".selectpicker").val();
 		var name = $('#edit-categoryName').val();
 		var desc = $('#edit-categoryDesc').val();
-		var imgUrl = $('#edit-categoryImgUrl').val();
+		//var imgUrl = $('#edit-categoryImgUrl').val();
 		$.ajax({
 			url : "/backend/admin/category/update",
 			type : "post",
@@ -332,7 +332,7 @@
 				id : id,
 				name : name,
 				desc : desc,
-				imgUrl : imgUrl,
+				//imgUrl : imgUrl,
 				parentCategoryId : parentCategoryId,
 			},
 			success : function(status) {

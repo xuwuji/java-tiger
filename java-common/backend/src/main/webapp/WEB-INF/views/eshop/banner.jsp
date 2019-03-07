@@ -68,11 +68,11 @@
 							name="txt_departmentname" data-bind="value:Name"
 							class="form-control" id="add-name" placeholder="名称">
 					</div>
-					<div class="form-group">
+					<!-- 	<div class="form-group">
 						<label for="txt_departmentname">图片url</label> <input type="text"
 							name="txt_departmentname" data-bind="value:Name"
 							class="form-control" id="add-imgUrl" placeholder="图片url">
-					</div>
+					</div> -->
 					<div class="form-group">
 						<label for="txt_departmentname">跳转页面</label> <input type="text"
 							name="txt_departmentname" data-bind="value:Name"
@@ -120,11 +120,11 @@
 						name="txt_departmentname" data-bind="value:Name"
 						class="form-control" id="edit-name" placeholder="名称">
 				</div>
-				<div class="form-group">
+				<!-- <div class="form-group">
 					<label for="txt_departmentname">图片url</label> <input type="text"
 						name="txt_departmentname" data-bind="value:Name"
 						class="form-control" id="edit-imgUrl" placeholder="图片url">
-				</div>
+				</div> -->
 				<div class="form-group">
 					<label for="txt_departmentname">跳转页面</label> <input type="text"
 						name="txt_departmentname" data-bind="value:Name"
@@ -190,11 +190,12 @@
 			field : 'name',
 			title : '名称',
 			align : 'center'
-		}, {
-			field : 'imgUrl',
-			title : '图片链接',
-			align : 'center'
-		}, {
+		}, /* {
+				field : '
+	imgUrl',
+					title : '图片链接',
+					align : 'center'
+				}, */{
 			field : 'redirectUrl',
 			title : '跳转页面链接',
 			align : 'center'
@@ -254,7 +255,7 @@
 	$('#btn_submit').on("click", function() {
 		var name = $('#add-name').val();
 		var redirectUrl = $('#add-redirectUrl').val();
-		var imgUrl = $('#add-imgUrl').val();
+		//var imgUrl = $('#add-imgUrl').val();
 		var bannerId = $('#add-bannerId').val();
 		$.ajax({
 			url : "/backend/admin/banner/add",
@@ -262,7 +263,7 @@
 			data : {
 				name : name,
 				redirectUrl : redirectUrl,
-				imgUrl : imgUrl,
+				//imgUrl : imgUrl,
 				bannerId : bannerId,
 			},
 			success : function(status) {
@@ -277,7 +278,7 @@
 		$("#editModal").modal().on("shown.bs.modal", function() {
 			$('#edit-name').val(row.name);
 			$('#edit-redirectUrl').val(row.redirectUrl);
-			$('#edit-imgUrl').val(row.imgUrl);
+			//$('#edit-imgUrl').val(row.imgUrl);
 			$('#edit-bannerId').val(row.bannerId);
 			$('#edit-id').val(row.id);
 		});
@@ -287,7 +288,7 @@
 	$('#btn_edit_submit').on("click", function() {
 		var name = $('#edit-name').val();
 		var redirectUrl = $('#edit-redirectUrl').val();
-		var imgUrl = $('#edit-imgUrl').val();
+		//var imgUrl = $('#edit-imgUrl').val();
 		var bannerId = $('#edit-bannerId').val();
 		var id = $('#edit-id').val();
 		$.ajax({
@@ -297,7 +298,7 @@
 				id : id,
 				name : name,
 				redirectUrl : redirectUrl,
-				imgUrl : imgUrl,
+				//imgUrl : imgUrl,
 				bannerId : bannerId,
 			},
 			success : function(status) {

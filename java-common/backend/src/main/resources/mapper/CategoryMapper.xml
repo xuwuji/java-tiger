@@ -16,11 +16,18 @@
 	</resultMap>
 
 	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
-		keyProperty="id">
-		insert into category (name,description,parentCategoryId,
-		imgUrl,state,recommend)
-		values(#{name},#{description},#{parentCategoryId},#{imgUrl},'0','0');
+		keyProperty="id" keyColumn="id">
+		insert into category
+		(name,description,parentCategoryId,
+		state,recommend)
+		values(#{name},#{description},#{parentCategoryId},'0','0');
 	</insert>
+	
+	<update id="updateImg" parameterType="hashmap">
+		update category set
+		imgUrl=#{imgUrl}
+		where id=#{id};
+	</update>
 
 	<update id="disable" parameterType="hashmap">
 		update category set
@@ -65,7 +72,8 @@
 		where id=#{id};
 	</update>
 
-	<select id="getByParent" resultType="Category" parameterType="hashmap">
+	<select id="getByParent" resultType="Category"
+		parameterType="hashmap">
 		select * from
 		category where
 		parentCategoryId=#{parentCategoryId}; ;

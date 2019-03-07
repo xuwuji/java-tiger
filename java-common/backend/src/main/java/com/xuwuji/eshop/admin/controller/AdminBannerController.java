@@ -34,12 +34,12 @@ public class AdminBannerController {
 	@ResponseBody
 	public void add(HttpServletRequest request, HttpServletResponse response) {
 		String name = request.getParameter("name");
-		String imgUrl = request.getParameter("imgUrl");
+		//String imgUrl = request.getParameter("imgUrl");
 		String redirectUrl = request.getParameter("redirectUrl");
 		String bannerId = request.getParameter("bannerId");
 		BannerItem bannerItem = new BannerItem();
 		bannerItem.setBannerId(bannerId);
-		bannerItem.setImgUrl(imgUrl);
+		//bannerItem.setImgUrl(imgUrl);
 		bannerItem.setName(name);
 		bannerItem.setRedirectUrl(redirectUrl);
 		bannerDao.add(bannerItem);
