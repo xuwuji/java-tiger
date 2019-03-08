@@ -19,12 +19,11 @@ public class BannerDao {
 		try {
 			BannerItemMapper mapper = session.getMapper(BannerItemMapper.class);
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("name", bannerItem.getName());
-			map.put("imgUrl", bannerItem.getImgUrl());
-			map.put("redirectUrl", bannerItem.getRedirectUrl());
-			map.put("state", bannerItem.getState());
-			map.put("bannerId", bannerItem.getBannerId());
-			mapper.add(map);
+			mapper.add(bannerItem);
+			int id = bannerItem.getId();
+			map.put("imgUrl", "bannerItem/" + id + ".jpg");
+			map.put("id", id);
+			mapper.updateImg(map);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();

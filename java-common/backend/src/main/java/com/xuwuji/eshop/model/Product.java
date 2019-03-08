@@ -20,7 +20,7 @@ public class Product {
 	private String mainImgUrl;
 	private String mainImgId;
 	private List<Img> imgs;
-	private List<String> imgIds;
+	private List<String> imgUrls;
 	private String parentCategoryId;
 	private String categoryId;
 	private String brandId;
@@ -30,6 +30,10 @@ public class Product {
 	private String bannerItemId;
 	private String bannerItemName;
 	private String country;
+	private String imgUrl1;
+	private String imgUrl2;
+	private String imgUrl3;
+	private String imgUrl4;
 
 	public Product() {
 
@@ -107,12 +111,12 @@ public class Product {
 		this.imgs = imgs;
 	}
 
-	public List<String> getImgIds() {
-		return imgIds;
+	public List<String> getImgUrls() {
+		return imgUrls;
 	}
 
-	public void setImgIds(List<String> imgIds) {
-		this.imgIds = imgIds;
+	public void setImgUrls(List<String> imgUrls) {
+		this.imgUrls = imgUrls;
 	}
 
 	public String getMainImgUrl() {
@@ -195,14 +199,48 @@ public class Product {
 		this.country = country;
 	}
 
+	public String getImgUrl1() {
+		return imgUrl1;
+	}
+
+	public void setImgUrl1(String imgUrl1) {
+		this.imgUrl1 = imgUrl1;
+	}
+
+	public String getImgUrl2() {
+		return imgUrl2;
+	}
+
+	public void setImgUrl2(String imgUrl2) {
+		this.imgUrl2 = imgUrl2;
+	}
+
+	public String getImgUrl3() {
+		return imgUrl3;
+	}
+
+	public void setImgUrl3(String imgUrl3) {
+		this.imgUrl3 = imgUrl3;
+	}
+
+	public String getImgUrl4() {
+		return imgUrl4;
+	}
+
+	public void setImgUrl4(String imgUrl4) {
+		this.imgUrl4 = imgUrl4;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
 				+ ", inventory=" + inventory + ", salesCount=" + salesCount + ", mainImg=" + mainImg + ", mainImgUrl="
-				+ mainImgUrl + ", mainImgId=" + mainImgId + ", imgs=" + imgs + ", imgIds=" + imgIds
+				+ mainImgUrl + ", mainImgId=" + mainImgId + ", imgs=" + imgs + ", imgUrls=" + imgUrls
 				+ ", parentCategoryId=" + parentCategoryId + ", categoryId=" + categoryId + ", brandId=" + brandId
 				+ ", brandNameCN=" + brandNameCN + ", brandNameEN=" + brandNameEN + ", state=" + state
-				+ ", bannerItemId=" + bannerItemId + "]";
+				+ ", bannerItemId=" + bannerItemId + ", bannerItemName=" + bannerItemName + ", country=" + country
+				+ ", imgUrl1=" + imgUrl1 + ", imgUrl2=" + imgUrl2 + ", imgUrl3=" + imgUrl3 + ", imgUrl4=" + imgUrl4
+				+ "]";
 	}
 
 }

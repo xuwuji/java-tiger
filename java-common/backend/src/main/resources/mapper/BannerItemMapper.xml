@@ -15,11 +15,17 @@
 	</resultMap>
 
 	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
-		keyProperty="id">
+		keyProperty="id" keyColumn="id">
 		insert into bannerItem
 		(name,imgUrl,redirectUrl,bannerId,state)
 		values(#{name},#{imgUrl},#{redirectUrl},#{bannerId},'0')
 	</insert>
+	
+	<update id="updateImg" parameterType="hashmap">
+		update bannerItem set
+		imgUrl=#{imgUrl}
+		where id=#{id};
+	</update>
 
 	<update id="update" parameterType="hashmap">
 		update bannerItem set

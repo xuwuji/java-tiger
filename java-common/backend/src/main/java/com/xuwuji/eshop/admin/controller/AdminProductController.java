@@ -50,11 +50,11 @@ public class AdminProductController {
 		String price = request.getParameter("price");
 		String inventory = request.getParameter("inventory");
 		String salesCount = request.getParameter("salesCount");
-		String mainImgUrl = request.getParameter("mainImgUrl");
+		//String mainImgUrl = request.getParameter("mainImgUrl");
 		String parentCategoryId = request.getParameter("parentCategoryId");
 		String categoryId = request.getParameter("categoryId");
-		String brandNameCN = request.getParameter("brandNameCN");
-		String brandNameEN = request.getParameter("brandNameEN");
+		//String brandNameCN = request.getParameter("brandNameCN");
+		//String brandNameEN = request.getParameter("brandNameEN");
 		Product product = new Product();
 		product.setName(name);
 		product.setDescription(desc);
@@ -62,10 +62,10 @@ public class AdminProductController {
 		product.setPrice(Double.valueOf(price));
 		product.setSalesCount(Integer.valueOf(salesCount));
 		product.setInventory(Integer.valueOf(inventory));
-		product.setBrandNameCN(brandNameCN);
-		product.setBrandNameEN(brandNameEN);
+		//product.setBrandNameCN(brandNameCN);
+		//product.setBrandNameEN(brandNameEN);
 		product.setCategoryId(categoryId);
-		product.setMainImgUrl(mainImgUrl);
+		//product.setMainImgUrl(mainImgUrl);
 		System.out.print(product);
 		productDao.add(product);
 	}

@@ -22,14 +22,18 @@
 		<result property="bannerItemName" column="type"></result>
 		<result property="country" column="type"></result>
 		<result property="brandId" column="type"></result>
+		<result property="imgUrl1" column="type"></result>
+		<result property="imgUrl2" column="type"></result>
+		<result property="imgUrl3" column="type"></result>
+		<result property="imgUrl4" column="type"></result>
 	</resultMap>
 
-	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
-		keyProperty="id">
+	<insert id="add" parameterType="Product" useGeneratedKeys="true"
+		keyProperty="id" keyColumn="id">
 		insert into product
-		(name,description,price,inventory,salesCount,mainImgUrl,parentCategoryId,categoryId,
-		brandNameCN,brandNameEN,state)
-		values(#{name},#{description},#{price},#{inventory},#{salesCount},#{mainImgUrl},#{parentCategoryId},#{categoryId},#{brandNameCN},#{brandNameEN},'0')
+		(name,description,price,inventory,salesCount,parentCategoryId,categoryId,
+		state)
+		values(#{name},#{description},#{price},#{inventory},#{salesCount},#{parentCategoryId},#{categoryId},'0')
 	</insert>
 
 	<update id="disable" parameterType="hashmap">
@@ -56,6 +60,13 @@
 		where id=#{id};
 	</update>
 
+	<update id="updateImgUrl" parameterType="hashmap">
+		update product set
+		mainImgUrl=#{mainImgUrl},
+		imgUrl1=#{imgUrl1},imgUrl2=#{imgUrl2},imgUrl3=#{imgUrl3},imgUrl4=#{imgUrl4}
+		where id=#{id};
+	</update>
+
 	<update id="update" parameterType="hashmap">
 		update product set
 		name=#{name},description=#{description},price=#{price},inventory=#{inventory},
@@ -75,7 +86,11 @@
 		parameterType="hashmap">
 		select * from product as p left join (select
 		banneritem.id,banneritem.name as bannerItemName, banneritem.bannerId
-		from banneritem ) b on p.bannerItemId= b.id where
+		from banneritem ) b on p.bannerItemId= b.id
+		left join (SELECT
+		brand.brandCN as brandNameCN,brand.brandEN as
+		brandNameEN,brand.id from
+		brand) bb on p.brandId=bb.id where
 		p.categoryId=#{categoryId};
 	</select>
 
@@ -121,11 +136,12 @@
 	<select id="getActiveByKW" resultType="Product"
 		parameterType="hashmap">
 		select * from
-		product where name like CONCAT('%',#{KW},'%')
+		product where name like
+		CONCAT('%',#{KW},'%')
 		and state
 		='1';
 	</select>
-	
+
 	<select id="getActiveByBannerItem" resultType="Product"
 		parameterType="hashmap">
 		select * from

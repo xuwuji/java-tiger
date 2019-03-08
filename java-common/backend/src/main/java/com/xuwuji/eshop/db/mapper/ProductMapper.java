@@ -7,7 +7,7 @@ import com.xuwuji.eshop.model.Product;
 
 public interface ProductMapper {
 
-	public void add(HashMap<String, Object> map);
+	public int add(Product product);
 
 	public void disable(HashMap<String, Object> map);
 
@@ -30,6 +30,8 @@ public interface ProductMapper {
 	public List<Product> getActiveByKW(HashMap<String, Object> map);
 	
 	public List<Product> getActiveByBannerItem(HashMap<String, Object> map);
+	
+	public void updateImgUrl(HashMap<String, Object> map);
 
 	
 

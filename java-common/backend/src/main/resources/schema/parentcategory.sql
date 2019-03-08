@@ -11,7 +11,7 @@
  Target Server Version : 80015
  File Encoding         : 65001
 
- Date: 04/03/2019 17:20:29
+ Date: 07/03/2019 16:42:31
 */
 
 SET NAMES utf8mb4;
@@ -25,19 +25,21 @@ CREATE TABLE `parentcategory`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   `state` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL COMMENT '状态，下架0，上架1',
+  `lastModifyTime` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
+  `createTime` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of parentcategory
 -- ----------------------------
-INSERT INTO `parentcategory` VALUES (1, 'd', '0');
-INSERT INTO `parentcategory` VALUES (2, 'd', '0');
-INSERT INTO `parentcategory` VALUES (3, 'd', '0');
-INSERT INTO `parentcategory` VALUES (4, 'dsad', '0');
-INSERT INTO `parentcategory` VALUES (5, '美妆', '1');
-INSERT INTO `parentcategory` VALUES (6, '护肤', '1');
-INSERT INTO `parentcategory` VALUES (7, '个人护理', '1');
-INSERT INTO `parentcategory` VALUES (8, '母婴幼儿', '1');
+INSERT INTO `parentcategory` VALUES (1, 'd', '0', NULL, '2019-03-05 14:21:28');
+INSERT INTO `parentcategory` VALUES (2, 'd', '0', NULL, '2019-03-05 14:21:28');
+INSERT INTO `parentcategory` VALUES (3, 'd', '0', NULL, '2019-03-05 14:21:28');
+INSERT INTO `parentcategory` VALUES (4, 'dsad', '0', NULL, '2019-03-05 14:21:28');
+INSERT INTO `parentcategory` VALUES (5, '美妆', '1', NULL, '2019-03-05 14:21:28');
+INSERT INTO `parentcategory` VALUES (6, '护肤', '1', NULL, '2019-03-05 14:21:28');
+INSERT INTO `parentcategory` VALUES (7, '个人护理', '1', NULL, '2019-03-05 14:21:28');
+INSERT INTO `parentcategory` VALUES (8, '母婴幼儿', '1', NULL, '2019-03-05 14:21:28');
 
 SET FOREIGN_KEY_CHECKS = 1;

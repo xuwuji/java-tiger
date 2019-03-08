@@ -7,7 +7,9 @@ import com.xuwuji.eshop.model.Category;
 
 public interface CategoryMapper {
 
-	public void add(HashMap<String, Object> map);
+	public int add(Category category);
+	
+	public int updateImg(HashMap<String, Object> map);
 
 	public void disable(HashMap<String, Object> map);
 

@@ -7,8 +7,10 @@ import com.xuwuji.eshop.model.BannerItem;
 
 public interface BannerItemMapper {
 
-	public void add(HashMap<String, Object> map);
+	public void add(BannerItem bannerItem);
 
+	public void updateImg(HashMap<String, Object> map);
+	
 	public void update(HashMap<String, Object> map);
 
 	public void disable(HashMap<String, Object> map);
