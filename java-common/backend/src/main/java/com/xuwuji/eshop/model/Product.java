@@ -34,6 +34,7 @@ public class Product {
 	private String imgUrl2;
 	private String imgUrl3;
 	private String imgUrl4;
+	private String formatId;
 
 	public Product() {
 
@@ -229,6 +230,14 @@ public class Product {
 
 	public void setImgUrl4(String imgUrl4) {
 		this.imgUrl4 = imgUrl4;
+	}
+
+	public String getFormatId() {
+		return formatId;
+	}
+
+	public void setFormatId(String formatId) {
+		this.formatId = formatId;
 	}
 
 	@Override

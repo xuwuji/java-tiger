@@ -5,31 +5,33 @@ import java.util.List;
 
 public class Order {
 
-	public int id;
-	public String wechatId;
+	private int id;
+	private String wechatId;
 	// 下单时间
-	public Date time;
+	private Date time;
 	/*
 	 * {@Link} OrderStatus
 	 */
-	public String status;
-	public String orderId;
-	public List<OrderItem> orderItemsList;
+	private String status;
+	private String orderId;
+	private List<OrderItem> orderItemsList;
 	// 收件人手机号
-	public String phoneNum;
+	private String phoneNum;
 	// 订单总额
-	public double amount;
+	private double amount;
 	// 总件数
-	public int totalCount;
+	private int totalCount;
 	// 收件人姓名
-	public String recieverName;
+	private String recieverName;
 	// 收货地址
-	public String address;
+	private String address;
 
 	// 下单用户的openId
-	public String openId;
+	private String openId;
 	// 订单物流单号
-	public String logisticsId;
+	private String logisticsId;
+
+	private String memo;
 
 	public int getId() {
 		return id;
@@ -141,6 +143,14 @@ public class Order {
 				+ orderId + ", orderItemsList=" + orderItemsList + ", phoneNum=" + phoneNum + ", amount=" + amount
 				+ ", totalCount=" + totalCount + ", recieverName=" + recieverName + ", address=" + address + ", openId="
 				+ openId + "]";
+	}
+
+	public String getMemo() {
+		return memo;
+	}
+
+	public void setMemo(String memo) {
+		this.memo = memo;
 	}
 
 }

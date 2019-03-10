@@ -1,5 +1,7 @@
 package com.xuwuji.eshop.controller;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.xuwuji.eshop.db.dao.ProductDao;
 import com.xuwuji.eshop.model.Product;
 import com.xuwuji.eshop.model.SortEnum;
+import com.xuwuji.eshop.util.EshopConfigUtil;
 import com.xuwuji.eshop.util.ProductUtil;
+import com.xuwuji.eshop.util.QRCodeUtil;
 
 @Controller
 @RequestMapping(value = "/product")
@@ -27,6 +31,32 @@ public class ProductController {
 
 	@Autowired
 	private ProductUtil productUtil;
+
+	@Autowired
+	private QRCodeUtil qRCodeUtil;
+
+	@Autowired
+	private EshopConfigUtil eshopConfigUtil;
+
+	/**
+	 * 
+	 * @param id
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/getQRCode/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public void getQRCode(@PathVariable("id") String id, HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		@SuppressWarnings("static-access")
+		byte[] result = qRCodeUtil.getQRCoderByte(id);
+		response.setContentType("image/png");
+		OutputStream os = response.getOutputStream();
+		os.write(result);
+		os.flush();
+		os.close();
+	}
 
 	/**
 	 * get 获取某一类别的所有产品
@@ -55,6 +85,7 @@ public class ProductController {
 	 * @param response
 	 * @return
 	 */
+	@SuppressWarnings("static-access")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public Product getProductById(@PathVariable("id") String id, HttpServletRequest request,
@@ -65,9 +96,11 @@ public class ProductController {
 		Product product = productDao.getById(id);
 		List<String> imgUrls = new ArrayList<String>();
 		for (int i = 1; i < 5; i++) {
-			imgUrls.add("product/" + id + "-" + i + ".jpg");
+			imgUrls.add(eshopConfigUtil.PRODUCT_IMG_BASE + id + "-" + i + ".jpg");
 		}
 		product.setImgUrls(imgUrls);
+		String mainImgUrl = eshopConfigUtil.PRODUCT_IMG_BASE + id + "-0.jpg";
+		product.setMainImgUrl(mainImgUrl);
 		return product;
 	}
 

@@ -10,6 +10,8 @@ public class OrderItem {
 	private String name;
 	private double price;
 	private String mainImgUrl;
+	private String formatId;
+	private String productId;
 
 	public OrderItem() {
 	}
@@ -60,6 +62,22 @@ public class OrderItem {
 
 	public void setMainImgUrl(String mainImgUrl) {
 		this.mainImgUrl = mainImgUrl;
+	}
+
+	public String getFormatId() {
+		return formatId;
+	}
+
+	public void setFormatId(String formatId) {
+		this.formatId = formatId;
+	}
+
+	public String getProductId() {
+		return productId;
+	}
+
+	public void setProductId(String productId) {
+		this.productId = productId;
 	}
 
 }

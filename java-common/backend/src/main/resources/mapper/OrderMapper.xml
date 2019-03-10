@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuwuji.eshop.db.mapper.FormatMapper">
+
+
+	<resultMap type="Order" id="orderResult">
+		<id property="id" column="id"></id>
+		<result property="time" column="DATE"></result>
+		<result property="status" column="type"></result>
+		<result property="orderId" column="type"></result>
+		<result property="phoneNum" column="type"></result>
+		<result property="amount" column="type"></result>
+		<result property="totalCount" column="type"></result>
+		<result property="recieverName" column="type"></result>
+		<result property="address" column="type"></result>
+		<result property="openId" column="type"></result>
+		<result property="logisticsId" column="type"></result>
+		<result property="memo" column="type"></result>
+	</resultMap>
+
+	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into order
+		(time,status,orderId,phoneNum,amount,totalCount,recieverName,address,openId,logisticsId,memo)
+		values(#{time},'0',#{orderId},#{phoneNum},#{amount},#{totalCount},#{recieverName},#{address},#{openId},#{logisticsId},#{memo})
+	</insert>
+
+	<update id="update" parameterType="hashmap">
+		update order set
+		status=#{status},logisticsId=#{logisticsId},memo=#{memo}
+		where
+		id=#{id};
+	</update>
+
+	<select id="getAllByWechatIdAndStatus" resultType="Format">
+		select * from
+		order
+		where
+		wechatId=#{wechatId} and status=#{status};
+	</select>
+
+	<select id="getAllByOpenIdAndStatus" resultType="Format">
+		select * from
+		order where
+		openId=#{openId} and status=#{status};
+	</select>
+
+</mapper>

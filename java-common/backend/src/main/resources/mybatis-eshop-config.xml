@@ -136,6 +136,9 @@
 		<mapper resource="mapper/ProductMapper.xml" />
 		<mapper resource="mapper/BannerItemMapper.xml" />
 		<mapper resource="mapper/BrandMapper.xml" />
+		<mapper resource="mapper/FormatMapper.xml" />
+		<mapper resource="mapper/OrderMapper.xml" />
+		<mapper resource="mapper/OrderItemMapper.xml" />
 	</mappers>
 
 

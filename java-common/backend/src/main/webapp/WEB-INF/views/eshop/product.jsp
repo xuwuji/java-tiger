@@ -121,7 +121,7 @@
 						<label for="txt_departmentname">商品销售量</label> <input type="text"
 							class="form-control" id="productSalesCount" placeholder="销售量">
 					</div>
-				<!-- 	<div class="form-group">
+					<!-- 	<div class="form-group">
 						<label for="txt_departmentname">商品主图Url</label> <input type="text"
 							class="form-control" id="productMainImgUrl" placeholder="商品主图Url">
 					</div> -->
@@ -198,7 +198,7 @@
 							class="form-control" id="edit-productSalesCount"
 							placeholder="销售量">
 					</div>
-				<!-- 	<div class="form-group">
+					<!-- 	<div class="form-group">
 						<label for="txt_departmentname">商品主图Url</label> <input type="text"
 							class="form-control" id="edit-productMainImgUrl"
 							placeholder="商品主图Url">
@@ -348,126 +348,130 @@
 
 	//根据子分类id加载所有商品然后进行操作
 	function initTable(categoryId) {
-		$table.bootstrapTable({
-			url : '/backend/admin/product/getDetailByCategory/' + categoryId, //请求后台的URL（*）
-			method : 'get', //请求方式（*）
-			toolbar : '#toolbar', //工具按钮用哪个容器
-			striped : true, //是否显示行间隔色
-			cache : false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-			pagination : true, //是否显示分页（*）
-			sortOrder : "asc", //排序方式
-			//queryParams : oTableInit.queryParams,//传递参数（*）
-			sidePagination : "client", //分页方式：client客户端分页，server服务端分页（*）
-			pageNumber : 1, //初始化加载第一页，默认第一页
-			pageSize : 5, //每页的记录行数（*）
-			pageList : [ 10, 25, 50, 100 ], //可供选择的每页的行数（*）
-			search : true, //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
-			showColumns : true, //是否显示所有的列
-			showRefresh : true, //是否显示刷新按钮
-			minimumCountColumns : 2, //最少允许的列数
-			// clickToSelect: true,                //是否启用点击选中行
-			height : 500, //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
-			uniqueId : "id", //每一行的唯一标识，一般为主键列
-			columns : [
-					{
-						checkbox : true
-					},
-					{
-						field : 'id',
-						title : 'id',
-						align : 'center'
-					},
-					{
-						field : 'name',
-						title : '类别名',
-						align : 'center'
-					},
-					{
-						field : 'description',
-						title : '介绍',
-						align : 'center'
-					},
-					{
-						field : 'price',
-						title : '价格',
-						align : 'center'
-					},
-					{
-						field : 'inventory',
-						title : '库存',
-						align : 'center'
-					},
-					{
-						field : 'salesCount',
-						title : '销量',
-						align : 'center'
-					},
-					/* {
-						field : 'mainImgUrl',
-						title : '主图url',
-						align : 'center'
-					}, */
-					{
-						field : 'parentCategoryId',
-						title : '大分类Id',
-						align : 'center'
-					},
-					{
-						field : 'categoryId',
-						title : '分类Id',
-						align : 'center'
-					},
-					/* {
-						field : 'brandNameCN',
-						title : '品牌中文名',
-						align : 'center'
-					},
-					{
-						field : 'brandNameEN',
-						title : '品牌英文名',
-						align : 'center'
-					}, */
-					{
-						field : 'bannerItemName',
-						title : 'banner位',
-						align : 'center',
-					},
-					{
-						field : 'state',
-						title : '状态',
-						align : 'center',
-						formatter : function(value, row, index) {
-							if (row.state) {
-								if (row.state == '0') {
-									return "已下架";
-								} else if (row.state == '1') {
-									return "已上架";
-								} else {
-									return "错误数据";
+		$table
+				.bootstrapTable({
+					url : '/backend/admin/product/getDetailByCategory/'
+							+ categoryId, //请求后台的URL（*）
+					method : 'get', //请求方式（*）
+					toolbar : '#toolbar', //工具按钮用哪个容器
+					striped : true, //是否显示行间隔色
+					cache : false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+					pagination : true, //是否显示分页（*）
+					sortOrder : "asc", //排序方式
+					//queryParams : oTableInit.queryParams,//传递参数（*）
+					sidePagination : "client", //分页方式：client客户端分页，server服务端分页（*）
+					pageNumber : 1, //初始化加载第一页，默认第一页
+					pageSize : 5, //每页的记录行数（*）
+					pageList : [ 10, 25, 50, 100 ], //可供选择的每页的行数（*）
+					search : true, //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+					showColumns : true, //是否显示所有的列
+					showRefresh : true, //是否显示刷新按钮
+					minimumCountColumns : 2, //最少允许的列数
+					// clickToSelect: true,                //是否启用点击选中行
+					height : 500, //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+					uniqueId : "id", //每一行的唯一标识，一般为主键列
+					columns : [
+							{
+								checkbox : true
+							},
+							{
+								field : 'id',
+								title : 'id',
+								align : 'center'
+							},
+							{
+								field : 'name',
+								title : '商品名',
+								align : 'center'
+							},
+							{
+								field : 'description',
+								title : '介绍',
+								align : 'center'
+							},
+							{
+								field : 'price',
+								title : '价格',
+								align : 'center'
+							},
+							{
+								field : 'inventory',
+								title : '库存',
+								align : 'center'
+							},
+							{
+								field : 'salesCount',
+								title : '销量',
+								align : 'center'
+							},
+							/* {
+								field : 'mainImgUrl',
+								title : '主图url',
+								align : 'center'
+							}, */
+							{
+								field : 'parentCategoryId',
+								title : '大分类Id',
+								align : 'center'
+							},
+							{
+								field : 'categoryId',
+								title : '分类Id',
+								align : 'center'
+							},
+							{
+								field : 'brandNameCN',
+								title : '品牌中文名',
+								align : 'center'
+							},
+							{
+								field : 'brandNameEN',
+								title : '品牌英文名',
+								align : 'center'
+							},
+							{
+								field : 'bannerItemName',
+								title : 'banner位',
+								align : 'center',
+							},
+							{
+								field : 'state',
+								title : '状态',
+								align : 'center',
+								formatter : function(value, row, index) {
+									if (row.state) {
+										if (row.state == '0') {
+											return "已下架";
+										} else if (row.state == '1') {
+											return "已上架";
+										} else {
+											return "错误数据";
+										}
+									}
+								}
+							},
+							{
+								title : '操作',
+								field : 'id',
+								formatter : function(id) {
+									var html = '<a href="javascript:editProduct('
+											+ id + ')">编辑</a>';
+									html += '　<a href="javascript:deleteProduct('
+											+ id + ')">下架</a>';
+									html += '　<a href="javascript:reActiveProduct('
+											+ id + ')">上架</a>';
+									html += '　<a href="javascript:updateBannerItem('
+											+ id + ')">修改banner位</a>';
+									html += '　<a href="javascript:updateBrand('
+											+ id + ')">修改品牌</a>';
+									html += '　<a href="http://localhost:8080/backend/admin/format/index/'
+											+ id + '">规格管理</a>';
+									return html;
 								}
 							}
-						}
-					},
-					{
-						title : '操作',
-						field : 'id',
-						formatter : function(id) {
-							var html = '<a href="javascript:editProduct(' + id
-									+ ')">编辑</a>';
-							html += '　<a href="javascript:deleteProduct(' + id
-									+ ')">下架</a>';
-							html += '　<a href="javascript:reActiveProduct('
-									+ id + ')">上架</a>';
-							html += '　<a href="javascript:updateBannerItem('
-									+ id + ')">修改banner位</a>';
-							html += '　<a href="javascript:updateBrand(' + id
-									+ ')">修改品牌</a>';
-							return html;
-						}
-					}
 
-			]
-		});
+					]
+				});
 	}
 	function updateBrand(id) {
 		var row = $table.bootstrapTable('getRowByUniqueId', id);
@@ -641,8 +645,8 @@
 				//mainImgUrl : mainImgUrl,
 				parentCategoryId : parentCategoryId,
 				categoryId : categoryId,
-				//brandNameCN : brandNameCN,
-				//brandNameEN : brandNameEN,
+			//brandNameCN : brandNameCN,
+			//brandNameEN : brandNameEN,
 			},
 			success : function(status) {
 				$table.bootstrapTable('destroy');
@@ -698,8 +702,8 @@
 				//mainImgUrl : mainImgUrl,
 				parentCategoryId : parentCategoryId,
 				categoryId : categoryId,
-				//brandNameCN : brandNameCN,
-				//brandNameEN : brandNameEN,
+			//brandNameCN : brandNameCN,
+			//brandNameEN : brandNameEN,
 			},
 			success : function(status) {
 				$table.bootstrapTable('destroy');

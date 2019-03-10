@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuwuji.eshop.db.mapper.OrderItemMapper">
+
+	<resultMap type="OrderItem" id="orderItemResult">
+		<id property="id" column="id"></id>
+		<result property="name" column="type"></result>
+		<result property="mainImgUrl" column="type"></result>
+		<result property="price" column="type"></result>
+		<result property="count" column="type"></result>
+		<result property="orderId" column="type"></result>
+		<result property="formatId" column="type"></result>
+		<result property="productId" column="type"></result>
+	</resultMap>
+
+	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
+		keyProperty="id" keyColumn="id">
+		insert into orderItem
+		(name,mainImgUrl,price,count,orderId,formatId,productId)
+		values(#{name},#{mainImgUrl},#{price},#{count},#{orderId},#{formatId},#{productId})
+	</insert>
+
+	<select id="getByOrderId" resultType="OrderItem">
+		select * from
+		orderItem
+		where
+		orderId=#{orderId};
+	</select>
+
+</mapper>
