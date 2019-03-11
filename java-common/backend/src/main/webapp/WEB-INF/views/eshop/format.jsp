@@ -79,7 +79,7 @@
 					<div class="form-group">
 						<label for="txt_departmentname">价格</label> <input type="text"
 							name="txt_departmentname" data-bind="value:Name"
-							class="form-control" id="add-price" placeholder="跳转页面">
+							class="form-control" id="add-price" placeholder="价格">
 					</div>
 					<!-- 	<div class="form-group">
 						<label for="txt_departmentname">format位</label> <input type="text"

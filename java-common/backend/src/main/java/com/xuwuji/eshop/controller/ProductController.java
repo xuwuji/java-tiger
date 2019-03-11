@@ -59,7 +59,6 @@ public class ProductController {
 	}
 
 	/**
-	 * get 获取某一类别的所有产品
 	 * 
 	 * @param id
 	 * @param request
@@ -90,6 +89,7 @@ public class ProductController {
 	@ResponseBody
 	public Product getProductById(@PathVariable("id") String id, HttpServletRequest request,
 			HttpServletResponse response) {
+		System.out.println(id);
 		if (id == null || id.equals("undefined")) {
 			id = "1";
 		}
@@ -105,7 +105,6 @@ public class ProductController {
 	}
 
 	/**
-	 * get 获取某一类别的所有产品
 	 * 
 	 * @param id
 	 * @param request

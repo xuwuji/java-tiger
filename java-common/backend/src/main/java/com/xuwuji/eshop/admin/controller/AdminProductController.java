@@ -152,6 +152,7 @@ public class AdminProductController {
 		String name = request.getParameter("name");
 		String desc = request.getParameter("desc");
 		String price = request.getParameter("price");
+		System.out.print(price);
 		String inventory = request.getParameter("inventory");
 		String salesCount = request.getParameter("salesCount");
 		String mainImgUrl = request.getParameter("mainImgUrl");

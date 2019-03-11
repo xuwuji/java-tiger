@@ -60,9 +60,12 @@ public class OrderController {
 			OrderItem item = new OrderItem();
 			item.setCount(orderItemsListNode.get(i).path("count").asInt());
 			item.setFormatId(orderItemsListNode.get(i).path("formatId").asText());
-			item.setName(orderItemsListNode.get(i).path("name").asText());
+			String name = new String(orderItemsListNode.get(i).path("name").asText().getBytes("utf-8"), "utf-8");
+			item.setName(name);
 			item.setOrderId(orderId);
-			item.setFormatName(orderItemsListNode.get(i).path("formatName").asText());
+			String formatName = new String(orderItemsListNode.get(i).path("formatName").asText().getBytes("utf-8"),
+					"utf-8");
+			item.setFormatName(formatName);
 			item.setProductId(orderItemsListNode.get(i).path("productId").asText());
 			item.setMainImgUrl(orderItemsListNode.get(i).path("mainImgUrl").asText());
 			item.setPrice(orderItemsListNode.get(i).path("price").asDouble());

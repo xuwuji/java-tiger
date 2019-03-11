@@ -512,6 +512,7 @@
 				"dataType" : "json",
 				"success" : function(data) {
 					var depart_list = data;
+					console.log(data);
 					var opts = "";
 					for (var depart_index = 0; depart_index < depart_list.length; depart_index++) {
 						var item = depart_list[depart_index];

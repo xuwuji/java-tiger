@@ -5,14 +5,19 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.xuwuji.eshop.db.mapper.ProductMapper;
 import com.xuwuji.eshop.db.util.SessionFactory;
 import com.xuwuji.eshop.model.Product;
+import com.xuwuji.eshop.util.EshopConfigUtil;
 
 @Component
 public class ProductDao {
+	
+	@Autowired
+	private EshopConfigUtil eshopConfigUtil;
 
 	public void add(Product product) {
 		SqlSession session = SessionFactory.openDEVSession();
@@ -22,11 +27,11 @@ public class ProductDao {
 			int id = product.getId();
 			HashMap<String, Object> imgMap = new HashMap<String, Object>();
 			imgMap.put("id", id);
-			imgMap.put("mainImgUrl", "product/" + id + "-0.jpg");
-			imgMap.put("imgUrl1", "product/" + id + "-1.jpg");
-			imgMap.put("imgUrl2", "product/" + id + "-2.jpg");
-			imgMap.put("imgUrl3", "product/" + id + "-3.jpg");
-			imgMap.put("imgUrl4", "product/" + id + "-4.jpg");
+			imgMap.put("mainImgUrl", eshopConfigUtil.PRODUCT_IMG_BASE + id + "-0.jpg");
+			imgMap.put("imgUrl1", eshopConfigUtil.PRODUCT_IMG_BASE + id + "-1.jpg");
+			imgMap.put("imgUrl2", eshopConfigUtil.PRODUCT_IMG_BASE + id + "-2.jpg");
+			imgMap.put("imgUrl3", eshopConfigUtil.PRODUCT_IMG_BASE + id + "-3.jpg");
+			imgMap.put("imgUrl4", eshopConfigUtil.PRODUCT_IMG_BASE + id + "-4.jpg");
 			mapper.updateImgUrl(imgMap);
 			session.commit();
 		} catch (Exception e) {
@@ -117,8 +122,8 @@ public class ProductDao {
 			map.put("mainImgUrl", product.getMainImgUrl());
 			map.put("parentCategoryId", product.getParentCategoryId());
 			map.put("categoryId", product.getCategoryId());
-			map.put("brandNameCN", product.getBrandNameCN());
-			map.put("brandNameEN", product.getBrandNameEN());
+			//map.put("brandNameCN", product.getBrandNameCN());
+			//map.put("brandNameEN", product.getBrandNameEN());
 			mapper.update(map);
 			session.commit();
 		} catch (Exception e) {
