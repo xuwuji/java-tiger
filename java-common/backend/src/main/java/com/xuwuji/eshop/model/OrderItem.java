@@ -2,12 +2,11 @@ package com.xuwuji.eshop.model;
 
 public class OrderItem {
 
-	// productId
 	private int id;
-	// 数量
 	private int count;
 	private String orderId;
 	private String name;
+	private String formatName;
 	private double price;
 	private String mainImgUrl;
 	private String formatId;
@@ -78,6 +77,14 @@ public class OrderItem {
 
 	public void setProductId(String productId) {
 		this.productId = productId;
+	}
+
+	public String getFormatName() {
+		return formatName;
+	}
+
+	public void setFormatName(String formatName) {
+		this.formatName = formatName;
 	}
 
 }

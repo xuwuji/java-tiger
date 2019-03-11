@@ -7,11 +7,15 @@ import com.xuwuji.eshop.model.Order;
 
 public interface OrderMapper {
 
-	public Order add(HashMap<String, Object> map);
-
+	public void add(Order order);
+	
 	public void update(HashMap<String, Object> map);
 
-	public List<Order> getAllByWechatIdAndStatus(HashMap<String, Object> map);
+	public void updateMemo(HashMap<String, Object> map);
+	
+	public List<Order> getAllByWechatIdAndState(HashMap<String, Object> map);
 
-	public List<Order> getAllByOpenIdAndStatus(HashMap<String, Object> map);
+	public List<Order> getAllByOpenIdAndState(HashMap<String, Object> map);
+	
+	public List<Order> getOrderInfoByOrderId(HashMap<String, Object> map);
 }

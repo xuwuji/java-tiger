@@ -3,13 +3,17 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.xuwuji.eshop.db.mapper.FormatMapper">
+<mapper namespace="com.xuwuji.eshop.db.mapper.OrderMapper">
 
 
 	<resultMap type="Order" id="orderResult">
 		<id property="id" column="id"></id>
-		<result property="time" column="DATE"></result>
-		<result property="status" column="type"></result>
+		<result property="time" column="DATE" javaType="java.util.Date"
+			jdbcType="DATE"></result>
+		<result property="lastModifyTime" column="DATE"
+			javaType="java.util.Date" jdbcType="DATE"></result>
+		<result property="wechatId" column="type"></result>
+		<result property="state" column="type"></result>
 		<result property="orderId" column="type"></result>
 		<result property="phoneNum" column="type"></result>
 		<result property="amount" column="type"></result>
@@ -18,34 +22,61 @@
 		<result property="address" column="type"></result>
 		<result property="openId" column="type"></result>
 		<result property="logisticsId" column="type"></result>
+		<result property="logisticsName" column="type"></result>
 		<result property="memo" column="type"></result>
 	</resultMap>
 
-	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
-		keyProperty="id">
-		insert into order
-		(time,status,orderId,phoneNum,amount,totalCount,recieverName,address,openId,logisticsId,memo)
-		values(#{time},'0',#{orderId},#{phoneNum},#{amount},#{totalCount},#{recieverName},#{address},#{openId},#{logisticsId},#{memo})
+	<insert id="add" parameterType="Order" useGeneratedKeys="true"
+		keyProperty="id" keyColumn="id">
+		insert into eshopOrder
+		(wechatId,time,state,orderId,phoneNum,amount,totalCount,recieverName,address,openId,memo)
+		values(#{wechatId},#{time},'0',#{orderId},#{phoneNum},#{amount},#{totalCount},#{recieverName},#{address},#{openId},#{memo})
 	</insert>
 
 	<update id="update" parameterType="hashmap">
-		update order set
-		status=#{status},logisticsId=#{logisticsId},memo=#{memo}
+		update eshopOrder set
+		lastModifyTime = now()
+		<if test="state != null and state !=''">
+			,state=#{state}
+		</if>
+		<if test="logisticsId != null and logisticsId !=''">
+			,logisticsId=#{logisticsId}
+		</if>
+		<if test="logisticsName != null and logisticsName !=''">
+			,logisticsName=#{logisticsName}
+		</if>
+		<if test="memo != null and memo !=''">
+			,memo=#{memo}
+		</if>
 		where
-		id=#{id};
+		orderId=#{orderId};
 	</update>
 
-	<select id="getAllByWechatIdAndStatus" resultType="Format">
-		select * from
-		order
+	<update id="updateMemo" parameterType="hashmap">
+		update eshopOrder set
+		lastModifyTime = now(),
+		memo=#{memo}
 		where
-		wechatId=#{wechatId} and status=#{status};
+		orderId=#{orderId};
+	</update>
+
+	<select id="getAllByWechatIdAndState" resultType="order">
+		select * from
+		eshopOrder
+		where
+		wechatId=#{wechatId} and state=#{state};
 	</select>
 
-	<select id="getAllByOpenIdAndStatus" resultType="Format">
+	<select id="getAllByOpenIdAndState" resultType="order">
 		select * from
-		order where
-		openId=#{openId} and status=#{status};
+		eshopOrder where
+		openId=#{openId} and state=#{state};
+	</select>
+
+	<select id="getOrderInfoByOrderId" resultType="order">
+		select * from
+		eshopOrder where
+		orderId=#{orderId} ;
 	</select>
 
 </mapper>

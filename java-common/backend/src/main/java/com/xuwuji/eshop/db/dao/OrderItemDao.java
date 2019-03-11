@@ -26,6 +26,7 @@ public class OrderItemDao {
 			map.put("orderId", orderItem.getOrderId());
 			map.put("formatId", orderItem.getFormatId());
 			map.put("productId", orderItem.getProductId());
+			map.put("formatName", orderItem.getFormatName());
 			mapper.add(map);
 			session.commit();
 		} catch (Exception e) {

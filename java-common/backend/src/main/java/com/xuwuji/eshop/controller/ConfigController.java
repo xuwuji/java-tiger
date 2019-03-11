@@ -19,7 +19,7 @@ public class ConfigController {
 	public Config geBaseConfig(HttpServletRequest request, HttpServletResponse response) {
 		Config config = new Config();
 		config.setNoticeMsg("欢迎在线联系徐小柴~");
-		config.setXxcUrl("http://www.baidu.com");
+		config.setXxcUrl("http://localhost:8080/backend/resources/eshop/image/xxc.jpg");
 		return config;
 	}
 

@@ -16,41 +16,44 @@ public class OrderDao {
 
 	public Order add(Order order) {
 		SqlSession session = SessionFactory.openDEVSession();
-		Order orderResult = new Order();
 		try {
 			OrderMapper mapper = session.getMapper(OrderMapper.class);
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("time", order.getTime());
-			map.put("status", order.getStatus());
-			map.put("wechatId", order.getWechatId());
-			map.put("orderId", order.getOrderId());
-			map.put("phoneNum", order.getPhoneNum());
-			map.put("address", order.getAddress());
-			map.put("amount", order.getAmount());
-			map.put("totalCount", order.getTotalCount());
-			map.put("recieverName", order.getRecieverName());
-			map.put("openId", order.getOpenId());
-			orderResult = mapper.add(map);
+			mapper.add(order);
 			session.commit();
-			return orderResult;
+			return order;
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.rollback();
 		} finally {
 			session.close();
 		}
-		return orderResult;
+		return order;
 	}
 
-	public List<Order> getAllByWechatIdAndStatus(String wechatId, String status) {
+	public void update(HashMap<String, Object> map) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			System.out.print("here");
+			OrderMapper mapper = session.getMapper(OrderMapper.class);
+			mapper.update(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+	}
+
+	public List<Order> getAllByWechatIdAndStatus(String wechatId, String state) {
 		SqlSession session = SessionFactory.openDEVSession();
 		List<Order> result = new ArrayList<Order>();
 		try {
 			OrderMapper mapper = session.getMapper(OrderMapper.class);
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("wechatId", wechatId);
-			map.put("status", status);
-			result = mapper.getAllByWechatIdAndStatus(map);
+			map.put("state", state);
+			result = mapper.getAllByWechatIdAndState(map);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -61,15 +64,15 @@ public class OrderDao {
 		return result;
 	}
 
-	public List<Order> getAllByOpenIdAndStatus(String openId, String status) {
+	public List<Order> getAllByOpenIdAndStatus(String openId, String state) {
 		SqlSession session = SessionFactory.openDEVSession();
 		List<Order> result = new ArrayList<Order>();
 		try {
 			OrderMapper mapper = session.getMapper(OrderMapper.class);
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("openId", openId);
-			map.put("status", status);
-			result = mapper.getAllByOpenIdAndStatus(map);
+			map.put("state", state);
+			result = mapper.getAllByOpenIdAndState(map);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -78,6 +81,25 @@ public class OrderDao {
 			session.close();
 		}
 		return result;
+	}
+
+	public Order getOrderInfoByOrderId(String orderId) {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<Order> result = new ArrayList<Order>();
+		try {
+			OrderMapper mapper = session.getMapper(OrderMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("orderId", orderId);
+			result = mapper.getOrderInfoByOrderId(map);
+			session.commit();
+			return result.get(0);
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result.get(0);
 	}
 
 }

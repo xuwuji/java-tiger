@@ -7,29 +7,21 @@ public class Order {
 
 	private int id;
 	private String wechatId;
-	// 下单时间
 	private Date time;
 	/*
 	 * {@Link} OrderStatus
 	 */
-	private String status;
+	private String state;
 	private String orderId;
 	private List<OrderItem> orderItemsList;
-	// 收件人手机号
 	private String phoneNum;
-	// 订单总额
 	private double amount;
-	// 总件数
 	private int totalCount;
-	// 收件人姓名
 	private String recieverName;
-	// 收货地址
 	private String address;
-
-	// 下单用户的openId
 	private String openId;
-	// 订单物流单号
 	private String logisticsId;
+	private String logisticsName;
 
 	private String memo;
 
@@ -57,12 +49,12 @@ public class Order {
 		this.time = time;
 	}
 
-	public String getStatus() {
-		return status;
+	public String getState() {
+		return state;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setState(String state) {
+		this.state = state;
 	}
 
 	public String getOrderId() {
@@ -137,20 +129,28 @@ public class Order {
 		this.logisticsId = logisticsId;
 	}
 
-	@Override
-	public String toString() {
-		return "Order [id=" + id + ", wechatId=" + wechatId + ", time=" + time + ", status=" + status + ", orderId="
-				+ orderId + ", orderItemsList=" + orderItemsList + ", phoneNum=" + phoneNum + ", amount=" + amount
-				+ ", totalCount=" + totalCount + ", recieverName=" + recieverName + ", address=" + address + ", openId="
-				+ openId + "]";
-	}
-
 	public String getMemo() {
 		return memo;
 	}
 
 	public void setMemo(String memo) {
 		this.memo = memo;
+	}
+
+	public String getLogisticsName() {
+		return logisticsName;
+	}
+
+	public void setLogisticsName(String logisticsName) {
+		this.logisticsName = logisticsName;
+	}
+
+	@Override
+	public String toString() {
+		return "Order [id=" + id + ", wechatId=" + wechatId + ", time=" + time + ", state=" + state + ", orderId="
+				+ orderId + ", orderItemsList=" + orderItemsList + ", phoneNum=" + phoneNum + ", amount=" + amount
+				+ ", totalCount=" + totalCount + ", recieverName=" + recieverName + ", address=" + address + ", openId="
+				+ openId + ", logisticsId=" + logisticsId + ", logisticsName=" + logisticsName + ", memo=" + memo + "]";
 	}
 
 }

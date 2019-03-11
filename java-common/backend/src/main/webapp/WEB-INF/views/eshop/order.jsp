@@ -43,7 +43,7 @@
 	<!-- 查询 -->
 	<label for="txt_departmentname">订单号</label>
 	<input type="text" class="form-control" id="search-orderId"
-		placeholder="备注">
+		placeholder="订单号">
 	<button id="searchByOrderId" type="button" class="btn">
 		<span aria-hidden="true" class="icon icon-plus-sign"></span>查询订单号
 	</button>
@@ -51,7 +51,7 @@
 	<br>
 	<br>
 	<br>
-	<div class="btn-group">
+	<!-- 	<div class="btn-group">
 		<button id="btn-add" type="button" class="btn">
 			<span aria-hidden="true" class="icon icon-plus-sign"></span>新增
 		</button>
@@ -66,7 +66,7 @@
 		<button id="btn-batch-delete" type="button" class="btn">
 			<span aria-hidden="true" class="icon icon-plus-sign"></span>批量上架
 		</button>
-	</div>
+	</div> -->
 
 	<!--工具-->
 
@@ -129,7 +129,8 @@
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="txt_departmentname">订单号</label> <input type="text"
-							class="form-control" id="edit-orderId" placeholder="订单号">
+							class="form-control" id="edit-orderId" placeholder="订单号"
+							disabled="disabled">
 					</div>
 					<div class="form-group">
 						<label for="txt_departmentname">备注</label> <input type="text"
@@ -163,13 +164,13 @@
 	//根据子分类id加载所有商品然后进行操作
 	function initTable(orderId) {
 		$table.bootstrapTable({
-			url : '/backend/order/getOrderInfoById/' + orderId,
+			url : '/backend/order/getOrderInfoByOrderId/' + orderId,
 			method : 'get', //请求方式（*）
 			toolbar : '#toolbar', //工具按钮用哪个容器
 			striped : true, //是否显示行间隔色
 			cache : false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
 			pagination : true, //是否显示分页（*）
-			sortOrder : "asc", //排序方式
+			//sortOrder : "asc", //排序方式
 			//queryParams : oTableInit.queryParams,//传递参数（*）
 			sidePagination : "client", //分页方式：client客户端分页，server服务端分页（*）
 			pageNumber : 1, //初始化加载第一页，默认第一页
@@ -181,7 +182,7 @@
 			minimumCountColumns : 2, //最少允许的列数
 			// clickToSelect: true,                //是否启用点击选中行
 			height : 500, //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
-			uniqueId : "orderId", //每一行的唯一标识，一般为主键列
+			uniqueId : "id", //每一行的唯一标识，一般为主键列
 			columns : [
 					{
 						checkbox : true
@@ -199,12 +200,53 @@
 					{
 						field : 'time',
 						title : '下单时间',
-						align : 'center'
+						align : 'center',
+						formatter : function(value, row, index) {
+							var unixtimestamp = new Date((row.time));
+							var year = 1900 + unixtimestamp.getYear();
+							var month = "0" + (unixtimestamp.getMonth() + 1);
+							var date = "0" + unixtimestamp.getDate();
+							var hour = "0" + unixtimestamp.getHours();
+							var minute = "0" + unixtimestamp.getMinutes();
+							var second = "0" + unixtimestamp.getSeconds();
+							return year
+									+ "-"
+									+ month.substring(month.length - 2,
+											month.length)
+									+ "-"
+									+ date.substring(date.length - 2,
+											date.length)
+									+ " "
+									+ hour.substring(hour.length - 2,
+											hour.length)
+									+ ":"
+									+ minute.substring(minute.length - 2,
+											minute.length)
+									+ ":"
+									+ second.substring(second.length - 2,
+											second.length);
+						}
 					},
 					{
-						field : 'status',
+						field : 'state',
 						title : '状态',
-						align : 'center'
+						align : 'center',
+						formatter : function(value, row, index) {
+							if (row.state) {
+								if (row.state == '0') {
+									return "待付款";
+								} else if (row.state == '1') {
+									return "待发货";
+								} else if (row.state == '2') {
+									return "已发货";
+								} else if (row.state == '3') {
+									return "已完成";
+								} else {
+									return "错误数据";
+								}
+							}
+						}
+
 					},
 					{
 						field : 'phoneNum',
@@ -237,15 +279,16 @@
 						align : 'center'
 					},
 					{
-						field : 'logisticsName',
-						title : '物流公司',
-						align : 'center'
-					},
-					{
 						field : 'logisticsId',
 						title : '物流单号',
 						align : 'center'
 					},
+					{
+						field : 'logisticsName',
+						title : '物流公司',
+						align : 'center'
+					},
+
 					{
 						field : 'memo',
 						title : '备注',
@@ -253,14 +296,18 @@
 					},
 					{
 						title : '操作',
-						field : 'orderId',
-						formatter : function(orderId) {
-							var html = '<a href="javascript:editMemo('
-									+ orderId + ')">编辑备注</a>';
-							html += '　<a href="javascript:deliverOrder('
-									+ orderId + ')">发货</a>';
-							html += '　<a href="javascript:finishOrder('
-									+ orderId + ')">已完成</a>';
+						field : 'id',
+						formatter : function(id) {
+							var html = '<a href="javascript:editMemo(' + id
+									+ ')">编辑备注</a>';
+							html += '　<a href="javascript:payOrder(' + id
+									+ ')">已付款</a>';
+							html += '　<a href="javascript:deliverOrder(' + id
+									+ ')">发货</a>';
+							html += '　<a href="javascript:finishOrder(' + id
+									+ ')">已完成</a>';
+							html += '　<a href="javascript:viewOrder(' + id
+									+ ')">查看商品</a>';
 							return html;
 						}
 					}
@@ -314,8 +361,9 @@
 	});
 
 	//编辑备注
-	function editMemo(orderId) {
-		var row = $table.bootstrapTable('getRowByUniqueId', orderId);
+	function editMemo(id) {
+		var row = $table.bootstrapTable('getRowByUniqueId', id);
+		//console.log(row);
 		$("#memoModal").modal().on("shown.bs.modal", function() {
 			$('#edit-memo').val(row.memo);
 			$('#edit-orderId').val(row.orderId);
@@ -327,7 +375,7 @@
 		var orderId = $('#edit-orderId').val();
 		var memo = $('#edit-memo').val();
 		$.ajax({
-			url : "/backend/admin/order/deliver",
+			url : "/backend/admin/order/update",
 			type : "post",
 			data : {
 				orderId : orderId,
@@ -335,14 +383,14 @@
 			},
 			success : function(status) {
 				$table.bootstrapTable('destroy');
-				initTable(parentCategoryId);
+				initTable(orderId);
 			}
 		});
 	});
 
 	//发货操作
-	function deliverOrder(orderId) {
-		var row = $table.bootstrapTable('getRowByUniqueId', orderId);
+	function deliverOrder(id) {
+		var row = $table.bootstrapTable('getRowByUniqueId', id);
 		//$table.bootstrapTable('refresh');
 		$("#deliverModal").modal().on("shown.bs.modal", function() {
 			$('#deliver-orderId').val(row.orderId);
@@ -354,38 +402,71 @@
 		var orderId = $("#deliver-orderId").val();
 		var logisticsName = $("#deliver-logisticsName").val();
 		var logisticsId = $("#deliver-logisticsId").val();
+		console.log(logisticsName);
+		console.log(logisticsId);
+
 		$.ajax({
-			url : "/backend/admin/order/deliver",
+			url : "/backend/admin/order/update",
 			type : "post",
 			data : {
 				orderId : orderId,
 				logisticsName : logisticsName,
 				logisticsId : logisticsId,
+				state : '2',
 			},
 			success : function(status) {
 				$table.bootstrapTable('destroy');
-				initTable(parentCategoryId);
+				initTable(orderId);
 			}
 		});
 	});
 
 	//完成操作
-	function finishOrder(orderId) {
+	function finishOrder(id) {
+		var row = $table.bootstrapTable('getRowByUniqueId', id);
+		var orderId = row.orderId;
 		if (confirm("确定此订单已完成了吗？")) {
 			$.ajax({
-				url : "/backend/admin/order/finish",
+				url : "/backend/admin/order/update",
 				type : "post",
 				data : {
 					orderId : orderId,
-					type : "single"
+					state : '3',
 				},
 				success : function(status) {
-					alert(status);
 					$table.bootstrapTable('destroy');
 					initTable(orderId);
 				}
 			});
 		}
+	}
+
+	//付款操作
+	function payOrder(id) {
+		var row = $table.bootstrapTable('getRowByUniqueId', id);
+		var orderId = row.orderId;
+		if (confirm("确定此订单已付款了吗？")) {
+			$.ajax({
+				url : "/backend/admin/order/update",
+				type : "post",
+				data : {
+					orderId : orderId,
+					state : '1',
+				},
+				success : function(status) {
+					$table.bootstrapTable('destroy');
+					initTable(orderId);
+				}
+			});
+		}
+	}
+
+	//查看订单商品操作
+	function viewOrder(id) {
+		var row = $table.bootstrapTable('getRowByUniqueId', id);
+		var orderId = row.orderId;
+		window.location.href = "http://localhost:8080/backend/admin/index/orderItem/"
+				+ orderId;
 	}
 
 	/* 批量上架 */
@@ -429,7 +510,6 @@
 				type : "batch"
 			},
 			success : function(status) {
-				alert("ds");
 				$table.bootstrapTable('destroy');
 				initTable(parentCategoryId);
 				console.log(parentCategoryId);
@@ -443,8 +523,10 @@
 	$('#searchByOrderId').on("click", function() {
 		var orderId = $("#search-orderId").val();
 		console.log(orderId);
-		//$table.bootstrapTable('destroy');
+		$table.bootstrapTable('destroy');
 		initTable(orderId);
+		$table.bootstrapTable('refresh');
+		//$table.bootstrapTable('refresh');
 	});
 </script>
 </html>
