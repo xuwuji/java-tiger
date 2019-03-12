@@ -96,10 +96,10 @@ public class ProductController {
 		Product product = productDao.getById(id);
 		List<String> imgUrls = new ArrayList<String>();
 		for (int i = 1; i < 5; i++) {
-			imgUrls.add(eshopConfigUtil.PRODUCT_IMG_BASE + id + "-" + i + ".jpg");
+			imgUrls.add(eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + id + "-" + i + ".jpg");
 		}
 		product.setImgUrls(imgUrls);
-		String mainImgUrl = eshopConfigUtil.PRODUCT_IMG_BASE + id + "-0.jpg";
+		String mainImgUrl = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + id + "-0.jpg";
 		product.setMainImgUrl(mainImgUrl);
 		return product;
 	}

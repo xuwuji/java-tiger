@@ -15,7 +15,7 @@ import com.xuwuji.eshop.util.EshopConfigUtil;
 
 @Component
 public class ProductDao {
-	
+
 	@Autowired
 	private EshopConfigUtil eshopConfigUtil;
 
@@ -27,11 +27,11 @@ public class ProductDao {
 			int id = product.getId();
 			HashMap<String, Object> imgMap = new HashMap<String, Object>();
 			imgMap.put("id", id);
-			imgMap.put("mainImgUrl", eshopConfigUtil.PRODUCT_IMG_BASE + id + "-0.jpg");
-			imgMap.put("imgUrl1", eshopConfigUtil.PRODUCT_IMG_BASE + id + "-1.jpg");
-			imgMap.put("imgUrl2", eshopConfigUtil.PRODUCT_IMG_BASE + id + "-2.jpg");
-			imgMap.put("imgUrl3", eshopConfigUtil.PRODUCT_IMG_BASE + id + "-3.jpg");
-			imgMap.put("imgUrl4", eshopConfigUtil.PRODUCT_IMG_BASE + id + "-4.jpg");
+			imgMap.put("mainImgUrl", eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + id + "-0.jpg");
+			imgMap.put("imgUrl1", eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + id + "-1.jpg");
+			imgMap.put("imgUrl2", eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + id + "-2.jpg");
+			imgMap.put("imgUrl3", eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + id + "-3.jpg");
+			imgMap.put("imgUrl4", eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + id + "-4.jpg");
 			mapper.updateImgUrl(imgMap);
 			session.commit();
 		} catch (Exception e) {
@@ -122,8 +122,8 @@ public class ProductDao {
 			map.put("mainImgUrl", product.getMainImgUrl());
 			map.put("parentCategoryId", product.getParentCategoryId());
 			map.put("categoryId", product.getCategoryId());
-			//map.put("brandNameCN", product.getBrandNameCN());
-			//map.put("brandNameEN", product.getBrandNameEN());
+			// map.put("brandNameCN", product.getBrandNameCN());
+			// map.put("brandNameEN", product.getBrandNameEN());
 			mapper.update(map);
 			session.commit();
 		} catch (Exception e) {

@@ -808,9 +808,10 @@
 						$
 								.ajax({
 									url : "/backend/category/getCategoryByParent/"
-											+ parentCategoryId, //url
+											+ parentCategoryId, 
 									type : "get",
 									success : function(data) {
+										$('#selectpicker-child').find("option").remove();
 										var depart_list = data;
 										var opts = "";
 										for (var depart_index = 0; depart_index < depart_list.length; depart_index++) {

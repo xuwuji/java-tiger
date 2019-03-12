@@ -20,6 +20,7 @@ import com.xuwuji.eshop.db.dao.ProductDao;
 import com.xuwuji.eshop.model.Category;
 import com.xuwuji.eshop.model.ParentCategory;
 import com.xuwuji.eshop.model.Product;
+import com.xuwuji.eshop.util.EshopConfigUtil;
 
 @Controller
 @RequestMapping(value = "/category")
@@ -30,9 +31,8 @@ public class CategoryController {
 	private ProductDao productDao;
 	@Autowired
 	private ParentCategoryDao parentCategoryDao;
-
-	
-	
+	@Autowired
+	private EshopConfigUtil eshopConfigUtil;
 
 	/**
 	 * get 获取某一类别的所有产品
@@ -63,6 +63,9 @@ public class CategoryController {
 			HttpServletResponse response) {
 		List<Category> list = new ArrayList<Category>();
 		list = categoryDao.getByParent(id);
+		for (Category category : list) {
+			category.setImgUrl(eshopConfigUtil.getParam(eshopConfigUtil.CATEGORY_IMG_BASE) + category.getId() + ".jpg");
+		}
 		return list;
 	}
 
@@ -79,6 +82,9 @@ public class CategoryController {
 			HttpServletResponse response) {
 		List<Category> list = new ArrayList<Category>();
 		list = categoryDao.getActiveByParent(id);
+		for (Category category : list) {
+			category.setImgUrl(eshopConfigUtil.getParam(eshopConfigUtil.CATEGORY_IMG_BASE) + category.getId() + ".jpg");
+		}
 		return list;
 	}
 

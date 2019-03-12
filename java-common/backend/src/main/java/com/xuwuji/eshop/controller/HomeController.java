@@ -22,6 +22,7 @@ import com.xuwuji.eshop.model.Category;
 import com.xuwuji.eshop.model.Img;
 import com.xuwuji.eshop.model.Product;
 import com.xuwuji.eshop.model.Theme;
+import com.xuwuji.eshop.util.EshopConfigUtil;
 
 @Controller
 @RequestMapping(value = "/home")
@@ -32,6 +33,9 @@ public class HomeController {
 	private CategoryDao categoryDao;
 	@Autowired
 	private ProductDao productDao;
+
+	@Autowired
+	private EshopConfigUtil eshopConfigUtil;
 
 	@RequestMapping(value = "/banner/{id}", method = RequestMethod.GET)
 	@ResponseBody
@@ -73,7 +77,19 @@ public class HomeController {
 		categories = categoryDao.getRecommend();
 		for (Category c : categories) {
 			int categoryId = c.getId();
-			c.setProducts(productDao.getActiveByCategory(String.valueOf(categoryId)));
+			List<Product> products = new ArrayList<Product>();
+			products = productDao.getActiveByCategory(String.valueOf(categoryId));
+			System.out.println(eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE));
+			for (Product product : products) {
+				List<String> imgUrls = new ArrayList<String>();
+				for (int i = 1; i < 5; i++) {
+					imgUrls.add(eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + product.getId() + "-" + i + ".jpg");
+				}
+				product.setImgUrls(imgUrls);
+				String mainImgUrl = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + product.getId() + "-0.jpg";
+				product.setMainImgUrl(mainImgUrl);
+			}
+			c.setProducts(products);
 		}
 		return categories;
 	}

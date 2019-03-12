@@ -1,32 +1,38 @@
 package com.xuwuji.eshop.model;
 
 /**
- * eshop的基础配置信息
  * 
  * @author xuwuji
  *
  */
 public class Config {
 
-	// 徐小柴二维码的地址
-	private String xxcUrl;
-	// 首页公告的信息
-	private String noticeMsg;
+	private int id;
+	private String name;
+	private String value;
 
-	public String getXxcUrl() {
-		return xxcUrl;
+	public int getId() {
+		return id;
 	}
 
-	public void setXxcUrl(String xxcUrl) {
-		this.xxcUrl = xxcUrl;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public String getNoticeMsg() {
-		return noticeMsg;
+	public String getName() {
+		return name;
 	}
 
-	public void setNoticeMsg(String noticeMsg) {
-		this.noticeMsg = noticeMsg;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 }
