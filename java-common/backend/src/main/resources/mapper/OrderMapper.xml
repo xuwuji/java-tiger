@@ -28,13 +28,13 @@
 
 	<insert id="add" parameterType="Order" useGeneratedKeys="true"
 		keyProperty="id" keyColumn="id">
-		insert into eshopOrder
+		insert into eshoporder
 		(wechatId,time,state,orderId,phoneNum,amount,totalCount,recieverName,address,openId,memo)
 		values(#{wechatId},#{time},'0',#{orderId},#{phoneNum},#{amount},#{totalCount},#{recieverName},#{address},#{openId},#{memo})
 	</insert>
 
 	<update id="update" parameterType="hashmap">
-		update eshopOrder set
+		update eshoporder set
 		lastModifyTime = now()
 		<if test="state != null and state !=''">
 			,state=#{state}
@@ -53,7 +53,7 @@
 	</update>
 
 	<update id="updateMemo" parameterType="hashmap">
-		update eshopOrder set
+		update eshoporder set
 		lastModifyTime = now(),
 		memo=#{memo}
 		where
@@ -62,20 +62,20 @@
 
 	<select id="getAllByWechatIdAndState" resultType="order">
 		select * from
-		eshopOrder
+		eshoporder
 		where
 		wechatId=#{wechatId} and state=#{state};
 	</select>
 
 	<select id="getAllByOpenIdAndState" resultType="order">
 		select * from
-		eshopOrder where
+		eshoporder where
 		openId=#{openId} and state=#{state};
 	</select>
 
 	<select id="getOrderInfoByOrderId" resultType="order">
 		select * from
-		eshopOrder where
+		eshoporder where
 		orderId=#{orderId} ;
 	</select>
 

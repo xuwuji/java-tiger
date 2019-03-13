@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.xuwuji.eshop.model.BannerItem;
 import com.xuwuji.eshop.model.Config;
 import com.xuwuji.eshop.util.EshopConfigUtil;
+import com.xuwuji.eshop.util.TokenUtil;
 
 @Controller
 @RequestMapping(value = "/config")
@@ -28,6 +29,15 @@ public class ConfigController {
 		eshopConfig eshopConfig = new eshopConfig();
 		eshopConfig.setNoticeMsg(eshopConfigUtil.getParam(eshopConfigUtil.noticeMsg));
 		eshopConfig.setXxcUrl(eshopConfigUtil.getParam(eshopConfigUtil.xxcUrl));
+		return eshopConfig;
+	}
+
+	@RequestMapping(value = "/getOpenId", method = RequestMethod.GET)
+	@ResponseBody
+	public eshopConfig getOpenId(HttpServletRequest request, HttpServletResponse response) {
+		eshopConfig eshopConfig = new eshopConfig();
+		String code = request.getParameter("code");
+		eshopConfig.setOpenId(TokenUtil.getOpenId(code));
 		return eshopConfig;
 	}
 
@@ -62,6 +72,7 @@ public class ConfigController {
 	class eshopConfig {
 		public String xxcUrl;
 		public String noticeMsg;
+		public String openId;
 
 		public String getXxcUrl() {
 			return xxcUrl;
@@ -77,6 +88,14 @@ public class ConfigController {
 
 		public void setNoticeMsg(String noticeMsg) {
 			this.noticeMsg = noticeMsg;
+		}
+
+		public String getOpenId() {
+			return openId;
+		}
+
+		public void setOpenId(String openId) {
+			this.openId = openId;
 		}
 
 	}

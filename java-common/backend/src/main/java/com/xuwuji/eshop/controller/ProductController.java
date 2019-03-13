@@ -72,6 +72,10 @@ public class ProductController {
 		List<Product> products = new ArrayList<Product>();
 		SortEnum sortRequset = SortEnum.getByCode(sort);
 		products = productDao.getActiveByCategory(id);
+		for(Product product:products) {
+			String mainImgUrl = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + product.getId() + "-0.jpg";
+			product.setMainImgUrl(mainImgUrl);
+		}
 		products = productUtil.sort(products, sortRequset);
 		return products;
 	}

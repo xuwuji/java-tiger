@@ -43,7 +43,12 @@ public class HomeController {
 			HttpServletResponse response) {
 		Banner banner = new Banner();
 		banner.setBannerId(id);
-		banner.setItems(bannerDao.getActiveAllByBannerId(id));
+		List<BannerItem> list = new ArrayList<BannerItem>();
+		list = bannerDao.getAll();
+		for (BannerItem bannerItem : list) {
+			bannerItem.setImgUrl(eshopConfigUtil.getParam(EshopConfigUtil.BANNER_IMG_BASE) + bannerItem.getId() + ".jpg");
+		}
+		banner.setItems(list);
 		return banner;
 	}
 

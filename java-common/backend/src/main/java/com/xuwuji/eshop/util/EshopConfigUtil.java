@@ -17,7 +17,7 @@ public class EshopConfigUtil {
 
 	public static final String PRODUCT_IMG_BASE = "productImgBase";
 	public static final String CATEGORY_IMG_BASE = "categoryImgBase";
-	// http://localhost:8080/backend/resources/eshop/image/product/
+	public static final String BANNER_IMG_BASE = "bannerImgBase";
 	public static final String xxcUrl = "xxcUrl";
 	public static final String noticeMsg = "noticeMsg";
 	public static Map<String, Object> configMap = new HashMap<String, Object>();

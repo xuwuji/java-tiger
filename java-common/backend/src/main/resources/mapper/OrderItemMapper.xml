@@ -19,14 +19,14 @@
 
 	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
 		keyProperty="id" keyColumn="id">
-		insert into orderItem
+		insert into orderitem
 		(name,formatName,mainImgUrl,price,count,orderId,formatId,productId)
 		values(#{name},#{formatName},#{mainImgUrl},#{price},#{count},#{orderId},#{formatId},#{productId})
 	</insert>
 
 	<select id="getByOrderId" resultType="OrderItem">
 		select * from
-		orderItem
+		orderitem
 		where
 		orderId=#{orderId};
 	</select>

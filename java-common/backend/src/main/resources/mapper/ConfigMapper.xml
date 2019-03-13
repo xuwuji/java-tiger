@@ -13,19 +13,19 @@
 
 	<insert id="addParam" parameterType="hashmap"
 		useGeneratedKeys="true" keyProperty="id">
-		insert into eshopConfig
+		insert into eshopconfig
 		(name,value) values (#{name},#{value})
 	</insert>
 
 	<update id="update" parameterType="hashmap">
-		update eshopConfig set
+		update eshopconfig set
 		name=#{name},value=#{value}
 		where id=#{id};
 	</update>
 
 	<select id="getAll" resultType="Config">
 		select * from
-		eshopConfig;
+		eshopconfig;
 	</select>
 
 </mapper>
