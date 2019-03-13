@@ -8,7 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.jboss.netty.util.internal.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +23,7 @@ import com.xuwuji.eshop.model.Img;
 import com.xuwuji.eshop.model.ParentCategory;
 
 /**
- * product¹ÜÀí
+ * productï¿½ï¿½ï¿½ï¿½
  * 
  * @author xuwuji
  *
@@ -49,11 +48,11 @@ public class AdminOrderController {
 	public void delete(HttpServletRequest request, HttpServletResponse response) {
 		String id = request.getParameter("id");
 		String type = request.getParameter("type");
-		// µ¥ÌõÉ¾³ý
+		// ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½
 		if (type.equals("single")) {
 
 		}
-		// ÅúÁ¿É¾³ý
+		// ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½
 		else if (type.equals("batch")) {
 			List<String> ids = Arrays.asList(id.split(","));
 			System.out.println(ids);

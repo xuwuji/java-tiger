@@ -8,7 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.jboss.netty.util.internal.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +27,7 @@ import com.xuwuji.eshop.model.OrderItem;
 import com.xuwuji.eshop.model.ParentCategory;
 
 /**
- * product¹ÜÀí
+ * productï¿½ï¿½ï¿½ï¿½
  * 
  * @author xuwuji
  *

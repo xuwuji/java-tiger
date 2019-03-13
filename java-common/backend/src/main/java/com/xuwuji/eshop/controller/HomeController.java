@@ -44,7 +44,7 @@ public class HomeController {
 		Banner banner = new Banner();
 		banner.setBannerId(id);
 		List<BannerItem> list = new ArrayList<BannerItem>();
-		list = bannerDao.getAll();
+		list = bannerDao.getActiveAllByBannerId(id);
 		for (BannerItem bannerItem : list) {
 			bannerItem.setImgUrl(eshopConfigUtil.getParam(EshopConfigUtil.BANNER_IMG_BASE) + bannerItem.getId() + ".jpg");
 		}
