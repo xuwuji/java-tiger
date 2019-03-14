@@ -125,4 +125,15 @@ public class ProductController {
 		products = productUtil.sort(products, sortRequset);
 		return products;
 	}
+	
+	@RequestMapping(value = "/getActiveByBrandId", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Product> getActiveByBrandId(@RequestParam("id") String id, @RequestParam("sort") String sort,
+			HttpServletRequest request, HttpServletResponse response) {
+		List<Product> products = new ArrayList<Product>();
+		SortEnum sortRequset = SortEnum.getByCode(sort);
+		products = productDao.getActiveByBrandId(id);
+		products = productUtil.sort(products, sortRequset);
+		return products;
+	}
 }
