@@ -134,6 +134,10 @@ public class ProductController {
 		SortEnum sortRequset = SortEnum.getByCode(sort);
 		products = productDao.getActiveByBrandId(id);
 		products = productUtil.sort(products, sortRequset);
+		for(Product product:products) {
+			String mainImgUrl = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + product.getId() + "-0.jpg";
+			product.setMainImgUrl(mainImgUrl);
+		}
 		return products;
 	}
 }

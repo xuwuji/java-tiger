@@ -465,7 +465,7 @@
 	function viewOrder(id) {
 		var row = $table.bootstrapTable('getRowByUniqueId', id);
 		var orderId = row.orderId;
-		window.location.href = "http://localhost:8080/backend/admin/index/orderItem/"
+		window.location.href = "/backend/admin/index/orderItem/"
 				+ orderId;
 	}
 

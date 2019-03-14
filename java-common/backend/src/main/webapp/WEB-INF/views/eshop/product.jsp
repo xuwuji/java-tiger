@@ -464,7 +464,7 @@
 											+ id + ')">修改banner位</a>';
 									html += '　<a href="javascript:updateBrand('
 											+ id + ')">修改品牌</a>';
-									html += '　<a href="http://localhost:8080/backend/admin/format/index/'
+									html += '　<a href="/backend/admin/format/index/'
 											+ id + '">规格管理</a>';
 									return html;
 								}
