@@ -18,4 +18,6 @@ public interface BrandMapper {
 	public List<Brand> getAll();
 
 	public List<Brand> getActiveAll();
+	
+	public List<Brand> getActiveAllByBrandId(HashMap<String, Object> map);
 }

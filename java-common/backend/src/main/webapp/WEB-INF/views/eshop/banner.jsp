@@ -34,6 +34,7 @@
 
 <body>
 	<h1 align="center">banner管理</h1>
+	<h4 align="left">首页中间栏展示分类的跳转页面是商品列表，路径为../productList/productList?id={{对应的类别categoryId}}&type=category</h4>
 	<!--工具-->
 	<div id="toolbar" class="btn-group">
 		<button id="btn-add" type="button" class="btn">
@@ -82,7 +83,7 @@
 						<label for="txt_departmentname">banner位</label> <input type="text"
 							name="txt_departmentname" data-bind="value:Name"
 							class="form-control" id="add-bannerId"
-							placeholder="0首页轮播，1首页分类推荐">
+							placeholder="0首页轮播，1首页主题推荐 , 2首页中间栏展示分类">
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">
@@ -208,8 +209,10 @@
 					if (row.bannerId == '0') {
 						return "首页轮播位";
 					} else if (row.bannerId == '1') {
-						return "首页推荐分类栏";
-					} else {
+						return "首页主题推荐";
+					} else if (row.bannerId == '2') {
+						return "首页中间栏展示分类";
+					}else {
 						return "错误数据";
 					}
 				}

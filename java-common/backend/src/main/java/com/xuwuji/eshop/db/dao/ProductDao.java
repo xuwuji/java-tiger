@@ -241,4 +241,22 @@ public class ProductDao {
 		}
 		return result;
 	}
+
+	public List<Product> getActiveByBrandId(String brandId) {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<Product> result = new ArrayList<Product>();
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("brandId", brandId);
+			result = mapper.getActiveByBrandId(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
 }

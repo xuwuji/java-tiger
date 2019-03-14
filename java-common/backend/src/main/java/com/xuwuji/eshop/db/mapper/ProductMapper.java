@@ -32,6 +32,8 @@ public interface ProductMapper {
 	public List<Product> getActiveByBannerItem(HashMap<String, Object> map);
 	
 	public void updateImgUrl(HashMap<String, Object> map);
+	
+	public List<Product> getActiveByBrandId(HashMap<String, Object> map);
 
 	
 

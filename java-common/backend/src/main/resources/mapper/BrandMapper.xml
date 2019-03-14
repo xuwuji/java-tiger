@@ -53,4 +53,12 @@
 		state='1';
 	</select>
 
+	<select id="getActiveAllByBrandId" resultType="brand"
+		parameterType="hashmap">
+		select * from
+		brand where
+		id=#{id} and
+		state='1';
+	</select>
+
 </mapper>

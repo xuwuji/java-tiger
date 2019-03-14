@@ -150,4 +150,12 @@
 		='1';
 	</select>
 
+	<select id="getActiveByBrandId" resultType="Product"
+		parameterType="hashmap">
+		select * from
+		product where brandId=#{brandId}
+		and state
+		='1';
+	</select>
+
 </mapper>

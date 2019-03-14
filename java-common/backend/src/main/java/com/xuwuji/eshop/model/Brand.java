@@ -63,4 +63,11 @@ public class Brand {
 		this.state = state;
 	}
 
+	@Override
+	public String toString() {
+		return "Brand [id=" + id + ", brandEN=" + brandEN + ", brandCN=" + brandCN + ", brandLevel=" + brandLevel
+				+ ", country=" + country + ", state=" + state + "]";
+	}
+
+	
 }
