@@ -259,4 +259,20 @@ public class ProductDao {
 		}
 		return result;
 	}
+
+	public List<Product> getActivityByTop() {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<Product> result = new ArrayList<Product>();
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			result = mapper.getActivityByTop();
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
 }

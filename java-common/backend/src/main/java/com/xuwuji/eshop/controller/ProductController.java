@@ -72,7 +72,7 @@ public class ProductController {
 		List<Product> products = new ArrayList<Product>();
 		SortEnum sortRequset = SortEnum.getByCode(sort);
 		products = productDao.getActiveByCategory(id);
-		for(Product product:products) {
+		for (Product product : products) {
 			String mainImgUrl = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + product.getId() + "-0.jpg";
 			product.setMainImgUrl(mainImgUrl);
 		}
@@ -125,7 +125,7 @@ public class ProductController {
 		products = productUtil.sort(products, sortRequset);
 		return products;
 	}
-	
+
 	@RequestMapping(value = "/getActiveByBrandId", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Product> getActiveByBrandId(@RequestParam("id") String id, @RequestParam("sort") String sort,
@@ -134,7 +134,22 @@ public class ProductController {
 		SortEnum sortRequset = SortEnum.getByCode(sort);
 		products = productDao.getActiveByBrandId(id);
 		products = productUtil.sort(products, sortRequset);
-		for(Product product:products) {
+		for (Product product : products) {
+			String mainImgUrl = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + product.getId() + "-0.jpg";
+			product.setMainImgUrl(mainImgUrl);
+		}
+		return products;
+	}
+
+	@RequestMapping(value = "/getByActivity", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Product> getByActivity(@RequestParam("type") String type, HttpServletRequest request,
+			HttpServletResponse response) {
+		List<Product> products = new ArrayList<Product>();
+		if(type.equals("top")) {
+			products = productDao.getActivityByTop();
+		}
+		for (Product product : products) {
 			String mainImgUrl = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + product.getId() + "-0.jpg";
 			product.setMainImgUrl(mainImgUrl);
 		}
