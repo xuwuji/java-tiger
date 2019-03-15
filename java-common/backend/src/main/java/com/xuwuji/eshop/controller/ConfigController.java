@@ -1,5 +1,6 @@
 package com.xuwuji.eshop.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,8 +26,8 @@ public class ConfigController {
 
 	@RequestMapping(value = "/getBaseConfig", method = RequestMethod.GET)
 	@ResponseBody
-	public eshopConfig geBaseConfig(HttpServletRequest request, HttpServletResponse response) {
-		eshopConfig eshopConfig = new eshopConfig();
+	public EshopConfigResponse geBaseConfig(HttpServletRequest request, HttpServletResponse response) {
+		EshopConfigResponse eshopConfig = new EshopConfigResponse();
 		eshopConfig.setNoticeMsg(eshopConfigUtil.getParam(eshopConfigUtil.noticeMsg));
 		eshopConfig.setXxcUrl(eshopConfigUtil.getParam(eshopConfigUtil.xxcUrl));
 		return eshopConfig;
@@ -34,8 +35,8 @@ public class ConfigController {
 
 	@RequestMapping(value = "/getOpenId", method = RequestMethod.GET)
 	@ResponseBody
-	public eshopConfig getOpenId(HttpServletRequest request, HttpServletResponse response) {
-		eshopConfig eshopConfig = new eshopConfig();
+	public EshopConfigResponse getOpenId(HttpServletRequest request, HttpServletResponse response) {
+		EshopConfigResponse eshopConfig = new EshopConfigResponse();
 		String code = request.getParameter("code");
 		eshopConfig.setOpenId(TokenUtil.getOpenId(code));
 		return eshopConfig;
@@ -69,10 +70,20 @@ public class ConfigController {
 		eshopConfigUtil.updateParam(name, value, id);
 	}
 
-	class eshopConfig {
+	@SuppressWarnings("static-access")
+	@RequestMapping(value = "/getPreSearch", method = RequestMethod.GET)
+	@ResponseBody
+	public EshopConfigResponse getPreSearch(HttpServletRequest request, HttpServletResponse response) {
+		EshopConfigResponse eshopConfig = new EshopConfigResponse();
+		eshopConfig.setPreSearch(Arrays.asList(eshopConfigUtil.getParam(eshopConfigUtil.PRE_SEARCH).split("/")));
+		return eshopConfig;
+	}
+
+	class EshopConfigResponse {
 		public String xxcUrl;
 		public String noticeMsg;
 		public String openId;
+		public List<String> preSearch;
 
 		public String getXxcUrl() {
 			return xxcUrl;
@@ -96,6 +107,14 @@ public class ConfigController {
 
 		public void setOpenId(String openId) {
 			this.openId = openId;
+		}
+
+		public List<String> getPreSearch() {
+			return preSearch;
+		}
+
+		public void setPreSearch(List<String> preSearch) {
+			this.preSearch = preSearch;
 		}
 
 	}

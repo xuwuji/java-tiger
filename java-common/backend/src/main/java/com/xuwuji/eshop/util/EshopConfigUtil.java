@@ -19,6 +19,7 @@ public class EshopConfigUtil {
 	public static final String CATEGORY_IMG_BASE = "categoryImgBase";
 	public static final String BANNER_IMG_BASE = "bannerImgBase";
 	public static final String xxcUrl = "xxcUrl";
+	public static final String PRE_SEARCH = "preSearch";
 	public static final String noticeMsg = "noticeMsg";
 	public static Map<String, Object> configMap = new HashMap<String, Object>();
 
