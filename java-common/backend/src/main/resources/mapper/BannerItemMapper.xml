@@ -12,13 +12,14 @@
 		<result property="redirectUrl" column="type"></result>
 		<result property="bannerId" column="type"></result>
 		<result property="state" column="state"></result>
+		<result property="info" column="info"></result>
 	</resultMap>
 
 	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
 		keyProperty="id" keyColumn="id">
 		insert into banneritem
-		(name,imgUrl,redirectUrl,bannerId,state)
-		values(#{name},#{imgUrl},#{redirectUrl},#{bannerId},'0')
+		(name,imgUrl,redirectUrl,bannerId,state,info)
+		values(#{name},#{imgUrl},#{redirectUrl},#{bannerId},'0',#{info})
 	</insert>
 	
 	<update id="updateImg" parameterType="hashmap">
@@ -30,7 +31,7 @@
 	<update id="update" parameterType="hashmap">
 		update banneritem set
 		name=#{name},imgUrl=#{imgUrl},redirectUrl=#{redirectUrl},
-		bannerId=#{bannerId}
+		bannerId=#{bannerId},info=#{info}
 		where id=#{id};
 	</update>
 

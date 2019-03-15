@@ -42,6 +42,7 @@ public class BannerDao {
 			map.put("imgUrl", bannerItem.getImgUrl());
 			map.put("redirectUrl", bannerItem.getRedirectUrl());
 			map.put("state", bannerItem.getState());
+			map.put("info", bannerItem.getInfo());
 			map.put("bannerId", bannerItem.getBannerId());
 			map.put("id", bannerItem.getId());
 			mapper.update(map);

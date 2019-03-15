@@ -37,11 +37,13 @@ public class AdminBannerController {
 		String name = request.getParameter("name");
 		String redirectUrl = request.getParameter("redirectUrl");
 		String bannerId = request.getParameter("bannerId");
+		String info = request.getParameter("info");
 		BannerItem bannerItem = new BannerItem();
 		bannerItem.setBannerId(bannerId);
 		bannerItem.setImgUrl(EshopConfigUtil.getParam(EshopConfigUtil.BANNER_IMG_BASE) + bannerItem.getId() + ".jpg");
 		bannerItem.setName(name);
 		bannerItem.setRedirectUrl(redirectUrl);
+		bannerItem.setInfo(info);
 		bannerDao.add(bannerItem);
 	}
 
@@ -83,12 +85,14 @@ public class AdminBannerController {
 		String redirectUrl = request.getParameter("redirectUrl");
 		String bannerId = request.getParameter("bannerId");
 		String id = request.getParameter("id");
+		String info = request.getParameter("info");
 		BannerItem bannerItem = new BannerItem();
 		bannerItem.setBannerId(bannerId);
 		bannerItem.setImgUrl(imgUrl);
 		bannerItem.setName(name);
 		bannerItem.setRedirectUrl(redirectUrl);
 		bannerItem.setId(Integer.valueOf(id));
+		bannerItem.setInfo(info);
 		bannerDao.update(bannerItem);
 
 	}
