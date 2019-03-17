@@ -35,7 +35,7 @@ public interface ProductMapper {
 	
 	public List<Product> getActiveByBrandId(HashMap<String, Object> map);
 
-	public List<Product> getActivityByTop();
+	public List<Product> getRankByTop();
 
 	
 

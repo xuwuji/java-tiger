@@ -27,6 +27,7 @@ import com.xuwuji.eshop.db.dao.OrderDao;
 import com.xuwuji.eshop.db.dao.OrderItemDao;
 import com.xuwuji.eshop.model.Order;
 import com.xuwuji.eshop.model.OrderItem;
+import com.xuwuji.eshop.util.EshopConfigUtil;
 import com.xuwuji.eshop.util.ToolUtil;
 
 @Controller
@@ -42,6 +43,9 @@ public class OrderController {
 	@Autowired
 	private ToolUtil toolUtil;
 
+	@Autowired
+	private EshopConfigUtil eshopConfigUtil;
+
 	@RequestMapping(value = "/submitOrder", method = RequestMethod.POST)
 	@ResponseBody
 	public Order submitOrder(@RequestBody String orderJsonStr)
@@ -56,6 +60,7 @@ public class OrderController {
 		JsonNode orderItemsListNode = orderNode.get("orderItemsList");
 		List<OrderItem> orderItemsList = new ArrayList<OrderItem>();
 		String orderId = toolUtil.getOrderId();
+		String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
 		for (int i = 0; i < orderItemsListNode.size(); i++) {
 			OrderItem item = new OrderItem();
 			item.setCount(orderItemsListNode.get(i).path("count").asInt());
@@ -66,8 +71,9 @@ public class OrderController {
 			String formatName = new String(orderItemsListNode.get(i).path("formatName").asText().getBytes("utf-8"),
 					"utf-8");
 			item.setFormatName(formatName);
-			item.setProductId(orderItemsListNode.get(i).path("productId").asText());
-			item.setMainImgUrl(orderItemsListNode.get(i).path("mainImgUrl").asText());
+			String productId = orderItemsListNode.get(i).path("productId").asText();
+			item.setProductId(productId);
+			item.setMainImgUrl(PRODUCT_IMG_BASE + productId + "-0.jpg");
 			item.setPrice(orderItemsListNode.get(i).path("price").asDouble());
 			orderItemsList.add(item);
 			orderItemDao.add(item);

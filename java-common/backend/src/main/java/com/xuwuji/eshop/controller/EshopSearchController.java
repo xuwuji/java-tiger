@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.xuwuji.eshop.db.dao.ProductDao;
 import com.xuwuji.eshop.model.Product;
 import com.xuwuji.eshop.model.SortEnum;
+import com.xuwuji.eshop.util.EshopConfigUtil;
 import com.xuwuji.eshop.util.ProductUtil;
 
 @Controller
@@ -27,6 +28,9 @@ public class EshopSearchController {
 	@Autowired
 	private ProductUtil productUtil;
 
+	@Autowired
+	private EshopConfigUtil eshopConfigUtil;
+
 	@RequestMapping(value = "/keyword", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Product> getProductsByKeyword(@RequestParam("kw") String kw, @RequestParam("sort") String sort,
@@ -37,6 +41,11 @@ public class EshopSearchController {
 			return products;
 		} else {
 			products = productDao.getActiveByKW(kw);
+			String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
+			for (Product product : products) {
+				String mainImgUrl = PRODUCT_IMG_BASE + product.getId() + "-0.jpg";
+				product.setMainImgUrl(mainImgUrl);
+			}
 			SortEnum sortRequset = SortEnum.getByCode(sort);
 			products = productUtil.sort(products, sortRequset);
 			return products;

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xuwuji.eshop.db.dao.ProductDao;
+import com.xuwuji.eshop.model.ActivityEnum;
 import com.xuwuji.eshop.model.Product;
 import com.xuwuji.eshop.model.SortEnum;
 import com.xuwuji.eshop.util.EshopConfigUtil;
@@ -72,9 +73,9 @@ public class ProductController {
 		List<Product> products = new ArrayList<Product>();
 		SortEnum sortRequset = SortEnum.getByCode(sort);
 		products = productDao.getActiveByCategory(id);
+		String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
 		for (Product product : products) {
-			String mainImgUrl = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + product.getId() + "-0.jpg";
-			product.setMainImgUrl(mainImgUrl);
+			product.setMainImgUrl(PRODUCT_IMG_BASE + product.getId() + "-0.jpg");
 		}
 		products = productUtil.sort(products, sortRequset);
 		return products;
@@ -99,11 +100,12 @@ public class ProductController {
 		}
 		Product product = productDao.getById(id);
 		List<String> imgUrls = new ArrayList<String>();
+		String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
 		for (int i = 1; i < 5; i++) {
-			imgUrls.add(eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + id + "-" + i + ".jpg");
+			imgUrls.add(PRODUCT_IMG_BASE + id + "-" + i + ".jpg");
 		}
 		product.setImgUrls(imgUrls);
-		String mainImgUrl = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + id + "-0.jpg";
+		String mainImgUrl = PRODUCT_IMG_BASE + id + "-0.jpg";
 		product.setMainImgUrl(mainImgUrl);
 		return product;
 	}
@@ -134,25 +136,12 @@ public class ProductController {
 		SortEnum sortRequset = SortEnum.getByCode(sort);
 		products = productDao.getActiveByBrandId(id);
 		products = productUtil.sort(products, sortRequset);
+		String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
 		for (Product product : products) {
-			String mainImgUrl = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + product.getId() + "-0.jpg";
+			String mainImgUrl = PRODUCT_IMG_BASE + product.getId() + "-0.jpg";
 			product.setMainImgUrl(mainImgUrl);
 		}
 		return products;
 	}
 
-	@RequestMapping(value = "/getByActivity", method = RequestMethod.GET)
-	@ResponseBody
-	public List<Product> getByActivity(@RequestParam("type") String type, HttpServletRequest request,
-			HttpServletResponse response) {
-		List<Product> products = new ArrayList<Product>();
-		if(type.equals("top")) {
-			products = productDao.getActivityByTop();
-		}
-		for (Product product : products) {
-			String mainImgUrl = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + product.getId() + "-0.jpg";
-			product.setMainImgUrl(mainImgUrl);
-		}
-		return products;
-	}
 }

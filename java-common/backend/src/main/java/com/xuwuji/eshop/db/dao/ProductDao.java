@@ -260,12 +260,12 @@ public class ProductDao {
 		return result;
 	}
 
-	public List<Product> getActivityByTop() {
+	public List<Product> getRankByTop() {
 		SqlSession session = SessionFactory.openDEVSession();
 		List<Product> result = new ArrayList<Product>();
 		try {
 			ProductMapper mapper = session.getMapper(ProductMapper.class);
-			result = mapper.getActivityByTop();
+			result = mapper.getRankByTop();
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();

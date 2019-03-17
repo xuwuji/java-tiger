@@ -158,7 +158,7 @@
 		='1';
 	</select>
 
-	<select id="getActivityByTop" resultType="Product"
+	<select id="getRankByTop" resultType="Product"
 		parameterType="hashmap">
 		select * from
 		product where state='1' order by salesCount desc limit 10;
