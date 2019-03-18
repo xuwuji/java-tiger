@@ -2,7 +2,7 @@ package com.xuwuji.eshop.model;
 
 public enum PromotionType {
 
-	reduceMoney("0", "Âú¼õ"), GIFT("1", "ËÍÀñÆ·");
+	reduceMoney("Âú¼õ", "0"), GIFT("ËÍÀñÆ·", "1");
 
 	private String desc;
 	private String code;

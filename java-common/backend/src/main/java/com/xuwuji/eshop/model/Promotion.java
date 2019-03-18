@@ -93,4 +93,13 @@ public class Promotion {
 		this.state = state;
 	}
 
+	@Override
+	public String toString() {
+		return "Promotion [id=" + id + ", name=" + name + ", target=" + target + ", type=" + type + ", amount=" + amount
+				+ ", reduction=" + reduction + ", gift=" + gift + ", brandId=" + brandId + ", categoryId=" + categoryId
+				+ ", state=" + state + "]";
+	}
+	
+	
+
 }

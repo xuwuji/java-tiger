@@ -1,7 +1,7 @@
 package com.xuwuji.eshop.model;
 
 public enum PromotionTarget {
-	BRAND("0", "品牌活动"), CATEGORY("1", "商品种类活动"), SHOP("2", "全场活动");
+	BRAND("品牌活动", "0"), CATEGORY("商品种类活动", "1"), SHOP("全场活动", "2");
 
 	private String desc;
 	private String code;
