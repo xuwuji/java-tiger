@@ -34,6 +34,8 @@
 
 <body>
 	<h1 align="center">促销管理</h1>
+	<h4 align="left">场景：0-品牌，1-商品种类，2-全场</h4>
+	<h4 align="left">促销种类：0-满减，1-送礼品</h4>
 	<!--工具-->
 	<div id="toolbar" class="btn-group">
 		<button id="btn-add" type="button" class="btn">
