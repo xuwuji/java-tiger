@@ -109,6 +109,7 @@
 		<mapper resource="mapper/OrderMapper.xml" />
 		<mapper resource="mapper/OrderItemMapper.xml" />
 		<mapper resource="mapper/ConfigMapper.xml" />
+		<mapper resource="mapper/PromotionMapper.xml" />
 	</mappers>
 
 
