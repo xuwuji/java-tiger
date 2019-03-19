@@ -14,6 +14,8 @@ public interface BrandMapper {
 	public void disable(HashMap<String, Object> map);
 
 	public void reActive(HashMap<String, Object> map);
+	
+	public List<Brand> getById(HashMap<String, Object> map);
 
 	public List<Brand> getAll();
 

@@ -12,10 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xuwuji.eshop.db.dao.BrandDao;
 import com.xuwuji.eshop.model.Brand;
+import com.xuwuji.eshop.util.EshopConfigUtil;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 
@@ -24,6 +26,9 @@ import net.sourceforge.pinyin4j.PinyinHelper;
 public class BrandController {
 	@Autowired
 	private BrandDao brandDao;
+
+	@Autowired
+	private EshopConfigUtil eshopConfigUtil;
 
 	@RequestMapping(value = "/getAlphaBrandList", method = RequestMethod.GET)
 	@ResponseBody
@@ -47,8 +52,21 @@ public class BrandController {
 		}
 		return alphaBrandList;
 	}
-	
-	
+
+	@RequestMapping(value = "/getById", method = RequestMethod.GET)
+	@ResponseBody
+	public Brand getById(@RequestParam("id") String id, HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("Brand/getById");
+		List<Brand> list = new ArrayList<Brand>();
+		list = brandDao.getById(id);
+		if (list.size() == 1) {
+			Brand brand = list.get(0);
+			brand.setCountryFlagImg(
+					eshopConfigUtil.getParam(eshopConfigUtil.COUNTRY_FLAG_BASE) + brand.getCountry() + ".jpg");
+		return brand;
+		}
+		return null;
+	}
 
 	class AlphaBrandList {
 		private HashMap<String, List<Brand>> brandsMap = new HashMap<String, List<Brand>>();

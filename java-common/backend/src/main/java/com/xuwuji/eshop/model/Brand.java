@@ -13,6 +13,7 @@ public class Brand {
 	// {@link} BrandLevel
 	private String brandLevel;
 	private String country;
+	private String countryFlagImg;
 	private String state;
 
 	public int getId() {
@@ -55,6 +56,14 @@ public class Brand {
 		this.country = country;
 	}
 
+	public String getCountryFlagImg() {
+		return countryFlagImg;
+	}
+
+	public void setCountryFlagImg(String countryFlagImg) {
+		this.countryFlagImg = countryFlagImg;
+	}
+
 	public String getState() {
 		return state;
 	}
@@ -63,11 +72,4 @@ public class Brand {
 		this.state = state;
 	}
 
-	@Override
-	public String toString() {
-		return "Brand [id=" + id + ", brandEN=" + brandEN + ", brandCN=" + brandCN + ", brandLevel=" + brandLevel
-				+ ", country=" + country + ", state=" + state + "]";
-	}
-
-	
 }

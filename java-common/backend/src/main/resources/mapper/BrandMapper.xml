@@ -46,6 +46,11 @@
 		select * from
 		brand;
 	</select>
+	
+	<select id="getById" resultType="brand">
+		select * from
+		brand where id=#{id};
+	</select>
 
 	<select id="getActiveAll" resultType="brand">
 		select * from
