@@ -28,6 +28,8 @@ public class PromotionDao {
 			map.put("gift", promotion.getGift());
 			map.put("brandId", promotion.getBrandId());
 			map.put("categoryId", promotion.getCategoryId());
+			map.put("rule", promotion.getRule());
+			map.put("total", promotion.getTotal());
 			mapper.add(map);
 			session.commit();
 		} catch (Exception e) {
@@ -52,6 +54,8 @@ public class PromotionDao {
 			map.put("gift", promotion.getGift());
 			map.put("brandId", promotion.getBrandId());
 			map.put("categoryId", promotion.getCategoryId());
+			map.put("rule", promotion.getRule());
+			map.put("total", promotion.getTotal());
 			mapper.update(map);
 			session.commit();
 		} catch (Exception e) {

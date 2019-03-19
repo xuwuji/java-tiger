@@ -34,8 +34,9 @@
 
 <body>
 	<h1 align="center">促销管理</h1>
-	<h4 align="left">场景：0-品牌，1-商品种类，2-全场</h4>
-	<h4 align="left">促销种类：0-满减，1-送礼品</h4>
+	<h4 align="left">场景：brand-品牌促销，category-类别促销,shop-全场促销</h4>
+	<h4 align="left">促销种类：money-满减，gift-送礼品</h4>
+	<h4 align="left">促销规则：amount-满金额，total-满数量</h4>
 	<!--工具-->
 	<div id="toolbar" class="btn-group">
 		<button id="btn-add" type="button" class="btn">
@@ -74,20 +75,34 @@
 						<label for="txt_departmentname">针对场景</label> <input type="text"
 							name="txt_departmentname" data-bind="value:Name"
 							class="form-control" id="add-target"
-							placeholder="0-品牌促销，1-类别促销,2-全场促销">
+							placeholder="brand-品牌促销，category-类别促销,shop-全场促销">
 					</div>
 					<div class="form-group">
 						<label for="txt_departmentname">促销种类</label> <input type="text"
 							name="txt_departmentname" data-bind="value:Name"
-							class="form-control" id="add-type" placeholder="0-满减，1-送礼品">
+							class="form-control" id="add-type"
+							placeholder="money-满减，gift-送礼品">
 					</div>
 					<div class="form-group">
-						<label for="txt_departmentname">每满</label> <input type="text"
+						<label for="txt_departmentname">促销规则</label> <input type="text"
 							name="txt_departmentname" data-bind="value:Name"
-							class="form-control" id="add-amount" placeholder="满减类别才需要填">
+							class="form-control" id="add-rule"
+							placeholder="amount-满金额，total-满数量">
 					</div>
 					<div class="form-group">
-						<label for="txt_departmentname">减</label> <input type="text"
+						<label for="txt_departmentname">满（金额）</label> <input type="text"
+							name="txt_departmentname" data-bind="value:Name"
+							class="form-control" id="add-amount"
+							placeholder="满减-满多少可以减；赠礼-满多少可以送">
+					</div>
+					<div class="form-group">
+						<label for="txt_departmentname">满（数量）</label> <input type="text"
+							name="txt_departmentname" data-bind="value:Name"
+							class="form-control" id="add-total"
+							placeholder="满减-满多少可以减；赠礼-满多少可以送">
+					</div>
+					<div class="form-group">
+						<label for="txt_departmentname">减（金额）</label> <input type="text"
 							name="txt_departmentname" data-bind="value:Name"
 							class="form-control" id="add-reduction" placeholder="满减类别才需要填">
 					</div>
@@ -147,18 +162,30 @@
 						<label for="txt_departmentname">针对场景</label>
 						<input type="text" name="txt_departmentname"
 						data-bind="value:Name" class="form-control" id="edit-target"
-						placeholder="0-品牌促销，1-类别促销,2-全场促销">
+						placeholder="brand-品牌促销，category-类别促销,shop-全场促销">
 					</select>
 				</div>
 				<div class="form-group">
 					<label for="txt_departmentname">促销种类</label> <input type="text"
 						name="txt_departmentname" data-bind="value:Name"
-						class="form-control" id="edit-type" placeholder="0-满减，1-送礼品">
+						class="form-control" id="edit-type"
+						placeholder="money-满减，gift-送礼品">
 				</div>
 				<div class="form-group">
-					<label for="txt_departmentname">每满</label> <input type="text"
+					<label for="txt_departmentname">促销规则</label> <input type="text"
+						name="txt_departmentname" data-bind="value:Name"
+						class="form-control" id="edit-rule"
+						placeholder="amount-满金额，total-满数量">
+				</div>
+				<div class="form-group">
+					<label for="txt_departmentname">满（金额）</label> <input type="text"
 						name="txt_departmentname" data-bind="value:Name"
 						class="form-control" id="edit-amount" placeholder="满减类别才需要填">
+				</div>
+				<div class="form-group">
+					<label for="txt_departmentname">满（数量）</label> <input type="text"
+						name="txt_departmentname" data-bind="value:Name"
+						class="form-control" id="edit-total" placeholder="满减类别才需要填">
 				</div>
 				<div class="form-group">
 					<label for="txt_departmentname">减</label> <input type="text"
@@ -240,11 +267,11 @@
 			align : 'center',
 			formatter : function(value, row, index) {
 				if (row.target) {
-					if (row.target == '0') {
+					if (row.target == 'brand') {
 						return "品牌活动";
-					} else if (row.target == '1') {
+					} else if (row.target == 'category') {
 						return "商品种类活动";
-					} else if (row.target == '2') {
+					} else if (row.target == 'shop') {
 						return "全场活动";
 					} else {
 						return "错误数据";
@@ -257,10 +284,25 @@
 			align : 'center',
 			formatter : function(value, row, index) {
 				if (row.type) {
-					if (row.type == '0') {
+					if (row.type == 'money') {
 						return "满减";
-					} else if (row.type == '1') {
-						return "送礼品";
+					} else if (row.type == 'gift') {
+						return "";
+					} else {
+						return "错误数据";
+					}
+				}
+			}
+		}, {
+			field : 'rule',
+			title : '促销规则',
+			align : 'center',
+			formatter : function(value, row, index) {
+				if (row.rule) {
+					if (row.rule == 'amount') {
+						return "满金额";
+					} else if (row.rule == 'total') {
+						return "满数量";
 					} else {
 						return "错误数据";
 					}
@@ -268,7 +310,11 @@
 			}
 		}, {
 			field : 'amount',
-			title : '每满',
+			title : '每满（金额）',
+			align : 'center'
+		}, {
+			field : 'total',
+			title : '每满（数量）',
 			align : 'center'
 		}, {
 			field : 'reduction',
@@ -328,7 +374,9 @@
 		var name = $('#add-name').val();
 		var type = $('#add-type').val();
 		var target = $('#add-target').val();
+		var rule = $('#add-rule').val();
 		var gift = $('#add-gift').val();
+		var total = $('#add-total').val();
 		var brandId = $('#add-brandId').val();
 		var categoryId = $('#add-categoryId').val();
 		console.log(categoryId);
@@ -346,6 +394,8 @@
 				categoryId : categoryId,
 				amount : amount,
 				reduction : reduction,
+				rule : rule,
+				total : total,
 			},
 			success : function(status) {
 				$table.bootstrapTable('refresh');
@@ -361,12 +411,14 @@
 			$('#edit-type').val(row.type);
 			$('#edit-target').val(row.target);
 			$('#edit-brandId').val(row.brandId);
-			console.log(row.brandId);
+			//console.log(row.brandId);
 			$('#edit-gift').val(row.gift);
 			$('#edit-categoryId').val(row.categoryId);
 			$('#edit-amount').val(row.amount);
 			$('#edit-reduction').val(row.reduction);
 			$('#edit-id').val(row.id);
+			$('#edit-total').val(row.total);
+			$('#edit-rule').val(row.rule);
 		});
 	}
 
@@ -381,6 +433,8 @@
 		var amount = $('#edit-amount').val();
 		var reduction = $('#edit-reduction').val();
 		var id = $('#edit-id').val();
+		var rule = $('#edit-rule').val();
+		var total = $('#edit-total').val();
 		$.ajax({
 			url : "/backend/admin/promotion/update",
 			type : "post",
@@ -394,6 +448,8 @@
 				categoryId : categoryId,
 				amount : amount,
 				reduction : reduction,
+				rule : rule,
+				total : total
 			},
 			success : function(status) {
 				$table.bootstrapTable('refresh');

@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.xuwuji.eshop.db.dao.ProductDao;
 import com.xuwuji.eshop.db.dao.PromotionDao;
+import com.xuwuji.eshop.model.Product;
 import com.xuwuji.eshop.model.Promotion;
 import com.xuwuji.eshop.model.PromotionTarget;
 
@@ -22,7 +24,10 @@ import com.xuwuji.eshop.model.PromotionTarget;
 public class PromotionController {
 	@Autowired
 	private PromotionDao promotionDao;
-
+	@Autowired
+	private ProductDao productDao;
+	
+	
 	@RequestMapping(value = "/getActiveAll", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Promotion> getActiveAll(HttpServletRequest request, HttpServletResponse response) {
@@ -38,6 +43,9 @@ public class PromotionController {
 		for (Promotion promotion : promotions) {
 			System.out.print(promotion);
 			if (promotion.getTarget().equals(PromotionTarget.BRAND.getCode())) {
+				List<Product> products=new ArrayList<Product>();
+				products=productDao.getActiveByBrandId(promotion.getBrandId());
+				promotion.setProducts(products);
 				result.add(promotion);
 			}
 		}

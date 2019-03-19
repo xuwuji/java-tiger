@@ -1,13 +1,13 @@
 package com.xuwuji.eshop.model;
 
-public enum PromotionType {
+public enum PromotionRule {
 
-	reduceMoney("满减", "money"), GIFT("送礼品", "gift");
+	AMOUNT("满金额", "amount"), TOTAL("满数量", "total");
 
 	private String desc;
 	private String code;
 
-	private PromotionType(String desc, String code) {
+	private PromotionRule(String desc, String code) {
 		this.desc = desc;
 		this.code = code;
 	}
@@ -28,8 +28,8 @@ public enum PromotionType {
 		this.code = code;
 	}
 
-	public PromotionType getByCode(String code) {
-		for (PromotionType status : PromotionType.values()) {
+	public PromotionRule getByCode(String code) {
+		for (PromotionRule status : PromotionRule.values()) {
 			if (status.code.equals(code)) {
 				return status;
 			}

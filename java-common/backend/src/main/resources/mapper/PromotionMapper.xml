@@ -10,6 +10,8 @@
 		<result property="name" column="type"></result>
 		<result property="target" column="type"></result>
 		<result property="type" column="type"></result>
+		<result property="rule" column="type"></result>
+		<result property="total" column="type"></result>
 		<result property="amount" column="type"></result>
 		<result property="reduction" column="type"></result>
 		<result property="gift" column="type"></result>
@@ -21,13 +23,13 @@
 	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
 		keyProperty="id">
 		insert into promotion
-		(name,target,type,amount,reduction,gift,brandId,categoryId,state)
-		values(#{name},#{target},#{type},#{amount},#{reduction},#{gift},#{brandId},#{categoryId},'0')
+		(name,target,type,rule,total,amount,reduction,gift,brandId,categoryId,state)
+		values(#{name},#{target},#{type},#{rule},#{total},#{amount},#{reduction},#{gift},#{brandId},#{categoryId},'0')
 	</insert>
 
 	<update id="update" parameterType="hashmap">
 		update promotion set
-		name=#{name},target=#{target},type=#{type},amount=#{amount},
+		name=#{name},target=#{target},type=#{type},#{rule}=#{rule},#{total}=#{total},amount=#{amount},
 		reduction=#{reduction},gift=#{gift},brandId=#{brandId},categoryId=#{categoryId}
 		where id=#{id};
 	</update>
@@ -51,7 +53,8 @@
 
 	<select id="getActiveAll" resultType="promotion">
 		select * from
-		promotion where
+		promotion
+		where
 		state='1';
 	</select>
 
@@ -62,7 +65,7 @@
 		brandId=#{brandId} and
 		state='1';
 	</select>
-	
+
 	<select id="getActiveAllByCategoryId" resultType="promotion"
 		parameterType="hashmap">
 		select * from

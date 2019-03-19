@@ -18,6 +18,7 @@ import com.xuwuji.eshop.db.dao.BrandDao;
 import com.xuwuji.eshop.db.dao.PromotionDao;
 import com.xuwuji.eshop.model.Brand;
 import com.xuwuji.eshop.model.Promotion;
+import com.xuwuji.eshop.model.PromotionRule;
 import com.xuwuji.eshop.model.PromotionType;
 
 @Controller
@@ -42,7 +43,10 @@ public class AdminPromotionController {
 		String amount = request.getParameter("amount");
 		String reduction = request.getParameter("reduction");
 		String gift = request.getParameter("gift");
+		String rule = request.getParameter("rule");
+
 		Promotion promotion = new Promotion();
+		promotion.setRule(rule);
 		promotion.setName(name);
 		promotion.setTarget(target);
 		promotion.setType(type);
@@ -50,6 +54,10 @@ public class AdminPromotionController {
 		if (type.equals(PromotionType.reduceMoney.getCode())) {
 			promotion.setAmount(Double.valueOf(amount));
 			promotion.setReduction(Double.valueOf(reduction));
+		}
+		if (rule.equals(PromotionRule.TOTAL.getCode())) {
+			int total = Integer.valueOf(request.getParameter("total"));
+			promotion.setTotal(total);
 		}
 		promotion.setBrandId(brandId);
 		promotion.setCategoryId(categoryId);
@@ -67,16 +75,23 @@ public class AdminPromotionController {
 		String categoryId = request.getParameter("categoryId");
 		String amount = request.getParameter("amount");
 		String reduction = request.getParameter("reduction");
-		String gift = request.getParameter("cougiftntry");
+		String gift = request.getParameter("gift");
+		String rule = request.getParameter("rule");
+	
 		Promotion promotion = new Promotion();
 		promotion.setName(name);
 		promotion.setTarget(target);
 		promotion.setType(type);
 		promotion.setGift(gift);
 		promotion.setId(Integer.valueOf(id));
+		promotion.setRule(rule);
 		if (type.equals(PromotionType.reduceMoney.getCode())) {
 			promotion.setAmount(Double.valueOf(amount));
 			promotion.setReduction(Double.valueOf(reduction));
+		}
+		if (rule.equals(PromotionRule.TOTAL.getCode())) {
+			int total = Integer.valueOf(request.getParameter("total"));
+			promotion.setTotal(total);
 		}
 		promotion.setBrandId(brandId);
 		promotion.setCategoryId(categoryId);
