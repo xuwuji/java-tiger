@@ -144,4 +144,18 @@ public class ProductController {
 		return products;
 	}
 
+	@SuppressWarnings("static-access")
+	@RequestMapping(value = "/getActiveByFlash", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Product> getActiveByFlash(HttpServletRequest request, HttpServletResponse response) {
+		List<Product> products = new ArrayList<Product>();
+		products = productDao.getActiveByFlash();
+		String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
+		for (Product product : products) {
+			String mainImgUrl = PRODUCT_IMG_BASE + product.getId() + "-0.jpg";
+			product.setMainImgUrl(mainImgUrl);
+		}
+		return products;
+	}
+
 }

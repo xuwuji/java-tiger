@@ -35,6 +35,8 @@ public class Product {
 	private String imgUrl3;
 	private String imgUrl4;
 	private String formatId;
+	private double flashPrice;
+	private String flashState;
 
 	public Product() {
 
@@ -238,6 +240,22 @@ public class Product {
 
 	public void setFormatId(String formatId) {
 		this.formatId = formatId;
+	}
+
+	public double getFlashPrice() {
+		return flashPrice;
+	}
+
+	public void setFlashPrice(double flashPrice) {
+		this.flashPrice = flashPrice;
+	}
+
+	public String getFlashState() {
+		return flashState;
+	}
+
+	public void setFlashState(String flashState) {
+		this.flashState = flashState;
 	}
 
 	@Override

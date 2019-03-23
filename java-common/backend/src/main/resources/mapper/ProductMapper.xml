@@ -26,14 +26,16 @@
 		<result property="imgUrl2" column="type"></result>
 		<result property="imgUrl3" column="type"></result>
 		<result property="imgUrl4" column="type"></result>
+		<result property="flashPrice" column="type"></result>
+		<result property="flashState" column="type"></result>
 	</resultMap>
 
 	<insert id="add" parameterType="Product" useGeneratedKeys="true"
 		keyProperty="id" keyColumn="id">
 		insert into product
 		(name,description,price,inventory,salesCount,parentCategoryId,categoryId,
-		state)
-		values(#{name},#{description},#{price},#{inventory},#{salesCount},#{parentCategoryId},#{categoryId},'0')
+		state,flashState)
+		values(#{name},#{description},#{price},#{inventory},#{salesCount},#{parentCategoryId},#{categoryId},'0','0')
 	</insert>
 
 	<update id="disable" parameterType="hashmap">
@@ -75,8 +77,7 @@
 		where id=#{id};
 	</update>
 
-	<select id="getByCategory" resultType="Product"
-		parameterType="hashmap">
+	<select id="getByCategory" resultType="Product" parameterType="hashmap">
 		select * from
 		product where
 		categoryId=#{categoryId}; ;
@@ -110,31 +111,30 @@
 		state='1' order by id desc;
 	</select>
 
-	<select id="getActiveByCategoryOrderByPrice"
-		resultType="Product" parameterType="hashmap">
+	<select id="getActiveByCategoryOrderByPrice" resultType="Product"
+		parameterType="hashmap">
 		select * from
 		product where
 		categoryId=#{categoryId} and
 		state='1' order by price desc;
 	</select>
 
-	<select id="getActiveByCategoryOrderBySalesCount"
-		resultType="Product" parameterType="hashmap">
+	<select id="getActiveByCategoryOrderBySalesCount" resultType="Product"
+		parameterType="hashmap">
 		select * from
 		product where
 		categoryId=#{categoryId} and
 		state='1' order by salesCount desc;
 	</select>
 
-	<select id="getById" resultType="Product"
-		parameterType="hashmap">
-		select * from
+	<select id="getById" resultType="Product" parameterType="hashmap">
+		select *
+		from
 		product where
 		id=#{id};
 	</select>
 
-	<select id="getActiveByKW" resultType="Product"
-		parameterType="hashmap">
+	<select id="getActiveByKW" resultType="Product" parameterType="hashmap">
 		select * from
 		product where name like
 		CONCAT('%',#{KW},'%')
@@ -158,10 +158,17 @@
 		='1';
 	</select>
 
-	<select id="getRankByTop" resultType="Product"
+	<select id="getRankByTop" resultType="Product" parameterType="hashmap">
+		select * from
+		product where state='1' order by salesCount desc limit
+		10;
+	</select>
+
+	<select id="getActiveByFlash" resultType="Product"
 		parameterType="hashmap">
 		select * from
-		product where state='1' order by salesCount desc limit 10;
+		product where state
+		='1' and flashState="1";
 	</select>
 
 </mapper>
