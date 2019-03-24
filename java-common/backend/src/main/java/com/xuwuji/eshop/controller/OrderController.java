@@ -83,7 +83,11 @@ public class OrderController {
 		order.setAddress(orderNode.get("address").asText());
 		order.setRecieverName(orderNode.get("recieverName").asText());
 		order.setOpenId(orderNode.get("openId").asText());
-		order.setMemo(orderNode.get("memo").asText());
+		if(orderNode.get("memo")!=null){
+			order.setMemo(orderNode.get("memo").asText());
+		}else{
+			order.setMemo("");
+		}
 		order.setTime(new Date());
 		order.setOrderId(orderId);
 		order = orderDao.add(order);
