@@ -35,12 +35,14 @@ public class AdminBannerController {
 	@ResponseBody
 	public void add(HttpServletRequest request, HttpServletResponse response) {
 		String name = request.getParameter("name");
+		String imgUrl = request.getParameter("imgUrl");
 		String redirectUrl = request.getParameter("redirectUrl");
 		String bannerId = request.getParameter("bannerId");
 		String info = request.getParameter("info");
 		BannerItem bannerItem = new BannerItem();
 		bannerItem.setBannerId(bannerId);
-		bannerItem.setImgUrl(EshopConfigUtil.getParam(EshopConfigUtil.BANNER_IMG_BASE) + bannerItem.getId() + ".jpg");
+		//bannerItem.setImgUrl(EshopConfigUtil.getParam(EshopConfigUtil.BANNER_IMG_BASE) + bannerItem.getId() + ".jpg");
+		bannerItem.setImgUrl(imgUrl);
 		bannerItem.setName(name);
 		bannerItem.setRedirectUrl(redirectUrl);
 		bannerItem.setInfo(info);
@@ -103,10 +105,10 @@ public class AdminBannerController {
 		System.out.println("banner/getAll");
 		List<BannerItem> list = new ArrayList<BannerItem>();
 		list = bannerDao.getAll();
-		for (BannerItem bannerItem : list) {
-			bannerItem
-					.setImgUrl(EshopConfigUtil.getParam(EshopConfigUtil.BANNER_IMG_BASE) + bannerItem.getId() + ".jpg");
-		}
+//		for (BannerItem bannerItem : list) {
+//			bannerItem
+//					.setImgUrl(EshopConfigUtil.getParam(EshopConfigUtil.BANNER_IMG_BASE) + bannerItem.getId() + ".jpg");
+//		}
 		return list;
 	}
 
@@ -117,10 +119,10 @@ public class AdminBannerController {
 		System.out.println("banner/getById");
 		List<BannerItem> list = new ArrayList<BannerItem>();
 		list = bannerDao.getById(id);
-		for (BannerItem bannerItem : list) {
-			bannerItem
-					.setImgUrl(EshopConfigUtil.getParam(EshopConfigUtil.BANNER_IMG_BASE) + bannerItem.getId() + ".jpg");
-		}
+//		for (BannerItem bannerItem : list) {
+//			bannerItem
+//					.setImgUrl(EshopConfigUtil.getParam(EshopConfigUtil.BANNER_IMG_BASE) + bannerItem.getId() + ".jpg");
+//		}
 		return list;
 	}
 
@@ -130,10 +132,10 @@ public class AdminBannerController {
 		System.out.println("banner/getAllActive");
 		List<BannerItem> list = new ArrayList<BannerItem>();
 		list = bannerDao.getAllActive();
-		for (BannerItem bannerItem : list) {
-			bannerItem
-					.setImgUrl(EshopConfigUtil.getParam(EshopConfigUtil.BANNER_IMG_BASE) + bannerItem.getId() + ".jpg");
-		}
+//		for (BannerItem bannerItem : list) {
+//			bannerItem
+//					.setImgUrl(EshopConfigUtil.getParam(EshopConfigUtil.BANNER_IMG_BASE) + bannerItem.getId() + ".jpg");
+//		}
 		return list;
 	}
 
@@ -143,10 +145,10 @@ public class AdminBannerController {
 		List<BannerItem> list = new ArrayList<BannerItem>();
 		String bannerId = request.getParameter("bannerId");
 		list = bannerDao.getActiveAllByBannerId(bannerId);
-		for (BannerItem bannerItem : list) {
-			bannerItem
-					.setImgUrl(EshopConfigUtil.getParam(EshopConfigUtil.BANNER_IMG_BASE) + bannerItem.getId() + ".jpg");
-		}
+//		for (BannerItem bannerItem : list) {
+//			bannerItem
+//					.setImgUrl(EshopConfigUtil.getParam(EshopConfigUtil.BANNER_IMG_BASE) + bannerItem.getId() + ".jpg");
+//		}
 		return list;
 	}
 

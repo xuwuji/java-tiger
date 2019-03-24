@@ -21,6 +21,7 @@ public class FormatDao {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("name", format.getName());
 			map.put("price", format.getPrice());
+			map.put("flashPrice", format.getFlashPrice());
 			map.put("productId", format.getProductId());
 			mapper.add(map);
 			session.commit();
@@ -41,6 +42,7 @@ public class FormatDao {
 			map.put("name", format.getName());
 			map.put("price", format.getPrice());
 			map.put("productId", format.getProductId());
+			map.put("flashPrice", format.getFlashPrice());
 			mapper.update(map);
 			session.commit();
 		} catch (Exception e) {
