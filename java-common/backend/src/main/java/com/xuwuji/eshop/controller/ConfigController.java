@@ -78,12 +78,22 @@ public class ConfigController {
 		eshopConfig.setPreSearch(Arrays.asList(eshopConfigUtil.getParam(eshopConfigUtil.PRE_SEARCH).split("/")));
 		return eshopConfig;
 	}
+	
+	@SuppressWarnings("static-access")
+	@RequestMapping(value = "/getArticlePreSearch", method = RequestMethod.GET)
+	@ResponseBody
+	public EshopConfigResponse getArticlePreSearch(HttpServletRequest request, HttpServletResponse response) {
+		EshopConfigResponse eshopConfig = new EshopConfigResponse();
+		eshopConfig.setArticlePreSearch(Arrays.asList(eshopConfigUtil.getParam(eshopConfigUtil.ARTICLE_PRE_SEARCH).split("/")));
+		return eshopConfig;
+	}
 
 	class EshopConfigResponse {
 		public String xxcUrl;
 		public String noticeMsg;
 		public String openId;
 		public List<String> preSearch;
+		public List<String> articlePreSearch;
 
 		public String getXxcUrl() {
 			return xxcUrl;
@@ -116,6 +126,15 @@ public class ConfigController {
 		public void setPreSearch(List<String> preSearch) {
 			this.preSearch = preSearch;
 		}
+
+		public List<String> getArticlePreSearch() {
+			return articlePreSearch;
+		}
+
+		public void setArticlePreSearch(List<String> articlePreSearch) {
+			this.articlePreSearch = articlePreSearch;
+		}
+
 
 	}
 

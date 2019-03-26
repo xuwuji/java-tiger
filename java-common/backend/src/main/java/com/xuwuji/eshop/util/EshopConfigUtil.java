@@ -22,6 +22,7 @@ public class EshopConfigUtil {
 	public static final String COUNTRY_FLAG_BASE = "countryFlagImgBase";
 	public static final String xxcUrl = "xxcUrl";
 	public static final String PRE_SEARCH = "preSearch";
+	public static final String ARTICLE_PRE_SEARCH = "articlePreSearch";
 	public static final String noticeMsg = "noticeMsg";
 	public static Map<String, Object> configMap = new HashMap<String, Object>();
 
