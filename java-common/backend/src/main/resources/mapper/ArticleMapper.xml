@@ -15,19 +15,22 @@
 			jdbcType="DATE"></result>
 		<result property="imgs" column="type"></result>
 		<result property="tags" column="type"></result>
+		<result property="typeId" column="type"></result>
+		<result property="announceStyle" column="type"></result>
+
 
 	</resultMap>
 
 	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
 		keyProperty="id">
 		insert into article
-		(title,text,time,imgs,tags,state)
-		values(#{title},#{text},now(),#{imgs},#{tags},'0')
+		(title,text,time,imgs,tags,state,typeId,announceStyle)
+		values(#{title},#{text},now(),#{imgs},#{tags},'0'，#{typeId},#{announceStyle})
 	</insert>
 
 	<update id="update" parameterType="hashmap">
 		update article set
-		title=#{title},text=#{text},imgs=#{imgs},tags=#{tags} where id=#{id}
+		title=#{title},text=#{text},imgs=#{imgs},tags=#{tags} ,typeId=#{typeId},announceStyle=#{announceStyle} where id=#{id}
 	</update>
 
 	<select id="getById" resultType="Article">
@@ -41,11 +44,25 @@
 		article where
 		state='1';
 	</select>
-	
+
 	<select id="getActiveAllByTags" resultType="Article">
 		select * from
-		article where
+		article
+		where
 		state='1' and tags like CONCAT('%',#{tag},'%');
+	</select>
+	
+	<select id="getActiveAllByCondition" resultType="Article">
+		select * from
+		article
+		where
+		state='1' 
+		<if test="tags != null and tags !=''">
+			and tags like CONCAT('%',#{tag},'%') 
+		</if>
+		<if test="typeId != null and typeId !=''">
+		    and typeId=#{typeId};
+		</if>
 	</select>
 
 	<select id="getAll" resultType="Article">

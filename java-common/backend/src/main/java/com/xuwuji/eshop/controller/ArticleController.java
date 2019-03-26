@@ -32,12 +32,16 @@ public class ArticleController {
 		String text = request.getParameter("text");
 		String tags = request.getParameter("tags");
 		String imgs = request.getParameter("imgs");
+		String typeId = request.getParameter("typeId");
+		String announceStyle = request.getParameter("announceStyle");
 		Article article = new Article();
 		article.setTitle(title);
 		article.setReferProductId(referProductId);
 		article.setImgs(imgs);
 		article.setTags(tags);
 		article.setText(text);
+		article.setTypeId(typeId);
+		article.setAnnounceStyle(announceStyle);
 		articleDao.add(article);
 	}
 
@@ -50,6 +54,8 @@ public class ArticleController {
 		String tags = request.getParameter("tags");
 		String imgs = request.getParameter("imgs");
 		String id = request.getParameter("id");
+		String typeId = request.getParameter("typeId");
+		String announceStyle = request.getParameter("announceStyle");
 		Article article = new Article();
 		article.setTitle(title);
 		article.setReferProductId(referProductId);
@@ -57,6 +63,8 @@ public class ArticleController {
 		article.setTags(tags);
 		article.setText(text);
 		article.setId(Integer.valueOf(id));
+		article.setTypeId(typeId);
+		article.setAnnounceStyle(announceStyle);
 		articleDao.update(article);
 	}
 
@@ -87,6 +95,25 @@ public class ArticleController {
 	public List<Article> getActiveAll(HttpServletRequest request, HttpServletResponse response) {
 		List<Article> list = new ArrayList<Article>();
 		list = articleDao.getActiveAll();
+		return list;
+	}
+	
+	@RequestMapping(value = "/getActiveAllByCondition", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Article> getActiveAllByCondition(HttpServletRequest request, HttpServletResponse response) {
+		String tag=request.getParameter("tag");
+		String typeId=request.getParameter("typeId");
+		List<Article> list = new ArrayList<Article>();
+		HashSet<Integer> idSet=new HashSet<Integer>();
+		List<Article> temp = articleDao.getActiveAllByCondition(tag,typeId);
+		for (Article article :temp ) {
+			if(!idSet.contains(article.getId())){
+				article.setImgUrlList(Arrays.asList(article.getImgs().split(";")));
+				article.setTagList(Arrays.asList(article.getTags().split(";")));
+				list.add(article);
+				idSet.add(article.getId());
+			}
+		}
 		return list;
 	}
 

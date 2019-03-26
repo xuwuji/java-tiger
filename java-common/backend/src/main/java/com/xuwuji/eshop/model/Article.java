@@ -16,6 +16,8 @@ public class Article {
 	private String tags;
 	private List<String> imgUrlList;
 	private List<String> tagList;
+	private String typeId;
+	private String announceStyle;
 
 	public int getId() {
 		return id;
@@ -87,6 +89,22 @@ public class Article {
 
 	public void setTagList(List<String> tagList) {
 		this.tagList = tagList;
+	}
+
+	public String getTypeId() {
+		return typeId;
+	}
+
+	public void setTypeId(String typeId) {
+		this.typeId = typeId;
+	}
+
+	public String getAnnounceStyle() {
+		return announceStyle;
+	}
+
+	public void setAnnounceStyle(String announceStyle) {
+		this.announceStyle = announceStyle;
 	}
 
 }

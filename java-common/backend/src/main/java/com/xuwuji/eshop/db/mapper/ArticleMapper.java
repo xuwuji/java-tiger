@@ -23,4 +23,6 @@ public interface ArticleMapper {
 	
 	public List<Article> getActiveAllByTags(HashMap<String, Object> map);
 	
+	public List<Article> getActiveAllByCondition(HashMap<String, Object> map);
+	
 }
