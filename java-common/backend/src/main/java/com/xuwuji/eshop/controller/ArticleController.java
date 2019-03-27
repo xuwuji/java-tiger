@@ -17,12 +17,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xuwuji.eshop.db.dao.ArticleDao;
 import com.xuwuji.eshop.model.Article;
+import com.xuwuji.eshop.util.EshopConfigUtil;
 
 @Controller
 @RequestMapping(value = "/article")
 public class ArticleController {
 	@Autowired
 	private ArticleDao articleDao;
+	@Autowired
+	private EshopConfigUtil eshopConfigUtil;
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
@@ -97,17 +100,18 @@ public class ArticleController {
 		list = articleDao.getActiveAll();
 		return list;
 	}
-	
+
 	@RequestMapping(value = "/getActiveAllByCondition", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Article> getActiveAllByCondition(HttpServletRequest request, HttpServletResponse response) {
-		String tag=request.getParameter("tag");
-		String typeId=request.getParameter("typeId");
+		String tag = request.getParameter("tag");
+		String typeId = request.getParameter("typeId");
+		String title = request.getParameter("title");
 		List<Article> list = new ArrayList<Article>();
-		HashSet<Integer> idSet=new HashSet<Integer>();
-		List<Article> temp = articleDao.getActiveAllByCondition(tag,typeId);
-		for (Article article :temp ) {
-			if(!idSet.contains(article.getId())){
+		HashSet<Integer> idSet = new HashSet<Integer>();
+		List<Article> temp = articleDao.getActiveAllByCondition(tag, typeId, title);
+		for (Article article : temp) {
+			if (!idSet.contains(article.getId())) {
 				article.setImgUrlList(Arrays.asList(article.getImgs().split(";")));
 				article.setTagList(Arrays.asList(article.getTags().split(";")));
 				list.add(article);
@@ -122,16 +126,66 @@ public class ArticleController {
 	public List<Article> getActiveAllByTags(@RequestParam("tags") String tags, HttpServletRequest request,
 			HttpServletResponse response) {
 		List<Article> list = new ArrayList<Article>();
-		HashSet<Integer> idSet=new HashSet<Integer>();
+		HashSet<Integer> idSet = new HashSet<Integer>();
 		for (String tag : tags.split(";")) {
 			List<Article> temp = articleDao.getActiveAllByTags(tag);
-			for (Article article :temp ) {
-				if(!idSet.contains(article.getId())){
+			for (Article article : temp) {
+				if (!idSet.contains(article.getId())) {
 					article.setImgUrlList(Arrays.asList(article.getImgs().split(";")));
 					article.setTagList(Arrays.asList(article.getTags().split(";")));
 					list.add(article);
 					idSet.add(article.getId());
 				}
+			}
+		}
+		return list;
+	}
+
+	@RequestMapping(value = "/getGuess", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Article> getGuess(HttpServletRequest request, HttpServletResponse response) {
+		List<Article> list = new ArrayList<Article>();
+		HashSet<Integer> idSet = new HashSet<Integer>();
+		List<String> preSearchArr = Arrays
+				.asList(eshopConfigUtil.getParam(eshopConfigUtil.ARTICLE_PRE_SEARCH).split("/"));
+		for (String word : preSearchArr) {
+			List<Article> tagTemp = articleDao.getActiveAllByCondition(word, "", "");
+			System.out.print(tagTemp.size());
+			List<Article> titleTemp = articleDao.getActiveAllByCondition("", "", word);
+			for (Article article : tagTemp) {
+				if (!idSet.contains(article.getId())) {
+					list.add(article);
+					idSet.add(article.getId());
+				}
+			}
+			for (Article article : titleTemp) {
+				if (!idSet.contains(article.getId())) {
+					list.add(article);
+					idSet.add(article.getId());
+				}
+			}
+		}
+		return list;
+	}
+
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Article> search(HttpServletRequest request, HttpServletResponse response) {
+		String kw = request.getParameter("kw");
+		List<Article> list = new ArrayList<Article>();
+		HashSet<Integer> idSet = new HashSet<Integer>();
+		List<Article> tagTemp = articleDao.getActiveAllByCondition(kw, "", "");
+		List<Article> titleTemp = articleDao.getActiveAllByCondition("", "", kw);
+		for (Article article : tagTemp) {
+			if (!idSet.contains(article.getId())) {
+				list.add(article);
+				idSet.add(article.getId());
+			}
+		}
+		for (Article article : titleTemp) {
+			if (!idSet.contains(article.getId())) {
+				list.add(article);
+				idSet.add(article.getId());
 			}
 		}
 		return list;

@@ -130,14 +130,16 @@ public class ArticleDao {
 		return result;
 	}
 	
-	public List<Article> getActiveAllByCondition(String tag,String typeId) {
+	public List<Article> getActiveAllByCondition(String tag,String typeId,String title) {
 		SqlSession session = SessionFactory.openDEVSession();
 		List<Article> result = new ArrayList<Article>();
 		try {
 			ArticleMapper mapper = session.getMapper(ArticleMapper.class);
 			HashMap<String, Object> map = new HashMap<String, Object>();
+			System.out.print("tag:"+tag);
 			map.put("tag", tag);
 			map.put("typeId", typeId);
+			map.put("title", title);
 			result = mapper.getActiveAllByCondition(map);
 			session.commit();
 		} catch (Exception e) {

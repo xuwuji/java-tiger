@@ -57,11 +57,14 @@
 		article
 		where
 		state='1' 
-		<if test="tags != null and tags !=''">
+		<if test="tag != null and tag !=''">
 			and tags like CONCAT('%',#{tag},'%') 
 		</if>
 		<if test="typeId != null and typeId !=''">
 		    and typeId=#{typeId};
+		</if>
+		<if test="title != null and title !=''">
+		    and title like CONCAT('%',#{title},'%') ;
 		</if>
 	</select>
 
