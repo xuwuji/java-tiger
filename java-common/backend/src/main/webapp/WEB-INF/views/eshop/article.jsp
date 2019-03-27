@@ -45,11 +45,11 @@
 		</button>
 	</div>
 
-	<div id="toolbar" class="btn-group">
+<!-- 	<div id="toolbar" class="btn-group">
 		<button id="btn-batch-disable" type="button" class="btn">
 			<span aria-hidden="true" class="icon icon-plus-sign"></span>批量下架
 		</button>
-	</div>
+	</div> -->
 	<!--bootstrap-table表格-->
 	<table id="data-table"></table>
 
@@ -393,12 +393,8 @@
 	function disable(id) {
 		if (confirm("确定下架此分类吗？")) {
 			$.ajax({
-				url : "/backend/admin/banner/disable", //url
-				type : "post",
-				data : {
-					id : id,
-					type : "single"
-				},
+				url : "/backend/article/disable?id="+id, //url
+				type : "get",
 				success : function(status) {
 					$table.bootstrapTable('refresh');
 				}
@@ -410,12 +406,9 @@
 	function reActive(id) {
 		if (confirm("确定上架此分类吗？")) {
 			$.ajax({
-				url : "/backend/admin/banner/reActive", //url
-				type : "post",
-				data : {
-					id : id,
-					type : "single"
-				},
+				url : "/backend/article/reActive?id="+id, //url
+				type : "get",
+
 				success : function(status) {
 					$table.bootstrapTable('refresh');
 				}
@@ -423,25 +416,5 @@
 		}
 	}
 
-	/* 批量删除 */
-	$('#btn-batch-disable').on("click", function() {
-		var rows = $table.bootstrapTable('getSelections');
-		var ids = '';
-		for (var i = 0; i < rows.length; i++) {
-			ids += rows[i].id + ',';
-		}
-		ids = ids.substring(0, ids.length - 1);
-		$.ajax({
-			url : "/backend/admin/banner/disable", //url
-			type : "post",
-			data : {
-				id : ids,
-				type : "batch"
-			},
-			success : function(status) {
-				$table.bootstrapTable('refresh');
-			}
-		});
-	});
 </script>
 </html>
