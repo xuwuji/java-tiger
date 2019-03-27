@@ -28,6 +28,7 @@ public class ArticleDao {
 			map.put("typeId", article.getTypeId());
 			map.put("announceStyle", article.getAnnounceStyle());
 			map.put("time", new Date());
+			map.put("mainImgUrl", article.getMainImgUrl());
 			mapper.add(map);
 			session.commit();
 		} catch (Exception e) {
@@ -102,6 +103,7 @@ public class ArticleDao {
 			map.put("id", article.getId());
 			map.put("typeId", article.getTypeId());
 			map.put("announceStyle", article.getAnnounceStyle());
+			map.put("mainImgUrl", article.getMainImgUrl());
 			mapper.update(map);
 			session.commit();
 		} catch (Exception e) {
@@ -129,14 +131,14 @@ public class ArticleDao {
 		}
 		return result;
 	}
-	
-	public List<Article> getActiveAllByCondition(String tag,String typeId,String title) {
+
+	public List<Article> getActiveAllByCondition(String tag, String typeId, String title) {
 		SqlSession session = SessionFactory.openDEVSession();
 		List<Article> result = new ArrayList<Article>();
 		try {
 			ArticleMapper mapper = session.getMapper(ArticleMapper.class);
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			System.out.print("tag:"+tag);
+			System.out.print("tag:" + tag);
 			map.put("tag", tag);
 			map.put("typeId", typeId);
 			map.put("title", title);

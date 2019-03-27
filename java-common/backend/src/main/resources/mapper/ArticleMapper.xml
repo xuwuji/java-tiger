@@ -17,6 +17,9 @@
 		<result property="tags" column="type"></result>
 		<result property="typeId" column="type"></result>
 		<result property="announceStyle" column="type"></result>
+		<result property="mainImgUrl" column="type"></result>
+		
+
 
 
 	</resultMap>
@@ -24,13 +27,15 @@
 	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
 		keyProperty="id">
 		insert into article
-		(title,text,time,imgs,tags,state,typeId,announceStyle)
-		values(#{title},#{text},now(),#{imgs},#{tags},'0'，#{typeId},#{announceStyle})
+		(title,text,time,imgs,tags,state,typeId,announceStyle,mainImgUrl,referProductId)
+		values(#{title},#{text},now(),#{imgs},#{tags},'0',#{typeId},#{announceStyle},#{mainImgUrl},#{referProductId})
 	</insert>
 
 	<update id="update" parameterType="hashmap">
 		update article set
-		title=#{title},text=#{text},imgs=#{imgs},tags=#{tags} ,typeId=#{typeId},announceStyle=#{announceStyle} where id=#{id}
+		title=#{title},text=#{text},imgs=#{imgs},tags=#{tags}
+		,typeId=#{typeId},announceStyle=#{announceStyle},mainImgUrl=#{mainImgUrl},referProductId=#{referProductId}
+		where id=#{id}
 	</update>
 
 	<select id="getById" resultType="Article">
@@ -51,20 +56,20 @@
 		where
 		state='1' and tags like CONCAT('%',#{tag},'%');
 	</select>
-	
+
 	<select id="getActiveAllByCondition" resultType="Article">
 		select * from
 		article
 		where
-		state='1' 
+		state='1'
 		<if test="tag != null and tag !=''">
-			and tags like CONCAT('%',#{tag},'%') 
+			and tags like CONCAT('%',#{tag},'%')
 		</if>
 		<if test="typeId != null and typeId !=''">
-		    and typeId=#{typeId};
+			and typeId=#{typeId};
 		</if>
 		<if test="title != null and title !=''">
-		    and title like CONCAT('%',#{title},'%') ;
+			and title like CONCAT('%',#{title},'%') ;
 		</if>
 	</select>
 

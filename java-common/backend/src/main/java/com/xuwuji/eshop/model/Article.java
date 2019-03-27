@@ -1,7 +1,5 @@
 package com.xuwuji.eshop.model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +16,8 @@ public class Article {
 	private List<String> tagList;
 	private String typeId;
 	private String announceStyle;
+	private String mainImgUrl;
+	private String state;
 
 	public int getId() {
 		return id;
@@ -105,6 +105,22 @@ public class Article {
 
 	public void setAnnounceStyle(String announceStyle) {
 		this.announceStyle = announceStyle;
+	}
+
+	public String getMainImgUrl() {
+		return mainImgUrl;
+	}
+
+	public void setMainImgUrl(String mainImgUrl) {
+		this.mainImgUrl = mainImgUrl;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 
 }

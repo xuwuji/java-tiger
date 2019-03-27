@@ -44,7 +44,7 @@ public class QRCodeUtil {
 		String url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=" + getAccessToken();
 		Map<String, Object> param = new HashMap<>();
 		param.put("scene", productId);
-		param.put("path", "pages/product/product");
+		param.put("page", "pages/product/product");
 		param.put("width", 430);
 		param.put("auto_color", false);
 		Map<String, Object> line_color = new HashMap<>();

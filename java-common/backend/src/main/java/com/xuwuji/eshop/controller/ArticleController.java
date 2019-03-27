@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.xuwuji.eshop.db.dao.ArticleDao;
 import com.xuwuji.eshop.model.Article;
@@ -26,6 +27,11 @@ public class ArticleController {
 	private ArticleDao articleDao;
 	@Autowired
 	private EshopConfigUtil eshopConfigUtil;
+	
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
+		return new ModelAndView("/eshop/article");
+	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
@@ -36,6 +42,7 @@ public class ArticleController {
 		String tags = request.getParameter("tags");
 		String imgs = request.getParameter("imgs");
 		String typeId = request.getParameter("typeId");
+		String mainImgUrl = request.getParameter("mainImgUrl");
 		String announceStyle = request.getParameter("announceStyle");
 		Article article = new Article();
 		article.setTitle(title);
@@ -44,6 +51,7 @@ public class ArticleController {
 		article.setTags(tags);
 		article.setText(text);
 		article.setTypeId(typeId);
+		article.setMainImgUrl(mainImgUrl);
 		article.setAnnounceStyle(announceStyle);
 		articleDao.add(article);
 	}
@@ -58,6 +66,7 @@ public class ArticleController {
 		String imgs = request.getParameter("imgs");
 		String id = request.getParameter("id");
 		String typeId = request.getParameter("typeId");
+		String mainImgUrl = request.getParameter("mainImgUrl");
 		String announceStyle = request.getParameter("announceStyle");
 		Article article = new Article();
 		article.setTitle(title);
@@ -65,6 +74,7 @@ public class ArticleController {
 		article.setImgs(imgs);
 		article.setTags(tags);
 		article.setText(text);
+		article.setMainImgUrl(mainImgUrl);
 		article.setId(Integer.valueOf(id));
 		article.setTypeId(typeId);
 		article.setAnnounceStyle(announceStyle);
