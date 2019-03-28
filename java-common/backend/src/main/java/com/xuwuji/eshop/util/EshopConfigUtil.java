@@ -24,8 +24,10 @@ public class EshopConfigUtil {
 	public static final String PRE_SEARCH = "preSearch";
 	public static final String ARTICLE_PRE_SEARCH = "articlePreSearch";
 	public static final String noticeMsg = "noticeMsg";
+	public static final String BONUS="bonus";
 	public static Map<String, Object> configMap = new HashMap<String, Object>();
 
+	
 	public String getParam(String paramName) {
 		String value = "";
 		value = (String) configMap.get(paramName);

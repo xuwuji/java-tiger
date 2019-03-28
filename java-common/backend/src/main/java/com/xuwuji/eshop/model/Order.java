@@ -24,6 +24,9 @@ public class Order {
 	private String logisticsName;
 
 	private String memo;
+	private String source;
+	private String sourceWechatId;
+	private String sourceOpenId;
 
 	public int getId() {
 		return id;
@@ -145,12 +148,37 @@ public class Order {
 		this.logisticsName = logisticsName;
 	}
 
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
+	}
+
+	public String getSourceWechatId() {
+		return sourceWechatId;
+	}
+
+	public void setSourceWechatId(String sourceWechatId) {
+		this.sourceWechatId = sourceWechatId;
+	}
+
+	public String getSourceOpenId() {
+		return sourceOpenId;
+	}
+
+	public void setSourceOpenId(String sourceOpenId) {
+		this.sourceOpenId = sourceOpenId;
+	}
+
 	@Override
 	public String toString() {
 		return "Order [id=" + id + ", wechatId=" + wechatId + ", time=" + time + ", state=" + state + ", orderId="
 				+ orderId + ", orderItemsList=" + orderItemsList + ", phoneNum=" + phoneNum + ", amount=" + amount
 				+ ", totalCount=" + totalCount + ", recieverName=" + recieverName + ", address=" + address + ", openId="
-				+ openId + ", logisticsId=" + logisticsId + ", logisticsName=" + logisticsName + ", memo=" + memo + "]";
+				+ openId + ", logisticsId=" + logisticsId + ", logisticsName=" + logisticsName + ", memo=" + memo
+				+ ", source=" + source + ", sourceWechatId=" + sourceWechatId + ", sourceOpenId=" + sourceOpenId + "]";
 	}
 
 }

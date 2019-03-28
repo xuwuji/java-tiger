@@ -83,6 +83,22 @@ public class OrderDao {
 		return result;
 	}
 
+	public List<Order> getAll() {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<Order> result = new ArrayList<Order>();
+		try {
+			OrderMapper mapper = session.getMapper(OrderMapper.class);
+			result = mapper.getAll();
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+
 	public Order getOrderInfoByOrderId(String orderId) {
 		SqlSession session = SessionFactory.openDEVSession();
 		List<Order> result = new ArrayList<Order>();

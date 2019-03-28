@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuwuji.eshop.db.mapper.UserMapper">
+
+	<resultMap type="user" id="userResult">
+		<id property="id" column="id"></id>
+		<result property="openId" column="state"></result>
+		<result property="state" column="info"></result>
+		<result property="bonusAmount" column="info"></result>
+	</resultMap>
+
+	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
+		keyProperty="id" keyColumn="id">
+		insert into user
+		(openId,wechatId,state,bonusAmount)
+		values(#{openId},#{wechatId},'1',0)
+	</insert>
+
+	<update id="update" parameterType="hashmap">
+		update user set
+		state=#{state},bonusAmount=#{bonusAmount}
+		where openId=#{openId};
+	</update>
+
+	<update id="updateState" parameterType="hashmap">
+		update user set
+		state=#{state}
+		where openId=#{openId};
+	</update>
+
+	<select id="getAll" resultType="user">
+		select * from
+		user;
+	</select>
+
+	<select id="getByCondition" resultType="user">
+		select * from
+		user
+		where
+		<if test="openId != null and openId !=''">
+			openId=#{openId};
+		</if>
+		<if test="wechatId != null and wechatId !=''">
+			wechatId=#{wechatId};
+		</if>
+	</select>
+
+	<select id="getAllByState" resultType="user">
+		select * from
+		user
+		where
+		state=#{state};
+	</select>
+</mapper>

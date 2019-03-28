@@ -24,13 +24,16 @@
 		<result property="logisticsId" column="type"></result>
 		<result property="logisticsName" column="type"></result>
 		<result property="memo" column="type"></result>
+		<result property="source" column="type"></result>
+		<result property="sourceWechatId" column="type"></result>
+		<result property="sourceOpenId" column="type"></result>
 	</resultMap>
 
 	<insert id="add" parameterType="Order" useGeneratedKeys="true"
 		keyProperty="id" keyColumn="id">
 		insert into eshoporder
-		(wechatId,time,state,orderId,phoneNum,amount,totalCount,recieverName,address,openId,memo)
-		values(#{wechatId},#{time},'0',#{orderId},#{phoneNum},#{amount},#{totalCount},#{recieverName},#{address},#{openId},#{memo})
+		(wechatId,time,state,orderId,phoneNum,amount,totalCount,recieverName,address,openId,memo,source,sourceOpenId,sourceWechatId)
+		values(#{wechatId},#{time},'0',#{orderId},#{phoneNum},#{amount},#{totalCount},#{recieverName},#{address},#{openId},#{memo},#{source},#{sourceOpenId},#{sourceWechatId})
 	</insert>
 
 	<update id="update" parameterType="hashmap">
@@ -77,6 +80,11 @@
 		select * from
 		eshoporder where
 		orderId=#{orderId} ;
+	</select>
+	
+	<select id="getAll" resultType="order">
+		select * from
+		eshoporder ;
 	</select>
 
 </mapper>

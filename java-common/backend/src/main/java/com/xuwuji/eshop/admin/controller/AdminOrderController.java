@@ -18,9 +18,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.xuwuji.eshop.db.dao.OrderDao;
 import com.xuwuji.eshop.db.dao.OrderItemDao;
+import com.xuwuji.eshop.db.dao.UserDao;
 import com.xuwuji.eshop.model.Category;
 import com.xuwuji.eshop.model.Img;
+import com.xuwuji.eshop.model.Order;
 import com.xuwuji.eshop.model.ParentCategory;
+import com.xuwuji.eshop.model.User;
+import com.xuwuji.eshop.util.EshopConfigUtil;
 
 /**
  * product����
@@ -37,7 +41,13 @@ public class AdminOrderController {
 
 	@Autowired
 	private OrderItemDao orderItemDao;
-	
+
+	@Autowired
+	private UserDao userDao;
+
+	@Autowired
+	private EshopConfigUtil eshopConfigUtil;
+
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
 		return new ModelAndView("/eshop/order");
@@ -92,5 +102,36 @@ public class AdminOrderController {
 		orderDao.update(map);
 	}
 
+	@RequestMapping(value = "/pay", method = RequestMethod.POST)
+	@ResponseBody
+	public void pay(HttpServletRequest request, HttpServletResponse response) {
+		String orderId = request.getParameter("orderId");
+		String state = request.getParameter("state");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("orderId", orderId);
+		map.put("state", state);
+		orderDao.update(map);
+		// user related
+		Order order = orderDao.getOrderInfoByOrderId(orderId);
+		String openId = order.getOpenId();
+		String source = order.getSource();
+		User buyer = new User();
+		buyer.setOpenId(openId);
+		// buyer=> new user
+		if (userDao.getByCondition(buyer).getId() == 0) {
+			// bonus
+			if (source.equals("share")) {
+				String sourceOpenId = order.getSourceOpenId();
+				User resourcer = new User();
+				resourcer.setOpenId(sourceOpenId);
+				resourcer = userDao.getByCondition(resourcer);
+				resourcer.setBonusAmount(
+						resourcer.getBonusAmount() + Double.valueOf(eshopConfigUtil.getParam(eshopConfigUtil.BONUS)));
+				userDao.update(resourcer);
+			}
+			// buyer => old
+			userDao.add(buyer);
+		}
+	}
 
 }

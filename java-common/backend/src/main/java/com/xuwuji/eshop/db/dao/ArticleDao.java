@@ -104,6 +104,7 @@ public class ArticleDao {
 			map.put("typeId", article.getTypeId());
 			map.put("announceStyle", article.getAnnounceStyle());
 			map.put("mainImgUrl", article.getMainImgUrl());
+			System.out.println(article.getMainImgUrl());
 			mapper.update(map);
 			session.commit();
 		} catch (Exception e) {

@@ -1,10 +1,8 @@
 package com.xuwuji.eshop.controller;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -83,10 +81,26 @@ public class OrderController {
 		order.setAddress(orderNode.get("address").asText());
 		order.setRecieverName(orderNode.get("recieverName").asText());
 		order.setOpenId(orderNode.get("openId").asText());
-		if(orderNode.get("memo")!=null){
+		if (orderNode.get("memo") != null) {
 			order.setMemo(orderNode.get("memo").asText());
-		}else{
+		} else {
 			order.setMemo("");
+		}
+		//source
+		if (orderNode.get("source") != null) {
+			order.setSource(orderNode.get("source").asText());
+		} else {
+			order.setSource("");
+		}
+		if (orderNode.get("sourceOpenId") != null) {
+			order.setSourceOpenId(orderNode.get("sourceOpenId").asText());
+		} else {
+			order.setSourceOpenId("");
+		}
+		if (orderNode.get("sourceWechatId") != null) {
+			order.setSourceWechatId(orderNode.get("sourceWechatId").asText());
+		} else {
+			order.setSourceWechatId("");
 		}
 		order.setTime(new Date());
 		order.setOrderId(orderId);
@@ -96,6 +110,17 @@ public class OrderController {
 		return order;
 	}
 
+	
+	@RequestMapping(value = "/getAll", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Order> getAll( HttpServletRequest request,
+			HttpServletResponse response) {
+		List<Order> orders = new ArrayList<Order>();
+		orders = orderDao.getAll();
+		return orders;
+	}
+	
+	
 	@RequestMapping(value = "/getOrderInfoByOrderId/{orderId}", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Order> getOrderInfoByOrderId(@PathVariable("orderId") String orderId, HttpServletRequest request,

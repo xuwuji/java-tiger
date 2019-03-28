@@ -287,8 +287,15 @@
 						field : 'logisticsName',
 						title : '物流公司',
 						align : 'center'
+					},{
+						field : 'source',
+						title : '来源',
+						align : 'center'
+					},{
+						field : 'sourceOpenId',
+						title : '分享人openId',
+						align : 'center'
 					},
-
 					{
 						field : 'memo',
 						title : '备注',
@@ -447,7 +454,7 @@
 		var orderId = row.orderId;
 		if (confirm("确定此订单已付款了吗？")) {
 			$.ajax({
-				url : "/backend/admin/order/update",
+				url : "/backend/admin/order/pay",
 				type : "post",
 				data : {
 					orderId : orderId,
@@ -465,7 +472,7 @@
 	function viewOrder(id) {
 		var row = $table.bootstrapTable('getRowByUniqueId', id);
 		var orderId = row.orderId;
-		window.location.href = "/backend/admin/index/orderItem/"
+		window.location.href = "/backend/admin/orderItem/"
 				+ orderId;
 	}
 
