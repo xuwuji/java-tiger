@@ -27,13 +27,16 @@
 		<result property="source" column="type"></result>
 		<result property="sourceWechatId" column="type"></result>
 		<result property="sourceOpenId" column="type"></result>
+		<result property="bonusAmount" column="type"></result>
+		<result property="promotionIds" column="type"></result>
+
 	</resultMap>
 
 	<insert id="add" parameterType="Order" useGeneratedKeys="true"
 		keyProperty="id" keyColumn="id">
 		insert into eshoporder
-		(wechatId,time,state,orderId,phoneNum,amount,totalCount,recieverName,address,openId,memo,source,sourceOpenId,sourceWechatId)
-		values(#{wechatId},#{time},'0',#{orderId},#{phoneNum},#{amount},#{totalCount},#{recieverName},#{address},#{openId},#{memo},#{source},#{sourceOpenId},#{sourceWechatId})
+		(wechatId,promotionIds,time,state,orderId,phoneNum,amount,totalCount,recieverName,address,openId,memo,source,sourceOpenId,sourceWechatId)
+		values(#{wechatId},#{promotionIds},#{time},'0',#{orderId},#{phoneNum},#{amount},#{totalCount},#{recieverName},#{address},#{openId},#{memo},#{source},#{sourceOpenId},#{sourceWechatId})
 	</insert>
 
 	<update id="update" parameterType="hashmap">
@@ -77,11 +80,12 @@
 	</select>
 
 	<select id="getOrderInfoByOrderId" resultType="order">
-		select * from
-		eshoporder where
-		orderId=#{orderId} ;
+		select
+		eshoporder.*, user.bonusAmount from eshoporder left join user
+		on
+		eshoporder.openId=user.openId where eshoporder.orderId=#{orderId} ;
 	</select>
-	
+
 	<select id="getAll" resultType="order">
 		select * from
 		eshoporder ;

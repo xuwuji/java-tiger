@@ -115,7 +115,7 @@ public class BrandDao {
 		}
 		return result;
 	}
-	
+
 	public List<Brand> getById(String id) {
 		SqlSession session = SessionFactory.openDEVSession();
 		List<Brand> result = new ArrayList<Brand>();
@@ -133,7 +133,7 @@ public class BrandDao {
 		}
 		return result;
 	}
-	
+
 	public List<Brand> getActiveAllByBrandId(String brandId) {
 		SqlSession session = SessionFactory.openDEVSession();
 		List<Brand> result = new ArrayList<Brand>();
@@ -142,6 +142,22 @@ public class BrandDao {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("id", brandId);
 			result = mapper.getActiveAllByBrandId(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+
+	public List<String> getActiveCountry() {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<String> result = new ArrayList<String>();
+		try {
+			BrandMapper mapper = session.getMapper(BrandMapper.class);
+			result = mapper.getActiveCountry();
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();

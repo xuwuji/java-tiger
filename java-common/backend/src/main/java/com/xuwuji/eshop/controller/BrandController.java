@@ -67,6 +67,15 @@ public class BrandController {
 		}
 		return null;
 	}
+	
+
+	@RequestMapping(value = "/getActiveCountry", method = RequestMethod.GET)
+	@ResponseBody
+	public List<String> getActiveCountry(HttpServletRequest request, HttpServletResponse response) {
+		List<String> list = new ArrayList<String>();
+		list = brandDao.getActiveCountry();
+		return list;
+	}
 
 	class AlphaBrandList {
 		private HashMap<String, List<Brand>> brandsMap = new HashMap<String, List<Brand>>();

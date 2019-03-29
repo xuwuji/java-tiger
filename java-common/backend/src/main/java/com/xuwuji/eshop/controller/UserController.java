@@ -24,7 +24,7 @@ public class UserController {
 
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
 	@ResponseBody
-	public User getByOpenId(HttpServletRequest request, HttpServletResponse response) {
+	public User get(HttpServletRequest request, HttpServletResponse response) {
 		String openId = request.getParameter("openId");
 		String wechatId = request.getParameter("wechatId");
 		User user = new User();

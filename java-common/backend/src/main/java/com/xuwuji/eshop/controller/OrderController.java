@@ -86,6 +86,10 @@ public class OrderController {
 		} else {
 			order.setMemo("");
 		}
+		if(orderNode.get("promotionIds")!=null){
+			System.out.print(orderNode.get("promotionIds"));
+			order.setPromotionIds(orderNode.get("promotionIds").asText());
+		}
 		//source
 		if (orderNode.get("source") != null) {
 			order.setSource(orderNode.get("source").asText());

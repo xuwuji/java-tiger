@@ -46,10 +46,11 @@
 		select * from
 		brand;
 	</select>
-	
+
 	<select id="getById" resultType="brand">
 		select * from
-		brand where id=#{id};
+		brand where
+		id=#{id};
 	</select>
 
 	<select id="getActiveAll" resultType="brand">
@@ -64,6 +65,11 @@
 		brand where
 		id=#{id} and
 		state='1';
+	</select>
+
+	<select id="getActiveCountry" resultType="hashmap"
+		parameterType="java.lang.String">
+		select DISTINCT(country) from brand where state='1';
 	</select>
 
 </mapper>

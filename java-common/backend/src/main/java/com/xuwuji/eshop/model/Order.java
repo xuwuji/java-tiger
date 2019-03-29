@@ -22,11 +22,12 @@ public class Order {
 	private String openId;
 	private String logisticsId;
 	private String logisticsName;
-
 	private String memo;
 	private String source;
 	private String sourceWechatId;
 	private String sourceOpenId;
+	private double bonusAmount;
+	private String promotionIds;
 
 	public int getId() {
 		return id;
@@ -170,6 +171,22 @@ public class Order {
 
 	public void setSourceOpenId(String sourceOpenId) {
 		this.sourceOpenId = sourceOpenId;
+	}
+
+	public double getBonusAmount() {
+		return bonusAmount;
+	}
+
+	public void setBonusAmount(double bonusAmount) {
+		this.bonusAmount = bonusAmount;
+	}
+
+	public String getPromotionIds() {
+		return promotionIds;
+	}
+
+	public void setPromotionIds(String promotionIds) {
+		this.promotionIds = promotionIds;
 	}
 
 	@Override

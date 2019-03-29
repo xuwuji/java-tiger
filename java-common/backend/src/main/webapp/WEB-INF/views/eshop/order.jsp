@@ -287,11 +287,13 @@
 						field : 'logisticsName',
 						title : '物流公司',
 						align : 'center'
-					},{
+					},
+					{
 						field : 'source',
 						title : '来源',
 						align : 'center'
-					},{
+					},
+					{
 						field : 'sourceOpenId',
 						title : '分享人openId',
 						align : 'center'
@@ -302,13 +304,23 @@
 						align : 'center'
 					},
 					{
+						field : 'promotionIds',
+						title : '参与的活动id号',
+						align : 'center'
+					},
+					{
+						field : 'bonusAmount',
+						title : '付款人红包金额',
+						align : 'center',
+					},
+					{
 						title : '操作',
 						field : 'id',
 						formatter : function(id) {
 							var html = '<a href="javascript:editMemo(' + id
 									+ ')">编辑备注</a>';
 							html += '　<a href="javascript:payOrder(' + id
-									+ ')">已付款</a>';
+									+ ')">付款</a>';
 							html += '　<a href="javascript:deliverOrder(' + id
 									+ ')">发货</a>';
 							html += '　<a href="javascript:finishOrder(' + id
@@ -452,6 +464,7 @@
 	function payOrder(id) {
 		var row = $table.bootstrapTable('getRowByUniqueId', id);
 		var orderId = row.orderId;
+
 		if (confirm("确定此订单已付款了吗？")) {
 			$.ajax({
 				url : "/backend/admin/order/pay",
@@ -472,8 +485,7 @@
 	function viewOrder(id) {
 		var row = $table.bootstrapTable('getRowByUniqueId', id);
 		var orderId = row.orderId;
-		window.location.href = "/backend/admin/orderItem/"
-				+ orderId;
+		window.location.href = "/backend/admin/orderItem/" + orderId;
 	}
 
 	/* 批量上架 */

@@ -30,6 +30,7 @@ public class ConfigController {
 		EshopConfigResponse eshopConfig = new EshopConfigResponse();
 		eshopConfig.setNoticeMsg(eshopConfigUtil.getParam(eshopConfigUtil.noticeMsg));
 		eshopConfig.setXxcUrl(eshopConfigUtil.getParam(eshopConfigUtil.xxcUrl));
+		eshopConfig.setShareTitle(eshopConfigUtil.getParam(eshopConfigUtil.SHARE_TITLE));
 		return eshopConfig;
 	}
 
@@ -78,13 +79,14 @@ public class ConfigController {
 		eshopConfig.setPreSearch(Arrays.asList(eshopConfigUtil.getParam(eshopConfigUtil.PRE_SEARCH).split("/")));
 		return eshopConfig;
 	}
-	
+
 	@SuppressWarnings("static-access")
 	@RequestMapping(value = "/getArticlePreSearch", method = RequestMethod.GET)
 	@ResponseBody
 	public EshopConfigResponse getArticlePreSearch(HttpServletRequest request, HttpServletResponse response) {
 		EshopConfigResponse eshopConfig = new EshopConfigResponse();
-		eshopConfig.setArticlePreSearch(Arrays.asList(eshopConfigUtil.getParam(eshopConfigUtil.ARTICLE_PRE_SEARCH).split("/")));
+		eshopConfig.setArticlePreSearch(
+				Arrays.asList(eshopConfigUtil.getParam(eshopConfigUtil.ARTICLE_PRE_SEARCH).split("/")));
 		return eshopConfig;
 	}
 
@@ -94,6 +96,7 @@ public class ConfigController {
 		public String openId;
 		public List<String> preSearch;
 		public List<String> articlePreSearch;
+		public String shareTitle;
 
 		public String getXxcUrl() {
 			return xxcUrl;
@@ -135,6 +138,13 @@ public class ConfigController {
 			this.articlePreSearch = articlePreSearch;
 		}
 
+		public String getShareTitle() {
+			return shareTitle;
+		}
+
+		public void setShareTitle(String shareTitle) {
+			this.shareTitle = shareTitle;
+		}
 
 	}
 

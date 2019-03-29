@@ -21,6 +21,7 @@ public class UserDao {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("openId", user.getOpenId());
 			map.put("wechatId", user.getWechatId());
+			map.put("bonusAmount", user.getBonusAmount());
 			mapper.add(map);
 			session.commit();
 		} catch (Exception e) {
@@ -56,8 +57,9 @@ public class UserDao {
 			UserMapper mapper = session.getMapper(UserMapper.class);
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("openId", user.getOpenId());
+			map.put("id", user.getId());
 			map.put("state", user.getState());
-			mapper.update(map);
+			mapper.updateState(map);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();

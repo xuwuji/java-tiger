@@ -7,7 +7,7 @@
 
 	<resultMap type="user" id="userResult">
 		<id property="id" column="id"></id>
-		<result property="openId" column="state"></result>
+		<result property="openId" column="type"></result>
 		<result property="state" column="info"></result>
 		<result property="bonusAmount" column="info"></result>
 	</resultMap>
@@ -28,7 +28,13 @@
 	<update id="updateState" parameterType="hashmap">
 		update user set
 		state=#{state}
-		where openId=#{openId};
+		where
+		<if test="openId!=null and openId!=''">
+			openId=#{openId};
+		</if>
+		<if test="id!=null and id!=''">
+			id=#{id};
+		</if>
 	</update>
 
 	<select id="getAll" resultType="user">

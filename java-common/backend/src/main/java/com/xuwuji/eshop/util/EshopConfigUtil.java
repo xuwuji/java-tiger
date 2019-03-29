@@ -25,6 +25,7 @@ public class EshopConfigUtil {
 	public static final String ARTICLE_PRE_SEARCH = "articlePreSearch";
 	public static final String noticeMsg = "noticeMsg";
 	public static final String BONUS="bonus";
+	public static final String SHARE_TITLE="shareTitle";
 	public static Map<String, Object> configMap = new HashMap<String, Object>();
 
 	
