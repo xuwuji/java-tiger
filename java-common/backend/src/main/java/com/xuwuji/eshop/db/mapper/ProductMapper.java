@@ -38,6 +38,10 @@ public interface ProductMapper {
 	public List<Product> getRankByTop();
 	
 	public List<Product> getActiveByFlash();
+	
+	public List<Product> getMultiByIds(HashMap<String, Object> map);
+	
+	
 
 	
 

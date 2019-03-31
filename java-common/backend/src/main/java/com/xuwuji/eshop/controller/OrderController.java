@@ -86,11 +86,11 @@ public class OrderController {
 		} else {
 			order.setMemo("");
 		}
-		if(orderNode.get("promotionIds")!=null){
+		if (orderNode.get("promotionIds") != null) {
 			System.out.print(orderNode.get("promotionIds"));
 			order.setPromotionIds(orderNode.get("promotionIds").asText());
 		}
-		//source
+		// source
 		if (orderNode.get("source") != null) {
 			order.setSource(orderNode.get("source").asText());
 		} else {
@@ -114,17 +114,14 @@ public class OrderController {
 		return order;
 	}
 
-	
 	@RequestMapping(value = "/getAll", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Order> getAll( HttpServletRequest request,
-			HttpServletResponse response) {
+	public List<Order> getAll(HttpServletRequest request, HttpServletResponse response) {
 		List<Order> orders = new ArrayList<Order>();
 		orders = orderDao.getAll();
 		return orders;
 	}
-	
-	
+
 	@RequestMapping(value = "/getOrderInfoByOrderId/{orderId}", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Order> getOrderInfoByOrderId(@PathVariable("orderId") String orderId, HttpServletRequest request,
@@ -153,6 +150,21 @@ public class OrderController {
 			order.setOrderItemsList(orderItemsList);
 		}
 		return orders;
+	}
+
+	@RequestMapping(value = "/update", method = RequestMethod.GET)
+	@ResponseBody
+	public void update(HttpServletRequest request, HttpServletResponse response) {
+		String orderId = request.getParameter("orderId");
+		String state = request.getParameter("state");
+		String logisticsId = request.getParameter("logisticsId");
+		String logisticsName = request.getParameter("logisticsName");
+		Order order = new Order();
+		order.setOrderId(orderId);
+		order.setState(state);
+		order.setLogisticsId(logisticsId);
+		order.setLogisticsName(logisticsName);
+		orderDao.update(order);
 	}
 
 }

@@ -73,7 +73,7 @@
 		update product set
 		name=#{name},description=#{description},price=#{price},inventory=#{inventory},
 		salesCount=#{salesCount},mainImgUrl=#{mainImgUrl},parentCategoryId=#{parentCategoryId},
-		categoryId=#{categoryId}
+		categoryId=#{categoryId},flashPrice=#{flashPrice},flashState=#{flashState}
 		where id=#{id};
 	</update>
 
@@ -169,6 +169,16 @@
 		select * from
 		product where state
 		='1' and flashState="1";
+	</select>
+
+	<select id="getMultiByIds" resultType="Product" parameterType="hashmap">
+		select * from
+		product where state
+		='1' and id in
+		<foreach item="item" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
 	</select>
 
 </mapper>

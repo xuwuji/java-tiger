@@ -83,6 +83,7 @@ public class BrandDao {
 			session.close();
 		}
 	};
+	
 
 	public List<Brand> getAll() {
 		SqlSession session = SessionFactory.openDEVSession();
@@ -142,6 +143,25 @@ public class BrandDao {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("id", brandId);
 			result = mapper.getActiveAllByBrandId(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+
+	
+	public List<Brand> getActiveAllByCountry(String country) {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<Brand> result = new ArrayList<Brand>();
+		try {
+			BrandMapper mapper = session.getMapper(BrandMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("country", country);
+			result = mapper.getActiveAllByCountry(map);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();

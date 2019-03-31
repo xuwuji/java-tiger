@@ -18,7 +18,7 @@ import com.xuwuji.eshop.db.dao.ProductDao;
 import com.xuwuji.eshop.model.Product;
 
 /**
- * product¹ÜÀí
+ * productï¿½ï¿½ï¿½ï¿½
  * 
  * @author xuwuji
  *
@@ -75,11 +75,11 @@ public class AdminProductController {
 	public void delete(HttpServletRequest request, HttpServletResponse response) {
 		String id = request.getParameter("id");
 		String type = request.getParameter("type");
-		// µ¥ÌõÏÂ¼Ü
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
 		if (type.equals("single")) {
 			productDao.disable(id);
 		}
-		// ÅúÁ¿ÏÂ¼Ü
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
 		else if (type.equals("batch")) {
 			List<String> ids = Arrays.asList(id.split(","));
 			for (String i : ids) {
@@ -94,11 +94,11 @@ public class AdminProductController {
 	public void reActive(HttpServletRequest request, HttpServletResponse response) {
 		String id = request.getParameter("id");
 		String type = request.getParameter("type");
-		// µ¥ÌõÉÏ¼Ü
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½
 		if (type.equals("single")) {
 			productDao.reActive(id);
 		}
-		// ÅúÁ¿ÉÏ¼Ü
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½
 		else if (type.equals("batch")) {
 			List<String> ids = Arrays.asList(id.split(","));
 			for (String i : ids) {
@@ -113,11 +113,11 @@ public class AdminProductController {
 		String id = request.getParameter("id");
 		String type = request.getParameter("type");
 		String bannerItemId = request.getParameter("bannerItemId");
-		// µ¥ÌõÉÏ¼Ü
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½
 		if (type.equals("single")) {
 			productDao.updateBannerItem(id, bannerItemId);
 		}
-		// ÅúÁ¿ÉÏ¼Ü
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½
 		else if (type.equals("batch")) {
 			List<String> ids = Arrays.asList(id.split(","));
 			for (String i : ids) {
@@ -132,11 +132,11 @@ public class AdminProductController {
 		String id = request.getParameter("id");
 		String type = request.getParameter("type");
 		String brandId = request.getParameter("brandId");
-		// µ¥ÌõÉÏ¼Ü
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½
 		if (type.equals("single")) {
 			productDao.updateBrand(id, brandId);
 		}
-		// ÅúÁ¿ÉÏ¼Ü
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½
 		else if (type.equals("batch")) {
 			List<String> ids = Arrays.asList(id.split(","));
 			for (String i : ids) {
@@ -152,6 +152,7 @@ public class AdminProductController {
 		String name = request.getParameter("name");
 		String desc = request.getParameter("desc");
 		String price = request.getParameter("price");
+		
 		System.out.print(price);
 		String inventory = request.getParameter("inventory");
 		String salesCount = request.getParameter("salesCount");
@@ -160,6 +161,8 @@ public class AdminProductController {
 		String categoryId = request.getParameter("categoryId");
 		String brandNameCN = request.getParameter("brandNameCN");
 		String brandNameEN = request.getParameter("brandNameEN");
+		String flashPrice = request.getParameter("flashPrice");
+		String flashState = request.getParameter("flashState");
 		Product product = new Product();
 		product.setId(Integer.valueOf(id));
 		product.setName(name);
@@ -172,6 +175,8 @@ public class AdminProductController {
 		product.setBrandNameEN(brandNameEN);
 		product.setCategoryId(categoryId);
 		product.setMainImgUrl(mainImgUrl);
+		product.setFlashPrice(Double.valueOf(flashPrice));
+		product.setFlashState(flashState);
 		System.out.print(product);
 		productDao.update(product);
 	}

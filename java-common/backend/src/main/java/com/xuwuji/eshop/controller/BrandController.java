@@ -38,9 +38,32 @@ public class BrandController {
 		list = brandDao.getAll();
 		AlphaBrandList alphaBrandList = new AlphaBrandList();
 		for (Brand brand : list) {
-			// ÖÐÎÄÆ´ÒôµÚÒ»¸ö×ÖÄ¸
+			// ï¿½ï¿½ï¿½ï¿½Æ´ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ä¸
 			String firstLetterCN = getFirstLetter(brand.getBrandCN()).substring(0, 1).toUpperCase();
-			// Ó¢ÎÄµÚÒ»¸ö×ÖÄ¸
+			// Ó¢ï¿½Äµï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ä¸
+			String firstLetterEN = brand.getBrandEN().substring(0, 1).toUpperCase();
+			if (firstLetterCN.equals(firstLetterEN)) {
+				alphaBrandList = builAplhaBrandList(brand, alphaBrandList, firstLetterCN);
+			} else {
+				alphaBrandList = builAplhaBrandList(brand, alphaBrandList, firstLetterCN);
+				alphaBrandList = builAplhaBrandList(brand, alphaBrandList, firstLetterEN);
+			}
+
+		}
+		return alphaBrandList;
+	}
+	
+	@RequestMapping(value = "/getAlphaBrandListByCountry", method = RequestMethod.GET)
+	@ResponseBody
+	public AlphaBrandList getAlphaBrandListByCountry(HttpServletRequest request, HttpServletResponse response) {
+		String country=request.getParameter("country");
+		List<Brand> list = new ArrayList<Brand>();
+		list = brandDao.getActiveAllByCountry(country);
+		AlphaBrandList alphaBrandList = new AlphaBrandList();
+		for (Brand brand : list) {
+			// ï¿½ï¿½ï¿½ï¿½Æ´ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ä¸
+			String firstLetterCN = getFirstLetter(brand.getBrandCN()).substring(0, 1).toUpperCase();
+			// Ó¢ï¿½Äµï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ä¸
 			String firstLetterEN = brand.getBrandEN().substring(0, 1).toUpperCase();
 			if (firstLetterCN.equals(firstLetterEN)) {
 				alphaBrandList = builAplhaBrandList(brand, alphaBrandList, firstLetterCN);

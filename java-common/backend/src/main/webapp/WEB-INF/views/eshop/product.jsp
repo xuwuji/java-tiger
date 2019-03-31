@@ -198,6 +198,14 @@
 							class="form-control" id="edit-productSalesCount"
 							placeholder="销售量">
 					</div>
+					<div class="form-group">
+						<label for="txt_departmentname">商品促销价</label> <input type="text"
+							class="form-control" id="edit-flashPrice" placeholder="闪购时的价格">
+					</div>
+					<div class="form-group">
+						<label for="txt_departmentname">是否闪购</label> <input type="text"
+							class="form-control" id="edit-flashState" placeholder="0-不参加，1-参加">
+					</div>
 					<!-- 	<div class="form-group">
 						<label for="txt_departmentname">商品主图Url</label> <input type="text"
 							class="form-control" id="edit-productMainImgUrl"
@@ -254,6 +262,11 @@
 					<div class="form-group">
 						<label for="txt_departmentname">商品id</label> <input type="text"
 							class="form-control" id="banner-id" placeholder="商品id"
+							disabled="disabled">
+					</div>
+					<div class="form-group">
+						<label for="txt_departmentname">修改类型</label> <input type="text"
+							class="form-control" id="banner-type" placeholder="商品id"
 							disabled="disabled">
 					</div>
 					<div class="form-group">
@@ -433,6 +446,27 @@
 								field : 'bannerItemName',
 								title : 'banner位',
 								align : 'center',
+							},
+							{
+								field : 'flashPrice',
+								title : '促销价格',
+								align : 'center',
+							},
+							{
+								field : 'flashState',
+								title : '是否促销',
+								align : 'center',
+								formatter : function(value, row, index) {
+									if (row.flashState) {
+										if (row.flashState == '0') {
+											return "否";
+										} else if (row.flashState == '1') {
+											return "是";
+										} else {
+											return "错误数据";
+										}
+									}
+								}
 							},
 							{
 								field : 'state',
@@ -670,6 +704,8 @@
 			$('#edit-productPrice').val(row.price);
 			$('#edit-productSalesCount').val(row.salesCount);
 			$('#edit-productInventory').val(row.inventory);
+			$('#edit-flashPrice').val(row.flashPrice);
+			$('#edit-flashState').val(row.flashState);
 			//$('#edit-productMainImgUrl').val(row.mainImgUrl);
 			//$('#edit-productBrandNameCN').val(row.brandNameCN);
 			//$('#edit-productBrandNameEN').val(row.brandNameEN);
@@ -686,6 +722,8 @@
 		var price = $('#edit-productPrice').val();
 		var inventory = $('#edit-productInventory').val();
 		var salesCount = $('#edit-productSalesCount').val();
+		var flashPrice = $('#edit-flashPrice').val();
+		var flashState = $('#edit-flashState').val();
 		//var mainImgUrl = $('#edit-productMainImgUrl').val();
 		//var brandNameCN = $('#edit-productBrandNameCN').val();
 		//var brandNameEN = $('#edit-productBrandNameEN').val();
@@ -703,6 +741,8 @@
 				//mainImgUrl : mainImgUrl,
 				parentCategoryId : parentCategoryId,
 				categoryId : categoryId,
+				flashPrice : flashPrice,
+				flashState : flashState,
 			//brandNameCN : brandNameCN,
 			//brandNameEN : brandNameEN,
 			},
@@ -808,10 +848,11 @@
 						$
 								.ajax({
 									url : "/backend/category/getCategoryByParent/"
-											+ parentCategoryId, 
+											+ parentCategoryId,
 									type : "get",
 									success : function(data) {
-										$('#selectpicker-child').find("option").remove();
+										$('#selectpicker-child').find("option")
+												.remove();
 										var depart_list = data;
 										var opts = "";
 										for (var depart_index = 0; depart_index < depart_list.length; depart_index++) {

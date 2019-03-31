@@ -82,24 +82,18 @@ public class AdminOrderController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	@ResponseBody
 	public void update(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("admin/update");
 		String orderId = request.getParameter("orderId");
-		System.out.println(orderId);
 		String state = request.getParameter("state");
-		System.out.println(state);
 		String logisticsId = request.getParameter("logisticsId");
-		System.out.println(logisticsId);
 		String logisticsName = request.getParameter("logisticsName");
-		System.out.println(logisticsName);
 		String memo = request.getParameter("memo");
-		System.out.println(memo);
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("orderId", orderId);
-		map.put("state", state);
-		map.put("logisticsId", logisticsId);
-		map.put("logisticsName", logisticsName);
-		map.put("memo", memo);
-		orderDao.update(map);
+		Order order = new Order();
+		order.setOrderId(orderId);
+		order.setState(state);
+		order.setLogisticsId(logisticsId);
+		order.setLogisticsName(logisticsName);
+		order.setMemo(memo);
+		orderDao.update(order);
 	}
 
 	@RequestMapping(value = "/pay", method = RequestMethod.POST)
@@ -107,10 +101,10 @@ public class AdminOrderController {
 	public void pay(HttpServletRequest request, HttpServletResponse response) {
 		String orderId = request.getParameter("orderId");
 		String state = request.getParameter("state");
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("orderId", orderId);
-		map.put("state", state);
-		orderDao.update(map);
+		Order updateOrder = new Order();
+		updateOrder.setState(state);
+		updateOrder.setOrderId(orderId);
+		orderDao.update(updateOrder);
 		// user related
 		Order order = orderDao.getOrderInfoByOrderId(orderId);
 		String openId = order.getOpenId();

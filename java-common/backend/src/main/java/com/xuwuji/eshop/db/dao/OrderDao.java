@@ -30,11 +30,16 @@ public class OrderDao {
 		return order;
 	}
 
-	public void update(HashMap<String, Object> map) {
+	public void update(Order order) {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
-			System.out.print("here");
 			OrderMapper mapper = session.getMapper(OrderMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("logisticsId", order.getLogisticsId());
+			map.put("logisticsName", order.getLogisticsName());
+			map.put("memo", order.getMemo());
+			map.put("state", order.getState());
+			map.put("orderId", order.getOrderId());
 			mapper.update(map);
 			session.commit();
 		} catch (Exception e) {

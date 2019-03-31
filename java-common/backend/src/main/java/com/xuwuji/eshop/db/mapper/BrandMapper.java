@@ -24,4 +24,7 @@ public interface BrandMapper {
 	public List<Brand> getActiveAllByBrandId(HashMap<String, Object> map);
 
 	public List<String> getActiveCountry();
+
+	public List<Brand> getActiveAllByCountry(HashMap<String, Object> map);
+	
 }

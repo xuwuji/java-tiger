@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.xuwuji.eshop.db.dao.ProductDao;
-import com.xuwuji.eshop.model.ActivityEnum;
 import com.xuwuji.eshop.model.Product;
 import com.xuwuji.eshop.model.SortEnum;
 import com.xuwuji.eshop.util.EshopConfigUtil;
@@ -154,6 +152,28 @@ public class ProductController {
 		for (Product product : products) {
 			String mainImgUrl = PRODUCT_IMG_BASE + product.getId() + "-0.jpg";
 			product.setMainImgUrl(mainImgUrl);
+		}
+		return products;
+	}
+
+	@SuppressWarnings("static-access")
+	@RequestMapping(value = "/getMultiByIds", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Product> getMultiByIds(HttpServletRequest request, HttpServletResponse response) {
+		String idString = request.getParameter("ids");
+		List<Integer> ids = new ArrayList<Integer>();
+		String[] temp = idString.split(";");
+		for (String id : temp) {
+			ids.add(Integer.valueOf(id));
+		}
+		List<Product> products = new ArrayList<Product>();
+		products = productDao.getMultiByIds(ids);
+		for (Product product : products) {
+			if (product.getMainImgUrl() == null || product.getMainImgUrl().isEmpty()) {
+				String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
+				String mainImgUrl = PRODUCT_IMG_BASE + product.getId() + "-0.jpg";
+				product.setMainImgUrl(mainImgUrl);
+			}
 		}
 		return products;
 	}

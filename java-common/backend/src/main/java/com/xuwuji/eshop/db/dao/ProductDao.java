@@ -122,6 +122,8 @@ public class ProductDao {
 			map.put("mainImgUrl", product.getMainImgUrl());
 			map.put("parentCategoryId", product.getParentCategoryId());
 			map.put("categoryId", product.getCategoryId());
+			map.put("flashPrice", product.getFlashPrice());
+			map.put("flashState", product.getFlashState());
 			// map.put("brandNameCN", product.getBrandNameCN());
 			// map.put("brandNameEN", product.getBrandNameEN());
 			mapper.update(map);
@@ -282,6 +284,24 @@ public class ProductDao {
 		try {
 			ProductMapper mapper = session.getMapper(ProductMapper.class);
 			result = mapper.getActiveByFlash();
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+	
+	public List<Product> getMultiByIds(List<Integer> ids) {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<Product> result = new ArrayList<Product>();
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("ids", ids);
+			result = mapper.getMultiByIds(map);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -72,4 +72,10 @@
 		select DISTINCT(country) from brand where state='1';
 	</select>
 
+	<select id="getActiveAllByCountry" resultType="brand" parameterType="hashmap">
+		select * from
+		brand where
+		country=#{country} and state='1';
+	</select>
+
 </mapper>
