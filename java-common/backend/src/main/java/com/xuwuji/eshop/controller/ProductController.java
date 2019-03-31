@@ -161,12 +161,15 @@ public class ProductController {
 	@ResponseBody
 	public List<Product> getMultiByIds(HttpServletRequest request, HttpServletResponse response) {
 		String idString = request.getParameter("ids");
+		List<Product> products = new ArrayList<Product>();
+		if (idString == null || idString.isEmpty()) {
+			return products;
+		}
 		List<Integer> ids = new ArrayList<Integer>();
 		String[] temp = idString.split(";");
 		for (String id : temp) {
 			ids.add(Integer.valueOf(id));
 		}
-		List<Product> products = new ArrayList<Product>();
 		products = productDao.getMultiByIds(ids);
 		for (Product product : products) {
 			if (product.getMainImgUrl() == null || product.getMainImgUrl().isEmpty()) {
