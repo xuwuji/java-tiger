@@ -11,7 +11,7 @@
  Target Server Version : 50725
  File Encoding         : 65001
 
- Date: 29/03/2019 17:32:06
+ Date: 01/04/2019 17:36:44
 */
 
 SET NAMES utf8mb4;
@@ -154,6 +154,29 @@ INSERT INTO `category` VALUES (10, '精华/肌底液', '精华/肌底液', '6', 
 INSERT INTO `category` VALUES (11, '面霜/乳液', '面霜/乳液', '6', 'category/11.jpg', '1', '0', '2019-03-14 09:46:39', '2019-03-14 09:47:11');
 INSERT INTO `category` VALUES (12, '眼霜/精华', '眼霜/精华', '6', 'category/12.jpg', '1', '0', '2019-03-14 09:46:52', '2019-03-14 09:47:13');
 INSERT INTO `category` VALUES (13, '洁面', '洁面', '6', 'category/13.jpg', '0', '0', '2019-03-14 09:47:04', '2019-03-14 09:47:04');
+
+-- ----------------------------
+-- Table structure for coupon
+-- ----------------------------
+DROP TABLE IF EXISTS `coupon`;
+CREATE TABLE `coupon`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
+  `total` double(255, 0) NULL DEFAULT NULL,
+  `reduction` double(255, 0) NULL DEFAULT NULL,
+  `state` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
+  `startDate` timestamp(0) NULL DEFAULT NULL,
+  `endDate` timestamp(0) NULL DEFAULT NULL,
+  `type` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL COMMENT '0-全场',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of coupon
+-- ----------------------------
+INSERT INTO `coupon` VALUES (1, '满1000减30', 1000, 30, '1', '2019-03-31 16:00:00', '2019-04-30 16:00:00', '0');
+INSERT INTO `coupon` VALUES (2, 'test', 1000, 50, '1', '2019-03-31 16:00:00', '2019-04-30 16:00:00', NULL);
+INSERT INTO `coupon` VALUES (3, 'test2', 5000, 200, '1', '2019-03-31 16:00:00', '2019-04-30 16:00:00', '0');
 
 -- ----------------------------
 -- Table structure for eshopconfig
