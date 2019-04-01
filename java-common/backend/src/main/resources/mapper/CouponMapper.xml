@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuwuji.eshop.db.mapper.CouponMapper">
+
+
+	<resultMap type="coupon" id="couponResult">
+		<id property="id" column="id"></id>
+		<result property="name" column="type"></result>
+		<result property="total" column="type"></result>
+		<result property="reduction" column="type"></result>
+		<result property="state" column="type"></result>
+		<result property="type" column="type"></result>
+		<result property="startDate" column="type"
+			javaType="java.util.Date" jdbcType="DATE"></result>
+		<result property="endDate" column="type"
+			javaType="java.util.Date" jdbcType="DATE"></result>
+	</resultMap>
+
+	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into coupon
+		(name,total,reduction,state,startDate,endDate,type)
+		values(#{name},#{total},#{reduction},'0',#{startDate},#{endDate},#{type})
+	</insert>
+
+	<update id="update" parameterType="hashmap">
+		update coupon set
+		name=#{name},total=#{total},reduction=#{reduction},state=#{state},type=#{type}
+		where id=#{id};
+	</update>
+
+	<update id="disable" parameterType="hashmap">
+		update coupon set
+		state='0'
+		where id=#{id};
+	</update>
+
+	<update id="reActive" parameterType="hashmap">
+		update coupon set
+		state='1'
+		where id=#{id};
+	</update>
+
+	<select id="getAll" resultType="coupon">
+		select * from
+		coupon;
+	</select>
+
+	<select id="getById" resultType="coupon">
+		select * from
+		coupon where
+		id=#{id};
+	</select>
+
+	<select id="getActiveAll" resultType="coupon">
+		select * from
+		coupon where
+		state='1';
+	</select>
+
+	<select id="getActiveAllByCouponId" resultType="coupon"
+		parameterType="hashmap">
+		select * from
+		coupon where
+		id=#{id} and
+		state='1';
+	</select>
+</mapper>

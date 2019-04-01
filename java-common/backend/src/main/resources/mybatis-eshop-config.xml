@@ -112,6 +112,7 @@
 		<mapper resource="mapper/PromotionMapper.xml" />
 		<mapper resource="mapper/ArticleMapper.xml" />
 		<mapper resource="mapper/UserMapper.xml" />
+		<mapper resource="mapper/CouponMapper.xml" />
 	</mappers>
 
 
