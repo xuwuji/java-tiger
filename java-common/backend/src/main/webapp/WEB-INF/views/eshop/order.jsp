@@ -314,6 +314,11 @@
 						align : 'center',
 					},
 					{
+						field : 'couponId',
+						title : '优惠券id',
+						align : 'center',
+					},
+					{
 						title : '操作',
 						field : 'id',
 						formatter : function(id) {

@@ -29,14 +29,15 @@
 		<result property="sourceOpenId" column="type"></result>
 		<result property="bonusAmount" column="type"></result>
 		<result property="promotionIds" column="type"></result>
+		<result property="couponId" column="type"></result>
 
 	</resultMap>
 
 	<insert id="add" parameterType="Order" useGeneratedKeys="true"
 		keyProperty="id" keyColumn="id">
 		insert into eshoporder
-		(wechatId,promotionIds,time,state,orderId,phoneNum,amount,totalCount,recieverName,address,openId,memo,source,sourceOpenId,sourceWechatId)
-		values(#{wechatId},#{promotionIds},#{time},'0',#{orderId},#{phoneNum},#{amount},#{totalCount},#{recieverName},#{address},#{openId},#{memo},#{source},#{sourceOpenId},#{sourceWechatId})
+		(wechatId,promotionIds,time,state,orderId,phoneNum,amount,totalCount,recieverName,address,openId,memo,source,sourceOpenId,sourceWechatId,couponId)
+		values(#{wechatId},#{promotionIds},#{time},'0',#{orderId},#{phoneNum},#{amount},#{totalCount},#{recieverName},#{address},#{openId},#{memo},#{source},#{sourceOpenId},#{sourceWechatId},#{couponId})
 	</insert>
 
 	<update id="update" parameterType="hashmap">

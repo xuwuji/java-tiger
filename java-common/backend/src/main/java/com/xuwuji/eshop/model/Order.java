@@ -28,6 +28,7 @@ public class Order {
 	private String sourceOpenId;
 	private double bonusAmount;
 	private String promotionIds;
+	private String couponId;
 
 	public int getId() {
 		return id;
@@ -187,6 +188,14 @@ public class Order {
 
 	public void setPromotionIds(String promotionIds) {
 		this.promotionIds = promotionIds;
+	}
+
+	public String getCouponId() {
+		return couponId;
+	}
+
+	public void setCouponId(String couponId) {
+		this.couponId = couponId;
 	}
 
 	@Override
