@@ -1,5 +1,7 @@
 package com.xuwuji.eshop.model;
 
+import java.util.Date;
+
 public class User {
 
 	private int id;
@@ -9,6 +11,8 @@ public class User {
 	private double bonusAmount;
 	private String level;
 	private double totalPay;
+	private Date membershipFirstDay;
+	private double amountAfterMSFD;
 
 	public int getId() {
 		return id;
@@ -64,6 +68,22 @@ public class User {
 
 	public void setTotalPay(double totalPay) {
 		this.totalPay = totalPay;
+	}
+
+	public Date getMembershipFirstDay() {
+		return membershipFirstDay;
+	}
+
+	public void setMembershipFirstDay(Date membershipFirstDay) {
+		this.membershipFirstDay = membershipFirstDay;
+	}
+
+	public double getAmountAfterMSFD() {
+		return amountAfterMSFD;
+	}
+
+	public void setAmountAfterMSFD(double amountAfterMSFD) {
+		this.amountAfterMSFD = amountAfterMSFD;
 	}
 
 }
