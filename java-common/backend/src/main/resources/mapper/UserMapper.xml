@@ -14,6 +14,7 @@
 		<result property="totalPay" column="info"></result>
 		<result property="membershipFirstDay" column="info"></result>
 		<result property="amountAfterMSFD" column="info"></result>
+		<result property="amountThisMonth" column="info"></result>
 	</resultMap>
 
 	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
@@ -26,7 +27,7 @@
 	<update id="update" parameterType="hashmap">
 		update user set
 		state=#{state},bonusAmount=#{bonusAmount},level=#{level},totalPay=#{totalPay},
-		membershipFirstDay=#{membershipFirstDay},amountAfterMSFD=#{amountAfterMSFD}
+		membershipFirstDay=#{membershipFirstDay},amountAfterMSFD=#{amountAfterMSFD},amountThisMonth=#{amountThisMonth}
 		where openId=#{openId};
 	</update>
 

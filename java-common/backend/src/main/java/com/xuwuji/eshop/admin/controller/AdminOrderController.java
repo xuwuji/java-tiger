@@ -24,6 +24,7 @@ import com.xuwuji.eshop.model.Img;
 import com.xuwuji.eshop.model.Order;
 import com.xuwuji.eshop.model.ParentCategory;
 import com.xuwuji.eshop.model.User;
+import com.xuwuji.eshop.model.UserLevel;
 import com.xuwuji.eshop.util.EshopConfigUtil;
 
 /**
@@ -111,9 +112,7 @@ public class AdminOrderController {
 		String source = order.getSource();
 		User buyer = new User();
 		buyer.setOpenId(openId);
-		// buyers是新用户
 		if (userDao.getByCondition(buyer).getId() == 0) {
-			// share对分享来源的sourcer进行红包奖励
 			if (source.equals("share")) {
 				String sourceOpenId = order.getSourceOpenId();
 				User resourcer = new User();
@@ -125,9 +124,21 @@ public class AdminOrderController {
 			}
 			userDao.add(buyer);
 		}
-		//update买家的累计金额
 		User updateUser=userDao.getByCondition(buyer);
-		updateUser.setTotalPay(updateUser.getTotalPay()+order.getAmount());
+		double totalPay=updateUser.getTotalPay()+order.getAmount();
+		updateUser.setTotalPay(totalPay);
+		//鏍规嵁绱Н閲戦锛屽鐢ㄦ埛杩涜绛夌骇鍒掑垎
+		if(totalPay<3000){
+			updateUser.setLevel(UserLevel.NORMAL.getCode());
+		}else if(totalPay>=3000&&totalPay<8000){
+			updateUser.setLevel(UserLevel.GOLD.getCode());
+		}
+		else if(totalPay>=8000&&totalPay<20000){
+			updateUser.setLevel(UserLevel.PLATINUM.getCode());
+		}
+		else if(totalPay>=20000){
+			updateUser.setLevel(UserLevel.DIAMOND.getCode());
+		}
 		userDao.update(updateUser);
 	}
 

@@ -9,10 +9,12 @@ public class User {
 	private String wechatId;
 	private String state;
 	private double bonusAmount;
+	//@{link UserLevel}
 	private String level;
 	private double totalPay;
 	private Date membershipFirstDay;
 	private double amountAfterMSFD;
+	private double amountThisMonth;
 
 	public int getId() {
 		return id;
@@ -84,6 +86,14 @@ public class User {
 
 	public void setAmountAfterMSFD(double amountAfterMSFD) {
 		this.amountAfterMSFD = amountAfterMSFD;
+	}
+
+	public double getAmountThisMonth() {
+		return amountThisMonth;
+	}
+
+	public void setAmountThisMonth(double amountThisMonth) {
+		this.amountThisMonth = amountThisMonth;
 	}
 
 }

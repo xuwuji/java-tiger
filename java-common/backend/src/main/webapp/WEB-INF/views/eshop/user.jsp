@@ -197,7 +197,22 @@
 		}, {
 			field : 'level',
 			title : '用户级别',
-			align : 'center'
+			align : 'center',
+			formatter : function(value, row, index) {
+				if (row.level) {
+					 if (row.level == '0') {
+						return "大众";
+					} else if (row.level == '1') {
+						return "黄金";
+					} else if (row.level == '2') {
+						return "铂金";
+					} else if (row.level == '3') {
+						return "钻石";
+					} else {
+						return "错误数据";
+					}
+				}
+			}
 		}, {
 			field : 'totalPay',
 			title : '累计消费金额',
