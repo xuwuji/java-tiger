@@ -41,6 +41,8 @@ public class UserDao {
 			map.put("state", user.getState());
 			map.put("wechatId", user.getWechatId());
 			map.put("bonusAmount", user.getBonusAmount());
+			map.put("level", user.getLevel());
+			map.put("totalPay", user.getTotalPay());
 			mapper.update(map);
 			session.commit();
 		} catch (Exception e) {

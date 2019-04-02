@@ -10,18 +10,23 @@
 		<result property="openId" column="type"></result>
 		<result property="state" column="info"></result>
 		<result property="bonusAmount" column="info"></result>
+		<result property="level" column="info"></result>
+		<result property="totalPay" column="info"></result>
+		<result property="membershipFirstDay" column="info"></result>
+
 	</resultMap>
 
 	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
 		keyProperty="id" keyColumn="id">
 		insert into user
-		(openId,wechatId,state,bonusAmount)
-		values(#{openId},#{wechatId},'1',0)
+		(openId,wechatId,state,bonusAmount,level,totalPay)
+		values(#{openId},#{wechatId},'1',0,'0',0)
 	</insert>
 
 	<update id="update" parameterType="hashmap">
 		update user set
-		state=#{state},bonusAmount=#{bonusAmount}
+		state=#{state},bonusAmount=#{bonusAmount},level=#{level},totalPay=#{totalPay},
+		membershipFirstDay=#{membershipFirstDay}
 		where openId=#{openId};
 	</update>
 

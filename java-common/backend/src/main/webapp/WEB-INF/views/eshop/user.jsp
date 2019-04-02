@@ -195,6 +195,14 @@
 			title : '微信id号',
 			align : 'center'
 		}, {
+			field : 'level',
+			title : '用户级别',
+			align : 'center'
+		}, {
+			field : 'totalPay',
+			title : '累计消费金额',
+			align : 'center'
+		}, {
 			field : 'state',
 			title : '状态',
 			align : 'center',
@@ -269,6 +277,8 @@
 			$('#edit-openId').val(row.openId);
 			$('#edit-bonusAmount').val(row.bonusAmount);
 			$('#edit-id').val(row.id);
+			$('#edit-totalPay').val(row.totalPay);
+			$('#edit-level').val(row.level);
 		});
 	}
 
@@ -279,6 +289,8 @@
 		var wechatId = $('#edit-wechatId').val();
 		var state = $('#edit-state').val();
 		var id = $('#edit-id').val();
+		var totalPay=$('#edit-totalPay').val();
+		var level=$('#edit-level').val();
 		$.ajax({
 			url : "/backend/admin/user/update",
 			type : "post",
@@ -288,6 +300,8 @@
 				wechatId : wechatId,
 				state : state,
 				bonusAmount : bonusAmount,
+				level:level,
+				totalPay:totalPay,
 			},
 			success : function(status) {
 				$table.bootstrapTable('refresh');

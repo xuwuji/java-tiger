@@ -7,6 +7,8 @@ public class User {
 	private String wechatId;
 	private String state;
 	private double bonusAmount;
+	private String level;
+	private double totalPay;
 
 	public int getId() {
 		return id;
@@ -46,6 +48,22 @@ public class User {
 
 	public void setBonusAmount(double bonusAmount) {
 		this.bonusAmount = bonusAmount;
+	}
+
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
+	}
+
+	public double getTotalPay() {
+		return totalPay;
+	}
+
+	public void setTotalPay(double totalPay) {
+		this.totalPay = totalPay;
 	}
 
 }

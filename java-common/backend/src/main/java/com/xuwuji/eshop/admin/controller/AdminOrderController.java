@@ -111,9 +111,9 @@ public class AdminOrderController {
 		String source = order.getSource();
 		User buyer = new User();
 		buyer.setOpenId(openId);
-		// buyer=> new user
+		// buyers是新用户
 		if (userDao.getByCondition(buyer).getId() == 0) {
-			// bonus
+			// share对分享来源的sourcer进行红包奖励
 			if (source.equals("share")) {
 				String sourceOpenId = order.getSourceOpenId();
 				User resourcer = new User();
@@ -123,9 +123,12 @@ public class AdminOrderController {
 						resourcer.getBonusAmount() + Double.valueOf(eshopConfigUtil.getParam(eshopConfigUtil.BONUS)));
 				userDao.update(resourcer);
 			}
-			// buyer => old
 			userDao.add(buyer);
 		}
+		//update买家的累计金额
+		User updateUser=userDao.getByCondition(buyer);
+		updateUser.setTotalPay(updateUser.getTotalPay()+order.getAmount());
+		userDao.update(updateUser);
 	}
 
 }

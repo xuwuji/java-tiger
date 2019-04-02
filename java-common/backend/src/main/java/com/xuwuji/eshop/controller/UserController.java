@@ -44,13 +44,20 @@ public class UserController {
 	public void update(HttpServletRequest request, HttpServletResponse response) {
 		String openId = request.getParameter("openId");
 		String state = request.getParameter("state");
+		String level = request.getParameter("level");
 		double bonusAmount = 0;
 		if (request.getParameter("bonusAmount") != null && !request.getParameter("bonusAmount").isEmpty()) {
 			bonusAmount = Double.valueOf(request.getParameter("bonusAmount"));
 		}
+		double totalPay = 0;
+		if (request.getParameter("totalPay") != null && !request.getParameter("totalPay").isEmpty()) {
+			totalPay = Double.valueOf(request.getParameter("totalPay"));
+		}
 		User user = new User();
 		user.setOpenId(openId);
 		user.setState(state);
+		user.setLevel(level);
+		user.setTotalPay(totalPay);
 		user.setBonusAmount(bonusAmount);
 		userDao.update(user);
 	}
