@@ -11,7 +11,7 @@
  Target Server Version : 50725
  File Encoding         : 65001
 
- Date: 03/04/2019 13:39:05
+ Date: 03/04/2019 13:44:12
 */
 
 SET NAMES utf8mb4;
@@ -479,7 +479,7 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '1', 15, '1', 3976, '2019-04-03 03:29:13', 0, 0);
+INSERT INTO `user` VALUES (1, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '1', 15, '1', 4000, '2019-04-03 03:29:13', 0, 0);
 INSERT INTO `user` VALUES (2, 'test', NULL, '1', 8, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `user` VALUES (3, 'aaa', NULL, '1', 0, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `user` VALUES (4, 'test', 'test', '1', 0, NULL, NULL, NULL, NULL, NULL);
