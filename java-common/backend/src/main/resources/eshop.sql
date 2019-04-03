@@ -11,7 +11,7 @@
  Target Server Version : 50725
  File Encoding         : 65001
 
- Date: 02/04/2019 18:26:41
+ Date: 03/04/2019 13:39:05
 */
 
 SET NAMES utf8mb4;
@@ -229,7 +229,7 @@ CREATE TABLE `eshoporder`  (
   `promotionIds` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   `couponId` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of eshoporder
@@ -265,6 +265,7 @@ INSERT INTO `eshoporder` VALUES (31, 'd', '2019-03-29 06:15:00', '0', '201903291
 INSERT INTO `eshoporder` VALUES (32, 'd', '2019-03-29 06:17:11', '0', '20190329141711379606', 'd', 696, 2, 'd', 'd', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '', NULL, NULL, '', '', '', NULL, NULL);
 INSERT INTO `eshoporder` VALUES (33, 'd', '2019-03-29 06:21:47', '0', '20190329142147684147', 'd', 696, 2, 'd', 'd', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '', NULL, NULL, '', '', '', '14;', NULL);
 INSERT INTO `eshoporder` VALUES (34, 'dasds', '2019-04-01 15:16:34', '1', '201904012316345224246', '18217683505', 328, 1, 'xuwuji', 'sad', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '', '2019-04-02 15:58:26', NULL, '', '', '', '', '2');
+INSERT INTO `eshoporder` VALUES (35, 'd', '2019-04-03 03:28:38', '1', '201904031128376573520', '18217683505', 696, 2, 'ds', 'dsa', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '', '2019-04-03 11:29:12', NULL, '', '', '', '14;', '');
 
 -- ----------------------------
 -- Table structure for format
@@ -310,7 +311,7 @@ CREATE TABLE `orderitem`  (
   `productId` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   `formatName` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 48 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 49 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of orderitem
@@ -352,6 +353,7 @@ INSERT INTO `orderitem` VALUES (44, 2, '20190329141459554122', 'Tom Ford汤姆�
 INSERT INTO `orderitem` VALUES (45, 2, '20190329141711379606', 'Tom Ford汤姆福特 lip color 黑金唇膏', 348.00, 'http://pnwhn87vf.bkt.clouddn.com/product/15-0.jpg', '3', '15', '#80');
 INSERT INTO `orderitem` VALUES (46, 2, '20190329142147684147', 'Tom Ford汤姆福特 lip color 黑金唇膏', 348.00, 'http://pnwhn87vf.bkt.clouddn.com/product/15-0.jpg', '3', '15', '#80');
 INSERT INTO `orderitem` VALUES (47, 1, '201904012316345224246', 'Tom Ford汤姆福特 lip color 黑金唇膏', 348.00, 'http://pnwhn87vf.bkt.clouddn.com/product/15-0.jpg', '3', '15', '#80');
+INSERT INTO `orderitem` VALUES (48, 2, '201904031128376573520', 'Tom Ford汤姆福特 lip color 黑金唇膏', 348.00, 'http://pnwhn87vf.bkt.clouddn.com/product/15-0.jpg', '3', '15', '#80');
 
 -- ----------------------------
 -- Table structure for parentcategory
@@ -470,15 +472,16 @@ CREATE TABLE `user`  (
   `totalPay` double(255, 0) NULL DEFAULT NULL COMMENT '消费总额',
   `membershipFirstDay` timestamp(0) NULL DEFAULT NULL COMMENT '会员日期生效日',
   `amountAfterMSFD` double(255, 0) NULL DEFAULT NULL COMMENT '会员生效日后面付款金额',
+  `amountThisMonth` double(255, 0) NULL DEFAULT NULL COMMENT '本月消费金额',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '1', 15, NULL, 328, NULL, NULL);
-INSERT INTO `user` VALUES (2, 'test', NULL, '1', 8, NULL, NULL, NULL, NULL);
-INSERT INTO `user` VALUES (3, 'aaa', NULL, '1', 0, NULL, NULL, NULL, NULL);
-INSERT INTO `user` VALUES (4, 'test', 'test', '1', 0, NULL, NULL, NULL, NULL);
+INSERT INTO `user` VALUES (1, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '1', 15, '1', 3976, '2019-04-03 03:29:13', 0, 0);
+INSERT INTO `user` VALUES (2, 'test', NULL, '1', 8, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `user` VALUES (3, 'aaa', NULL, '1', 0, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `user` VALUES (4, 'test', 'test', '1', 0, NULL, NULL, NULL, NULL, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
