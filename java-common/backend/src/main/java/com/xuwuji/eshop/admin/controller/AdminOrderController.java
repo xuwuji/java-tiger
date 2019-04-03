@@ -2,6 +2,7 @@ package com.xuwuji.eshop.admin.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -124,20 +125,26 @@ public class AdminOrderController {
 			}
 			userDao.add(buyer);
 		}
-		User updateUser=userDao.getByCondition(buyer);
-		double totalPay=updateUser.getTotalPay()+order.getAmount();
+		User updateUser = userDao.getByCondition(buyer);
+		double totalPay = updateUser.getTotalPay() + order.getAmount();
 		updateUser.setTotalPay(totalPay);
-		//根据累积金额，对用户进行等级划分
-		if(totalPay<3000){
+		if (totalPay < 3000) {
 			updateUser.setLevel(UserLevel.NORMAL.getCode());
-		}else if(totalPay>=3000&&totalPay<8000){
+		} else if (totalPay >= 3000 && totalPay < 8000) {
 			updateUser.setLevel(UserLevel.GOLD.getCode());
-		}
-		else if(totalPay>=8000&&totalPay<20000){
+			if (updateUser.getMembershipFirstDay() == null) {
+				updateUser.setMembershipFirstDay(new Date());
+			}
+		} else if (totalPay >= 8000 && totalPay < 20000) {
 			updateUser.setLevel(UserLevel.PLATINUM.getCode());
-		}
-		else if(totalPay>=20000){
+			if (updateUser.getMembershipFirstDay() == null) {
+				updateUser.setMembershipFirstDay(new Date());
+			}
+		} else if (totalPay >= 20000) {
 			updateUser.setLevel(UserLevel.DIAMOND.getCode());
+			if (updateUser.getMembershipFirstDay() == null) {
+				updateUser.setMembershipFirstDay(new Date());
+			}
 		}
 		userDao.update(updateUser);
 	}
