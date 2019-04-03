@@ -11,7 +11,7 @@
  Target Server Version : 50725
  File Encoding         : 65001
 
- Date: 03/04/2019 13:44:12
+ Date: 03/04/2019 16:44:31
 */
 
 SET NAMES utf8mb4;
@@ -187,7 +187,7 @@ CREATE TABLE `eshopconfig`  (
   `name` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   `value` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of eshopconfig
@@ -202,6 +202,9 @@ INSERT INTO `eshopconfig` VALUES (7, 'countryFlagImgBase', 'http://pnwhn87vf.bkt
 INSERT INTO `eshopconfig` VALUES (8, 'articlePreSearch', '阿玛尼403/药丸面膜/天气丹套装/第一');
 INSERT INTO `eshopconfig` VALUES (9, 'bonus', '15');
 INSERT INTO `eshopconfig` VALUES (10, 'shareTitle', '快来看一看');
+INSERT INTO `eshopconfig` VALUES (11, 'goldDiscount', '0.98');
+INSERT INTO `eshopconfig` VALUES (12, 'platinumDiscount', '0.93');
+INSERT INTO `eshopconfig` VALUES (13, 'diamondDiscount', '0.88');
 
 -- ----------------------------
 -- Table structure for eshoporder
@@ -229,32 +232,32 @@ CREATE TABLE `eshoporder`  (
   `promotionIds` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   `couponId` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of eshoporder
 -- ----------------------------
 INSERT INTO `eshoporder` VALUES (4, 'ew', '2019-03-11 00:00:00', '0', '201903111105062979734', 'we', 348, 1, 'qe', 'ee', '', NULL, NULL, '2019-03-11 15:35:48', NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `eshoporder` VALUES (5, 'ew', '2019-03-11 00:00:00', '0', '201903111107147199074', 'ew', 348, 1, 'e', 'e', '', NULL, NULL, '2019-03-11 15:35:48', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `eshoporder` VALUES (6, 'gg', '2019-03-11 00:00:00', '0', '201903111109167016132', 'gg', 348, 1, 'gg', 'gg', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, NULL, '2019-03-11 15:35:48', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `eshoporder` VALUES (7, 'tre', '2019-03-11 00:00:00', '0', '201903111115107671399', 're', 1054, 3, 'er', '34', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, NULL, '2019-03-11 15:35:48', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `eshoporder` VALUES (8, '5', '2019-03-11 11:18:01', '0', '201903111118019758198', '4', 348, 1, '34', '2', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '4', '2019-03-11 15:35:48', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `eshoporder` VALUES (9, 'we', '2019-03-11 11:24:23', '0', '201903111124236765930', 'we', 348, 1, 'we', 'we', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, 'we', '2019-03-11 15:35:48', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `eshoporder` VALUES (6, 'gg', '2019-03-11 00:00:00', '-1', '201903111109167016132', 'gg', 348, 1, 'gg', 'gg', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, NULL, '2019-04-03 16:42:06', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `eshoporder` VALUES (7, 'tre', '2019-03-11 00:00:00', '-1', '201903111115107671399', 're', 1054, 3, 'er', '34', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, NULL, '2019-04-03 16:42:10', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `eshoporder` VALUES (8, '5', '2019-03-11 11:18:01', '-1', '201903111118019758198', '4', 348, 1, '34', '2', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '4', '2019-04-03 16:42:14', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `eshoporder` VALUES (9, 'we', '2019-03-11 11:24:23', '-1', '201903111124236765930', 'we', 348, 1, 'we', 'we', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, 'we', '2019-04-03 16:42:16', NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `eshoporder` VALUES (10, 'ds', '2019-03-11 03:29:31', '3', '201903111129304477200', 'sad', 348, 1, 'sd', 'ds', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, 'sad', '2019-03-11 15:35:48', NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `eshoporder` VALUES (11, 'ds', '2019-03-11 03:30:08', '3', '201903111130077986515', 'sad', 348, 1, 'sd', 'ds', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '23412321312', 'test', '2019-03-11 16:26:54', '顺丰', NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `eshoporder` VALUES (12, 'ds', '2019-03-11 05:04:58', '1', '201903111304584002459', 'sd', 706, 2, 'asd', 'd', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, 'ddddd', '2019-03-11 15:41:59', NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `eshoporder` VALUES (13, '34', '2019-03-11 09:35:57', '0', '201903111735566646844', '23', 571, 3, '32', '213', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '213', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `eshoporder` VALUES (14, 'wewe', '2019-03-11 09:44:39', '0', '201903111744388104120', 'we', 288, 1, 'ew', 'ew', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, 'ew', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `eshoporder` VALUES (15, 'sa', '2019-03-11 09:45:47', '0', '201903111745478540790', 'sd', 138, 1, 'd', 'd', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, 'd', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `eshoporder` VALUES (16, 'e2', '2019-03-11 09:51:27', '0', '201903111751262277431', '32', 288, 1, '23', '32', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `eshoporder` VALUES (17, 'dd', '2019-03-12 05:19:40', '0', '20190312131940007756', '???j', 288, 1, '???', '??????', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '??????', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `eshoporder` VALUES (18, 'd', '2019-03-13 02:37:04', '0', '20190313103704901593', 'd', 225, 1, 'd', 'd', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, 'd', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `eshoporder` VALUES (19, 'd', '2019-03-13 08:32:42', '0', '201903131632425925850', 'è?????', 225, 1, '?¤§è?¨è??', '????¤??°?', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '????¤§??°??°', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `eshoporder` VALUES (20, 'd', '2019-03-13 08:43:26', '0', '201903131643260583761', 'è?????', 225, 1, '?¤§è?¨è??', '????¤??°?', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '????¤§??°??°', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `eshoporder` VALUES (21, 'd', '2019-03-13 08:44:05', '0', '201903131644057331577', '说的', 225, 1, '大萨达', '是多少', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '撒大声地', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `eshoporder` VALUES (22, 'd', '2019-03-13 08:44:58', '0', '201903131644588800861', 'sad', 288, 1, 'è?????', '?¤§è?¨è??', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '??????', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `eshoporder` VALUES (23, '??????', '2019-03-13 08:46:10', '0', '201903131646091152163', '?¤§', 288, 1, '?????????', '??????????¤?', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, 'sad', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `eshoporder` VALUES (24, '手打', '2019-03-13 08:47:22', '0', '201903131647217012071', 'sad', 288, 1, 'sad', 'sad', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, 'sad', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `eshoporder` VALUES (14, 'wewe', '2019-03-11 09:44:39', '-1', '201903111744388104120', 'we', 288, 1, 'ew', 'ew', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, 'ew', '2019-04-03 16:42:21', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `eshoporder` VALUES (15, 'sa', '2019-03-11 09:45:47', '-1', '201903111745478540790', 'sd', 138, 1, 'd', 'd', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, 'd', '2019-04-03 16:42:22', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `eshoporder` VALUES (16, 'e2', '2019-03-11 09:51:27', '-1', '201903111751262277431', '32', 288, 1, '23', '32', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '23', '2019-04-03 16:42:26', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `eshoporder` VALUES (17, 'dd', '2019-03-12 05:19:40', '-1', '20190312131940007756', '???j', 288, 1, '???', '??????', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '??????', '2019-04-03 16:42:28', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `eshoporder` VALUES (18, 'd', '2019-03-13 02:37:04', '-1', '20190313103704901593', 'd', 225, 1, 'd', 'd', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, 'd', '2019-04-03 16:42:31', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `eshoporder` VALUES (19, 'd', '2019-03-13 08:32:42', '-1', '201903131632425925850', 'è?????', 225, 1, '?¤§è?¨è??', '????¤??°?', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '????¤§??°??°', '2019-04-03 16:42:33', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `eshoporder` VALUES (20, 'd', '2019-03-13 08:43:26', '-1', '201903131643260583761', 'è?????', 225, 1, '?¤§è?¨è??', '????¤??°?', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '????¤§??°??°', '2019-04-03 16:42:36', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `eshoporder` VALUES (21, 'd', '2019-03-13 08:44:05', '-1', '201903131644057331577', '说的', 225, 1, '大萨达', '是多少', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '撒大声地', '2019-04-03 16:42:38', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `eshoporder` VALUES (22, 'd', '2019-03-13 08:44:58', '-1', '201903131644588800861', 'sad', 288, 1, 'è?????', '?¤§è?¨è??', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '??????', '2019-04-03 16:42:40', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `eshoporder` VALUES (23, '??????', '2019-03-13 08:46:10', '-1', '201903131646091152163', '?¤§', 288, 1, '?????????', '??????????¤?', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, 'sad', '2019-04-03 16:42:42', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `eshoporder` VALUES (24, '手打', '2019-03-13 08:47:22', '-1', '201903131647217012071', 'sad', 288, 1, 'sad', 'sad', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, 'sad', '2019-04-03 16:42:44', NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `eshoporder` VALUES (25, 'ddsd', '2019-03-28 05:26:07', '0', '201903281326079119032', 'd', 348, 1, 'd', 'd', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '', NULL, NULL, '', '', '', NULL, NULL);
 INSERT INTO `eshoporder` VALUES (26, 'd', '2019-03-28 05:28:02', '1', '201903281328019856388', 'd', 348, 1, 'd', 'd', 'aaa', NULL, '', '2019-03-28 17:11:19', NULL, 'share', 'test', '', NULL, NULL);
 INSERT INTO `eshoporder` VALUES (27, 'd', '2019-03-29 06:09:27', '0', '20190329140926372161', 'd', 696, 2, 'd', 'd', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '', NULL, NULL, '', '', '', NULL, NULL);
@@ -266,6 +269,10 @@ INSERT INTO `eshoporder` VALUES (32, 'd', '2019-03-29 06:17:11', '0', '201903291
 INSERT INTO `eshoporder` VALUES (33, 'd', '2019-03-29 06:21:47', '0', '20190329142147684147', 'd', 696, 2, 'd', 'd', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '', NULL, NULL, '', '', '', '14;', NULL);
 INSERT INTO `eshoporder` VALUES (34, 'dasds', '2019-04-01 15:16:34', '1', '201904012316345224246', '18217683505', 328, 1, 'xuwuji', 'sad', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '', '2019-04-02 15:58:26', NULL, '', '', '', '', '2');
 INSERT INTO `eshoporder` VALUES (35, 'd', '2019-04-03 03:28:38', '1', '201904031128376573520', '18217683505', 696, 2, 'ds', 'dsa', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '', '2019-04-03 11:29:12', NULL, '', '', '', '14;', '');
+INSERT INTO `eshoporder` VALUES (36, '2o', '2019-04-03 08:35:26', '0', '2019040316352616083', '18217683505', 321, 1, 'e', '3', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '', NULL, NULL, '', '', '', '', '2');
+INSERT INTO `eshoporder` VALUES (37, 'e', '2019-04-03 08:37:24', '1', '2019040316372456885', '18217683505', 21114, 62, 'e', 'e', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '', '2019-04-03 16:38:02', NULL, '', '', '', '14;', '1');
+INSERT INTO `eshoporder` VALUES (38, 'e', '2019-04-03 08:40:06', '0', '2019040316400607076', '18217683505', 291, 1, 'e', '2', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '', NULL, NULL, '', '', '', '', '3');
+INSERT INTO `eshoporder` VALUES (39, 'e', '2019-04-03 08:41:26', '0', '2019040316412633266', '18217683505', 348, 1, 'e', 'e', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '', NULL, NULL, '', '', '', '', '');
 
 -- ----------------------------
 -- Table structure for format
@@ -311,7 +318,7 @@ CREATE TABLE `orderitem`  (
   `productId` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   `formatName` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 49 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 53 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of orderitem
@@ -354,6 +361,10 @@ INSERT INTO `orderitem` VALUES (45, 2, '20190329141711379606', 'Tom Ford汤姆�
 INSERT INTO `orderitem` VALUES (46, 2, '20190329142147684147', 'Tom Ford汤姆福特 lip color 黑金唇膏', 348.00, 'http://pnwhn87vf.bkt.clouddn.com/product/15-0.jpg', '3', '15', '#80');
 INSERT INTO `orderitem` VALUES (47, 1, '201904012316345224246', 'Tom Ford汤姆福特 lip color 黑金唇膏', 348.00, 'http://pnwhn87vf.bkt.clouddn.com/product/15-0.jpg', '3', '15', '#80');
 INSERT INTO `orderitem` VALUES (48, 2, '201904031128376573520', 'Tom Ford汤姆福特 lip color 黑金唇膏', 348.00, 'http://pnwhn87vf.bkt.clouddn.com/product/15-0.jpg', '3', '15', '#80');
+INSERT INTO `orderitem` VALUES (49, 1, '2019040316352616083', 'Tom Ford汤姆福特 lip color 黑金唇膏', 348.00, 'http://pnwhn87vf.bkt.clouddn.com/product/15-0.jpg', '3', '15', '#80');
+INSERT INTO `orderitem` VALUES (50, 62, '2019040316372456885', 'Tom Ford汤姆福特 lip color 黑金唇膏', 348.00, 'http://pnwhn87vf.bkt.clouddn.com/product/15-0.jpg', '3', '15', '#80');
+INSERT INTO `orderitem` VALUES (51, 1, '2019040316400607076', 'Tom Ford汤姆福特 lip color 黑金唇膏', 348.00, 'http://pnwhn87vf.bkt.clouddn.com/product/15-0.jpg', '3', '15', '#80');
+INSERT INTO `orderitem` VALUES (52, 1, '2019040316412633266', 'Tom Ford汤姆福特 lip color 黑金唇膏', 348.00, 'http://pnwhn87vf.bkt.clouddn.com/product/15-0.jpg', '3', '15', '#80');
 
 -- ----------------------------
 -- Table structure for parentcategory
@@ -479,7 +490,7 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '1', 15, '1', 4000, '2019-04-03 03:29:13', 0, 0);
+INSERT INTO `user` VALUES (1, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '1', 15, '0', 0, '2019-04-03 03:29:13', 0, 0);
 INSERT INTO `user` VALUES (2, 'test', NULL, '1', 8, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `user` VALUES (3, 'aaa', NULL, '1', 0, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `user` VALUES (4, 'test', 'test', '1', 0, NULL, NULL, NULL, NULL, NULL);

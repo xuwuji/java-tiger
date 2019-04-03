@@ -26,6 +26,9 @@ public class EshopConfigUtil {
 	public static final String noticeMsg = "noticeMsg";
 	public static final String BONUS="bonus";
 	public static final String SHARE_TITLE="shareTitle";
+	public static final String GOLD_DISCOUNT="goldDiscount";
+	public static final String PLATINUM_DISCOUNT="platinumDiscount";
+	public static final String DiAMOND_DISCOUNT="diamondDiscount";
 	public static Map<String, Object> configMap = new HashMap<String, Object>();
 
 	

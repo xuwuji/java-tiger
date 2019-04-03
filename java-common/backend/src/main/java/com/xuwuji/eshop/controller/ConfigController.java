@@ -31,6 +31,9 @@ public class ConfigController {
 		eshopConfig.setNoticeMsg(eshopConfigUtil.getParam(eshopConfigUtil.noticeMsg));
 		eshopConfig.setXxcUrl(eshopConfigUtil.getParam(eshopConfigUtil.xxcUrl));
 		eshopConfig.setShareTitle(eshopConfigUtil.getParam(eshopConfigUtil.SHARE_TITLE));
+		eshopConfig.setGoldDiscount(eshopConfigUtil.getParam(eshopConfigUtil.GOLD_DISCOUNT));
+		eshopConfig.setPlatinumDiscount(eshopConfigUtil.getParam(eshopConfigUtil.PLATINUM_DISCOUNT));
+		eshopConfig.setDiamondDiscount(eshopConfigUtil.getParam(eshopConfigUtil.DiAMOND_DISCOUNT));
 		return eshopConfig;
 	}
 
@@ -97,6 +100,9 @@ public class ConfigController {
 		public List<String> preSearch;
 		public List<String> articlePreSearch;
 		public String shareTitle;
+		public String goldDiscount;
+		public String platinumDiscount;
+		public String diamondDiscount;
 
 		public String getXxcUrl() {
 			return xxcUrl;
@@ -144,6 +150,30 @@ public class ConfigController {
 
 		public void setShareTitle(String shareTitle) {
 			this.shareTitle = shareTitle;
+		}
+
+		public String getGoldDiscount() {
+			return goldDiscount;
+		}
+
+		public void setGoldDiscount(String goldDiscount) {
+			this.goldDiscount = goldDiscount;
+		}
+
+		public String getPlatinumDiscount() {
+			return platinumDiscount;
+		}
+
+		public void setPlatinumDiscount(String platinumDiscount) {
+			this.platinumDiscount = platinumDiscount;
+		}
+
+		public String getDiamondDiscount() {
+			return diamondDiscount;
+		}
+
+		public void setDiamondDiscount(String diamondDiscount) {
+			this.diamondDiscount = diamondDiscount;
 		}
 
 	}
