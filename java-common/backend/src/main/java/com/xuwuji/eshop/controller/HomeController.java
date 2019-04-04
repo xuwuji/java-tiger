@@ -16,13 +16,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.xuwuji.eshop.db.dao.BannerDao;
 import com.xuwuji.eshop.db.dao.CategoryDao;
 import com.xuwuji.eshop.db.dao.ProductDao;
+import com.xuwuji.eshop.db.dao.UserDao;
 import com.xuwuji.eshop.model.Banner;
 import com.xuwuji.eshop.model.BannerItem;
 import com.xuwuji.eshop.model.Category;
 import com.xuwuji.eshop.model.Img;
 import com.xuwuji.eshop.model.Product;
+import com.xuwuji.eshop.model.SortEnum;
 import com.xuwuji.eshop.model.Theme;
+import com.xuwuji.eshop.model.User;
 import com.xuwuji.eshop.util.EshopConfigUtil;
+import com.xuwuji.eshop.util.ProductUtil;
 
 @Controller
 @RequestMapping(value = "/home")
@@ -33,6 +37,11 @@ public class HomeController {
 	private CategoryDao categoryDao;
 	@Autowired
 	private ProductDao productDao;
+	@Autowired
+	private UserDao userDao;
+
+	@Autowired
+	private ProductUtil productUtil;
 
 	@Autowired
 	private EshopConfigUtil eshopConfigUtil;
@@ -46,8 +55,9 @@ public class HomeController {
 		List<BannerItem> list = new ArrayList<BannerItem>();
 		list = bannerDao.getActiveAllByBannerId(id);
 		for (BannerItem bannerItem : list) {
-			if(bannerItem.getImgUrl()==null||bannerItem.getImgUrl().isEmpty()){
-				bannerItem.setImgUrl(eshopConfigUtil.getParam(EshopConfigUtil.BANNER_IMG_BASE) + bannerItem.getId() + ".jpg");
+			if (bannerItem.getImgUrl() == null || bannerItem.getImgUrl().isEmpty()) {
+				bannerItem.setImgUrl(
+						eshopConfigUtil.getParam(EshopConfigUtil.BANNER_IMG_BASE) + bannerItem.getId() + ".jpg");
 			}
 		}
 		banner.setItems(list);
@@ -79,7 +89,7 @@ public class HomeController {
 
 	@RequestMapping(value = "/recommend", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Category> getProductPartData(HttpServletRequest request, HttpServletResponse response) {
+	public List<Category> getRecommend(HttpServletRequest request, HttpServletResponse response) {
 		List<Category> categories = new ArrayList<Category>();
 		categories = categoryDao.getRecommend();
 		for (Category c : categories) {
@@ -90,15 +100,61 @@ public class HomeController {
 			for (Product product : products) {
 				List<String> imgUrls = new ArrayList<String>();
 				for (int i = 1; i < 5; i++) {
-					imgUrls.add(eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + product.getId() + "-" + i + ".jpg");
+					imgUrls.add(eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + product.getId() + "-" + i
+							+ ".jpg");
 				}
 				product.setImgUrls(imgUrls);
-				String mainImgUrl = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + product.getId() + "-0.jpg";
+				String mainImgUrl = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + product.getId()
+						+ "-0.jpg";
 				product.setMainImgUrl(mainImgUrl);
 			}
 			c.setProducts(products);
 		}
 		return categories;
+	}
+
+	/**
+	 * Ê×Ò³²ÂÄãÏ²»¶
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/like", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Product> getLike(HttpServletRequest request, HttpServletResponse response) {
+		List<Category> categories = new ArrayList<Category>();
+		categories = categoryDao.getRecommend();
+		String openId = request.getParameter("openId");
+		User user = new User();
+		user.setOpenId(openId);
+		user = userDao.getByCondition(user);
+		List<Product> results = new ArrayList<Product>();
+		// new user
+		if (user.getLevel() == null || user.getLevel().isEmpty()) {
+			for (Category c : categories) {
+				int categoryId = c.getId();
+				List<Product> products = new ArrayList<Product>();
+				products = productDao.getActiveByCategory(String.valueOf(categoryId));
+				productUtil.sort(products, SortEnum.SALE);
+				if (products.size() > 5) {
+					products = products.subList(0, 5);
+				} else {
+					products = products.subList(0, products.size());
+				}
+				for (Product product : products) {
+					if (product.getMainImgUrl() == null || product.getMainImgUrl().isEmpty()) {
+						String mainImgUrl = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + product.getId()
+								+ "-0.jpg";
+						product.setMainImgUrl(mainImgUrl);
+					}
+					results.add(product);
+				}
+			}
+		}
+		// old user
+
+		return results;
 	}
 
 }

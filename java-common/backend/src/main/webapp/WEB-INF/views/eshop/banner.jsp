@@ -71,11 +71,11 @@
 							name="txt_departmentname" data-bind="value:Name"
 							class="form-control" id="add-name" placeholder="名称">
 					</div>
-					<!-- 	<div class="form-group">
+					<div class="form-group">
 						<label for="txt_departmentname">图片url</label> <input type="text"
 							name="txt_departmentname" data-bind="value:Name"
 							class="form-control" id="add-imgUrl" placeholder="图片url">
-					</div> -->
+					</div>
 					<div class="form-group">
 						<label for="txt_departmentname">跳转页面</label> <input type="text"
 							name="txt_departmentname" data-bind="value:Name"
@@ -209,7 +209,7 @@
 			align : 'center'
 		},{
 			field : 'imgUrl',
-			title : '对应图片地址',
+			title : '图片地址',
 			align : 'center'
 		},  /* {
 				field : '
@@ -282,7 +282,7 @@
 	$('#btn_submit').on("click", function() {
 		var name = $('#add-name').val();
 		var redirectUrl = $('#add-redirectUrl').val();
-		//var imgUrl = $('#add-imgUrl').val();
+		var imgUrl = $('#add-imgUrl').val();
 		var bannerId = $('#add-bannerId').val();
 		var info = $('#add-info').val();
 		$.ajax({
@@ -291,7 +291,7 @@
 			data : {
 				name : name,
 				redirectUrl : redirectUrl,
-				//imgUrl : imgUrl,
+				imgUrl : imgUrl,
 				bannerId : bannerId,
 				info:info,
 			},

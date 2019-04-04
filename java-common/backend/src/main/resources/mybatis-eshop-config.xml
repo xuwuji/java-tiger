@@ -113,6 +113,7 @@
 		<mapper resource="mapper/ArticleMapper.xml" />
 		<mapper resource="mapper/UserMapper.xml" />
 		<mapper resource="mapper/CouponMapper.xml" />
+		<mapper resource="mapper/HistoryMapper.xml" />
 	</mappers>
 
 

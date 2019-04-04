@@ -31,7 +31,7 @@ public class UserController {
 		String openId = request.getParameter("openId");
 		String wechatId = request.getParameter("wechatId");
 		User user = new User();
-		System.out.println(openId);
+		//System.out.println(openId);
 		if (openId != null && !openId.isEmpty()) {
 			user.setOpenId(openId);
 		}

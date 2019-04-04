@@ -11,7 +11,7 @@
  Target Server Version : 50725
  File Encoding         : 65001
 
- Date: 03/04/2019 16:44:31
+ Date: 04/04/2019 21:46:50
 */
 
 SET NAMES utf8mb4;
@@ -70,7 +70,7 @@ CREATE TABLE `banneritem`  (
 -- ----------------------------
 -- Records of banneritem
 -- ----------------------------
-INSERT INTO `banneritem` VALUES (1, '', 'dasad', '1', '春季上新', '0', '2019-03-05 14:22:01', '2019-03-24 14:01:39', '春季上新');
+INSERT INTO `banneritem` VALUES (1, 'http://ppf0hsoua.bkt.clouddn.com/banner/spring_new.jpg', 'dasad', '1', '春季上新', '0', '2019-03-05 14:22:01', '2019-04-04 18:12:22', '春季上新');
 INSERT INTO `banneritem` VALUES (2, '', 'aaa', '1', '小红书推荐', '1', '2019-03-05 14:22:01', '2019-03-24 14:01:39', NULL);
 INSERT INTO `banneritem` VALUES (3, '', 'ddd', '1', '女王节', '1', '2019-03-05 14:22:01', '2019-03-24 14:01:39', NULL);
 INSERT INTO `banneritem` VALUES (4, '', 'ddd', '1', '化妆品套装', '1', '2019-03-05 14:22:01', '2019-03-24 14:01:39', '化妆品套装');
@@ -194,11 +194,11 @@ CREATE TABLE `eshopconfig`  (
 -- ----------------------------
 INSERT INTO `eshopconfig` VALUES (1, 'xxcUrl', 'http://localhost:8080/backend/resources/eshop/image/xxc.jpg');
 INSERT INTO `eshopconfig` VALUES (2, 'noticeMsg', '欢迎在线咨询徐小柴~');
-INSERT INTO `eshopconfig` VALUES (3, 'productImgBase', 'http://pnwhn87vf.bkt.clouddn.com/product/');
-INSERT INTO `eshopconfig` VALUES (4, 'categoryImgBase', 'http://pnwhn87vf.bkt.clouddn.com/category/');
-INSERT INTO `eshopconfig` VALUES (5, 'bannerImgBase', 'http://pnwhn87vf.bkt.clouddn.com/banner/');
+INSERT INTO `eshopconfig` VALUES (3, 'productImgBase', 'http://ppf0hsoua.bkt.clouddn.com/product/');
+INSERT INTO `eshopconfig` VALUES (4, 'categoryImgBase', 'http://ppf0hsoua.bkt.clouddn.com/category/');
+INSERT INTO `eshopconfig` VALUES (5, 'bannerImgBase', 'http://ppf0hsoua.bkt.clouddn.com/banner/');
 INSERT INTO `eshopconfig` VALUES (6, 'preSearch', 'ahc/ysl');
-INSERT INTO `eshopconfig` VALUES (7, 'countryFlagImgBase', 'http://pnwhn87vf.bkt.clouddn.com/country/');
+INSERT INTO `eshopconfig` VALUES (7, 'countryFlagImgBase', 'http://ppf0hsoua.bkt.clouddn.com/country/');
 INSERT INTO `eshopconfig` VALUES (8, 'articlePreSearch', '阿玛尼403/药丸面膜/天气丹套装/第一');
 INSERT INTO `eshopconfig` VALUES (9, 'bonus', '15');
 INSERT INTO `eshopconfig` VALUES (10, 'shareTitle', '快来看一看');
@@ -232,7 +232,7 @@ CREATE TABLE `eshoporder`  (
   `promotionIds` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   `couponId` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 42 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of eshoporder
@@ -273,6 +273,8 @@ INSERT INTO `eshoporder` VALUES (36, '2o', '2019-04-03 08:35:26', '0', '20190403
 INSERT INTO `eshoporder` VALUES (37, 'e', '2019-04-03 08:37:24', '1', '2019040316372456885', '18217683505', 21114, 62, 'e', 'e', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '', '2019-04-03 16:38:02', NULL, '', '', '', '14;', '1');
 INSERT INTO `eshoporder` VALUES (38, 'e', '2019-04-03 08:40:06', '0', '2019040316400607076', '18217683505', 291, 1, 'e', '2', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '', NULL, NULL, '', '', '', '', '3');
 INSERT INTO `eshoporder` VALUES (39, 'e', '2019-04-03 08:41:26', '0', '2019040316412633266', '18217683505', 348, 1, 'e', 'e', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '', NULL, NULL, '', '', '', '', '');
+INSERT INTO `eshoporder` VALUES (40, 'e', '2019-04-03 10:47:58', '0', '20190403184757073081', '18217683505', 783, 3, 'e', 'e', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, 'e', NULL, NULL, '', '', '', '14;', '2');
+INSERT INTO `eshoporder` VALUES (41, 'd', '2019-04-03 10:52:44', '0', '20190403185243216168', '18217683505', 311, 1, 'e', 'e', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '', NULL, NULL, '', '', '', '', '3');
 
 -- ----------------------------
 -- Table structure for format
@@ -304,6 +306,30 @@ INSERT INTO `format` VALUES (10, '250ml', 1050, '23', '1', NULL);
 INSERT INTO `format` VALUES (11, '十片/盒', 68, '24', '1', NULL);
 
 -- ----------------------------
+-- Table structure for history
+-- ----------------------------
+DROP TABLE IF EXISTS `history`;
+CREATE TABLE `history`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `openId` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
+  `productId` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
+  `categoryId` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
+  `time` timestamp(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of history
+-- ----------------------------
+INSERT INTO `history` VALUES (1, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '15', '2', '2019-04-04 21:27:47');
+INSERT INTO `history` VALUES (2, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '15', '2', '2019-04-04 21:27:50');
+INSERT INTO `history` VALUES (3, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-04 21:28:22');
+INSERT INTO `history` VALUES (4, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '15', '2', '2019-04-04 21:28:47');
+INSERT INTO `history` VALUES (5, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '15', '2', '2019-04-04 21:28:58');
+INSERT INTO `history` VALUES (6, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '15', '2', '2019-04-04 21:30:36');
+INSERT INTO `history` VALUES (7, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '10', '2', '2019-04-04 21:45:15');
+
+-- ----------------------------
 -- Table structure for orderitem
 -- ----------------------------
 DROP TABLE IF EXISTS `orderitem`;
@@ -318,7 +344,7 @@ CREATE TABLE `orderitem`  (
   `productId` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   `formatName` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 53 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 56 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of orderitem
@@ -365,6 +391,9 @@ INSERT INTO `orderitem` VALUES (49, 1, '2019040316352616083', 'Tom Ford汤姆福
 INSERT INTO `orderitem` VALUES (50, 62, '2019040316372456885', 'Tom Ford汤姆福特 lip color 黑金唇膏', 348.00, 'http://pnwhn87vf.bkt.clouddn.com/product/15-0.jpg', '3', '15', '#80');
 INSERT INTO `orderitem` VALUES (51, 1, '2019040316400607076', 'Tom Ford汤姆福特 lip color 黑金唇膏', 348.00, 'http://pnwhn87vf.bkt.clouddn.com/product/15-0.jpg', '3', '15', '#80');
 INSERT INTO `orderitem` VALUES (52, 1, '2019040316412633266', 'Tom Ford汤姆福特 lip color 黑金唇膏', 348.00, 'http://pnwhn87vf.bkt.clouddn.com/product/15-0.jpg', '3', '15', '#80');
+INSERT INTO `orderitem` VALUES (53, 2, '20190403184757073081', 'Tom Ford汤姆福特 lip color 黑金唇膏', 348.00, 'http://pnwhn87vf.bkt.clouddn.com/product/15-0.jpg', '3', '15', '#80');
+INSERT INTO `orderitem` VALUES (54, 1, '20190403184757073081', 'MAC唇膏', 138.00, 'http://pnwhn87vf.bkt.clouddn.com/product/8-0.jpg', '1', '8', '01 cilli');
+INSERT INTO `orderitem` VALUES (55, 1, '20190403185243216168', 'Tom Ford汤姆福特 lip color 黑金唇膏', 348.00, 'http://pnwhn87vf.bkt.clouddn.com/product/15-0.jpg', '3', '15', '#80');
 
 -- ----------------------------
 -- Table structure for parentcategory
@@ -490,7 +519,7 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '1', 15, '0', 0, '2019-04-03 03:29:13', 0, 0);
+INSERT INTO `user` VALUES (1, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '1', 15, '1', 2000, NULL, 0, 0);
 INSERT INTO `user` VALUES (2, 'test', NULL, '1', 8, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `user` VALUES (3, 'aaa', NULL, '1', 0, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `user` VALUES (4, 'test', 'test', '1', 0, NULL, NULL, NULL, NULL, NULL);
