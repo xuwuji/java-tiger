@@ -3,10 +3,10 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.xuwuji.eshop.db.mapper.HistoryMapper">
+<mapper namespace="com.xuwuji.eshop.db.mapper.ViewHistoryMapper">
 
 
-	<resultMap type="History" id="HistoryResult">
+	<resultMap type="ViewHistory" id="HistoryResult">
 		<id property="id" column="id"></id>
 		<result property="openId" column="type"></result>
 		<result property="productId" column="type"></result>
@@ -15,16 +15,16 @@
 			jdbcType="DATE"></result>
 	</resultMap>
 
-	<insert id="add" parameterType="History" useGeneratedKeys="true"
+	<insert id="add" parameterType="ViewHistory" useGeneratedKeys="true"
 		keyProperty="id">
-		insert into history
+		insert into viewhistory
 		(openId,productId,categoryId,time)
 		values(#{openId},#{productId},#{categoryId},now())
 	</insert>
 
-	<select id="getAllByOpenId" resultType="History"
+	<select id="getAllByOpenId" resultType="ViewHistory"
 		parameterType="hashmap">
-		select * from history where openId=#{openId} group by
+		select * from viewhistory where openId=#{openId} group by
 		productId order by time desc
 	</select>
 

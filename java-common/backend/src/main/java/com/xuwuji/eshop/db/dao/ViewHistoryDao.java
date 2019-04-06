@@ -7,17 +7,17 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Component;
 
-import com.xuwuji.eshop.db.mapper.HistoryMapper;
+import com.xuwuji.eshop.db.mapper.ViewHistoryMapper;
 import com.xuwuji.eshop.db.util.SessionFactory;
-import com.xuwuji.eshop.model.History;
+import com.xuwuji.eshop.model.ViewHistory;
 
 @Component
-public class HistoryDao {
+public class ViewHistoryDao {
 
-	public void add(History history) {
+	public void add(ViewHistory history) {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
-			HistoryMapper mapper = session.getMapper(HistoryMapper.class);
+			ViewHistoryMapper mapper = session.getMapper(ViewHistoryMapper.class);
 			mapper.add(history);
 			session.commit();
 		} catch (Exception e) {
@@ -28,11 +28,11 @@ public class HistoryDao {
 		}
 	}
 
-	public List<History> getAllByOpenId(String openId) {
+	public List<ViewHistory> getAllByOpenId(String openId) {
 		SqlSession session = SessionFactory.openDEVSession();
-		List<History> result = new ArrayList<History>();
+		List<ViewHistory> result = new ArrayList<ViewHistory>();
 		try {
-			HistoryMapper mapper = session.getMapper(HistoryMapper.class);
+			ViewHistoryMapper mapper = session.getMapper(ViewHistoryMapper.class);
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("openId", openId);
 			result = mapper.getAllByOpenId(map);

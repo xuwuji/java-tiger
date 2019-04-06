@@ -2,12 +2,11 @@ package com.xuwuji.eshop.model;
 
 import java.util.Date;
 
-public class History {
+public class SearchHistory {
 
 	private int id;
 	private String openId;
-	private String productId;
-	private String categoryId;
+	private String kw;
 	private Date time;
 
 	public int getId() {
@@ -26,20 +25,12 @@ public class History {
 		this.openId = openId;
 	}
 
-	public String getProductId() {
-		return productId;
+	public String getKw() {
+		return kw;
 	}
 
-	public void setProductId(String productId) {
-		this.productId = productId;
-	}
-
-	public String getCategoryId() {
-		return categoryId;
-	}
-
-	public void setCategoryId(String categoryId) {
-		this.categoryId = categoryId;
+	public void setKw(String kw) {
+		this.kw = kw;
 	}
 
 	public Date getTime() {

@@ -114,6 +114,7 @@
 		<mapper resource="mapper/UserMapper.xml" />
 		<mapper resource="mapper/CouponMapper.xml" />
 		<mapper resource="mapper/HistoryMapper.xml" />
+		<mapper resource="mapper/SearchMapper.xml" />
 	</mappers>
 
 

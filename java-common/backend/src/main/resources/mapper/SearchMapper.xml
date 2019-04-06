@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuwuji.eshop.db.mapper.SearchHistoryMapper">
+
+
+	<resultMap type="SearchHistory" id="HistoryResult">
+		<id property="id" column="id"></id>
+		<result property="openId" column="type"></result>
+		<result property="kw" column="type"></result>
+		<result property="time" column="DATE" javaType="java.util.Date"
+			jdbcType="DATE"></result>
+	</resultMap>
+
+	<insert id="add" parameterType="SearchHistory" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into searchhistory
+		(openId,kw,time)
+		values(#{openId},#{kw},now())
+	</insert>
+
+	<select id="getAllByOpenId" resultType="SearchHistory"
+		parameterType="hashmap">
+		select * from searchhistory where openId=#{openId} group
+		by
+		kw order by time desc
+	</select>
+
+	<select id="getAllByCount" resultType="hashmap" parameterType="java.lang.String">
+		select kw,count(kw) as count from searchhistory group by kw order by count descÏ
+	</select>
+
+</mapper>
