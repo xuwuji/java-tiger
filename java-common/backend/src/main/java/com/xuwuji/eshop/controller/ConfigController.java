@@ -34,6 +34,7 @@ public class ConfigController {
 		eshopConfig.setGoldDiscount(eshopConfigUtil.getParam(eshopConfigUtil.GOLD_DISCOUNT));
 		eshopConfig.setPlatinumDiscount(eshopConfigUtil.getParam(eshopConfigUtil.PLATINUM_DISCOUNT));
 		eshopConfig.setDiamondDiscount(eshopConfigUtil.getParam(eshopConfigUtil.DiAMOND_DISCOUNT));
+		eshopConfig.setShowNoticeMessage(eshopConfigUtil.getParam(eshopConfigUtil.SHOW_NOTICE_MESSAGE));
 		return eshopConfig;
 	}
 
@@ -62,7 +63,12 @@ public class ConfigController {
 	public void add(HttpServletRequest request, HttpServletResponse response) {
 		String name = request.getParameter("name");
 		String value = request.getParameter("value");
-		eshopConfigUtil.addParam(name, value);
+		String description = request.getParameter("description");
+		Config config = new Config();
+		config.setName(name);
+		config.setDescription(description);
+		config.setValue(value);
+		eshopConfigUtil.addParam(config);
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
@@ -70,8 +76,14 @@ public class ConfigController {
 	public void update(HttpServletRequest request, HttpServletResponse response) {
 		String name = request.getParameter("name");
 		String value = request.getParameter("value");
+		String description = request.getParameter("description");
 		String id = request.getParameter("id");
-		eshopConfigUtil.updateParam(name, value, id);
+		Config config = new Config();
+		config.setName(name);
+		config.setDescription(description);
+		config.setValue(value);
+		config.setId(Integer.valueOf(id));
+		eshopConfigUtil.updateParam(config);
 	}
 
 	@SuppressWarnings("static-access")
@@ -103,6 +115,7 @@ public class ConfigController {
 		public String goldDiscount;
 		public String platinumDiscount;
 		public String diamondDiscount;
+		public String showNoticeMessage;
 
 		public String getXxcUrl() {
 			return xxcUrl;
@@ -174,6 +187,14 @@ public class ConfigController {
 
 		public void setDiamondDiscount(String diamondDiscount) {
 			this.diamondDiscount = diamondDiscount;
+		}
+
+		public String getShowNoticeMessage() {
+			return showNoticeMessage;
+		}
+
+		public void setShowNoticeMessage(String showNoticeMessage) {
+			this.showNoticeMessage = showNoticeMessage;
 		}
 
 	}

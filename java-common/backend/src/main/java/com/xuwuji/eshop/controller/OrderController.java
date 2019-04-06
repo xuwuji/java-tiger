@@ -58,7 +58,6 @@ public class OrderController {
 		JsonNode orderItemsListNode = orderNode.get("orderItemsList");
 		List<OrderItem> orderItemsList = new ArrayList<OrderItem>();
 		String orderId = toolUtil.getOrderId();
-		String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
 		for (int i = 0; i < orderItemsListNode.size(); i++) {
 			OrderItem item = new OrderItem();
 			item.setCount(orderItemsListNode.get(i).path("count").asInt());
@@ -71,7 +70,6 @@ public class OrderController {
 			item.setFormatName(formatName);
 			String productId = orderItemsListNode.get(i).path("productId").asText();
 			item.setProductId(productId);
-			item.setMainImgUrl(PRODUCT_IMG_BASE + productId + "-0.jpg");
 			item.setPrice(orderItemsListNode.get(i).path("price").asDouble());
 			orderItemsList.add(item);
 			orderItemDao.add(item);
@@ -148,10 +146,14 @@ public class OrderController {
 			@RequestParam("orderState") String orderState, HttpServletRequest request, HttpServletResponse response) {
 		List<Order> orders = new ArrayList<Order>();
 		orders = orderDao.getAllByOpenIdAndStatus(openId, orderState);
+		String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
 		for (Order order : orders) {
 			String orderId = order.getOrderId();
 			List<OrderItem> orderItemsList = new ArrayList<OrderItem>();
 			orderItemsList = orderItemDao.getByOrderId(orderId);
+			for (OrderItem orderItem : orderItemsList) {
+				orderItem.setMainImgUrl(PRODUCT_IMG_BASE + orderItem.getProductId() + "-0.jpg");
+			}
 			order.setOrderItemsList(orderItemsList);
 		}
 		return orders;

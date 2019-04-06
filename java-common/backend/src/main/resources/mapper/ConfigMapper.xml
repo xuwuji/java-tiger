@@ -9,17 +9,18 @@
 		<id property="id" column="id"></id>
 		<result property="name" column="type"></result>
 		<result property="value" column="type"></result>
+		<result property="description" column="type"></result>
 	</resultMap>
 
 	<insert id="addParam" parameterType="hashmap"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into eshopconfig
-		(name,value) values (#{name},#{value})
+		(name,value,description) values (#{name},#{value},#{description})
 	</insert>
 
 	<update id="update" parameterType="hashmap">
 		update eshopconfig set
-		name=#{name},value=#{value}
+		name=#{name},value=#{value},description=#{description}
 		where id=#{id};
 	</update>
 

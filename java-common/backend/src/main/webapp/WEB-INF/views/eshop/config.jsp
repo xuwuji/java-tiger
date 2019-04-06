@@ -64,6 +64,11 @@
 							name="txt_departmentname" data-bind="value:Name"
 							class="form-control" id="add-name" placeholder="名称">
 					</div>
+						<div class="form-group">
+						<label for="txt_departmentname">说明</label> <input type="text"
+							name="txt_departmentname" data-bind="value:Name"
+							class="form-control" id="add-description" placeholder="说明">
+					</div>
 					<div class="form-group">
 						<label for="txt_departmentname">值</label> <input type="text"
 							name="txt_departmentname" data-bind="value:Name"
@@ -105,10 +110,15 @@
 						name="txt_departmentname" data-bind="value:Name"
 						class="form-control" id="edit-name" placeholder="名称">
 				</div>
+					<div class="form-group">
+					<label for="txt_departmentname">说明</label> <input type="text"
+						name="txt_departmentname" data-bind="value:Name"
+						class="form-control" id="edit-description" placeholder="说明">
+				</div>
 				<div class="form-group">
 					<label for="txt_departmentname">值</label> <input type="text"
 						name="txt_departmentname" data-bind="value:Name"
-						class="form-control" id="edit-value" placeholder="跳转页面">
+						class="form-control" id="edit-value" placeholder="值">
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">
@@ -174,6 +184,10 @@
 						title : '名称',
 						align : 'center'
 					},{
+						field : 'description',
+						title : '说明',
+						align : 'center'
+					},{
 						field : 'value',
 						title : '值',
 						align : 'center'
@@ -204,12 +218,14 @@
 	$('#btn_submit').on("click", function() {
 		var name = $('#add-name').val();
 		var value = $('#add-value').val();
+		var description = $('#add-description').val();
 		$.ajax({
 			url : "/backend/config/add",
 			type : "post",
 			data : {
 				name : name,
 				value : value,
+				description:description,
 			},
 			success : function(status) {
 				initTable()
@@ -225,6 +241,7 @@
 			$('#edit-name').val(row.name);
 			$('#edit-value').val(row.value);
 			$('#edit-id').val(row.id);
+			$('#edit-description').val(row.description);
 		});
 	}
 
@@ -233,6 +250,7 @@
 		var name = $('#edit-name').val();
 		var value = $('#edit-value').val();
 		var id = $('#edit-id').val();
+		var description = $('#edit-description').val();
 		$.ajax({
 			url : "/backend/config/update",
 			type : "post",
@@ -240,6 +258,7 @@
 				id : id,
 				name : name,
 				value : value,
+				description:description,
 			},
 			success : function(status) {
 				initTable()

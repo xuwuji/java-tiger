@@ -21,6 +21,7 @@ public class ConfigDao {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("name", config.getName());
 			map.put("value", config.getValue());
+			map.put("description", config.getDescription());
 			mapper.addParam(map);
 			session.commit();
 		} catch (Exception e) {
@@ -38,6 +39,7 @@ public class ConfigDao {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("name", config.getName());
 			map.put("value", config.getValue());
+			map.put("description", config.getDescription());
 			map.put("id", config.getId());
 			mapper.update(map);
 			session.commit();

@@ -24,14 +24,14 @@ public class EshopConfigUtil {
 	public static final String PRE_SEARCH = "preSearch";
 	public static final String ARTICLE_PRE_SEARCH = "articlePreSearch";
 	public static final String noticeMsg = "noticeMsg";
-	public static final String BONUS="bonus";
-	public static final String SHARE_TITLE="shareTitle";
-	public static final String GOLD_DISCOUNT="goldDiscount";
-	public static final String PLATINUM_DISCOUNT="platinumDiscount";
-	public static final String DiAMOND_DISCOUNT="diamondDiscount";
+	public static final String SHOW_NOTICE_MESSAGE = "showNoticeMessage";
+	public static final String BONUS = "bonus";
+	public static final String SHARE_TITLE = "shareTitle";
+	public static final String GOLD_DISCOUNT = "goldDiscount";
+	public static final String PLATINUM_DISCOUNT = "platinumDiscount";
+	public static final String DiAMOND_DISCOUNT = "diamondDiscount";
 	public static Map<String, Object> configMap = new HashMap<String, Object>();
 
-	
 	public String getParam(String paramName) {
 		String value = "";
 		value = (String) configMap.get(paramName);
@@ -48,21 +48,14 @@ public class EshopConfigUtil {
 		return value;
 	}
 
-	public void addParam(String paramName, String value) {
-		Config config = new Config();
-		config.setName(paramName);
-		config.setValue(value);
+	public void addParam(Config config) {
 		configDao.add(config);
-		configMap.put(paramName, value);
+		configMap.put(config.getName(), config.getValue());
 	}
 
-	public void updateParam(String paramName, String value, String id) {
-		Config config = new Config();
-		config.setName(paramName);
-		config.setValue(value);
-		config.setId(Integer.valueOf(id));
+	public void updateParam(Config config) {
 		configDao.update(config);
-		configMap.put(paramName, value);
+		configMap.put(config.getName(), config.getValue());
 	}
 
 	public List<Config> getAll() {
