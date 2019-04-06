@@ -11,7 +11,7 @@
  Target Server Version : 50713
  File Encoding         : utf-8
 
- Date: 04/06/2019 12:00:43 PM
+ Date: 04/06/2019 13:59:23 PM
 */
 
 SET NAMES utf8;
@@ -213,26 +213,6 @@ INSERT INTO `format` VALUES ('1', '01 cilli', '138', '8', '1', null), ('2', 'rub
 COMMIT;
 
 -- ----------------------------
---  Table structure for `history`
--- ----------------------------
-DROP TABLE IF EXISTS `history`;
-CREATE TABLE `history` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `openId` varchar(255) DEFAULT NULL,
-  `productId` varchar(255) DEFAULT NULL,
-  `categoryId` varchar(255) DEFAULT NULL,
-  `time` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=gb2312 ROW_FORMAT=DYNAMIC;
-
--- ----------------------------
---  Records of `history`
--- ----------------------------
-BEGIN;
-INSERT INTO `history` VALUES ('1', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '15', '2', '2019-04-04 21:27:47'), ('2', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '15', '2', '2019-04-04 21:27:50'), ('3', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-04 21:28:22'), ('4', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '15', '2', '2019-04-04 21:28:47'), ('5', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '15', '2', '2019-04-04 21:28:58'), ('6', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '15', '2', '2019-04-04 21:30:36'), ('7', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '10', '2', '2019-04-04 21:45:15');
-COMMIT;
-
--- ----------------------------
 --  Table structure for `orderitem`
 -- ----------------------------
 DROP TABLE IF EXISTS `orderitem`;
@@ -340,6 +320,25 @@ INSERT INTO `promotion` VALUES ('12', '雅诗兰黛全场每满300减30', 'brand
 COMMIT;
 
 -- ----------------------------
+--  Table structure for `searchhistory`
+-- ----------------------------
+DROP TABLE IF EXISTS `searchhistory`;
+CREATE TABLE `searchhistory` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `kw` varchar(255) DEFAULT NULL,
+  `openId` varchar(255) DEFAULT NULL,
+  `time` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=gb2312;
+
+-- ----------------------------
+--  Records of `searchhistory`
+-- ----------------------------
+BEGIN;
+INSERT INTO `searchhistory` VALUES ('1', 'a', 'a', null), ('2', 'a', 'a', null), ('3', 'b', 'b', null), ('4', 'mac', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '2019-04-06 13:58:40');
+COMMIT;
+
+-- ----------------------------
 --  Table structure for `user`
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
@@ -362,6 +361,26 @@ CREATE TABLE `user` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `user` VALUES ('1', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', null, '1', '15', '1', '2000', null, '0', '0'), ('2', 'test', null, '1', '8', null, null, null, null, null), ('3', 'aaa', null, '1', '0', null, null, null, null, null), ('4', 'test', 'test', '1', '0', null, null, null, null, null);
+COMMIT;
+
+-- ----------------------------
+--  Table structure for `viewhistory`
+-- ----------------------------
+DROP TABLE IF EXISTS `viewhistory`;
+CREATE TABLE `viewhistory` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `openId` varchar(255) DEFAULT NULL,
+  `productId` varchar(255) DEFAULT NULL,
+  `categoryId` varchar(255) DEFAULT NULL,
+  `time` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=gb2312 ROW_FORMAT=DYNAMIC;
+
+-- ----------------------------
+--  Records of `viewhistory`
+-- ----------------------------
+BEGIN;
+INSERT INTO `viewhistory` VALUES ('1', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '15', '2', '2019-04-04 21:27:47'), ('2', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '15', '2', '2019-04-04 21:27:50'), ('3', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-04 21:28:22'), ('4', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '15', '2', '2019-04-04 21:28:47'), ('5', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '15', '2', '2019-04-04 21:28:58'), ('6', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '15', '2', '2019-04-04 21:30:36'), ('7', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '10', '2', '2019-04-04 21:45:15'), ('8', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-06 13:50:17'), ('9', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-06 13:50:42');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
