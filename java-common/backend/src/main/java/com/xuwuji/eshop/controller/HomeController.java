@@ -1,6 +1,7 @@
 package com.xuwuji.eshop.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,15 +17,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.xuwuji.eshop.db.dao.BannerDao;
 import com.xuwuji.eshop.db.dao.CategoryDao;
 import com.xuwuji.eshop.db.dao.ProductDao;
+import com.xuwuji.eshop.db.dao.SearchHistoryDao;
 import com.xuwuji.eshop.db.dao.UserDao;
+import com.xuwuji.eshop.db.dao.ViewHistoryDao;
 import com.xuwuji.eshop.model.Banner;
 import com.xuwuji.eshop.model.BannerItem;
 import com.xuwuji.eshop.model.Category;
 import com.xuwuji.eshop.model.Img;
 import com.xuwuji.eshop.model.Product;
+import com.xuwuji.eshop.model.SearchHistory;
 import com.xuwuji.eshop.model.SortEnum;
 import com.xuwuji.eshop.model.Theme;
 import com.xuwuji.eshop.model.User;
+import com.xuwuji.eshop.model.ViewHistory;
 import com.xuwuji.eshop.util.EshopConfigUtil;
 import com.xuwuji.eshop.util.ProductUtil;
 
@@ -39,6 +44,10 @@ public class HomeController {
 	private ProductDao productDao;
 	@Autowired
 	private UserDao userDao;
+	@Autowired
+	private ViewHistoryDao viewHistoryDao;
+	@Autowired
+	private SearchHistoryDao searchHistoryDao;
 
 	@Autowired
 	private ProductUtil productUtil;
@@ -123,14 +132,15 @@ public class HomeController {
 	@RequestMapping(value = "/like", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Product> getLike(HttpServletRequest request, HttpServletResponse response) {
-		List<Category> categories = new ArrayList<Category>();
-		categories = categoryDao.getRecommend();
 		String openId = request.getParameter("openId");
 		User user = new User();
 		user.setOpenId(openId);
 		user = userDao.getByCondition(user);
 		List<Product> results = new ArrayList<Product>();
-		// new user
+		HashSet<Integer> ids = new HashSet<Integer>();
+		// recommend
+		List<Category> categories = new ArrayList<Category>();
+		categories = categoryDao.getRecommend();
 		if (user.getLevel() == null || user.getLevel().isEmpty()) {
 			for (Category c : categories) {
 				int categoryId = c.getId();
@@ -143,17 +153,57 @@ public class HomeController {
 					products = products.subList(0, products.size());
 				}
 				for (Product product : products) {
-					if (product.getMainImgUrl() == null || product.getMainImgUrl().isEmpty()) {
-						String mainImgUrl = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + product.getId()
-								+ "-0.jpg";
-						product.setMainImgUrl(mainImgUrl);
+					if (!ids.contains(product.getId())) {
+						results.add(product);
+						ids.add(product.getId());
 					}
-					results.add(product);
 				}
 			}
 		}
-		// old user
-
+		// view history
+		List<ViewHistory> viewHistoryList = viewHistoryDao.getAllByOpenId(openId);
+		for (ViewHistory viewHistory : viewHistoryList) {
+			String categoryId = viewHistory.getCategoryId();
+			List<Product> products = new ArrayList<Product>();
+			products = productDao.getActiveByCategory(String.valueOf(categoryId));
+			products = productUtil.sort(products, SortEnum.SALE);
+			if (products.size() > 5) {
+				products = products.subList(0, 5);
+			} else {
+				products = products.subList(0, products.size());
+			}
+			for (Product product : products) {
+				if (!ids.contains(product.getId())) {
+					results.add(product);
+					ids.add(product.getId());
+				}
+			}
+		}
+		// search kw history
+		List<SearchHistory> searchHistoryList = searchHistoryDao.getAllByOpenId(openId);
+		for (SearchHistory searchHistory : searchHistoryList) {
+			String kw = searchHistory.getKw();
+			List<Product> products = new ArrayList<Product>();
+			products = productDao.getActiveByKW(kw);
+			products = productUtil.sort(products, SortEnum.SALE);
+			if (products.size() > 5) {
+				products = products.subList(0, 5);
+			} else {
+				products = products.subList(0, products.size());
+			}
+			for (Product product : products) {
+				if (!ids.contains(product.getId())) {
+					results.add(product);
+					ids.add(product.getId());
+				}
+			}
+		}
+		for (Product product : results) {
+//			if (product.getMainImgUrl() == null || product.getMainImgUrl().isEmpty()) {
+			String mainImgUrl = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + product.getId() + "-0.jpg";
+			product.setMainImgUrl(mainImgUrl);
+//			}
+		}
 		return results;
 	}
 
