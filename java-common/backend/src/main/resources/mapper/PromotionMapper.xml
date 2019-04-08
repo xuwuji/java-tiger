@@ -29,7 +29,7 @@
 
 	<update id="update" parameterType="hashmap">
 		update promotion set
-		name=#{name},target=#{target},type=#{type},#{rule}=#{rule},#{total}=#{total},amount=#{amount},
+		name=#{name},target=#{target},type=#{type},rule=#{rule},total=#{total},amount=#{amount},
 		reduction=#{reduction},gift=#{gift},brandId=#{brandId},categoryId=#{categoryId}
 		where id=#{id};
 	</update>
