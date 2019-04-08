@@ -19,6 +19,7 @@ public class ProductDao {
 	@Autowired
 	private EshopConfigUtil eshopConfigUtil;
 
+	@SuppressWarnings("static-access")
 	public void add(Product product) {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {

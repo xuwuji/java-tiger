@@ -181,4 +181,35 @@ public class AdminProductController {
 		productDao.update(product);
 	}
 
+	
+	@RequestMapping(value = "/local/add", method = RequestMethod.GET)
+	@ResponseBody
+	public void addLocal(HttpServletRequest request, HttpServletResponse response) {
+		String name = request.getParameter("name");
+		String desc = request.getParameter("desc");
+		String price = request.getParameter("price");
+		String inventory = request.getParameter("inventory");
+		String salesCount = request.getParameter("salesCount");
+		//String mainImgUrl = request.getParameter("mainImgUrl");
+		String parentCategoryId = request.getParameter("parentCategoryId");
+		String categoryId = request.getParameter("categoryId");
+		//String brandNameCN = request.getParameter("brandNameCN");
+		//String brandNameEN = request.getParameter("brandNameEN");
+		for(int i=0;i<100;i++) {
+			Product product = new Product();
+			product.setName("test"+i);
+			product.setDescription("test"+i);
+			product.setParentCategoryId("6");
+			product.setPrice(10);
+			product.setCategoryId("4");
+			productDao.add(product);
+		}
+	
+		
+		//product.setBrandNameCN(brandNameCN);
+		//product.setBrandNameEN(brandNameEN);
+		
+		//product.setMainImgUrl(mainImgUrl);
+		
+	}
 }
