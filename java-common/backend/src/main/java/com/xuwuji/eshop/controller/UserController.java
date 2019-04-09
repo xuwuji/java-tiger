@@ -31,7 +31,7 @@ public class UserController {
 		String openId = request.getParameter("openId");
 		String wechatId = request.getParameter("wechatId");
 		User user = new User();
-		//System.out.println(openId);
+		// System.out.println(openId);
 		if (openId != null && !openId.isEmpty()) {
 			user.setOpenId(openId);
 		}
@@ -86,6 +86,30 @@ public class UserController {
 			user.setWechatId(wechatId);
 		}
 		userDao.add(user);
+	}
+
+	@RequestMapping(value = "/checkIn", method = RequestMethod.GET)
+	@ResponseBody
+	public void checkIn(HttpServletRequest request, HttpServletResponse response) {
+		String openId = request.getParameter("openId");
+		String point = request.getParameter("point");
+		User user = new User();
+		if (openId != null && !openId.isEmpty()) {
+			user.setOpenId(openId);
+		} else {
+			return;
+		}
+		user = userDao.getByCondition(user);
+		if (user == null || user.getLevel() == null || user.getLevel().isEmpty()) {
+			user.setPoints(Double.valueOf(point));
+			user.setOpenId(openId);
+			user.setLevel("0");
+			userDao.add(user);
+		} else {
+			user.setPoints(user.getPoints() + Double.valueOf(point));
+			System.out.print(user);
+			userDao.updatePoints(user);
+		}
 	}
 
 }

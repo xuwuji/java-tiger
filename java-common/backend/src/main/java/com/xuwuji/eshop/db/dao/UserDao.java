@@ -74,6 +74,24 @@ public class UserDao {
 		}
 	}
 
+	public void updatePoints(User user) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			UserMapper mapper = session.getMapper(UserMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("openId", user.getOpenId());
+			map.put("id", user.getId());
+			map.put("points", user.getPoints());
+			mapper.updatePoints(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+	}
+
 	public List<User> getAll() {
 		SqlSession session = SessionFactory.openDEVSession();
 		List<User> result = new ArrayList<User>();

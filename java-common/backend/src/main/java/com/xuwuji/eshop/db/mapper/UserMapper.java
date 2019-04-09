@@ -12,6 +12,8 @@ public interface UserMapper {
 	public void update(HashMap<String, Object> map);
 
 	public void updateState(HashMap<String, Object> map);
+	
+	public void updatePoints(HashMap<String, Object> map);
 
 	public List<User> getByCondition(HashMap<String, Object> map);
 

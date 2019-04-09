@@ -9,12 +9,13 @@ public class User {
 	private String wechatId;
 	private String state;
 	private double bonusAmount;
-	//@{link UserLevel}
+	// @{link UserLevel}
 	private String level;
 	private double totalPay;
 	private Date membershipFirstDay;
 	private double amountAfterMSFD;
 	private double amountThisMonth;
+	private double points;
 
 	public int getId() {
 		return id;
@@ -94,6 +95,22 @@ public class User {
 
 	public void setAmountThisMonth(double amountThisMonth) {
 		this.amountThisMonth = amountThisMonth;
+	}
+
+	public double getPoints() {
+		return points;
+	}
+
+	public void setPoints(double points) {
+		this.points = points;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", openId=" + openId + ", wechatId=" + wechatId + ", state=" + state
+				+ ", bonusAmount=" + bonusAmount + ", level=" + level + ", totalPay=" + totalPay
+				+ ", membershipFirstDay=" + membershipFirstDay + ", amountAfterMSFD=" + amountAfterMSFD
+				+ ", amountThisMonth=" + amountThisMonth + ", points=" + points + "]";
 	}
 
 }
