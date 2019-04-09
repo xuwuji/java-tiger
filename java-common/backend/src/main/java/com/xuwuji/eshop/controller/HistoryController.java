@@ -57,7 +57,11 @@ public class HistoryController {
 		}
 		for (ViewHistory history : list) {
 			String productId = history.getProductId();
+			System.out.print(productId);
 			Product product = productDao.getById(productId);
+			if(product==null||!product.getState().equals("1")) {
+				continue;
+			}
 			if (product.getMainImgUrl() == null || product.getMainImgUrl().isEmpty()) {
 				String mainImgUrl = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + product.getId()
 						+ "-0.jpg";
