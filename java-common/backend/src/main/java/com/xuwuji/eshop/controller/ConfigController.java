@@ -35,6 +35,7 @@ public class ConfigController {
 		eshopConfig.setPlatinumDiscount(eshopConfigUtil.getParam(eshopConfigUtil.PLATINUM_DISCOUNT));
 		eshopConfig.setDiamondDiscount(eshopConfigUtil.getParam(eshopConfigUtil.DiAMOND_DISCOUNT));
 		eshopConfig.setShowNoticeMessage(eshopConfigUtil.getParam(eshopConfigUtil.SHOW_NOTICE_MESSAGE));
+		eshopConfig.setLicenceImgUrl(eshopConfigUtil.getParam(eshopConfigUtil.LICENCE_IMG_URL));
 		return eshopConfig;
 	}
 
@@ -116,6 +117,7 @@ public class ConfigController {
 		public String platinumDiscount;
 		public String diamondDiscount;
 		public String showNoticeMessage;
+		public String licenceImgUrl;
 
 		public String getXxcUrl() {
 			return xxcUrl;
@@ -196,6 +198,16 @@ public class ConfigController {
 		public void setShowNoticeMessage(String showNoticeMessage) {
 			this.showNoticeMessage = showNoticeMessage;
 		}
+
+		public String getLicenceImgUrl() {
+			return licenceImgUrl;
+		}
+
+		public void setLicenceImgUrl(String licenceImgUrl) {
+			this.licenceImgUrl = licenceImgUrl;
+		}
+		
+		
 
 	}
 

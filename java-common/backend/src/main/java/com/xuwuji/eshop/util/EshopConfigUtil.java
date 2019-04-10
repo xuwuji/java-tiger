@@ -31,6 +31,7 @@ public class EshopConfigUtil {
 	public static final String GOLD_DISCOUNT = "goldDiscount";
 	public static final String PLATINUM_DISCOUNT = "platinumDiscount";
 	public static final String DiAMOND_DISCOUNT = "diamondDiscount";
+	public static final String LICENCE_IMG_URL = "licenceImgUrl";
 	public static Map<String, Object> configMap = new HashMap<String, Object>();
 
 	public String getParam(String paramName) {
