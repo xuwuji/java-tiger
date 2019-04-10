@@ -20,6 +20,7 @@ public class EshopConfigUtil {
 	public static final String BANNER_IMG_BASE = "bannerImgBase";
 	public static final String POPULAR_PRODUCTS = "popularProducts";
 	public static final String COUNTRY_FLAG_BASE = "countryFlagImgBase";
+	public static final String BRAND_IMG_BASE = "brandImgBase";
 	public static final String xxcUrl = "xxcUrl";
 	public static final String PRE_SEARCH = "preSearch";
 	public static final String ARTICLE_PRE_SEARCH = "articlePreSearch";

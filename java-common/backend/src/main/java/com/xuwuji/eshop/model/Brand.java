@@ -15,6 +15,7 @@ public class Brand {
 	private String country;
 	private String countryFlagImg;
 	private String state;
+	private String imgUrl;
 
 	public int getId() {
 		return id;
@@ -70,6 +71,14 @@ public class Brand {
 
 	public void setState(String state) {
 		this.state = state;
+	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 }

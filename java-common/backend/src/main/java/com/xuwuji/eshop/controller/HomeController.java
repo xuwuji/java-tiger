@@ -204,6 +204,10 @@ public class HomeController {
 			product.setMainImgUrl(mainImgUrl);
 //			}
 		}
+		//max 50
+		if(results.size()>50) {
+			results=results.subList(0, 50);
+		}
 		return results;
 	}
 

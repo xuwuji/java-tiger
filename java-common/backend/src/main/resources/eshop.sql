@@ -11,7 +11,7 @@
  Target Server Version : 50725
  File Encoding         : 65001
 
- Date: 09/04/2019 19:20:47
+ Date: 10/04/2019 18:24:13
 */
 
 SET NAMES utf8mb4;
@@ -61,7 +61,7 @@ CREATE TABLE `banneritem`  (
   `state` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT '0',
   `name` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   `bannerId` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
-  `createTime` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `createTime` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `lastModifyTime` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `info` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
@@ -104,24 +104,26 @@ CREATE TABLE `brand`  (
   `brandLevel` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   `country` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   `state` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT '0',
-  `createTime` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `createTime` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `lastModifyTime` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
+  `imgUrl` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of brand
 -- ----------------------------
-INSERT INTO `brand` VALUES (1, '圣罗兰', 'YSL', '2', '法国', '1', '2019-03-05 14:21:52', NULL);
-INSERT INTO `brand` VALUES (2, '阿玛尼', 'Giorgio Armani', '2', '法国', '1', '2019-03-05 14:21:52', NULL);
-INSERT INTO `brand` VALUES (3, 'NYX', 'NYX', '1', '美国', '1', '2019-03-05 14:21:52', NULL);
-INSERT INTO `brand` VALUES (4, '井田', 'canmake', '0', '日本', '1', '2019-03-05 14:21:52', NULL);
-INSERT INTO `brand` VALUES (5, '魅可', 'mac', '1', '美国', '1', '2019-03-05 14:21:52', NULL);
-INSERT INTO `brand` VALUES (6, '汤姆福特', 'TF', '2', '法国', '1', '2019-03-11 17:07:31', '2019-03-11 17:07:44');
-INSERT INTO `brand` VALUES (7, '雅诗兰黛', 'Estee Lauder', '2', '法国', '1', '2019-03-11 17:10:47', '2019-03-11 17:10:49');
-INSERT INTO `brand` VALUES (8, '蒂佳婷', 'Dr.Jart+', '1', '韩国', '1', '2019-03-12 12:44:15', '2019-03-12 12:44:18');
-INSERT INTO `brand` VALUES (9, '安耐晒', 'ANESSA', '2', '日本', '1', '2019-03-12 12:59:34', '2019-03-12 12:59:42');
-INSERT INTO `brand` VALUES (10, '肌司妍', 'JM solution', '1', '韩国', '0', '2019-03-18 16:33:58', NULL);
+INSERT INTO `brand` VALUES (1, '圣罗兰', 'YSL', '2', '法国', '1', '2019-03-05 14:21:52', NULL, NULL);
+INSERT INTO `brand` VALUES (2, '阿玛尼', 'Giorgio Armani', '2', '法国', '1', '2019-03-05 14:21:52', NULL, NULL);
+INSERT INTO `brand` VALUES (3, 'NYX', 'NYX', '1', '美国', '1', '2019-03-05 14:21:52', NULL, NULL);
+INSERT INTO `brand` VALUES (4, '井田', 'canmake', '0', '日本', '1', '2019-03-05 14:21:52', NULL, NULL);
+INSERT INTO `brand` VALUES (5, '魅可', 'mac', '1', '美国', '1', '2019-03-05 14:21:52', NULL, NULL);
+INSERT INTO `brand` VALUES (6, '汤姆福特', 'TF', '2', '法国', '1', '2019-03-11 17:07:31', '2019-03-11 17:07:44', NULL);
+INSERT INTO `brand` VALUES (7, '雅诗兰黛', 'Estee Lauder', '2', '法国', '1', '2019-03-11 17:10:47', '2019-03-11 17:10:49', NULL);
+INSERT INTO `brand` VALUES (8, '蒂佳婷', 'Dr.Jart+', '1', '韩国', '1', '2019-03-12 12:44:15', '2019-03-12 12:44:18', NULL);
+INSERT INTO `brand` VALUES (9, '安耐晒', 'ANESSA', '2', '日本', '1', '2019-03-12 12:59:34', '2019-03-12 12:59:42', NULL);
+INSERT INTO `brand` VALUES (10, '肌司妍', 'JM solution', '1', '韩国', '0', '2019-03-18 16:33:58', NULL, NULL);
+INSERT INTO `brand` VALUES (11, '迪奥', 'Dior', '2', '法国', '1', '2019-04-10 18:20:06', '2019-04-10 18:20:12', NULL);
 
 -- ----------------------------
 -- Table structure for category
@@ -135,7 +137,7 @@ CREATE TABLE `category`  (
   `imgUrl` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT '' COMMENT '显示的图片url',
   `state` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT '0' COMMENT '0下架 1上架',
   `recommend` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT '0' COMMENT '0不推荐 1推荐',
-  `createTime` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `createTime` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `lastModifyTime` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
@@ -189,7 +191,7 @@ CREATE TABLE `eshopconfig`  (
   `value` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   `description` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of eshopconfig
@@ -208,6 +210,7 @@ INSERT INTO `eshopconfig` VALUES (11, 'goldDiscount', '0.98', NULL);
 INSERT INTO `eshopconfig` VALUES (12, 'platinumDiscount', '0.93', NULL);
 INSERT INTO `eshopconfig` VALUES (13, 'diamondDiscount', '0.88', NULL);
 INSERT INTO `eshopconfig` VALUES (14, 'showNoticeMessage', '0', NULL);
+INSERT INTO `eshopconfig` VALUES (15, 'brandImgBase', 'http://ppf0hsoua.bkt.clouddn.com/brand/', '品牌的图片base地址');
 
 -- ----------------------------
 -- Table structure for eshoporder
@@ -407,7 +410,7 @@ CREATE TABLE `parentcategory`  (
   `name` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   `state` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL COMMENT '状态，下架0，上架1',
   `lastModifyTime` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
-  `createTime` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `createTime` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
@@ -441,7 +444,7 @@ CREATE TABLE `product`  (
   `brandId` int(11) NULL DEFAULT NULL,
   `state` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT '0',
   `bannerItemId` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT '0',
-  `createTime` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `createTime` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `lastModifyTime` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `imgUrl1` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   `imgUrl2` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
@@ -463,7 +466,7 @@ INSERT INTO `product` VALUES (5, 'a', 'd', NULL, NULL, 31, 213, 'sdsad', NULL, N
 INSERT INTO `product` VALUES (6, 'xcz', 'wewq', NULL, NULL, 213, 21, 'sdaas', NULL, NULL, NULL, '0', NULL, '2019-03-05 14:17:56', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `product` VALUES (7, 'asd', 'sadsa', NULL, NULL, 321, 12, 'sad', '4', NULL, NULL, '0', NULL, '2019-03-05 14:17:56', '2019-03-24 01:03:40', NULL, NULL, NULL, NULL, NULL, '1');
 INSERT INTO `product` VALUES (8, 'MAC唇膏', 'MAC唇膏', 138.00, NULL, 100, 32, NULL, '2', '5', 5, '1', '2', '2019-03-05 14:17:56', '2019-03-11 17:18:48', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `product` VALUES (9, 'Dior魅惑唇膏', 'Dior魅惑唇膏', 288.00, 0.00, 0, 13, NULL, '2', '5', 1, '1', '2', '2019-03-05 14:17:56', '2019-04-09 10:55:53', NULL, NULL, NULL, NULL, NULL, '1');
+INSERT INTO `product` VALUES (9, 'Dior魅惑唇膏', 'Dior魅惑唇膏', 288.00, 0.00, 0, 13, NULL, '2', '5', 11, '1', '2', '2019-03-05 14:17:56', '2019-04-10 18:20:34', NULL, NULL, NULL, NULL, NULL, '1');
 INSERT INTO `product` VALUES (10, '阿玛尼漆亮水漾唇釉', '阿玛尼漆亮水漾唇釉', 258.00, NULL, 100, 13, 'http://i1.bvimg.com/677237/28b8fff357968901.jpg', '2', '5', 2, '1', '2', '2019-03-05 14:17:56', '2019-03-11 17:18:48', NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `product` VALUES (11, 'NYX 16色眼影盘', 'NYX 16色眼影盘', 175.00, NULL, 100, 19, 'http://i1.bvimg.com/677237/a7a31b8795c57402.jpg', '3', '5', 3, '1', '0', '2019-03-05 14:17:56', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `product` VALUES (12, 'MAC 魅可 时尚焦点小眼影', 'MAC 魅可 时尚焦点小眼影', 148.00, NULL, 100, 19, 'http://i1.bvimg.com/677237/1aa814981de97c7a.jpg', '3', '5', 5, '1', '0', '2019-03-05 14:17:56', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -672,7 +675,7 @@ CREATE TABLE `viewhistory`  (
   `categoryId` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   `time` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 78 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of viewhistory
@@ -704,5 +707,54 @@ INSERT INTO `viewhistory` VALUES (25, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '21', '4',
 INSERT INTO `viewhistory` VALUES (26, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-09 11:00:57');
 INSERT INTO `viewhistory` VALUES (27, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-09 11:03:27');
 INSERT INTO `viewhistory` VALUES (28, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '10', '2', '2019-04-09 11:03:33');
+INSERT INTO `viewhistory` VALUES (29, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 16:16:23');
+INSERT INTO `viewhistory` VALUES (30, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 16:17:34');
+INSERT INTO `viewhistory` VALUES (31, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 16:18:22');
+INSERT INTO `viewhistory` VALUES (32, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 16:18:50');
+INSERT INTO `viewhistory` VALUES (33, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 16:18:52');
+INSERT INTO `viewhistory` VALUES (34, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 16:19:16');
+INSERT INTO `viewhistory` VALUES (35, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 16:20:01');
+INSERT INTO `viewhistory` VALUES (36, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 16:20:03');
+INSERT INTO `viewhistory` VALUES (37, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 16:20:21');
+INSERT INTO `viewhistory` VALUES (38, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 16:20:39');
+INSERT INTO `viewhistory` VALUES (39, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 16:21:11');
+INSERT INTO `viewhistory` VALUES (40, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 16:21:23');
+INSERT INTO `viewhistory` VALUES (41, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 16:21:37');
+INSERT INTO `viewhistory` VALUES (42, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 16:21:39');
+INSERT INTO `viewhistory` VALUES (43, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 16:21:43');
+INSERT INTO `viewhistory` VALUES (44, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 16:22:09');
+INSERT INTO `viewhistory` VALUES (45, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 16:22:33');
+INSERT INTO `viewhistory` VALUES (46, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 16:22:49');
+INSERT INTO `viewhistory` VALUES (47, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 17:34:51');
+INSERT INTO `viewhistory` VALUES (48, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 17:35:05');
+INSERT INTO `viewhistory` VALUES (49, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 17:39:25');
+INSERT INTO `viewhistory` VALUES (50, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 17:41:49');
+INSERT INTO `viewhistory` VALUES (51, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 17:43:53');
+INSERT INTO `viewhistory` VALUES (52, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 17:49:23');
+INSERT INTO `viewhistory` VALUES (53, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 17:49:28');
+INSERT INTO `viewhistory` VALUES (54, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 17:49:57');
+INSERT INTO `viewhistory` VALUES (55, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 17:50:04');
+INSERT INTO `viewhistory` VALUES (56, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 17:50:26');
+INSERT INTO `viewhistory` VALUES (57, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 17:50:36');
+INSERT INTO `viewhistory` VALUES (58, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 17:51:19');
+INSERT INTO `viewhistory` VALUES (59, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 17:51:27');
+INSERT INTO `viewhistory` VALUES (60, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 17:52:22');
+INSERT INTO `viewhistory` VALUES (61, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 17:52:25');
+INSERT INTO `viewhistory` VALUES (62, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 17:53:15');
+INSERT INTO `viewhistory` VALUES (63, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 17:54:01');
+INSERT INTO `viewhistory` VALUES (64, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 17:55:03');
+INSERT INTO `viewhistory` VALUES (65, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 17:59:53');
+INSERT INTO `viewhistory` VALUES (66, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 18:03:43');
+INSERT INTO `viewhistory` VALUES (67, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 18:03:48');
+INSERT INTO `viewhistory` VALUES (68, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 18:04:09');
+INSERT INTO `viewhistory` VALUES (69, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 18:14:17');
+INSERT INTO `viewhistory` VALUES (70, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 18:14:57');
+INSERT INTO `viewhistory` VALUES (71, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 18:15:03');
+INSERT INTO `viewhistory` VALUES (72, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 18:15:22');
+INSERT INTO `viewhistory` VALUES (73, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 18:15:51');
+INSERT INTO `viewhistory` VALUES (74, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 18:16:04');
+INSERT INTO `viewhistory` VALUES (75, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 18:17:27');
+INSERT INTO `viewhistory` VALUES (76, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 18:20:40');
+INSERT INTO `viewhistory` VALUES (77, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '9', '2', '2019-04-10 18:22:17');
 
 SET FOREIGN_KEY_CHECKS = 1;

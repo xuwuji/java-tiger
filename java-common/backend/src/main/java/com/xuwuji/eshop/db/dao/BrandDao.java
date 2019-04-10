@@ -23,6 +23,7 @@ public class BrandDao {
 			map.put("brandEN", brand.getBrandEN());
 			map.put("country", brand.getCountry());
 			map.put("brandLevel", brand.getBrandLevel());
+			map.put("imgUrl", brand.getImgUrl());
 			mapper.add(map);
 			session.commit();
 		} catch (Exception e) {
@@ -42,6 +43,7 @@ public class BrandDao {
 			map.put("brandEN", brand.getBrandEN());
 			map.put("country", brand.getCountry());
 			map.put("brandLevel", brand.getBrandLevel());
+			map.put("imgUrl", brand.getImgUrl());
 			mapper.update(map);
 			session.commit();
 		} catch (Exception e) {
@@ -83,7 +85,6 @@ public class BrandDao {
 			session.close();
 		}
 	};
-	
 
 	public List<Brand> getAll() {
 		SqlSession session = SessionFactory.openDEVSession();
@@ -153,7 +154,6 @@ public class BrandDao {
 		return result;
 	}
 
-	
 	public List<Brand> getActiveAllByCountry(String country) {
 		SqlSession session = SessionFactory.openDEVSession();
 		List<Brand> result = new ArrayList<Brand>();

@@ -52,11 +52,11 @@ public class BrandController {
 		}
 		return alphaBrandList;
 	}
-	
+
 	@RequestMapping(value = "/getAlphaBrandListByCountry", method = RequestMethod.GET)
 	@ResponseBody
 	public AlphaBrandList getAlphaBrandListByCountry(HttpServletRequest request, HttpServletResponse response) {
-		String country=request.getParameter("country");
+		String country = request.getParameter("country");
 		List<Brand> list = new ArrayList<Brand>();
 		list = brandDao.getActiveAllByCountry(country);
 		AlphaBrandList alphaBrandList = new AlphaBrandList();
@@ -86,11 +86,11 @@ public class BrandController {
 			Brand brand = list.get(0);
 			brand.setCountryFlagImg(
 					eshopConfigUtil.getParam(eshopConfigUtil.COUNTRY_FLAG_BASE) + brand.getCountry() + ".jpg");
-		return brand;
+			brand.setImgUrl(eshopConfigUtil.getParam(eshopConfigUtil.BRAND_IMG_BASE) + brand.getId() + ".jpg");
+			return brand;
 		}
 		return null;
 	}
-	
 
 	@RequestMapping(value = "/getActiveCountry", method = RequestMethod.GET)
 	@ResponseBody
