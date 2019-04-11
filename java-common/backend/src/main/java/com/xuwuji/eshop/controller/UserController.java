@@ -93,6 +93,7 @@ public class UserController {
 	public void checkIn(HttpServletRequest request, HttpServletResponse response) {
 		String openId = request.getParameter("openId");
 		String point = request.getParameter("point");
+		String continuousNum = request.getParameter("continuousNum");
 		User user = new User();
 		if (openId != null && !openId.isEmpty()) {
 			user.setOpenId(openId);
@@ -100,15 +101,21 @@ public class UserController {
 			return;
 		}
 		user = userDao.getByCondition(user);
+		//System.out.print(user);
+		// new
 		if (user == null || user.getLevel() == null || user.getLevel().isEmpty()) {
 			user.setPoints(Double.valueOf(point));
 			user.setOpenId(openId);
 			user.setLevel("0");
+			user.setLastCheckInDate(new Date());
+			user.setContinuousNum(1);
+			System.out.print(user);
 			userDao.add(user);
 		} else {
 			user.setPoints(user.getPoints() + Double.valueOf(point));
-			System.out.print(user);
-			userDao.updatePoints(user);
+			user.setLastCheckInDate(new Date());
+			user.setContinuousNum(Integer.valueOf(continuousNum));
+			userDao.updatePointsInfo(user);
 		}
 	}
 

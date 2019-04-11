@@ -22,6 +22,9 @@ public class UserDao {
 			map.put("openId", user.getOpenId());
 			map.put("wechatId", user.getWechatId());
 			map.put("bonusAmount", user.getBonusAmount());
+			map.put("lastCheckInDate", user.getLastCheckInDate());
+			map.put("continuousNum", user.getContinuousNum());
+			map.put("points", user.getPoints());
 			mapper.add(map);
 			session.commit();
 		} catch (Exception e) {
@@ -83,6 +86,62 @@ public class UserDao {
 			map.put("id", user.getId());
 			map.put("points", user.getPoints());
 			mapper.updatePoints(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+	}
+
+	public void updateLastCheckInDate(User user) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			UserMapper mapper = session.getMapper(UserMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("id", user.getId());
+			map.put("openId", user.getOpenId());
+			map.put("lastCheckInDate", user.getLastCheckInDate());
+			mapper.updateLastCheckInDate(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+	}
+
+	public void updateContinuousNum(User user) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			UserMapper mapper = session.getMapper(UserMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("id", user.getId());
+			map.put("openId", user.getOpenId());
+			map.put("continuousNum", user.getContinuousNum());
+			mapper.updateContinuousNum(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+	}
+	
+	public void updatePointsInfo(User user) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			UserMapper mapper = session.getMapper(UserMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("id", user.getId());
+			map.put("openId", user.getOpenId());
+			map.put("lastCheckInDate", user.getLastCheckInDate());
+			map.put("continuousNum", user.getContinuousNum());
+			map.put("points", user.getPoints());
+			mapper.updatePointsInfo(map);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();

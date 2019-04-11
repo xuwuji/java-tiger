@@ -16,6 +16,8 @@ public class User {
 	private double amountAfterMSFD;
 	private double amountThisMonth;
 	private double points;
+	private Date lastCheckInDate;
+	private int continuousNum;
 
 	public int getId() {
 		return id;
@@ -105,12 +107,29 @@ public class User {
 		this.points = points;
 	}
 
+	public Date getLastCheckInDate() {
+		return lastCheckInDate;
+	}
+
+	public void setLastCheckInDate(Date lastCheckInDate) {
+		this.lastCheckInDate = lastCheckInDate;
+	}
+
+	public int getContinuousNum() {
+		return continuousNum;
+	}
+
+	public void setContinuousNum(int continuousNum) {
+		this.continuousNum = continuousNum;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", openId=" + openId + ", wechatId=" + wechatId + ", state=" + state
 				+ ", bonusAmount=" + bonusAmount + ", level=" + level + ", totalPay=" + totalPay
 				+ ", membershipFirstDay=" + membershipFirstDay + ", amountAfterMSFD=" + amountAfterMSFD
-				+ ", amountThisMonth=" + amountThisMonth + ", points=" + points + "]";
+				+ ", amountThisMonth=" + amountThisMonth + ", points=" + points + ", lastCheckInDate=" + lastCheckInDate
+				+ ", continuousNum=" + continuousNum + "]";
 	}
 
 }

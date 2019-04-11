@@ -200,7 +200,7 @@
 			align : 'center',
 			formatter : function(value, row, index) {
 				if (row.level) {
-					 if (row.level == '0') {
+					if (row.level == '0') {
 						return "大众";
 					} else if (row.level == '1') {
 						return "黄金";
@@ -216,6 +216,14 @@
 		}, {
 			field : 'totalPay',
 			title : '累计消费金额',
+			align : 'center'
+		}, {
+			field : 'lastCheckInDate',
+			title : '最后一次签到日期',
+			align : 'center'
+		}, {
+			field : 'continuousNum',
+			title : '连续签到天数',
 			align : 'center'
 		}, {
 			field : 'state',
@@ -304,8 +312,8 @@
 		var wechatId = $('#edit-wechatId').val();
 		var state = $('#edit-state').val();
 		var id = $('#edit-id').val();
-		var totalPay=$('#edit-totalPay').val();
-		var level=$('#edit-level').val();
+		var totalPay = $('#edit-totalPay').val();
+		var level = $('#edit-level').val();
 		$.ajax({
 			url : "/backend/admin/user/update",
 			type : "post",
@@ -315,8 +323,8 @@
 				wechatId : wechatId,
 				state : state,
 				bonusAmount : bonusAmount,
-				level:level,
-				totalPay:totalPay,
+				level : level,
+				totalPay : totalPay,
 			},
 			success : function(status) {
 				$table.bootstrapTable('refresh');

@@ -11,7 +11,7 @@
  Target Server Version : 50725
  File Encoding         : 65001
 
- Date: 10/04/2019 18:24:13
+ Date: 11/04/2019 14:26:10
 */
 
 SET NAMES utf8mb4;
@@ -86,7 +86,7 @@ INSERT INTO `banneritem` VALUES (13, '', '../productList/productList?id=10&type=
 INSERT INTO `banneritem` VALUES (14, '', '../productList/productList?id=12&type=category', '1', '眼霜', '2', '2019-03-14 09:47:47', '2019-03-24 14:01:39', NULL);
 INSERT INTO `banneritem` VALUES (15, '', '../productList/productList?id=11&type=category', '1', '乳液', '2', '2019-03-14 09:48:05', '2019-03-24 14:01:39', NULL);
 INSERT INTO `banneritem` VALUES (16, '', '../brand/brand', '1', '品牌闪购', '4', '2019-03-15 10:58:50', '2019-03-24 14:01:39', '满300减50');
-INSERT INTO `banneritem` VALUES (17, '', '../', '1', '每日上新', '4', '2019-03-15 11:12:45', '2019-03-24 14:01:39', '科颜氏淡斑精华');
+INSERT INTO `banneritem` VALUES (17, '', '../points/points', '1', '积分赢好礼', '4', '2019-03-15 11:12:45', '2019-04-11 14:13:51', '下单抵现金');
 INSERT INTO `banneritem` VALUES (18, '', '../rank/rank', '1', '排行榜', '4', '2019-03-15 11:13:02', '2019-03-24 14:01:39', '药丸面膜');
 INSERT INTO `banneritem` VALUES (19, '', '..', '1', 'ysl口红', '0', '2019-03-15 13:14:24', '2019-03-24 14:01:39', 'ysl口红');
 INSERT INTO `banneritem` VALUES (20, '', '..', '1', '女神香水', '0', '2019-03-15 13:57:37', '2019-03-24 14:01:39', '女神香水');
@@ -652,17 +652,10 @@ CREATE TABLE `user`  (
   `amountAfterMSFD` double(255, 0) NULL DEFAULT NULL COMMENT '会员生效日后面付款金额',
   `amountThisMonth` double(255, 0) NULL DEFAULT NULL COMMENT '本月消费金额',
   `points` double(255, 0) NULL DEFAULT NULL COMMENT '积分',
+  `lastCheckInDate` timestamp(0) NULL DEFAULT NULL COMMENT '最后一次签到日期',
+  `continuousNum` int(255) NULL DEFAULT NULL COMMENT '连续签到天数',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of user
--- ----------------------------
-INSERT INTO `user` VALUES (1, 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', NULL, '1', 15, '1', 2000, NULL, 0, 0, 10);
-INSERT INTO `user` VALUES (2, 'test', NULL, '1', 8, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `user` VALUES (3, 'aaa', NULL, '1', 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `user` VALUES (4, 'test', 'test', '1', 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `user` VALUES (5, 'undefined', NULL, '1', 0, '0', 0, NULL, NULL, NULL, 0);
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for viewhistory

@@ -141,6 +141,7 @@ public class HomeController {
 		// recommend
 		List<Category> categories = new ArrayList<Category>();
 		categories = categoryDao.getRecommend();
+		//new user
 		if (user.getLevel() == null || user.getLevel().isEmpty()) {
 			for (Category c : categories) {
 				int categoryId = c.getId();
@@ -204,9 +205,9 @@ public class HomeController {
 			product.setMainImgUrl(mainImgUrl);
 //			}
 		}
-		//max 50
-		if(results.size()>50) {
-			results=results.subList(0, 50);
+		// max 50
+		if (results.size() > 50) {
+			results = results.subList(0, 50);
 		}
 		return results;
 	}

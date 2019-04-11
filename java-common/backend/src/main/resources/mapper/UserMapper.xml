@@ -16,13 +16,16 @@
 		<result property="amountAfterMSFD" column="info"></result>
 		<result property="amountThisMonth" column="info"></result>
 		<result property="points" column="info"></result>
+		<result property="lastCheckInDate" column="DATE"
+			javaType="java.util.Date" jdbcType="DATE"></result>
+		<result property="continuousNum" column="info"></result>
 	</resultMap>
 
 	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
 		keyProperty="id" keyColumn="id">
 		insert into user
-		(openId,wechatId,state,bonusAmount,level,totalPay,points)
-		values(#{openId},#{wechatId},'1',0,'0',0,0)
+		(openId,wechatId,state,bonusAmount,level,totalPay,points,lastCheckInDate,continuousNum)
+		values(#{openId},#{wechatId},'1',0,'0',0,#{points},#{lastCheckInDate},#{continuousNum})
 	</insert>
 
 	<update id="update" parameterType="hashmap">
@@ -37,8 +40,35 @@
 		update user set
 		points=#{points}
 		where
-		<if test="id!=null and id!=''">
-			id=#{id};
+		<if test="openId != null and openId !=''">
+			openId=#{openId};
+		</if>
+	</update>
+
+	<update id="updateLastCheckInDate" parameterType="hashmap">
+		update user set
+		lastCheckInDate=#{lastCheckInDate}
+		where
+		<if test="openId != null and openId !=''">
+			openId=#{openId};
+		</if>
+	</update>
+
+	<update id="updateContinuousNum" parameterType="hashmap">
+		update user set
+		continuousNum=#{continuousNum}
+		where
+		<if test="openId != null and openId !=''">
+			openId=#{openId};
+		</if>
+	</update>
+
+	<update id="updatePointsInfo" parameterType="hashmap">
+		update user set
+		continuousNum=#{continuousNum},lastCheckInDate=#{lastCheckInDate},points=#{points}
+		where
+		<if test="openId != null and openId !=''">
+			openId=#{openId};
 		</if>
 	</update>
 
