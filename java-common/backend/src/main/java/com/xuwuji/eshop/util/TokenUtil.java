@@ -1,8 +1,8 @@
 package com.xuwuji.eshop.util;
 
 public class TokenUtil {
-	public static final String APPID = "wx7561e2d8b255ea10";
-	public static final String APPSECRET = "fb82f205d7c0163e76437465d5882c09";
+	public static final String APPID = "wxcfed1ad72ce2da1f";
+	public static final String APPSECRET = "1a68074bde91d454a4afcd745bf4320d";
 	public static final String OPENID = "openid";
 
 	public static String getOpenId(String code) {
