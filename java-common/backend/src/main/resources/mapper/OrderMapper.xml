@@ -10,8 +10,8 @@
 		<id property="id" column="id"></id>
 		<result property="time" column="DATE" javaType="java.util.Date"
 			jdbcType="DATE"></result>
-		<result property="lastModifyTime" column="DATE"
-			javaType="java.util.Date" jdbcType="DATE"></result>
+		<result property="lastModifyTime" column="DATE" javaType="java.util.Date"
+			jdbcType="DATE"></result>
 		<result property="wechatId" column="type"></result>
 		<result property="state" column="type"></result>
 		<result property="orderId" column="type"></result>
@@ -30,14 +30,17 @@
 		<result property="bonusAmount" column="type"></result>
 		<result property="promotionIds" column="type"></result>
 		<result property="couponId" column="type"></result>
+		<result property="usedBonus" column="type"></result>
+		<result property="usedPoints" column="type"></result>
+		<result property="usedCouponCash" column="type"></result>
 
 	</resultMap>
 
 	<insert id="add" parameterType="Order" useGeneratedKeys="true"
 		keyProperty="id" keyColumn="id">
 		insert into eshoporder
-		(wechatId,promotionIds,time,state,orderId,phoneNum,amount,totalCount,recieverName,address,openId,memo,source,sourceOpenId,sourceWechatId,couponId)
-		values(#{wechatId},#{promotionIds},#{time},'0',#{orderId},#{phoneNum},#{amount},#{totalCount},#{recieverName},#{address},#{openId},#{memo},#{source},#{sourceOpenId},#{sourceWechatId},#{couponId})
+		(wechatId,promotionIds,time,state,orderId,phoneNum,amount,totalCount,recieverName,address,openId,memo,source,sourceOpenId,sourceWechatId,couponId,usedBonus,usedPoints,usedCouponCash)
+		values(#{wechatId},#{promotionIds},#{time},'0',#{orderId},#{phoneNum},#{amount},#{totalCount},#{recieverName},#{address},#{openId},#{memo},#{source},#{sourceOpenId},#{sourceWechatId},#{couponId},#{usedBonus},#{usedPoints},#{usedCouponCash})
 	</insert>
 
 	<update id="update" parameterType="hashmap">

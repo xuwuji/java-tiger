@@ -319,6 +319,21 @@
 						align : 'center',
 					},
 					{
+						field : 'usedBonus',
+						title : '使用的红包金额',
+						align : 'center',
+					},
+					{
+						field : 'usedPoints',
+						title : '使用的积分数',
+						align : 'center',
+					},
+					{
+						field : 'usedCouponCash',
+						title : '使用的优惠券金额',
+						align : 'center',
+					},
+					{
 						title : '操作',
 						field : 'id',
 						formatter : function(id) {

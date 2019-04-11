@@ -23,8 +23,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xuwuji.eshop.db.dao.OrderDao;
 import com.xuwuji.eshop.db.dao.OrderItemDao;
+import com.xuwuji.eshop.db.dao.UserDao;
 import com.xuwuji.eshop.model.Order;
 import com.xuwuji.eshop.model.OrderItem;
+import com.xuwuji.eshop.model.User;
 import com.xuwuji.eshop.util.EshopConfigUtil;
 import com.xuwuji.eshop.util.ToolUtil;
 
@@ -34,6 +36,9 @@ public class OrderController {
 
 	@Autowired
 	private OrderDao orderDao;
+
+	@Autowired
+	private UserDao userDao;
 
 	@Autowired
 	private OrderItemDao orderItemDao;
@@ -78,7 +83,8 @@ public class OrderController {
 		order.setTotalCount(orderNode.get("totalCount").asInt());
 		order.setAddress(orderNode.get("address").asText());
 		order.setRecieverName(orderNode.get("recieverName").asText());
-		order.setOpenId(orderNode.get("openId").asText());
+		String openId = orderNode.get("openId").asText();
+		order.setOpenId(openId);
 		if (orderNode.get("memo") != null) {
 			order.setMemo(orderNode.get("memo").asText());
 		} else {
@@ -109,6 +115,29 @@ public class OrderController {
 		} else {
 			order.setSourceWechatId("");
 		}
+		if (orderNode.get("usedPoints") != null) {
+			order.setUsedPoints(Double.valueOf(orderNode.get("usedPoints").asText()));
+		} else {
+			order.setUsedPoints(0);
+		}
+		if (orderNode.get("usedCouponCash") != null) {
+			order.setUsedCouponCash(Double.valueOf(orderNode.get("usedCouponCash").asText()));
+		} else {
+			order.setUsedCouponCash(0);
+		}
+		if (orderNode.get("usedBonus") != null) {
+			order.setUsedBonus(Double.valueOf(orderNode.get("usedBonus").asText()));
+		} else {
+			order.setUsedBonus(0);
+		}
+		// 将积分和红包减去，如果取消付款，再加回去
+		User user = new User();
+		user.setOpenId(openId);
+		user = userDao.getByCondition(user);
+		user.setPoints(user.getPoints() - order.getUsedPoints());
+		user.setBonusAmount(user.getBonusAmount() - order.getUsedBonus());
+		userDao.update(user);
+		userDao.updatePoints(user);
 		order.setTime(new Date());
 		order.setOrderId(orderId);
 		order = orderDao.add(order);
@@ -171,6 +200,18 @@ public class OrderController {
 		order.setState(state);
 		order.setLogisticsId(logisticsId);
 		order.setLogisticsName(logisticsName);
+		if (state.equals("-1")) {
+			Order tempOrder=orderDao.getOrderInfoByOrderId(orderId);
+			String openId = tempOrder.getOpenId();
+			// 取消付款，将积分和红包加回去
+			User user = new User();
+			user.setOpenId(openId);
+			user = userDao.getByCondition(user);
+			user.setPoints(user.getPoints() + tempOrder.getUsedPoints());
+			user.setBonusAmount(user.getBonusAmount() + tempOrder.getUsedBonus());
+			userDao.update(user);
+			userDao.updatePoints(user);
+		}
 		orderDao.update(order);
 	}
 

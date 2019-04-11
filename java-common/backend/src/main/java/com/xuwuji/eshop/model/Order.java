@@ -29,6 +29,9 @@ public class Order {
 	private double bonusAmount;
 	private String promotionIds;
 	private String couponId;
+	private double usedBonus;
+	private double usedPoints;
+	private double usedCouponCash;
 
 	public int getId() {
 		return id;
@@ -198,13 +201,40 @@ public class Order {
 		this.couponId = couponId;
 	}
 
+	public double getUsedBonus() {
+		return usedBonus;
+	}
+
+	public void setUsedBonus(double usedBonus) {
+		this.usedBonus = usedBonus;
+	}
+
+	public double getUsedPoints() {
+		return usedPoints;
+	}
+
+	public void setUsedPoints(double usedPoints) {
+		this.usedPoints = usedPoints;
+	}
+
+	public double getUsedCouponCash() {
+		return usedCouponCash;
+	}
+
+	public void setUsedCouponCash(double usedCouponCash) {
+		this.usedCouponCash = usedCouponCash;
+	}
+
 	@Override
 	public String toString() {
 		return "Order [id=" + id + ", wechatId=" + wechatId + ", time=" + time + ", state=" + state + ", orderId="
 				+ orderId + ", orderItemsList=" + orderItemsList + ", phoneNum=" + phoneNum + ", amount=" + amount
 				+ ", totalCount=" + totalCount + ", recieverName=" + recieverName + ", address=" + address + ", openId="
 				+ openId + ", logisticsId=" + logisticsId + ", logisticsName=" + logisticsName + ", memo=" + memo
-				+ ", source=" + source + ", sourceWechatId=" + sourceWechatId + ", sourceOpenId=" + sourceOpenId + "]";
+				+ ", source=" + source + ", sourceWechatId=" + sourceWechatId + ", sourceOpenId=" + sourceOpenId
+				+ ", bonusAmount=" + bonusAmount + ", promotionIds=" + promotionIds + ", couponId=" + couponId
+				+ ", usedBonus=" + usedBonus + ", usedPoints=" + usedPoints + ", usedCouponCash=" + usedCouponCash
+				+ "]";
 	}
 
 }
