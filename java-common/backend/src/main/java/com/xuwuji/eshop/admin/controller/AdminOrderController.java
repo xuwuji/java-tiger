@@ -127,7 +127,7 @@ public class AdminOrderController {
 		}
 		User updateUser = userDao.getByCondition(buyer);
 		double totalPay = updateUser.getTotalPay() + order.getAmount();
-		double amountThisMonth=updateUser.getAmountThisMonth()+order.getAmount();
+		double amountThisMonth = updateUser.getAmountThisMonth() + order.getAmount();
 		updateUser.setAmountThisMonth(amountThisMonth);
 		updateUser.setTotalPay(totalPay);
 		if (totalPay < 3000) {
@@ -148,6 +148,7 @@ public class AdminOrderController {
 				updateUser.setMembershipFirstDay(new Date());
 			}
 		}
+		updateUser.setPoints(updateUser.getPoints() + order.getUsedPoints());
 		userDao.update(updateUser);
 	}
 

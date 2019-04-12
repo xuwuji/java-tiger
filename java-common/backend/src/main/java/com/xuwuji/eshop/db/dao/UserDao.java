@@ -49,6 +49,7 @@ public class UserDao {
 			map.put("membershipFirstDay", user.getMembershipFirstDay());
 			map.put("amountAfterMSFD", user.getAmountAfterMSFD());
 			map.put("amountThisMonth", user.getAmountThisMonth());
+			map.put("points", user.getPoints());
 			mapper.update(map);
 			session.commit();
 		} catch (Exception e) {
