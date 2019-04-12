@@ -116,7 +116,10 @@ public class OrderController {
 			order.setSourceWechatId("");
 		}
 		if (orderNode.get("usedPoints") != null) {
-			order.setUsedPoints(Double.valueOf(orderNode.get("usedPoints").asText()));
+			String usedPoints=orderNode.get("usedPoints").asText();
+			if(!usedPoints.isEmpty()&&!usedPoints.equals("")) {
+				order.setUsedPoints(Double.valueOf(usedPoints));
+			}
 		} else {
 			order.setUsedPoints(0);
 		}
@@ -201,7 +204,7 @@ public class OrderController {
 		order.setLogisticsId(logisticsId);
 		order.setLogisticsName(logisticsName);
 		if (state.equals("-1")) {
-			Order tempOrder=orderDao.getOrderInfoByOrderId(orderId);
+			Order tempOrder = orderDao.getOrderInfoByOrderId(orderId);
 			String openId = tempOrder.getOpenId();
 			// 取消付款，将积分和红包加回去
 			User user = new User();
