@@ -1,6 +1,8 @@
 package com.xuwuji.eshop.util;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
@@ -32,5 +34,26 @@ public class HttpUtil {
 			request.releaseConnection();
 		}
 		return result;
+	}
+
+	public static boolean checkValid(String url) {
+		int counts = 0;
+		if (url == null || url.length() <= 0) {
+			return false;
+		}
+		while (counts < 5) {
+			try {
+				URL Url = new URL(url);
+				HttpURLConnection con = (HttpURLConnection) Url.openConnection();
+				int state = con.getResponseCode();
+				if (state == 404) {
+					return false;
+				}
+				break;
+			} catch (Exception ex) {
+				continue;
+			}
+		}
+		return true;
 	}
 }

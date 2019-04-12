@@ -19,6 +19,7 @@ import com.xuwuji.eshop.db.dao.ProductDao;
 import com.xuwuji.eshop.model.Product;
 import com.xuwuji.eshop.model.SortEnum;
 import com.xuwuji.eshop.util.EshopConfigUtil;
+import com.xuwuji.eshop.util.HttpUtil;
 import com.xuwuji.eshop.util.ProductUtil;
 import com.xuwuji.eshop.util.QRCodeUtil;
 
@@ -101,10 +102,21 @@ public class ProductController {
 		Product product = productDao.getById(id);
 		List<String> imgUrls = new ArrayList<String>();
 		String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
+		String PRODUCT_DETAIL_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_DETAIL_IMG_BASE);
+
 		for (int i = 1; i < 5; i++) {
 			imgUrls.add(PRODUCT_IMG_BASE + id + "-" + i + ".jpg");
 		}
 		product.setImgUrls(imgUrls);
+		// detail img urls
+		List<String> detailImgUrls = new ArrayList<String>();
+		for (int i = 1; i < 11; i++) {
+			String detailImgUrl = PRODUCT_DETAIL_IMG_BASE + id + "-" + i + ".jpg";
+			if (HttpUtil.checkValid(detailImgUrl)) {
+				detailImgUrls.add(detailImgUrl);
+			}
+		}
+		product.setDetailImgUrls(detailImgUrls);
 		String mainImgUrl = PRODUCT_IMG_BASE + id + "-0.jpg";
 		product.setMainImgUrl(mainImgUrl);
 		return product;
