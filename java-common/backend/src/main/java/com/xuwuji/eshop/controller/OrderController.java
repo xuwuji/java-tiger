@@ -115,32 +115,36 @@ public class OrderController {
 		} else {
 			order.setSourceWechatId("");
 		}
-		if (orderNode.get("usedPoints") != null) {
-			String usedPoints=orderNode.get("usedPoints").asText();
-			if(!usedPoints.isEmpty()&&!usedPoints.equals("")) {
-				order.setUsedPoints(Double.valueOf(usedPoints));
-			}
+		String usedPoints = orderNode.get("usedPoints").asText();
+		if (usedPoints != null && !usedPoints.isEmpty() && !usedPoints.equals("")) {
+			order.setUsedPoints(Double.valueOf(usedPoints));
 		} else {
 			order.setUsedPoints(0);
 		}
-		if (orderNode.get("usedCouponCash") != null) {
-			order.setUsedCouponCash(Double.valueOf(orderNode.get("usedCouponCash").asText()));
+		String usedCouponCash = orderNode.get("usedCouponCash").asText();
+		if (usedCouponCash != null && !usedCouponCash.isEmpty() && !usedCouponCash.equals("")) {
+			order.setUsedCouponCash(Double.valueOf(usedCouponCash));
 		} else {
 			order.setUsedCouponCash(0);
 		}
-		if (orderNode.get("usedBonus") != null) {
-			order.setUsedBonus(Double.valueOf(orderNode.get("usedBonus").asText()));
+		String usedBonus = orderNode.get("usedBonus").asText();
+		if (usedBonus != null && !usedBonus.isEmpty() && !usedBonus.equals("")) {
+			order.setUsedBonus(Double.valueOf(usedBonus));
 		} else {
 			order.setUsedBonus(0);
 		}
-		// 将积分和红包减去，如果取消付款，再加回去
+		// 此订单的买家
 		User user = new User();
 		user.setOpenId(openId);
 		user = userDao.getByCondition(user);
-		user.setPoints(user.getPoints() - order.getUsedPoints());
-		user.setBonusAmount(user.getBonusAmount() - order.getUsedBonus());
-		userDao.update(user);
-		userDao.updatePoints(user);
+		// 若为新用户，在表里没存储过，此处不添加，只有当真正付款时才添加
+		if (user.getId() != 0) {
+			// 老用户，需将积分和红包减去，如果取消付款，再加回去
+			user.setPoints(user.getPoints() - order.getUsedPoints());
+			user.setBonusAmount(user.getBonusAmount() - order.getUsedBonus());
+			userDao.update(user);
+			userDao.updatePoints(user);
+		}
 		order.setTime(new Date());
 		order.setOrderId(orderId);
 		order = orderDao.add(order);

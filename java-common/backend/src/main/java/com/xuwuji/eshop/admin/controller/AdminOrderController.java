@@ -113,22 +113,28 @@ public class AdminOrderController {
 		String source = order.getSource();
 		User buyer = new User();
 		buyer.setOpenId(openId);
-		if (userDao.getByCondition(buyer).getId() == 0) {
-			if (source.equals("share")) {
-				String sourceOpenId = order.getSourceOpenId();
-				User resourcer = new User();
-				resourcer.setOpenId(sourceOpenId);
-				resourcer = userDao.getByCondition(resourcer);
-				resourcer.setBonusAmount(
-						resourcer.getBonusAmount() + Double.valueOf(eshopConfigUtil.getParam(eshopConfigUtil.BONUS)));
-				userDao.update(resourcer);
-			}
+		User userFromDB = userDao.getByCondition(buyer);
+		// 表里没储存说明是新用户，需要添加到表内
+		if (userFromDB.getId() == 0 || userFromDB.getLevel().equals("0")) {
 			userDao.add(buyer);
 		}
+		//如果此订单是通过分享进行下单的，则对分享人进行红包奖励
+		if (source.equals("share")) {
+			String sourceOpenId = order.getSourceOpenId();
+			User resourcer = new User();
+			resourcer.setOpenId(sourceOpenId);
+			resourcer = userDao.getByCondition(resourcer);
+			resourcer.setBonusAmount(
+					resourcer.getBonusAmount() + Double.valueOf(eshopConfigUtil.getParam(eshopConfigUtil.BONUS)));
+			userDao.update(resourcer);
+		}
+		//对买家进行信息更新
 		User updateUser = userDao.getByCondition(buyer);
-		double totalPay = updateUser.getTotalPay() + order.getAmount();
+		//更新本月消费信息，每个月最后一天这个字段进行归档，所以此处可以直接添加
 		double amountThisMonth = updateUser.getAmountThisMonth() + order.getAmount();
 		updateUser.setAmountThisMonth(amountThisMonth);
+		//根据累积付款，更新级别
+		double totalPay = updateUser.getTotalPay() + order.getAmount();
 		updateUser.setTotalPay(totalPay);
 		if (totalPay < 3000) {
 			updateUser.setLevel(UserLevel.NORMAL.getCode());
@@ -148,7 +154,8 @@ public class AdminOrderController {
 				updateUser.setMembershipFirstDay(new Date());
 			}
 		}
-		updateUser.setPoints(updateUser.getPoints() + order.getUsedPoints());
+		// 付款后，将积分添加至用户账户内
+		updateUser.setPoints(updateUser.getPoints() + (int) (order.getAmount()));
 		userDao.update(updateUser);
 	}
 
