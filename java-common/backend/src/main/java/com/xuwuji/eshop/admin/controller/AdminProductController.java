@@ -2,6 +2,7 @@ package com.xuwuji.eshop.admin.controller;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,24 +49,26 @@ public class AdminProductController {
 		String name = request.getParameter("name");
 		String desc = request.getParameter("desc");
 		String price = request.getParameter("price");
+		String hkPrice = request.getParameter("hkPrice");
 		String inventory = request.getParameter("inventory");
 		String salesCount = request.getParameter("salesCount");
-		//String mainImgUrl = request.getParameter("mainImgUrl");
+		// String mainImgUrl = request.getParameter("mainImgUrl");
 		String parentCategoryId = request.getParameter("parentCategoryId");
 		String categoryId = request.getParameter("categoryId");
-		//String brandNameCN = request.getParameter("brandNameCN");
-		//String brandNameEN = request.getParameter("brandNameEN");
+		// String brandNameCN = request.getParameter("brandNameCN");
+		// String brandNameEN = request.getParameter("brandNameEN");
 		Product product = new Product();
 		product.setName(name);
 		product.setDescription(desc);
 		product.setParentCategoryId(parentCategoryId);
 		product.setPrice(Double.valueOf(price));
+		product.setHkPrice(Double.valueOf(hkPrice));
 		product.setSalesCount(Integer.valueOf(salesCount));
 		product.setInventory(Integer.valueOf(inventory));
-		//product.setBrandNameCN(brandNameCN);
-		//product.setBrandNameEN(brandNameEN);
+		// product.setBrandNameCN(brandNameCN);
+		// product.setBrandNameEN(brandNameEN);
 		product.setCategoryId(categoryId);
-		//product.setMainImgUrl(mainImgUrl);
+		// product.setMainImgUrl(mainImgUrl);
 		System.out.print(product);
 		productDao.add(product);
 	}
@@ -152,7 +155,6 @@ public class AdminProductController {
 		String name = request.getParameter("name");
 		String desc = request.getParameter("desc");
 		String price = request.getParameter("price");
-		
 		System.out.print(price);
 		String inventory = request.getParameter("inventory");
 		String salesCount = request.getParameter("salesCount");
@@ -181,7 +183,6 @@ public class AdminProductController {
 		productDao.update(product);
 	}
 
-	
 	@RequestMapping(value = "/local/add", method = RequestMethod.GET)
 	@ResponseBody
 	public void addLocal(HttpServletRequest request, HttpServletResponse response) {
@@ -190,26 +191,63 @@ public class AdminProductController {
 		String price = request.getParameter("price");
 		String inventory = request.getParameter("inventory");
 		String salesCount = request.getParameter("salesCount");
-		//String mainImgUrl = request.getParameter("mainImgUrl");
+		// String mainImgUrl = request.getParameter("mainImgUrl");
 		String parentCategoryId = request.getParameter("parentCategoryId");
 		String categoryId = request.getParameter("categoryId");
-		//String brandNameCN = request.getParameter("brandNameCN");
-		//String brandNameEN = request.getParameter("brandNameEN");
-		for(int i=0;i<100;i++) {
+		// String brandNameCN = request.getParameter("brandNameCN");
+		// String brandNameEN = request.getParameter("brandNameEN");
+		for (int i = 0; i < 100; i++) {
 			Product product = new Product();
-			product.setName("test"+i);
-			product.setDescription("test"+i);
+			product.setName("test" + i);
+			product.setDescription("test" + i);
 			product.setParentCategoryId("6");
 			product.setPrice(10);
 			product.setCategoryId("4");
 			productDao.add(product);
 		}
-	
-		
-		//product.setBrandNameCN(brandNameCN);
-		//product.setBrandNameEN(brandNameEN);
-		
-		//product.setMainImgUrl(mainImgUrl);
-		
 	}
+
+	@RequestMapping(value = "/local/updatePrice", method = RequestMethod.GET)
+	@ResponseBody
+	public void updatePrice(HttpServletRequest request, HttpServletResponse response) {
+		String categoryId = request.getParameter("categoryId");
+		List<Product> products = productDao.getByCategory(categoryId);
+		for (Product product : products) {
+			double hkPrice = product.getHkPrice();
+			double cost = hkPrice * 0.87;
+			int price = 0;
+			Random r = new Random();
+			if (cost < 50 && hkPrice < 50) {
+				price = (int) (cost / 0.5);
+				product.setPrice(price);
+				int inventory = r.nextInt(50) + 50;
+				int salesCount = r.nextInt(100) + 50;
+				product.setInventory(inventory);
+				product.setSalesCount(salesCount);
+				productDao.update(product);
+			} else if (cost > 50 && cost < 500) {
+				price = (int) (cost / 0.7) + 10;
+				int inventory = r.nextInt(40) + 50;
+				int salesCount = r.nextInt(50) + 50;
+				product.setInventory(inventory);
+				product.setSalesCount(salesCount);
+				productDao.updatePrice(product.getId(), price);
+			} else if (cost > 500 && cost < 1000) {
+				int inventory = r.nextInt(20) + 50;
+				int salesCount = r.nextInt(30) + 50;
+				product.setInventory(inventory);
+				product.setSalesCount(salesCount);
+				price = (int) (cost / 0.75) + 10;
+				productDao.updatePrice(product.getId(), price);
+			} else if (cost > 1000) {
+				int inventory = r.nextInt(10) + 50;
+				int salesCount = r.nextInt(20) + 50;
+				product.setInventory(inventory);
+				product.setSalesCount(salesCount);
+				price = (int) (cost / 0.8) + 10;
+				productDao.updatePrice(product.getId(), price);
+			}
+		}
+	}
+
 }

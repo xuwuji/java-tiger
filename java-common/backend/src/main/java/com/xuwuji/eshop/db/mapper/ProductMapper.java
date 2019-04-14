@@ -10,8 +10,10 @@ public interface ProductMapper {
 	public int add(Product product);
 
 	public void disable(HashMap<String, Object> map);
-
+	
 	public void reActive(HashMap<String, Object> map);
+	
+	public void updatePrice(HashMap<String, Object> map);
 
 	public void update(HashMap<String, Object> map);
 

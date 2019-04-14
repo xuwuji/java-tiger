@@ -75,6 +75,23 @@ public class ProductDao {
 		}
 	};
 
+	public void updatePrice(int id, int price) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("id", id);
+			map.put("price", price);
+			mapper.updatePrice(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+	};
+
 	public void updateBannerItem(String id, String bannerItemId) {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
@@ -118,6 +135,7 @@ public class ProductDao {
 			map.put("name", product.getName());
 			map.put("description", product.getDescription());
 			map.put("price", product.getPrice());
+			map.put("hkPrice", product.getHkPrice());
 			map.put("inventory", product.getInventory());
 			map.put("salesCount", product.getSalesCount());
 			map.put("mainImgUrl", product.getMainImgUrl());
@@ -278,7 +296,7 @@ public class ProductDao {
 		}
 		return result;
 	}
-	
+
 	public List<Product> getActiveByFlash() {
 		SqlSession session = SessionFactory.openDEVSession();
 		List<Product> result = new ArrayList<Product>();
@@ -294,7 +312,7 @@ public class ProductDao {
 		}
 		return result;
 	}
-	
+
 	public List<Product> getMultiByIds(List<Integer> ids) {
 		SqlSession session = SessionFactory.openDEVSession();
 		List<Product> result = new ArrayList<Product>();

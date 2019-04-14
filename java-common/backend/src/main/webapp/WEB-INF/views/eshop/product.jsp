@@ -114,6 +114,11 @@
 							class="form-control" id="productPrice" placeholder="商品价格">
 					</div>
 					<div class="form-group">
+						<label for="txt_departmentname">商品港币进货价格</label> <input
+							type="text" class="form-control" id="productHKPrice"
+							placeholder="商品港币进货价格">
+					</div>
+					<div class="form-group">
 						<label for="txt_departmentname">商品库存</label> <input type="text"
 							class="form-control" id="productInventory" placeholder="库存">
 					</div>
@@ -190,6 +195,11 @@
 							class="form-control" id="edit-productPrice" placeholder="商品价格">
 					</div>
 					<div class="form-group">
+						<label for="txt_departmentname">商品港币进货价格</label> <input
+							type="text" class="form-control" id="edit-productHKPrice"
+							placeholder="商品港币进货价格">
+					</div>
+					<div class="form-group">
 						<label for="txt_departmentname">商品库存</label> <input type="text"
 							class="form-control" id="edit-productInventory" placeholder="库存">
 					</div>
@@ -204,7 +214,8 @@
 					</div>
 					<div class="form-group">
 						<label for="txt_departmentname">是否闪购</label> <input type="text"
-							class="form-control" id="edit-flashState" placeholder="0-不参加，1-参加">
+							class="form-control" id="edit-flashState"
+							placeholder="0-不参加，1-参加">
 					</div>
 					<!-- 	<div class="form-group">
 						<label for="txt_departmentname">商品主图Url</label> <input type="text"
@@ -406,6 +417,14 @@
 								field : 'price',
 								title : '价格',
 								align : 'center'
+							},
+							{
+								field : 'hkPrice',
+								title : '港币进货价格',
+								align : 'center',
+								formatter : function(value, row, index) {
+									return value + "(" + value * 0.87 + ")";
+								}
 							},
 							{
 								field : 'inventory',
@@ -665,6 +684,7 @@
 		var price = $('#productPrice').val();
 		var inventory = $('#productInventory').val();
 		var salesCount = $('#productSalesCount').val();
+		var hkPrice = $('#productHKPrice').val();
 		//var mainImgUrl = $('#productMainImgUrl').val();
 		//var brandNameCN = $('#productBrandNameCN').val();
 		//var brandNameEN = $('#productBrandNameEN').val();
@@ -675,6 +695,7 @@
 				name : name,
 				desc : desc,
 				price : price,
+				hkPrice : hkPrice,
 				inventory : inventory,
 				salesCount : salesCount,
 				//mainImgUrl : mainImgUrl,
@@ -706,6 +727,7 @@
 			$('#edit-productInventory').val(row.inventory);
 			$('#edit-flashPrice').val(row.flashPrice);
 			$('#edit-flashState').val(row.flashState);
+			$('#edit-productHKPrice').val(row.hkPrice);
 			//$('#edit-productMainImgUrl').val(row.mainImgUrl);
 			//$('#edit-productBrandNameCN').val(row.brandNameCN);
 			//$('#edit-productBrandNameEN').val(row.brandNameEN);
@@ -724,6 +746,7 @@
 		var salesCount = $('#edit-productSalesCount').val();
 		var flashPrice = $('#edit-flashPrice').val();
 		var flashState = $('#edit-flashState').val();
+		var hkPrice = $('#edit-productHKPrice').val();
 		//var mainImgUrl = $('#edit-productMainImgUrl').val();
 		//var brandNameCN = $('#edit-productBrandNameCN').val();
 		//var brandNameEN = $('#edit-productBrandNameEN').val();
@@ -736,6 +759,7 @@
 				name : name,
 				desc : desc,
 				price : price,
+				hkPrice : hkPrice,
 				inventory : inventory,
 				salesCount : salesCount,
 				//mainImgUrl : mainImgUrl,

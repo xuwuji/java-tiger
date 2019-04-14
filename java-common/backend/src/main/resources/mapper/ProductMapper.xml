@@ -10,6 +10,7 @@
 		<result property="name" column="type"></result>
 		<result property="description" column="type"></result>
 		<result property="price" column="type"></result>
+		<result property="hkPrice" column="type"></result>
 		<result property="inventory" column="type"></result>
 		<result property="salesCount" column="type"></result>
 		<result property="mainImgUrl" column="type"></result>
@@ -34,8 +35,8 @@
 		keyProperty="id" keyColumn="id">
 		insert into product
 		(name,description,price,inventory,salesCount,parentCategoryId,categoryId,
-		state,flashState)
-		values(#{name},#{description},#{price},#{inventory},#{salesCount},#{parentCategoryId},#{categoryId},'0','0')
+		state,flashState,hkPrice)
+		values(#{name},#{description},#{price},#{inventory},#{salesCount},#{parentCategoryId},#{categoryId},'0','0',#{hkPrice})
 	</insert>
 
 	<update id="disable" parameterType="hashmap">
@@ -74,6 +75,12 @@
 		name=#{name},description=#{description},price=#{price},inventory=#{inventory},
 		salesCount=#{salesCount},mainImgUrl=#{mainImgUrl},parentCategoryId=#{parentCategoryId},
 		categoryId=#{categoryId},flashPrice=#{flashPrice},flashState=#{flashState}
+		where id=#{id};
+	</update>
+	
+	<update id="updatePrice" parameterType="hashmap">
+		update product set
+		price=#{price}
 		where id=#{id};
 	</update>
 
