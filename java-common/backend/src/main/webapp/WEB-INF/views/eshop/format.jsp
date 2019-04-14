@@ -81,6 +81,11 @@
 							name="txt_departmentname" data-bind="value:Name"
 							class="form-control" id="add-price" placeholder="价格">
 					</div>
+					<div class="form-group">
+						<label for="txt_departmentname">闪购价格</label> <input type="text"
+							name="txt_departmentname" data-bind="value:Name"
+							class="form-control" id="add-flashPrice" placeholder="价格">
+					</div>
 					<!-- 	<div class="form-group">
 						<label for="txt_departmentname">format位</label> <input type="text"
 							name="txt_departmentname" data-bind="value:Name"
@@ -123,6 +128,7 @@
 						name="txt_departmentname" data-bind="value:Name"
 						class="form-control" id="edit-name" placeholder="名称">
 				</div>
+
 				<!-- <div class="form-group">
 					<label for="txt_departmentname">图片url</label> <input type="text"
 						name="txt_departmentname" data-bind="value:Name"
@@ -132,6 +138,11 @@
 					<label for="txt_departmentname">价格</label> <input type="text"
 						name="txt_departmentname" data-bind="value:Name"
 						class="form-control" id="edit-price" placeholder="跳转页面">
+				</div>
+				<div class="form-group">
+					<label for="txt_departmentname">闪购价格</label> <input type="text"
+						name="txt_departmentname" data-bind="value:Name"
+						class="form-control" id="edit-flashPrice" placeholder="价格">
 				</div>
 				<!-- <div class="form-group">
 					<label for="txt_departmentname">format位</label> <input type="text"
@@ -203,31 +214,36 @@
 						title : '名称',
 						align : 'center'
 					}, /* {
-																																			field : '
-																																imgUrl',
-																																				title : '图片链接',
-																																				align : 'center'
-																																			}, */
+																																											field : '
+																																								imgUrl',
+																																												title : '图片链接',
+																																												align : 'center'
+																																											}, */
 					{
 						field : 'price',
 						title : '价格',
 						align : 'center'
+					},
+					{
+						field : 'flashPrice',
+						title : '闪购价格',
+						align : 'center'
 					},/*  {
-																																								field : 'formatId',
-																																								title : 'format位',
-																																								align : 'center',
-																																								formatter : function(value, row, index) {
-																																									if (row.formatId) {
-																																										if (row.formatId == '0') {
-																																											return "首页轮播位";
-																																										} else if (row.formatId == '1') {
-																																											return "首页推荐分类栏";
-																																										} else {
-																																											return "错误数据";
-																																										}
-																																									}
-																																								}
-																																							},  */
+																																																		field : 'formatId',
+																																																		title : 'format位',
+																																																		align : 'center',
+																																																		formatter : function(value, row, index) {
+																																																			if (row.formatId) {
+																																																				if (row.formatId == '0') {
+																																																					return "首页轮播位";
+																																																				} else if (row.formatId == '1') {
+																																																					return "首页推荐分类栏";
+																																																				} else {
+																																																					return "错误数据";
+																																																				}
+																																																			}
+																																																		}
+																																																	},  */
 					{
 						field : 'state',
 						title : '状态',
@@ -275,7 +291,7 @@
 	$('#btn_submit').on("click", function() {
 		var name = $('#add-name').val();
 		var price = $('#add-price').val();
-		//var imgUrl = $('#add-imgUrl').val();
+		var flashPrice = $('#add-flashPrice').val();
 		var productId = $('#productId').val();
 		$.ajax({
 			url : "/backend/admin/format/add",
@@ -284,6 +300,7 @@
 				name : name,
 				price : price,
 				productId : productId,
+				flashPrice : flashPrice,
 			},
 			success : function(status) {
 				initTable(productId)
@@ -299,6 +316,8 @@
 			$('#edit-name').val(row.name);
 			$('#edit-price').val(row.price);
 			$('#edit-id').val(row.id);
+			$('#edit-flashPrice').val(row.flashPrice);
+
 		});
 	}
 
@@ -308,6 +327,7 @@
 		var price = $('#edit-price').val();
 		var id = $('#edit-id').val();
 		var productId = $('#productId').val();
+		var flashPrice = $('#edit-flashPrice').val();
 		$.ajax({
 			url : "/backend/admin/format/update",
 			type : "post",
@@ -315,6 +335,7 @@
 				id : id,
 				name : name,
 				price : price,
+				flashPrice : flashPrice,
 			},
 			success : function(status) {
 				initTable(productId)
