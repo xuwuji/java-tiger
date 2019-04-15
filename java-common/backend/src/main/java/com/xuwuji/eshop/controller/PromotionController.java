@@ -18,6 +18,7 @@ import com.xuwuji.eshop.db.dao.PromotionDao;
 import com.xuwuji.eshop.model.Product;
 import com.xuwuji.eshop.model.Promotion;
 import com.xuwuji.eshop.model.PromotionTarget;
+import com.xuwuji.eshop.util.EshopConfigUtil;
 
 @Controller
 @RequestMapping(value = "/promotion")
@@ -26,6 +27,9 @@ public class PromotionController {
 	private PromotionDao promotionDao;
 	@Autowired
 	private ProductDao productDao;
+
+	@Autowired
+	private EshopConfigUtil eshopConfigUtil;
 	
 	
 	@RequestMapping(value = "/getActiveAll", method = RequestMethod.GET)
@@ -46,6 +50,11 @@ public class PromotionController {
 				List<Product> products=new ArrayList<Product>();
 				products=productDao.getActiveByBrandId(promotion.getBrandId());
 				promotion.setProducts(products);
+				String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
+				for (Product product : products) {
+					String mainImgUrl = PRODUCT_IMG_BASE + product.getId() + "-0.jpg";
+					product.setMainImgUrl(mainImgUrl);
+				}
 				result.add(promotion);
 			}
 		}

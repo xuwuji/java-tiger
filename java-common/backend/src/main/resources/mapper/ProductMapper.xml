@@ -74,7 +74,7 @@
 		update product set
 		name=#{name},description=#{description},price=#{price},inventory=#{inventory},
 		salesCount=#{salesCount},mainImgUrl=#{mainImgUrl},parentCategoryId=#{parentCategoryId},
-		categoryId=#{categoryId},flashPrice=#{flashPrice},flashState=#{flashState}
+		categoryId=#{categoryId},flashPrice=#{flashPrice},flashState=#{flashState},hkPrice=#{hkPrice}
 		where id=#{id};
 	</update>
 	

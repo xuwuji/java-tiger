@@ -74,8 +74,8 @@ public class ProductController {
 		products = productDao.getActiveByCategory(id);
 		String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
 		for (Product product : products) {
-			// product.setMainImgUrl(PRODUCT_IMG_BASE + product.getId() + "-0.jpg");
-			product.setMainImgUrl("http://ppf0hsoua.bkt.clouddn.com/product/10-0.jpg");
+			 product.setMainImgUrl(PRODUCT_IMG_BASE + product.getId() + "-0.jpg");
+			//product.setMainImgUrl("http://ppf0hsoua.bkt.clouddn.com/product/10-0.jpg");
 
 		}
 		products = productUtil.sort(products, sortRequset);

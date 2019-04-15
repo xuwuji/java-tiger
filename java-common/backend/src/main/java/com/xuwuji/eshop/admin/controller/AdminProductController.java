@@ -155,7 +155,8 @@ public class AdminProductController {
 		String name = request.getParameter("name");
 		String desc = request.getParameter("desc");
 		String price = request.getParameter("price");
-		System.out.print(price);
+		String hkPrice = request.getParameter("hkPrice");
+		//System.out.print(price);
 		String inventory = request.getParameter("inventory");
 		String salesCount = request.getParameter("salesCount");
 		String mainImgUrl = request.getParameter("mainImgUrl");
@@ -171,6 +172,7 @@ public class AdminProductController {
 		product.setDescription(desc);
 		product.setParentCategoryId(parentCategoryId);
 		product.setPrice(Double.valueOf(price));
+		product.setHkPrice(Double.valueOf(hkPrice));
 		product.setSalesCount(Integer.valueOf(salesCount));
 		product.setInventory(Integer.valueOf(inventory));
 		product.setBrandNameCN(brandNameCN);
