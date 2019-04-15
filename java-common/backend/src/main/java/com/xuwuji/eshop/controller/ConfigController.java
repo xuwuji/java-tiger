@@ -36,6 +36,7 @@ public class ConfigController {
 		eshopConfig.setDiamondDiscount(eshopConfigUtil.getParam(eshopConfigUtil.DiAMOND_DISCOUNT));
 		eshopConfig.setShowNoticeMessage(eshopConfigUtil.getParam(eshopConfigUtil.SHOW_NOTICE_MESSAGE));
 		eshopConfig.setLicenceImgUrl(eshopConfigUtil.getParam(eshopConfigUtil.LICENCE_IMG_URL));
+		eshopConfig.setShareImgUrl(eshopConfigUtil.getParam(eshopConfigUtil.SHARE_IMG_URL));
 		return eshopConfig;
 	}
 
@@ -118,6 +119,7 @@ public class ConfigController {
 		public String diamondDiscount;
 		public String showNoticeMessage;
 		public String licenceImgUrl;
+		public String shareImgUrl;
 
 		public String getXxcUrl() {
 			return xxcUrl;
@@ -206,8 +208,14 @@ public class ConfigController {
 		public void setLicenceImgUrl(String licenceImgUrl) {
 			this.licenceImgUrl = licenceImgUrl;
 		}
-		
-		
+
+		public String getShareImgUrl() {
+			return shareImgUrl;
+		}
+
+		public void setShareImgUrl(String shareImgUrl) {
+			this.shareImgUrl = shareImgUrl;
+		}
 
 	}
 

@@ -32,6 +32,7 @@ public class EshopConfigUtil {
 	public static final String PLATINUM_DISCOUNT = "platinumDiscount";
 	public static final String DiAMOND_DISCOUNT = "diamondDiscount";
 	public static final String LICENCE_IMG_URL = "licenceImgUrl";
+	public static final String SHARE_IMG_URL = "shareImgUrl";
 	public static final String PRODUCT_DETAIL_IMG_BASE="productDetailImgBase";
 	public static Map<String, Object> configMap = new HashMap<String, Object>();
 

@@ -19,11 +19,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.xuwuji.eshop.db.dao.OrderDao;
 import com.xuwuji.eshop.db.dao.OrderItemDao;
+import com.xuwuji.eshop.db.dao.ProductDao;
 import com.xuwuji.eshop.db.dao.UserDao;
 import com.xuwuji.eshop.model.Category;
 import com.xuwuji.eshop.model.Img;
 import com.xuwuji.eshop.model.Order;
+import com.xuwuji.eshop.model.OrderItem;
 import com.xuwuji.eshop.model.ParentCategory;
+import com.xuwuji.eshop.model.Product;
 import com.xuwuji.eshop.model.User;
 import com.xuwuji.eshop.model.UserLevel;
 import com.xuwuji.eshop.model.UserState;
@@ -44,6 +47,8 @@ public class AdminOrderController {
 
 	@Autowired
 	private OrderItemDao orderItemDao;
+	@Autowired
+	private ProductDao productDao;
 
 	@Autowired
 	private UserDao userDao;
@@ -168,6 +173,14 @@ public class AdminOrderController {
 		// 付款后，将积分添加至用户账户内
 		updateUser.setPoints(updateUser.getPoints() + (int) (order.getAmount()));
 		userDao.update(updateUser);
+		// 付款后更新库存和销量
+		List<OrderItem> orderItems = orderItemDao.getByOrderId(orderId);
+		for (OrderItem orderItem : orderItems) {
+			Product product = productDao.getById(orderItem.getProductId());
+			product.setSalesCount(product.getSalesCount() + orderItem.getCount());
+			product.setInventory(product.getInventory() - orderItem.getCount());
+			productDao.update(product);
+		}
 	}
 
 }

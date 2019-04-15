@@ -23,9 +23,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xuwuji.eshop.db.dao.OrderDao;
 import com.xuwuji.eshop.db.dao.OrderItemDao;
+import com.xuwuji.eshop.db.dao.ProductDao;
 import com.xuwuji.eshop.db.dao.UserDao;
 import com.xuwuji.eshop.model.Order;
 import com.xuwuji.eshop.model.OrderItem;
+import com.xuwuji.eshop.model.Product;
 import com.xuwuji.eshop.model.User;
 import com.xuwuji.eshop.util.EshopConfigUtil;
 import com.xuwuji.eshop.util.ToolUtil;
@@ -65,7 +67,8 @@ public class OrderController {
 		String orderId = toolUtil.getOrderId();
 		for (int i = 0; i < orderItemsListNode.size(); i++) {
 			OrderItem item = new OrderItem();
-			item.setCount(orderItemsListNode.get(i).path("count").asInt());
+			int count = orderItemsListNode.get(i).path("count").asInt();
+			item.setCount(count);
 			item.setFormatId(orderItemsListNode.get(i).path("formatId").asText());
 			String name = new String(orderItemsListNode.get(i).path("name").asText().getBytes("utf-8"), "utf-8");
 			item.setName(name);
