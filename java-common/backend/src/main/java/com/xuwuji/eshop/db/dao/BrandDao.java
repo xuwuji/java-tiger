@@ -39,6 +39,7 @@ public class BrandDao {
 		try {
 			BrandMapper mapper = session.getMapper(BrandMapper.class);
 			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("id", brand.getId());
 			map.put("brandCN", brand.getBrandCN());
 			map.put("brandEN", brand.getBrandEN());
 			map.put("country", brand.getCountry());
