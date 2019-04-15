@@ -29,6 +29,7 @@ import com.xuwuji.eshop.model.SearchHistory;
 import com.xuwuji.eshop.model.SortEnum;
 import com.xuwuji.eshop.model.Theme;
 import com.xuwuji.eshop.model.User;
+import com.xuwuji.eshop.model.UserState;
 import com.xuwuji.eshop.model.ViewHistory;
 import com.xuwuji.eshop.util.EshopConfigUtil;
 import com.xuwuji.eshop.util.ProductUtil;
@@ -123,7 +124,7 @@ public class HomeController {
 	}
 
 	/**
-	 * ��ҳ����ϲ��
+	 * ��ҳ����ϲ��
 	 * 
 	 * @param request
 	 * @param response
@@ -141,8 +142,8 @@ public class HomeController {
 		// recommend
 		List<Category> categories = new ArrayList<Category>();
 		categories = categoryDao.getRecommend();
-		//new user
-		if (user.getLevel() == null || user.getLevel().isEmpty()) {
+		// 如果是新用户或者是没在user表中的里
+		if (user.getState() == null || user.getState().isEmpty() || user.getState().equals(UserState.NEW.getCode())) {
 			for (Category c : categories) {
 				int categoryId = c.getId();
 				List<Product> products = new ArrayList<Product>();
@@ -200,10 +201,11 @@ public class HomeController {
 			}
 		}
 		for (Product product : results) {
-//			if (product.getMainImgUrl() == null || product.getMainImgUrl().isEmpty()) {
+			// if (product.getMainImgUrl() == null ||
+			// product.getMainImgUrl().isEmpty()) {
 			String mainImgUrl = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + product.getId() + "-0.jpg";
 			product.setMainImgUrl(mainImgUrl);
-//			}
+			// }
 		}
 		// max 50
 		if (results.size() > 50) {

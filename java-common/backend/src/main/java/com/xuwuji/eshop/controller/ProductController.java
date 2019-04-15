@@ -110,7 +110,7 @@ public class ProductController {
 		product.setImgUrls(imgUrls);
 		// detail img urls
 		List<String> detailImgUrls = new ArrayList<String>();
-		for (int i = 1; i < 11; i++) {
+		for (int i = 1; i < 6; i++) {
 			String detailImgUrl = PRODUCT_DETAIL_IMG_BASE + id + "-" + i + ".jpg";
 			if (HttpUtil.checkValid(detailImgUrl)) {
 				detailImgUrls.add(detailImgUrl);

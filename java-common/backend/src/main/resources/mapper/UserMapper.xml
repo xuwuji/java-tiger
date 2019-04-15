@@ -25,7 +25,7 @@
 		keyProperty="id" keyColumn="id">
 		insert into user
 		(openId,wechatId,state,bonusAmount,level,totalPay,points,lastCheckInDate,continuousNum)
-		values(#{openId},#{wechatId},'1',0,'0',0,#{points},#{lastCheckInDate},#{continuousNum})
+		values(#{openId},#{wechatId},#{state},0,'0',0,#{points},#{lastCheckInDate},#{continuousNum})
 	</insert>
 
 	<update id="update" parameterType="hashmap">

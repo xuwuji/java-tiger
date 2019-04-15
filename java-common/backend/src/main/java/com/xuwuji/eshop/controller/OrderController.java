@@ -139,7 +139,7 @@ public class OrderController {
 		user = userDao.getByCondition(user);
 		// 若为新用户，在表里没存储过，此处不添加，只有当真正付款时才添加
 		if (user.getId() != 0) {
-			// 老用户，需将积分和红包减去，如果取消付款，再加回去
+			// 表里存储的老用户或者签到过的用户，需将积分和红包减去，如果取消付款，再加回去
 			user.setPoints(user.getPoints() - order.getUsedPoints());
 			user.setBonusAmount(user.getBonusAmount() - order.getUsedBonus());
 			userDao.update(user);

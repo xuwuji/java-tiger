@@ -505,7 +505,7 @@
 	function viewOrder(id) {
 		var row = $table.bootstrapTable('getRowByUniqueId', id);
 		var orderId = row.orderId;
-		window.location.href = "/backend/admin/orderItem/" + orderId;
+		window.location.href = "/backend/admin/orderItem/index/" + orderId;
 	}
 
 	/* 批量上架 */

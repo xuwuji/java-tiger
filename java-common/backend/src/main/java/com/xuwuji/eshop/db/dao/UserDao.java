@@ -22,6 +22,7 @@ public class UserDao {
 			map.put("openId", user.getOpenId());
 			map.put("wechatId", user.getWechatId());
 			map.put("bonusAmount", user.getBonusAmount());
+			map.put("state", user.getState());
 			map.put("lastCheckInDate", user.getLastCheckInDate());
 			map.put("continuousNum", user.getContinuousNum());
 			map.put("points", user.getPoints());

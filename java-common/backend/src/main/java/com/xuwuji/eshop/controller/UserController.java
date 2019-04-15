@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xuwuji.eshop.db.dao.UserDao;
 import com.xuwuji.eshop.model.User;
+import com.xuwuji.eshop.model.UserLevel;
+import com.xuwuji.eshop.model.UserState;
 import com.xuwuji.eshop.util.TimeUtil;
 
 @Controller
@@ -101,17 +103,19 @@ public class UserController {
 			return;
 		}
 		user = userDao.getByCondition(user);
-		//System.out.print(user);
-		// new
-		if (user == null || user.getLevel() == null || user.getLevel().isEmpty()) {
+		// 如果是新用户，先将其加入表中
+		if (user == null || user.getState() == null || user.getState().isEmpty()) {
 			user.setPoints(Double.valueOf(point));
 			user.setOpenId(openId);
-			user.setLevel("0");
+			user.setLevel(UserLevel.NORMAL.getCode());
+			user.setState(UserState.NEW.getCode());
 			user.setLastCheckInDate(new Date());
 			user.setContinuousNum(1);
-			System.out.print(user);
+			// System.out.print(user);
 			userDao.add(user);
-		} else {
+		}
+		// 老用户的话，直接更新签到信息
+		else {
 			user.setPoints(user.getPoints() + Double.valueOf(point));
 			user.setLastCheckInDate(new Date());
 			user.setContinuousNum(Integer.valueOf(continuousNum));
