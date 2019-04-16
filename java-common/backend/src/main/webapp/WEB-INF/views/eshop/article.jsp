@@ -72,18 +72,18 @@
 							name="txt_departmentname" data-bind="value:Name"
 							class="form-control" id="add-title" placeholder="名称">
 					</div>
-					<div class="form-group">
+				<!-- 	<div class="form-group">
 						<label for="txt_departmentname">文章缩略图</label> <input type="text"
 							name="txt_departmentname" data-bind="value:Name"
 							class="form-control" id="add-mainImgUrl"
-							placeholder="图片url,每一个之间用英文;隔开">
+							placeholder="文章的封面图片url">
 					</div>
 					<div class="form-group">
 						<label for="txt_departmentname">文章内部图片集合</label> <input
 							type="text" name="txt_departmentname" data-bind="value:Name"
 							class="form-control" id="add-imgs"
 							placeholder="图片url,每一个之间用英文;隔开">
-					</div>
+					</div> -->
 					<div class="form-group">
 						<label for="txt_departmentname">相关商品的id</label> <input type="text"
 							name="txt_departmentname" data-bind="value:Name"
@@ -150,7 +150,7 @@
 						name="txt_departmentname" data-bind="value:Name"
 						class="form-control" id="edit-title" placeholder="名称">
 				</div>
-				<div class="form-group">
+				<!-- <div class="form-group">
 					<label for="txt_departmentname">文章缩略图</label> <input type="text"
 						name="txt_departmentname" data-bind="value:Name"
 						class="form-control" id="edit-mainImgUrl"
@@ -161,7 +161,7 @@
 						name="txt_departmentname" data-bind="value:Name"
 						class="form-control" id="edit-imgs"
 						placeholder="图片url,每一个之间用英文;隔开">
-				</div>
+				</div> -->
 				<div class="form-group">
 					<label for="txt_departmentname">相关商品的id</label> <input type="text"
 						name="txt_departmentname" data-bind="value:Name"
@@ -260,11 +260,9 @@
 					}
 				}
 			}
-		}, {
-			field : 'mainImgUrl',
-			title : '缩略图',
-			align : 'center'
-		}, {
+		}, 
+		
+		{
 			field : 'announceStyle',
 			title : '公告大小格式',
 			align : 'center'
@@ -317,8 +315,8 @@
 	$('#btn_submit').on("click", function() {
 		var title = $('#add-title').val();
 		var referProductId = $('#add-referProductId').val();
-		var imgs = $('#add-imgs').val();
-		var mainImgUrl = $('#add-mainImgUrl').val();
+		//var imgs = $('#add-imgs').val();
+		//var mainImgUrl = $('#add-mainImgUrl').val();
 		var typeId = $('#add-typeId').val();
 		var tags = $('#add-tags').val();
 		var text = $('#add-text').val();
@@ -329,8 +327,8 @@
 			data : {
 				title : title,
 				referProductId : referProductId,
-				imgs : imgs,
-				mainImgUrl : mainImgUrl,
+				//imgs : imgs,
+				//mainImgUrl : mainImgUrl,
 				typeId : typeId,
 				tags : tags,
 				text : text,
@@ -349,8 +347,8 @@
 			$('#edit-id').val(row.id);
 			$('#edit-title').val(row.title);
 			$('#edit-referProductId').val(row.referProductId);
-			$('#edit-imgs').val(row.imgs);
-			$('#edit-mainImgUrl').val(row.mainImgUrl);
+			//$('#edit-imgs').val(row.imgs);
+			//$('#edit-mainImgUrl').val(row.mainImgUrl);
 			$('#edit-typeId').val(row.typeId);
 			$('#edit-tags').val(row.tags);
 			$('#edit-text').val(row.text);
@@ -363,8 +361,8 @@
 		var id = $('#edit-id').val();
 		var title = $('#edit-title').val();
 		var referProductId = $('#edit-referProductId').val();
-		var imgs = $('#edit-imgs').val();
-		var mainImgUrl = $('#edit-mainImgUrl').val();
+		//var imgs = $('#edit-imgs').val();
+		//var mainImgUrl = $('#edit-mainImgUrl').val();
 		var typeId = $('#edit-typeId').val();
 		var tags = $('#edit-tags').val();
 		var text = $('#edit-text').val();
@@ -376,8 +374,8 @@
 				id : id,
 				title : title,
 				referProductId : referProductId,
-				imgs : imgs,
-				mainImgUrl : mainImgUrl,
+				//imgs : imgs,
+				//mainImgUrl : mainImgUrl,
 				typeId : typeId,
 				tags : tags,
 				text : text,

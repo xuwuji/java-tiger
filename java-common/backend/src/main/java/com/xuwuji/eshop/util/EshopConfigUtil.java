@@ -18,6 +18,7 @@ public class EshopConfigUtil {
 	public static final String PRODUCT_IMG_BASE = "productImgBase";
 	public static final String CATEGORY_IMG_BASE = "categoryImgBase";
 	public static final String BANNER_IMG_BASE = "bannerImgBase";
+	public static final String ARTICLE_IMG_BASE = "articleImgBase";
 	public static final String POPULAR_PRODUCTS = "popularProducts";
 	public static final String COUNTRY_FLAG_BASE = "countryFlagImgBase";
 	public static final String BRAND_IMG_BASE = "brandImgBase";

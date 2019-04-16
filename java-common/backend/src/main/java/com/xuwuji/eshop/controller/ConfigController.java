@@ -120,6 +120,7 @@ public class ConfigController {
 		public String showNoticeMessage;
 		public String licenceImgUrl;
 		public String shareImgUrl;
+		public String articleImgUrl;
 
 		public String getXxcUrl() {
 			return xxcUrl;
@@ -215,6 +216,14 @@ public class ConfigController {
 
 		public void setShareImgUrl(String shareImgUrl) {
 			this.shareImgUrl = shareImgUrl;
+		}
+
+		public String getArticleImgUrl() {
+			return articleImgUrl;
+		}
+
+		public void setArticleImgUrl(String articleImgUrl) {
+			this.articleImgUrl = articleImgUrl;
 		}
 
 	}
