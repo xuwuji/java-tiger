@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Component;
@@ -47,6 +48,25 @@ public class ArticleDao {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("id", id);
 			result = mapper.getById(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+
+	public List<Article> getByRefer(Set<String> productIds, Set<String> categoryIds) {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<Article> result = new ArrayList<Article>();
+		try {
+			ArticleMapper mapper = session.getMapper(ArticleMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("productIds", productIds);
+			map.put("categoryIds", categoryIds);
+			result = mapper.getByRefer(map);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();

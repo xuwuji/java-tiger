@@ -10,6 +10,7 @@ public class Article {
 	private Date time;
 	private String text;
 	private String referProductId;
+	private String referCategoryId;
 	private String imgs;
 	private String tags;
 	private List<String> imgUrlList;
@@ -121,6 +122,14 @@ public class Article {
 
 	public void setState(String state) {
 		this.state = state;
+	}
+
+	public String getReferCategoryId() {
+		return referCategoryId;
+	}
+
+	public void setReferCategoryId(String referCategoryId) {
+		this.referCategoryId = referCategoryId;
 	}
 
 }

@@ -11,6 +11,8 @@
 		<result property="title" column="type"></result>
 		<result property="state" column="type"></result>
 		<result property="text" column="type"></result>
+		<result property="referProductId" column="type"></result>
+		<result property="referCategoryId" column="type"></result>
 		<result property="time" column="DATE" javaType="java.util.Date"
 			jdbcType="DATE"></result>
 		<result property="imgs" column="type"></result>
@@ -18,25 +20,39 @@
 		<result property="typeId" column="type"></result>
 		<result property="announceStyle" column="type"></result>
 		<result property="mainImgUrl" column="type"></result>
-		
-
-
-
 	</resultMap>
 
 	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
 		keyProperty="id">
 		insert into article
-		(title,text,time,imgs,tags,state,typeId,announceStyle,mainImgUrl,referProductId)
-		values(#{title},#{text},now(),#{imgs},#{tags},'0',#{typeId},#{announceStyle},#{mainImgUrl},#{referProductId})
+		(title,text,time,imgs,tags,state,typeId,announceStyle,mainImgUrl,referProductId,referCategoryId)
+		values(#{title},#{text},now(),#{imgs},#{tags},'0',#{typeId},#{announceStyle},#{mainImgUrl},#{referProductId},#{referCategoryId})
 	</insert>
 
 	<update id="update" parameterType="hashmap">
 		update article set
 		title=#{title},text=#{text},imgs=#{imgs},tags=#{tags}
-		,typeId=#{typeId},announceStyle=#{announceStyle},mainImgUrl=#{mainImgUrl},referProductId=#{referProductId}
+		,typeId=#{typeId},announceStyle=#{announceStyle},mainImgUrl=#{mainImgUrl},referProductId=#{referProductId},referCategoryId=#{referCategoryId}
 		where id=#{id}
 	</update>
+
+	<select id="getByRefer" resultType="Article"
+		parameterType="hashmap">
+		select * from
+		article where
+		state='1' and (
+		referProductId in
+		<foreach item="item" index="index" collection="productIds"
+			open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		or referCategoryId in
+		<foreach item="item" index="index" collection="categoryIds"
+			open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		);
+	</select>
 
 	<select id="getById" resultType="Article">
 		select * from

@@ -17,7 +17,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.xuwuji.eshop.db.dao.ArticleDao;
+import com.xuwuji.eshop.db.dao.CategoryDao;
+import com.xuwuji.eshop.db.dao.ProductDao;
+import com.xuwuji.eshop.db.dao.SearchHistoryDao;
+import com.xuwuji.eshop.db.dao.UserDao;
+import com.xuwuji.eshop.db.dao.ViewHistoryDao;
 import com.xuwuji.eshop.model.Article;
+import com.xuwuji.eshop.model.Category;
+import com.xuwuji.eshop.model.Product;
+import com.xuwuji.eshop.model.SearchHistory;
+import com.xuwuji.eshop.model.SortEnum;
+import com.xuwuji.eshop.model.User;
+import com.xuwuji.eshop.model.UserState;
+import com.xuwuji.eshop.model.ViewHistory;
 import com.xuwuji.eshop.util.EshopConfigUtil;
 import com.xuwuji.eshop.util.HttpUtil;
 
@@ -28,6 +40,16 @@ public class ArticleController {
 	private ArticleDao articleDao;
 	@Autowired
 	private EshopConfigUtil eshopConfigUtil;
+	@Autowired
+	private ProductDao productDao;
+	@Autowired
+	private UserDao userDao;
+	@Autowired
+	private CategoryDao categoryDao;
+	@Autowired
+	private ViewHistoryDao viewHistoryDao;
+	@Autowired
+	private SearchHistoryDao searchHistoryDao;
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
@@ -41,18 +63,18 @@ public class ArticleController {
 		String referProductId = request.getParameter("referProductId");
 		String text = request.getParameter("text");
 		String tags = request.getParameter("tags");
-		//String imgs = request.getParameter("imgs");
+		// String imgs = request.getParameter("imgs");
 		String typeId = request.getParameter("typeId");
-		//String mainImgUrl = request.getParameter("mainImgUrl");
+		// String mainImgUrl = request.getParameter("mainImgUrl");
 		String announceStyle = request.getParameter("announceStyle");
 		Article article = new Article();
 		article.setTitle(title);
 		article.setReferProductId(referProductId);
-		//article.setImgs(imgs);
+		// article.setImgs(imgs);
 		article.setTags(tags);
 		article.setText(text);
 		article.setTypeId(typeId);
-		//article.setMainImgUrl(mainImgUrl);
+		// article.setMainImgUrl(mainImgUrl);
 		article.setAnnounceStyle(announceStyle);
 		articleDao.add(article);
 	}
@@ -134,7 +156,7 @@ public class ArticleController {
 		for (Article article : temp) {
 			if (!idSet.contains(article.getId())) {
 				article.setMainImgUrl(articleImgBase + article.getId() + "-0.jpg");
-				//article.setImgUrlList(Arrays.asList(article.getImgs().split(";")));
+				// article.setImgUrlList(Arrays.asList(article.getImgs().split(";")));
 				article.setTagList(Arrays.asList(article.getTags().split(";")));
 				list.add(article);
 				idSet.add(article.getId());
@@ -154,7 +176,7 @@ public class ArticleController {
 			List<Article> temp = articleDao.getActiveAllByTags(tag);
 			for (Article article : temp) {
 				if (!idSet.contains(article.getId())) {
-					//article.setImgUrlList(Arrays.asList(article.getImgs().split(";")));
+					// article.setImgUrlList(Arrays.asList(article.getImgs().split(";")));
 					article.setTagList(Arrays.asList(article.getTags().split(";")));
 					article.setMainImgUrl(articleImgBase + article.getId() + "-0.jpg");
 					list.add(article);
@@ -170,11 +192,47 @@ public class ArticleController {
 	public List<Article> getGuess(HttpServletRequest request, HttpServletResponse response) {
 		List<Article> list = new ArrayList<Article>();
 		HashSet<Integer> idSet = new HashSet<Integer>();
+		String openId = request.getParameter("openId");
+		User user = new User();
+		user.setOpenId(openId);
+		user = userDao.getByCondition(user);
+
+		List<Category> categories = new ArrayList<Category>();
+		categories = categoryDao.getRecommend();
+		HashSet<String> categoryIds = new HashSet<String>();
+		HashSet<String> productIds = new HashSet<String>();
+		List<Article> articles = new ArrayList<Article>();
+		for (Category c : categories) {
+			int categoryId = c.getId();
+			categoryIds.add(String.valueOf(categoryId));
+		}
+		// view history
+		List<ViewHistory> viewHistoryList = viewHistoryDao.getAllByOpenId(openId);
+		for (ViewHistory viewHistory : viewHistoryList) {
+			String categoryId = viewHistory.getCategoryId();
+			String productId = viewHistory.getProductId();
+			categoryIds.add(categoryId);
+			productIds.add(productId);
+		}
+		// search kw history
+		List<SearchHistory> searchHistoryList = searchHistoryDao.getAllByOpenId(openId);
+		for (SearchHistory searchHistory : searchHistoryList) {
+			String kw = searchHistory.getKw();
+			List<Product> products = new ArrayList<Product>();
+			products = productDao.getActiveByKW(kw);
+			for (Product product : products) {
+				productIds.add(String.valueOf(product.getId()));
+			}
+		}
+
+		articles = articleDao.getByRefer(productIds, categoryIds);
+
 		List<String> preSearchArr = Arrays
 				.asList(eshopConfigUtil.getParam(eshopConfigUtil.ARTICLE_PRE_SEARCH).split("/"));
+		String articleImgBase = eshopConfigUtil.getParam(eshopConfigUtil.ARTICLE_IMG_BASE);
 		for (String word : preSearchArr) {
 			List<Article> tagTemp = articleDao.getActiveAllByCondition(word, "", "");
-			System.out.print(tagTemp.size());
+			// System.out.print(tagTemp.size());
 			List<Article> titleTemp = articleDao.getActiveAllByCondition("", "", word);
 			for (Article article : tagTemp) {
 				if (!idSet.contains(article.getId())) {
@@ -189,6 +247,13 @@ public class ArticleController {
 				}
 			}
 		}
+		for (Article article : articles) {
+			list.add(article);
+		}
+		for (Article article : list) {
+			article.setMainImgUrl(articleImgBase + article.getId() + "-0.jpg");
+		}
+
 		return list;
 	}
 
