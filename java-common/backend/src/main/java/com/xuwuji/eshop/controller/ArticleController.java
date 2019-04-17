@@ -193,20 +193,16 @@ public class ArticleController {
 		List<Article> list = new ArrayList<Article>();
 		HashSet<Integer> idSet = new HashSet<Integer>();
 		String openId = request.getParameter("openId");
-		User user = new User();
-		user.setOpenId(openId);
-		user = userDao.getByCondition(user);
-
-		List<Category> categories = new ArrayList<Category>();
-		categories = categoryDao.getRecommend();
 		HashSet<String> categoryIds = new HashSet<String>();
 		HashSet<String> productIds = new HashSet<String>();
-		List<Article> articles = new ArrayList<Article>();
+		// 系统自定义推荐的类别
+		List<Category> categories = new ArrayList<Category>();
+		categories = categoryDao.getRecommend();
 		for (Category c : categories) {
 			int categoryId = c.getId();
 			categoryIds.add(String.valueOf(categoryId));
 		}
-		// view history
+		// 浏览历史
 		List<ViewHistory> viewHistoryList = viewHistoryDao.getAllByOpenId(openId);
 		for (ViewHistory viewHistory : viewHistoryList) {
 			String categoryId = viewHistory.getCategoryId();
@@ -214,7 +210,7 @@ public class ArticleController {
 			categoryIds.add(categoryId);
 			productIds.add(productId);
 		}
-		// search kw history
+		// 搜索历史
 		List<SearchHistory> searchHistoryList = searchHistoryDao.getAllByOpenId(openId);
 		for (SearchHistory searchHistory : searchHistoryList) {
 			String kw = searchHistory.getKw();
@@ -224,15 +220,20 @@ public class ArticleController {
 				productIds.add(String.valueOf(product.getId()));
 			}
 		}
-
-		articles = articleDao.getByRefer(productIds, categoryIds);
-
+		// 根据用户以前浏览和搜索到的商品和类别添加所相关的
+		List<Article> referArticles = new ArrayList<Article>();
+		referArticles = articleDao.getByRefer(productIds, categoryIds);
+		for (Article article : referArticles) {
+			if (!idSet.contains(article.getId())) {
+				list.add(article);
+				idSet.add(article.getId());
+			}
+		}
+		// 对于预先设置好的搜索词进行查询添加
 		List<String> preSearchArr = Arrays
 				.asList(eshopConfigUtil.getParam(eshopConfigUtil.ARTICLE_PRE_SEARCH).split("/"));
-		String articleImgBase = eshopConfigUtil.getParam(eshopConfigUtil.ARTICLE_IMG_BASE);
 		for (String word : preSearchArr) {
 			List<Article> tagTemp = articleDao.getActiveAllByCondition(word, "", "");
-			// System.out.print(tagTemp.size());
 			List<Article> titleTemp = articleDao.getActiveAllByCondition("", "", word);
 			for (Article article : tagTemp) {
 				if (!idSet.contains(article.getId())) {
@@ -247,13 +248,11 @@ public class ArticleController {
 				}
 			}
 		}
-		for (Article article : articles) {
-			list.add(article);
-		}
+
+		String articleImgBase = eshopConfigUtil.getParam(eshopConfigUtil.ARTICLE_IMG_BASE);
 		for (Article article : list) {
 			article.setMainImgUrl(articleImgBase + article.getId() + "-0.jpg");
 		}
-
 		return list;
 	}
 
