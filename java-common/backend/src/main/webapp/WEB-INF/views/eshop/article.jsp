@@ -45,7 +45,7 @@
 		</button>
 	</div>
 
-<!-- 	<div id="toolbar" class="btn-group">
+	<!-- 	<div id="toolbar" class="btn-group">
 		<button id="btn-batch-disable" type="button" class="btn">
 			<span aria-hidden="true" class="icon icon-plus-sign"></span>批量下架
 		</button>
@@ -72,7 +72,7 @@
 							name="txt_departmentname" data-bind="value:Name"
 							class="form-control" id="add-title" placeholder="名称">
 					</div>
-				<!-- 	<div class="form-group">
+					<!-- 	<div class="form-group">
 						<label for="txt_departmentname">文章缩略图</label> <input type="text"
 							name="txt_departmentname" data-bind="value:Name"
 							class="form-control" id="add-mainImgUrl"
@@ -91,6 +91,12 @@
 							placeholder="相关商品的id,只能写一个">
 					</div>
 					<div class="form-group">
+						<label for="txt_departmentname">相关类别的id</label> <input type="text"
+							name="txt_departmentname" data-bind="value:Name"
+							class="form-control" id="add-referCategoryId"
+							placeholder="相关类别的id,只能写一个">
+					</div>
+					<div class="form-group">
 						<label for="txt_departmentname">文章类别</label> <input type="text"
 							name="txt_departmentname" data-bind="value:Name"
 							class="form-control" id="add-typeId" placeholder="0公告，1种草笔记">
@@ -104,8 +110,7 @@
 					<div class="form-group">
 						<label for="txt_departmentname">文章标签集合</label> <input type="text"
 							name="txt_departmentname" data-bind="value:Name"
-							class="form-control" id="add-tags"
-							placeholder="每一个之间用英文;隔开">
+							class="form-control" id="add-tags" placeholder="每一个之间用英文;隔开">
 					</div>
 					<div class="form-group">
 						<label for="txt_departmentname">文章内容</label>
@@ -167,6 +172,12 @@
 						name="txt_departmentname" data-bind="value:Name"
 						class="form-control" id="edit-referProductId"
 						placeholder="相关商品的id,只能写一个">
+				</div>
+				<div class="form-group">
+					<label for="txt_departmentname">相关类别的id</label> <input type="text"
+						name="txt_departmentname" data-bind="value:Name"
+						class="form-control" id="edit-referCategoryId"
+						placeholder="相关类别的id,只能写一个">
 				</div>
 				<div class="form-group">
 					<label for="txt_departmentname">文章类别</label> <input type="text"
@@ -260,8 +271,8 @@
 					}
 				}
 			}
-		}, 
-		
+		},
+
 		{
 			field : 'announceStyle',
 			title : '公告大小格式',
@@ -272,6 +283,10 @@
 			align : 'center'
 		}, {
 			field : 'referProductId',
+			title : '相关商品id',
+			align : 'center',
+		}, {
+			field : 'referCategoryId',
 			title : '相关商品id',
 			align : 'center',
 		}, {
@@ -315,6 +330,7 @@
 	$('#btn_submit').on("click", function() {
 		var title = $('#add-title').val();
 		var referProductId = $('#add-referProductId').val();
+		var referCategoryId = $('#add-referCategoryId').val();
 		//var imgs = $('#add-imgs').val();
 		//var mainImgUrl = $('#add-mainImgUrl').val();
 		var typeId = $('#add-typeId').val();
@@ -332,6 +348,7 @@
 				typeId : typeId,
 				tags : tags,
 				text : text,
+				referCategoryId : referCategoryId,
 				announceStyle : announceStyle,
 			},
 			success : function(status) {
@@ -347,6 +364,7 @@
 			$('#edit-id').val(row.id);
 			$('#edit-title').val(row.title);
 			$('#edit-referProductId').val(row.referProductId);
+			$('#edit-referCategoryId').val(row.referCategoryId);
 			//$('#edit-imgs').val(row.imgs);
 			//$('#edit-mainImgUrl').val(row.mainImgUrl);
 			$('#edit-typeId').val(row.typeId);
@@ -361,6 +379,7 @@
 		var id = $('#edit-id').val();
 		var title = $('#edit-title').val();
 		var referProductId = $('#edit-referProductId').val();
+		var referCategoryId = $('#edit-referCategoryId').val();
 		//var imgs = $('#edit-imgs').val();
 		//var mainImgUrl = $('#edit-mainImgUrl').val();
 		var typeId = $('#edit-typeId').val();
@@ -374,6 +393,7 @@
 				id : id,
 				title : title,
 				referProductId : referProductId,
+				referCategoryId : referCategoryId,
 				//imgs : imgs,
 				//mainImgUrl : mainImgUrl,
 				typeId : typeId,
@@ -391,7 +411,7 @@
 	function disable(id) {
 		if (confirm("确定下架此分类吗？")) {
 			$.ajax({
-				url : "/backend/article/disable?id="+id, //url
+				url : "/backend/article/disable?id=" + id, //url
 				type : "get",
 				success : function(status) {
 					$table.bootstrapTable('refresh');
@@ -404,7 +424,7 @@
 	function reActive(id) {
 		if (confirm("确定上架此分类吗？")) {
 			$.ajax({
-				url : "/backend/article/reActive?id="+id, //url
+				url : "/backend/article/reActive?id=" + id, //url
 				type : "get",
 
 				success : function(status) {
@@ -413,6 +433,5 @@
 			});
 		}
 	}
-
 </script>
 </html>

@@ -61,6 +61,7 @@ public class ArticleController {
 	public void add(HttpServletRequest request, HttpServletResponse response) {
 		String title = request.getParameter("title");
 		String referProductId = request.getParameter("referProductId");
+		String referCategoryId = request.getParameter("referCategoryId");
 		String text = request.getParameter("text");
 		String tags = request.getParameter("tags");
 		// String imgs = request.getParameter("imgs");
@@ -70,6 +71,7 @@ public class ArticleController {
 		Article article = new Article();
 		article.setTitle(title);
 		article.setReferProductId(referProductId);
+		article.setReferCategoryId(referCategoryId);
 		// article.setImgs(imgs);
 		article.setTags(tags);
 		article.setText(text);
@@ -84,6 +86,7 @@ public class ArticleController {
 	public void update(HttpServletRequest request, HttpServletResponse response) {
 		String title = request.getParameter("title");
 		String referProductId = request.getParameter("referProductId");
+		String referCategoryId = request.getParameter("referCategoryId");
 		String text = request.getParameter("text");
 		String tags = request.getParameter("tags");
 		String imgs = request.getParameter("imgs");
@@ -94,6 +97,7 @@ public class ArticleController {
 		Article article = new Article();
 		article.setTitle(title);
 		article.setReferProductId(referProductId);
+		article.setReferCategoryId(referCategoryId);
 		article.setImgs(imgs);
 		article.setTags(tags);
 		article.setText(text);
