@@ -265,6 +265,7 @@ public class ArticleController {
 		HashSet<Integer> idSet = new HashSet<Integer>();
 		List<Article> tagTemp = articleDao.getActiveAllByCondition(kw, "", "");
 		List<Article> titleTemp = articleDao.getActiveAllByCondition("", "", kw);
+		String articleImgBase = eshopConfigUtil.getParam(eshopConfigUtil.ARTICLE_IMG_BASE);
 		for (Article article : tagTemp) {
 			if (!idSet.contains(article.getId())) {
 				list.add(article);
@@ -276,6 +277,9 @@ public class ArticleController {
 				list.add(article);
 				idSet.add(article.getId());
 			}
+		}
+		for (Article article : list) {
+			article.setMainImgUrl(articleImgBase + article.getId() + "-0.jpg");
 		}
 		return list;
 	}
