@@ -11,7 +11,7 @@
  Target Server Version : 50725
  File Encoding         : 65001
 
- Date: 16/04/2019 22:50:56
+ Date: 17/04/2019 17:31:30
 */
 
 SET NAMES utf8mb4;
@@ -35,7 +35,7 @@ CREATE TABLE `article`  (
   `state` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   `mainImgUrl` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of article
@@ -43,6 +43,7 @@ CREATE TABLE `article`  (
 INSERT INTO `article` VALUES (11, '三款热门洗面奶选哪款? 洗面奶测评', '2019-04-16 18:09:54', '洗面奶我也用过十几款了，大牌的、平价的也踩过很多坑，今天就先给大家测评下这三款很火的、价格差不多的洗面奶<br />\n<br />\nCPB洗面奶（滋润版）<br />\n推荐指数：5<br />\n价格：专柜价格￥500/125g<br />\n适合肤质：干皮（清爽版适合油皮）<br />\n使用感受：这款泡?最多，挤一点就能搓出很多泡?来，膏体很滋润很丝滑，并且很容易清洗，虽然它是皂基洗面奶，但是洗完脸后，一点也不干，不假滑?<br />\n<br />\nSK2洗面奶<br />\n推荐指数：4<br />\n价格：专柜价格 ￥460/120g<br />\n适合肤质：敏感肌、痘痘肌<br />\n使用感受：这款是氨基酸洗面奶，质地温和，洗完不紧绷，里面含有神仙水的主要成分，有深层清洁，改善油脂的功效，就是不是太容易清洗，洗完稍微有一点假滑?<br />\n<br />\n香奈儿山茶花洗面奶（粉色)&nbsp;<br />\n推荐指数：5<br />\n价格：专柜价格 ￥420/150g<br />\n适合肤质：干皮，敏感肌&nbsp;<br />\n使用感受：这款味道最好闻的，有淡淡的山茶花香味，膏体也比较细腻丝滑，洗完不紧绷，不假滑， 这款性价比最高，150g的容量能用很长时间?<br />\n<br />\n推荐排名：香奈儿 &gt; CPB &gt; SK2 !! 最后科普一下，氨基酸洗面奶和皂基洗面奶的区别：<br />\n<br />\n氨基酸洗面奶比较温和，对皮肤刺激小，保湿效果好，适合敏感皮肤，不过清洁力度比皂基洗面奶弱一些。另外不要觉得皂基洗面奶用了不好，会烂脸，皂基洗面奶清洁能力很强，比较适合油皮、混油皮，所以洗面奶还是要根据自己的肤质和需求来选哦?<br />', '1345', NULL, '1', '', NULL, '洁面;SKII;CPB;Chanel;', '1', NULL);
 INSERT INTO `article` VALUES (12, '干货分享｜黄皮巨显白的16支热门口红清单', '2019-04-16 22:26:23', 'Dior烈焰蓝金哑光999<br />\n人气最高的正红色，显色度超高，复古感十足，巨显白，让你惊艳到无法自拔。<br />\n<br />\n<br />\nDior漆光740<br />\n结合了唇釉与唇膏的优点，超级显白的枫叶红，带着砖红色与橘色的魅力。<br />\n<br />\n<br />\nYSL方管1号色Le Rouge正红色<br />\n气场瞬间一米八的一个颜色哦，偏正红色，显气质超吸睛，显白不止一个度。<br />\n<br />\n<br />\nYSL圆管46号色迷魅亮彩圆管唇膏口红Orange Perfecto<br />\n特别适合黄皮的一款颜色，超级显气质，偏珊瑚橘色，适合春夏的一款颜色哦。<br />\n<br />\n<br />\nYSL黑管唇釉416<br />\n显白不挑皮的颜色，棕调的番茄色，对黄黑皮友好到没的说，滋润度也很nice。<br />\n<br />\n<br />\nYSL小金条21号色<br />\n小金条里面的断货王，被李佳琦吹爆的一支口红，小姐姐抢货抢到人生崩塌。<br />\n<br />\n<br />\nCHANNEL丝绒58号色<br />\n薄涂是温柔的豆沙色，厚涂是棕红色，很实用的一支，超级有质感的颜色。<br />\n<br />\n<br />\nCHANNEL唇釉154号色<br />\n香奈儿里面的老网红了，显白还很提气质，到现在还是有好多仙女钟爱的一支。<br />\n<br />\n<br />\nTF黑管16号色Scarlet Rouge<br />\n涂上之后显得皮肤瞬间白了好几个度，巨显白，滋润度也超好，无法拒绝。<br />\n<br />\n<br />\nTF白管07号色Paradiso 3g<br />\n春天的颜色哦，万年的断货王，显白又少女的颜色，粉嫩嫩的首pick。<br />\n<br />\n<br />\nARMANI红管唇釉405<br />\n炒到一度断货的颜色，哑光丝绒却水润到感人的番茄红，真的超级无敌巨显白。<br />\n<br />\n<br />\n兰蔻菁纯丝绒口红 196<br />\n<br />\n橘的很妙的一款颜色，真的很胡萝卜，黄皮白皮随便上，显白显气质，质地超好。<br />\n<br />\n<br />\nMAC子弹头唇膏/口红 Chili&nbsp;<br />\nMac的必入款哦，火辣辣的小辣椒色，超级不挑皮，无敌巨显白。<br />\n<br />\n<br />\n纪梵希小羊皮315<br />\n姨妈色的鼻祖，之前还是baby的明星效应带火的，显白指数我给五星。<br />\n<br />\n<br />\n娇兰臻彩宝石口红/唇膏 25号色&nbsp;<br />\n传说中的冰冰色，hin有女人味的一款颜色哦，无敌显白的色系之一啦~~<br />\n<br />\n<br />\nCPB蔷薇口红/唇膏 311 Vivid red<br />\n超级经典的正红色，带有一丝丝绒哑光，上嘴很润，唇周肤色瞬间亮一度。<br />', '15', NULL, '1', '', NULL, '口红;YSL;Dior;TF;', '1', NULL);
 INSERT INTO `article` VALUES (13, 'nars腮红三部曲｜三大热门腮红推荐', '2019-04-16 22:45:18', 'Nars腮红三部曲！Deep Throat深喉 /Orgasm高潮 /Sex Appeal 性感魅力<br />\n1、Deep Throat 深喉<br />\n带偏珠光的细闪，但不是特别高调那种，粉色系，颜色属于粉色带点蜜桃,上脸非常粉嫩，比较显气色，想尝试带闪腮红又怕太夸张的可以试试这个哦。虽然也带闪但是是那种很细的小珠光，存在感比orgasm低很多，所以也更日常！这块属于白皮黄皮都能hold住的，上脸一秒提气色效果超明显！少女心爆棚！而且显色度超好，所以需要少量多次叠加。持久度也没问题，带妆一整天不是事儿。<br />\n2、Orgasm 高潮<br />\n潮是偏橘粉的珊瑚红，有细微珠光，比深喉更闪一些，粉质细腻不掉妆，带高调的金闪，比较显色，且比较显毛孔，桃粉色偏橘色，更适合白皮一些。粉嫩的元气少女色，很显脸色好、软萌的感觉，可以眼影可以腮红～<br />\n高潮、深喉区别：高潮带金闪适合白皮，深喉带银闪适合黄陂～<br />\n3、Sex Appeal 性感魅力<br />\n非常浅的亚光蜜桃粉，偏暖调，粉质细腻不显毛孔，颜色浅所以不怕猴屁股，显色持久而且超元气，它和高潮刷出来的颜色比较像，区别在于有无偏光，高潮因为偏光重很挑皮肤状态，但是Sex appeal对瑕疵比较友好，完全不挑肤质～<br />', '1338', NULL, '1', '', NULL, '腮红;Nars;', '1', NULL);
+INSERT INTO `article` VALUES (14, '口红全场500减50', '2019-04-17 13:15:07', 'aaaaa', '13', NULL, '0', 'small', NULL, '口红', '1', NULL);
 
 -- ----------------------------
 -- Table structure for banneritem
@@ -193,7 +194,7 @@ CREATE TABLE `eshopconfig`  (
   `value` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   `description` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of eshopconfig
@@ -203,9 +204,9 @@ INSERT INTO `eshopconfig` VALUES (2, 'noticeMsg', '欢迎在线咨询徐小柴~'
 INSERT INTO `eshopconfig` VALUES (3, 'productImgBase', 'http://ppf0hsoua.bkt.clouddn.com/product/', NULL);
 INSERT INTO `eshopconfig` VALUES (4, 'categoryImgBase', 'http://ppf0hsoua.bkt.clouddn.com/category/', NULL);
 INSERT INTO `eshopconfig` VALUES (5, 'bannerImgBase', 'http://ppf0hsoua.bkt.clouddn.com/banner/', NULL);
-INSERT INTO `eshopconfig` VALUES (6, 'preSearch', 'ahc/ysl', NULL);
+INSERT INTO `eshopconfig` VALUES (6, 'preSearch', 'TF/CPB/SK2/面膜/神仙水', '');
 INSERT INTO `eshopconfig` VALUES (7, 'countryFlagImgBase', 'http://ppf0hsoua.bkt.clouddn.com/country/', NULL);
-INSERT INTO `eshopconfig` VALUES (8, 'articlePreSearch', '阿玛尼403/药丸面膜/天气丹套装/第一', NULL);
+INSERT INTO `eshopconfig` VALUES (8, 'articlePreSearch', 'CPB/口红/洗面奶/Nars', '');
 INSERT INTO `eshopconfig` VALUES (9, 'bonus', '15', NULL);
 INSERT INTO `eshopconfig` VALUES (10, 'shareTitle', '小柴精选 全球品质好物', '');
 INSERT INTO `eshopconfig` VALUES (11, 'goldDiscount', '0.98', NULL);
@@ -217,6 +218,7 @@ INSERT INTO `eshopconfig` VALUES (16, 'productDetailImgBase', 'http://ppf0hsoua.
 INSERT INTO `eshopconfig` VALUES (17, 'shareImgUrl', 'http://ppf0hsoua.bkt.clouddn.com/logo.jpg', '分享链接的图片地址');
 INSERT INTO `eshopconfig` VALUES (18, 'licenceImgUrl', 'http://ppf0hsoua.bkt.clouddn.com/licenceCopy.jpg', '营业执照图片地址');
 INSERT INTO `eshopconfig` VALUES (19, 'articleImgBase', 'http://ppf0hsoua.bkt.clouddn.com/article/', '文章的图片base地址');
+INSERT INTO `eshopconfig` VALUES (20, 'bonusImgUrl', 'http://ppf0hsoua.bkt.clouddn.com/bonusShare.jpg', '分享红包页面的图片');
 
 -- ----------------------------
 -- Table structure for eshoporder
@@ -254,11 +256,11 @@ CREATE TABLE `eshoporder`  (
 -- ----------------------------
 INSERT INTO `eshoporder` VALUES (47, '1', '2019-04-15 14:47:13', '1', '20190415224712710006', '18217683505', 276, 2, '1', '1', 'oX-br4rfqn2ia4g6kGdbFKlkgBYw', NULL, '', '2019-04-15 22:51:30', NULL, 'share', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '', '', '', 0, 0, 0);
 INSERT INTO `eshoporder` VALUES (48, '号', '2019-04-15 15:10:08', '1', '20190415231008296472', '18217683505', 346, 1, 'a', '啊', 'oX-br4rfqn2ia4g6kGdbFKlkgBYw', NULL, '', '2019-04-15 23:11:13', NULL, 'share', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '', '', '', 0, 0, 200);
-INSERT INTO `eshoporder` VALUES (49, '2', '2019-04-15 15:25:22', '1', '20190415232520400000', '18218683505', 348, 1, '5', '5', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', NULL, '啊', '2019-04-15 23:27:38', NULL, 'share', 'oX-br4rfqn2ia4g6kGdbFKlkgBYw', '', '', '', 0, 0, 0);
+INSERT INTO `eshoporder` VALUES (49, '2', '2019-04-15 15:25:22', '2', '20190415232520400000', '18218683505', 348, 1, '5', '5', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '787219837213', '啊', '2019-04-17 17:29:01', '圆通', 'share', 'oX-br4rfqn2ia4g6kGdbFKlkgBYw', '', '', '', 0, 0, 0);
 INSERT INTO `eshoporder` VALUES (50, '1', '2019-04-15 15:29:31', '1', '20190415232930401342', '18217683505', 3147, 3, '5', '5', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', NULL, '5', '2019-04-15 23:29:56', NULL, '', '', '', '', '', 0, 0, 300);
 INSERT INTO `eshoporder` VALUES (51, '是', '2019-04-15 15:31:37', '-1', '20190415233136292689', '18217683505', 9241, 9, '18217683505', '5', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', NULL, '', '2019-04-15 23:32:02', NULL, '', '', '', '', '', 0, 0, 2000);
 INSERT INTO `eshoporder` VALUES (52, '了', '2019-04-15 15:32:45', '1', '20190415233245256045', '18217683505', 10270, 10, '了', '了', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', NULL, '', '2019-04-15 23:33:00', NULL, '', '', '', '', '', 0, 0, 2000);
-INSERT INTO `eshoporder` VALUES (53, 'e', '2019-04-15 15:40:39', '2', '20190415234038637522', '18217683505', 9890, 37, 'e', 'a', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '44', '', '2019-04-15 23:41:55', 'dd', 'share', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '', '', '', 0, 0, 2000);
+INSERT INTO `eshoporder` VALUES (53, 'e', '2019-04-15 15:40:39', '3', '20190415234038637522', '18217683505', 9890, 37, 'e', 'a', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '44', '', '2019-04-17 17:26:27', 'dd', 'share', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '', '', '', 0, 0, 2000);
 INSERT INTO `eshoporder` VALUES (54, '是', '2019-04-15 16:05:48', '1', '20190416000548101598', '18217683505', 1230, 2, '啊', '啊', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', NULL, '', '2019-04-16 00:06:18', NULL, 'share', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '', '', '', 0, 0, 0);
 
 -- ----------------------------
@@ -499,7 +501,7 @@ INSERT INTO `product` VALUES (10, '阿玛尼漆亮水漾唇釉', '阿玛尼漆�
 INSERT INTO `product` VALUES (11, 'NYX 16色眼影盘', 'NYX 16色眼影盘', 175.00, 136.00, 0.00, 100, 19, NULL, '3', '5', 3, '1', '0', '2019-03-05 14:17:56', '2019-04-15 16:55:06', NULL, NULL, NULL, NULL, NULL, '');
 INSERT INTO `product` VALUES (12, 'MAC 魅可 时尚焦点小眼影', 'MAC 魅可 时尚焦点小眼影', 158.00, 129.00, 0.00, 100, 19, NULL, '3', '5', 5, '1', '0', '2019-03-05 14:17:56', '2019-04-15 16:55:22', NULL, NULL, NULL, NULL, NULL, '');
 INSERT INTO `product` VALUES (13, 'Canmake 井田 完美高效眼影', 'Canmake 井田 完美高效眼影', 75.00, 49.00, 0.00, 100, 19, NULL, '3', '5', 4, '1', '0', '2019-03-05 14:17:56', '2019-04-15 16:57:58', NULL, NULL, NULL, NULL, NULL, '');
-INSERT INTO `product` VALUES (15, 'Tom Ford汤姆福特 lip color 黑金唇膏', 'Tom Ford汤姆福特 lip color 黑金唇膏', 348.00, 0.00, 0.00, 99, 24, NULL, '2', '5', 6, '1', '2', '2019-03-07 16:06:46', '2019-04-16 00:06:18', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `product` VALUES (15, 'Tom Ford  汤姆福特 TF lip color 黑金唇膏', 'Tom Ford汤姆福特 lip color 黑金唇膏', 348.00, 300.00, 0.00, 99, 24, NULL, '2', '5', 6, '1', '2', '2019-03-07 16:06:46', '2019-04-17 17:09:22', NULL, NULL, NULL, NULL, NULL, '');
 INSERT INTO `product` VALUES (21, '蒂佳婷 Dr.Jart+ 蓝色药丸面膜 专业瞬间锁水', '适合易缺水干燥肌肤。面膜蕴含水润精华，面膜纸以超细纤维制成，更贴合面部，将精华完整传送到肌底。', 68.00, 43.00, 0.00, 58, 42, NULL, '4', '6', 8, '1', '0', '2019-03-12 12:46:57', '2019-04-15 11:09:54', 'http://localhost:8080/backend/resources/eshop/image/product/21-1.jpg', 'http://localhost:8080/backend/resources/eshop/image/product/21-2.jpg', 'http://localhost:8080/backend/resources/eshop/image/product/21-3.jpg', 'http://localhost:8080/backend/resources/eshop/image/product/21-4.jpg', NULL, '');
 INSERT INTO `product` VALUES (22, 'Shiseido 资生堂 Anessa 安耐晒 超防水美肌UV乳液 SPF50', '具有防水、防汗、防皮脂的特性，不论进行海边、游泳池或户外休闲活动等，等能安心阻挡强烈日晒', 330.00, 266.00, 290.00, 40, 31, NULL, '7', '7', 9, '1', '0', '2019-03-12 13:02:40', '2019-04-15 17:04:33', 'http://localhost:8080/backend/resources/eshop/image/product/22-1.jpg', 'http://localhost:8080/backend/resources/eshop/image/product/22-2.jpg', 'http://localhost:8080/backend/resources/eshop/image/product/22-3.jpg', 'http://localhost:8080/backend/resources/eshop/image/product/22-4.jpg', NULL, '1');
 INSERT INTO `product` VALUES (23, 'SK-II 护肤精华 神仙水', 'SK-II 护肤精华 神仙水', 1050.00, 963.00, 0.00, 24, 32, NULL, '10', '6', 13, '1', '0', '2019-03-19 09:46:09', '2019-04-16 00:06:18', 'http://pnwhn87vf.bkt.clouddn.com/product/23-1.jpg', 'http://pnwhn87vf.bkt.clouddn.com/product/23-2.jpg', 'http://pnwhn87vf.bkt.clouddn.com/product/23-3.jpg', 'http://pnwhn87vf.bkt.clouddn.com/product/23-4.jpg', NULL, '0');
@@ -555,12 +557,21 @@ CREATE TABLE `searchhistory`  (
   `openId` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   `time` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of searchhistory
 -- ----------------------------
 INSERT INTO `searchhistory` VALUES (1, 'dior', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '2019-04-15 23:54:51');
+INSERT INTO `searchhistory` VALUES (2, 'TF', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '2019-04-17 17:01:12');
+INSERT INTO `searchhistory` VALUES (3, 'CPB', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '2019-04-17 17:01:41');
+INSERT INTO `searchhistory` VALUES (4, 'SK2', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '2019-04-17 17:01:44');
+INSERT INTO `searchhistory` VALUES (5, '神仙水', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '2019-04-17 17:01:47');
+INSERT INTO `searchhistory` VALUES (6, '面膜', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '2019-04-17 17:01:50');
+INSERT INTO `searchhistory` VALUES (7, 'mac', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '2019-04-17 17:06:25');
+INSERT INTO `searchhistory` VALUES (8, '面膜', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '2019-04-17 17:07:46');
+INSERT INTO `searchhistory` VALUES (9, '神仙水', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '2019-04-17 17:07:48');
+INSERT INTO `searchhistory` VALUES (10, 'TF', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '2019-04-17 17:09:26');
 
 -- ----------------------------
 -- Table structure for user
@@ -602,7 +613,7 @@ CREATE TABLE `viewhistory`  (
   `time` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `openId`(`openId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of viewhistory
@@ -642,5 +653,7 @@ INSERT INTO `viewhistory` VALUES (32, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '1344', '1
 INSERT INTO `viewhistory` VALUES (33, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '1339', '13', '2019-04-16 18:51:57');
 INSERT INTO `viewhistory` VALUES (34, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '1345', '13', '2019-04-16 18:52:01');
 INSERT INTO `viewhistory` VALUES (35, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '1345', '13', '2019-04-16 18:52:03');
+INSERT INTO `viewhistory` VALUES (36, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '15', '2', '2019-04-17 17:09:33');
+INSERT INTO `viewhistory` VALUES (37, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '15', '2', '2019-04-17 17:11:43');
 
 SET FOREIGN_KEY_CHECKS = 1;

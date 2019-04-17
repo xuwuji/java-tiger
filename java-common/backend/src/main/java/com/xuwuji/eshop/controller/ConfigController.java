@@ -37,6 +37,7 @@ public class ConfigController {
 		eshopConfig.setShowNoticeMessage(eshopConfigUtil.getParam(eshopConfigUtil.SHOW_NOTICE_MESSAGE));
 		eshopConfig.setLicenceImgUrl(eshopConfigUtil.getParam(eshopConfigUtil.LICENCE_IMG_URL));
 		eshopConfig.setShareImgUrl(eshopConfigUtil.getParam(eshopConfigUtil.SHARE_IMG_URL));
+		eshopConfig.setBonusImgUrl(eshopConfigUtil.getParam(eshopConfigUtil.BONUS_IMG_URL));
 		return eshopConfig;
 	}
 
@@ -121,6 +122,7 @@ public class ConfigController {
 		public String licenceImgUrl;
 		public String shareImgUrl;
 		public String articleImgUrl;
+		private String bonusImgUrl;
 
 		public String getXxcUrl() {
 			return xxcUrl;
@@ -224,6 +226,14 @@ public class ConfigController {
 
 		public void setArticleImgUrl(String articleImgUrl) {
 			this.articleImgUrl = articleImgUrl;
+		}
+
+		public String getBonusImgUrl() {
+			return bonusImgUrl;
+		}
+
+		public void setBonusImgUrl(String bonusImgUrl) {
+			this.bonusImgUrl = bonusImgUrl;
 		}
 
 	}
