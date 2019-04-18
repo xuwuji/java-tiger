@@ -11,7 +11,7 @@
  Target Server Version : 50725
  File Encoding         : 65001
 
- Date: 17/04/2019 17:34:05
+ Date: 18/04/2019 21:20:55
 */
 
 SET NAMES utf8mb4;
@@ -65,7 +65,7 @@ CREATE TABLE `banneritem`  (
 -- ----------------------------
 -- Records of banneritem
 -- ----------------------------
-INSERT INTO `banneritem` VALUES (1, 'http://ppf0hsoua.bkt.clouddn.com/banner/spring_new.jpg', 'dasad', '1', '春季上新', '0', '2019-03-05 14:22:01', '2019-04-04 18:12:22', '春季上新');
+INSERT INTO `banneritem` VALUES (1, 'http://ppf0hsoua.bkt.clouddn.com/banner/spring_new.jpg', '../points/points', '1', '春季上新', '0', '2019-03-05 14:22:01', '2019-04-18 17:25:35', '春季上新');
 INSERT INTO `banneritem` VALUES (2, '', 'aaa', '1', '小红书推荐', '1', '2019-03-05 14:22:01', '2019-03-24 14:01:39', NULL);
 INSERT INTO `banneritem` VALUES (3, '', 'ddd', '1', '女王节', '1', '2019-03-05 14:22:01', '2019-03-24 14:01:39', NULL);
 INSERT INTO `banneritem` VALUES (4, '', 'ddd', '1', '化妆品套装', '1', '2019-03-05 14:22:01', '2019-03-24 14:01:39', '化妆品套装');
@@ -85,8 +85,8 @@ INSERT INTO `banneritem` VALUES (17, '', '../points/points', '1', '积分赢好�
 INSERT INTO `banneritem` VALUES (18, '', '../rank/rank', '1', '排行榜', '4', '2019-03-15 11:13:02', '2019-03-24 14:01:39', '药丸面膜');
 INSERT INTO `banneritem` VALUES (19, '', '..', '0', 'ysl口红', '0', '2019-03-15 13:14:24', '2019-04-15 17:48:51', 'ysl口红');
 INSERT INTO `banneritem` VALUES (20, '', '..', '0', '女神香水', '0', '2019-03-15 13:57:37', '2019-04-15 17:48:49', '女神香水');
-INSERT INTO `banneritem` VALUES (21, 'http://pnwhn87vf.bkt.clouddn.com/skii.jpg', '../flashSale/flashSale', '1', '限时购', '3', '2019-03-15 11:13:02', '2019-03-24 14:07:09', 'SKII神仙水800起');
-INSERT INTO `banneritem` VALUES (22, 'http://ppf0hsoua.bkt.clouddn.com/red.jpg', '../bonus/bonus', '1', '分享好礼', '3', '2019-03-28 17:13:39', '2019-04-15 17:47:58', '得15元现金红包');
+INSERT INTO `banneritem` VALUES (21, 'http://pnwhn87vf.bkt.clouddn.com/skii.jpg', '../flashSale/flashSale', '1', '限时购', '3', '2019-03-15 11:13:02', '2019-04-18 17:13:32', '药丸面膜60起');
+INSERT INTO `banneritem` VALUES (22, 'http://ppf0hsoua.bkt.clouddn.com/red.jpg', '../bonus/bonus', '1', '分享好礼', '3', '2019-03-28 17:13:39', '2019-04-18 17:12:53', '得15元现金红包');
 
 -- ----------------------------
 -- Table structure for brand
@@ -103,7 +103,7 @@ CREATE TABLE `brand`  (
   `lastModifyTime` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `imgUrl` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of brand
@@ -127,6 +127,8 @@ INSERT INTO `brand` VALUES (16, '娇韵诗', 'Clarins', '1', '法国', '1', '201
 INSERT INTO `brand` VALUES (17, '馥蕾诗', 'fresh', '2', '法国', '1', '2019-04-16 00:53:01', '2019-04-16 00:53:04', NULL);
 INSERT INTO `brand` VALUES (18, '凡尔赛', 'Creer Beaute', '2', '日本', '1', '2019-04-16 01:05:42', '2019-04-16 01:05:45', NULL);
 INSERT INTO `brand` VALUES (19, '肌肤之钥', 'CPB', '2', '日本', '1', '2019-04-16 01:16:28', '2019-04-16 01:16:32', NULL);
+INSERT INTO `brand` VALUES (20, '后', 'Whoo', '2', '韩国', '1', '2019-04-18 20:40:19', '2019-04-18 20:40:26', NULL);
+INSERT INTO `brand` VALUES (21, '科颜氏', 'Kiehl\'s', '2', '美国', '1', '2019-04-18 21:03:48', '2019-04-18 21:03:53', NULL);
 
 -- ----------------------------
 -- Table structure for category
@@ -143,7 +145,7 @@ CREATE TABLE `category`  (
   `createTime` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `lastModifyTime` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of category
@@ -159,6 +161,20 @@ INSERT INTO `category` VALUES (10, '精华/肌底液', '精华/肌底液', '6', 
 INSERT INTO `category` VALUES (11, '面霜/乳液', '面霜/乳液', '6', 'category/11.jpg', '1', '0', '2019-03-14 09:46:39', '2019-03-14 09:47:11');
 INSERT INTO `category` VALUES (12, '眼霜/精华', '眼霜/精华', '6', 'category/12.jpg', '1', '0', '2019-03-14 09:46:52', '2019-03-14 09:47:13');
 INSERT INTO `category` VALUES (13, '洁面', '洁面', '6', 'category/13.jpg', '1', '0', '2019-03-14 09:47:04', '2019-04-16 00:46:29');
+INSERT INTO `category` VALUES (14, '化妆水', '化妆水', '6', 'category/14.jpg', '1', '0', '2019-04-18 21:11:03', '2019-04-18 21:11:16');
+
+-- ----------------------------
+-- Table structure for color
+-- ----------------------------
+DROP TABLE IF EXISTS `color`;
+CREATE TABLE `color`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
+  `price` decimal(10, 2) NULL DEFAULT NULL,
+  `productId` varchar(0) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
+  `inventory` int(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for coupon
@@ -179,9 +195,9 @@ CREATE TABLE `coupon`  (
 -- ----------------------------
 -- Records of coupon
 -- ----------------------------
-INSERT INTO `coupon` VALUES (1, '满1000减30', 1000, 30, '1', '2019-03-31 16:00:00', '2019-04-30 16:00:00', '0');
-INSERT INTO `coupon` VALUES (2, '满100减20', 100, 20, '1', '2019-03-31 16:00:00', '2019-04-30 16:00:00', '0');
-INSERT INTO `coupon` VALUES (3, '满200减15', 200, 15, '1', '2019-03-31 16:00:00', '2019-04-30 16:00:00', '0');
+INSERT INTO `coupon` VALUES (1, '满1000减30', 1000, 30, '0', '2019-03-31 16:00:00', '2019-04-30 16:00:00', '0');
+INSERT INTO `coupon` VALUES (2, '满100减20', 100, 20, '0', '2019-03-31 16:00:00', '2019-04-30 16:00:00', '0');
+INSERT INTO `coupon` VALUES (3, '满200减15', 200, 15, '0', '2019-03-31 16:00:00', '2019-04-30 16:00:00', '0');
 INSERT INTO `coupon` VALUES (4, '满500减25', 500, 25, '1', '2019-03-31 16:00:00', '2019-04-06 16:00:00', '0');
 
 -- ----------------------------
@@ -199,7 +215,7 @@ CREATE TABLE `eshopconfig`  (
 -- ----------------------------
 -- Records of eshopconfig
 -- ----------------------------
-INSERT INTO `eshopconfig` VALUES (1, 'xxcUrl', 'http://ppf0hsoua.bkt.clouddn.com/xxc.jpg', '');
+INSERT INTO `eshopconfig` VALUES (1, 'xxcUrl', 'http://ppf0hsoua.bkt.clouddn.com/contact.jpg', '');
 INSERT INTO `eshopconfig` VALUES (2, 'noticeMsg', '欢迎在线咨询徐小柴~', NULL);
 INSERT INTO `eshopconfig` VALUES (3, 'productImgBase', 'http://ppf0hsoua.bkt.clouddn.com/product/', NULL);
 INSERT INTO `eshopconfig` VALUES (4, 'categoryImgBase', 'http://ppf0hsoua.bkt.clouddn.com/category/', NULL);
@@ -249,7 +265,7 @@ CREATE TABLE `eshoporder`  (
   `usedCouponCash` double NULL DEFAULT NULL,
   `usedPoints` double NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 55 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 56 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of eshoporder
@@ -262,6 +278,7 @@ INSERT INTO `eshoporder` VALUES (51, '是', '2019-04-15 15:31:37', '-1', '201904
 INSERT INTO `eshoporder` VALUES (52, '了', '2019-04-15 15:32:45', '1', '20190415233245256045', '18217683505', 10270, 10, '了', '了', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', NULL, '', '2019-04-15 23:33:00', NULL, '', '', '', '', '', 0, 0, 2000);
 INSERT INTO `eshoporder` VALUES (53, 'e', '2019-04-15 15:40:39', '3', '20190415234038637522', '18217683505', 9890, 37, 'e', 'a', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '44', '', '2019-04-17 17:26:27', 'dd', 'share', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '', '', '', 0, 0, 2000);
 INSERT INTO `eshoporder` VALUES (54, '是', '2019-04-15 16:05:48', '1', '20190416000548101598', '18217683505', 1230, 2, '啊', '啊', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', NULL, '', '2019-04-16 00:06:18', NULL, 'share', 'oAEfX5U6TQ-VgmIiN9OYdm6Homj8', '', '', '', 0, 0, 0);
+INSERT INTO `eshoporder` VALUES (55, '的', '2019-04-18 06:56:10', '0', '2019041814561080353021', '18217683505', 286, 1, 'h', '了', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', NULL, '', NULL, NULL, '', '', '', '', '', 0, 0, 2000);
 
 -- ----------------------------
 -- Table structure for format
@@ -276,49 +293,69 @@ CREATE TABLE `format`  (
   `flashPrice` double(10, 2) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `productIdState`(`productId`, `state`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 59 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of format
 -- ----------------------------
-INSERT INTO `format` VALUES (1, '01 cilli', 138, '8', '1', NULL);
-INSERT INTO `format` VALUES (2, 'ruby woo', 145, '8', '1', NULL);
-INSERT INTO `format` VALUES (3, '#80', 348, '15', '1', NULL);
+INSERT INTO `format` VALUES (1, 'Chili 小辣椒', 158, '8', '1', 0.00);
+INSERT INTO `format` VALUES (2, 'Ruby Woo 复古正红色', 158, '8', '1', 0.00);
+INSERT INTO `format` VALUES (3, '#80 Impassined', 368, '15', '1', 0.00);
 INSERT INTO `format` VALUES (4, '#15 Wild Ginger', 358, '15', '1', NULL);
 INSERT INTO `format` VALUES (5, '#999 哑光', 288, '9', '1', 238.00);
 INSERT INTO `format` VALUES (6, '#400 The Red', 225, '10', '1', NULL);
 INSERT INTO `format` VALUES (7, '#405 Sultan', 328, '10', '1', NULL);
-INSERT INTO `format` VALUES (8, '五片 / 盒', 68, '21', '1', NULL);
-INSERT INTO `format` VALUES (9, '90ml', 320, '22', '1', 290.00);
-INSERT INTO `format` VALUES (10, '230ml', 1050, '23', '1', 0.00);
+INSERT INTO `format` VALUES (8, '五片 / 盒', 80, '21', '1', 60.00);
+INSERT INTO `format` VALUES (9, '60ml', 240, '22', '1', 220.00);
+INSERT INTO `format` VALUES (10, '230ml', 1100, '23', '1', 0.00);
 INSERT INTO `format` VALUES (11, '十片/盒', 80, '24', '1', 70.00);
 INSERT INTO `format` VALUES (12, '十片/盒', 80, '1334', '1', 68.00);
 INSERT INTO `format` VALUES (13, '五片/盒', 50, '1334', '1', 38.00);
-INSERT INTO `format` VALUES (14, '50ml', 608, '1335', '1', 588.00);
-INSERT INTO `format` VALUES (15, '100ml', 900, '1335', '1', 880.00);
+INSERT INTO `format` VALUES (14, '50ml', 650, '1335', '1', 618.00);
+INSERT INTO `format` VALUES (15, '100ml', 950, '1335', '1', 900.00);
 INSERT INTO `format` VALUES (16, '15ml', 388, '1336', '1', 0.00);
-INSERT INTO `format` VALUES (17, '300ml', 480, '1337', '1', 0.00);
-INSERT INTO `format` VALUES (18, '#03 Warm Neutrals', 175, '11', '1', 0.00);
-INSERT INTO `format` VALUES (19, '#Omega 柔亮米褐色', 158, '12', '1', 0.00);
+INSERT INTO `format` VALUES (17, '300ml', 500, '1337', '1', 480.00);
+INSERT INTO `format` VALUES (18, 'Warm Neutrals', 178, '11', '1', 0.00);
+INSERT INTO `format` VALUES (19, 'Omega 柔亮米褐色', 158, '12', '1', 0.00);
 INSERT INTO `format` VALUES (20, '#02 自然咖啡色', 75, '13', '1', 0.00);
 INSERT INTO `format` VALUES (21, '#05 粉红咖啡', 75, '13', '1', 0.00);
 INSERT INTO `format` VALUES (22, '#10 淡粉红', 75, '13', '1', 0.00);
 INSERT INTO `format` VALUES (23, '#15 暮光亮蓝', 75, '13', '1', 0.00);
 INSERT INTO `format` VALUES (24, '#14 古典深红', 75, '13', '1', 0.00);
 INSERT INTO `format` VALUES (25, '#07 桃红', 75, '13', '1', 0.00);
-INSERT INTO `format` VALUES (26, '#Deep Throat 深喉', 175, '1338', '1', 0.00);
-INSERT INTO `format` VALUES (27, '#Sex Appeal 性感', 175, '1338', '1', 0.00);
-INSERT INTO `format` VALUES (28, '#Orgasm 高潮', 175, '1338', '1', 0.00);
+INSERT INTO `format` VALUES (26, '#Deep Throat 深喉', 220, '1338', '1', 0.00);
+INSERT INTO `format` VALUES (27, '#Sex Appeal 性感', 220, '1338', '1', 0.00);
+INSERT INTO `format` VALUES (28, '#Orgasm 高潮', 220, '1338', '1', 0.00);
 INSERT INTO `format` VALUES (29, '150ml', 260, '1339', '1', 0.00);
-INSERT INTO `format` VALUES (30, '100ml', 385, '1340', '1', 0.00);
-INSERT INTO `format` VALUES (31, '100ml', 550, '1341', '1', 0.00);
+INSERT INTO `format` VALUES (30, '100ml', 435, '1340', '1', 0.00);
+INSERT INTO `format` VALUES (31, '100ml', 650, '1341', '1', 0.00);
 INSERT INTO `format` VALUES (32, '125g', 400, '1342', '1', 0.00);
 INSERT INTO `format` VALUES (33, '银色(美白保湿)  1片/27ml', 35, '1343', '1', 0.00);
 INSERT INTO `format` VALUES (34, ' 红色(白金保湿)  1片/27ml', 35, '1343', '1', 0.00);
 INSERT INTO `format` VALUES (35, '金色(弹力保湿) 1片/27ml', 35, '1343', '1', 0.00);
 INSERT INTO `format` VALUES (36, '120g', 420, '1344', '1', 0.00);
 INSERT INTO `format` VALUES (37, '滋润型/110ml', 400, '1345', '1', 0.00);
-INSERT INTO `format` VALUES (38, '清爽型/110ml', 400, '1345', '0', 0.00);
+INSERT INTO `format` VALUES (38, '清爽型/110ml', 400, '1345', '1', 0.00);
+INSERT INTO `format` VALUES (39, 'Dangerous 橘红色', 145, '8', '1', 0.00);
+INSERT INTO `format` VALUES (40, 'Marrakesh 砖红', 160, '8', '1', 0.00);
+INSERT INTO `format` VALUES (41, 'Cockney 斩男水红色', 145, '8', '1', 0.00);
+INSERT INTO `format` VALUES (42, 'Lady Bug 元气西红柿红', 145, '8', '1', 0.00);
+INSERT INTO `format` VALUES (43, 'See Sheer 西柚色', 148, '8', '1', 0.00);
+INSERT INTO `format` VALUES (44, '#21 Naked Coral', 335, '15', '1', 0.00);
+INSERT INTO `format` VALUES (45, '#10 Cherry Lush', 340, '15', '1', 0.00);
+INSERT INTO `format` VALUES (46, '#08  Flamingo', 355, '15', '1', 0.00);
+INSERT INTO `format` VALUES (47, '#16 Scarlet Rouge', 385, '15', '1', 0.00);
+INSERT INTO `format` VALUES (48, '#999', 290, '9', '1', 0.00);
+INSERT INTO `format` VALUES (49, '#762', 255, '9', '1', 0.00);
+INSERT INTO `format` VALUES (50, '#060', 258, '9', '1', 0.00);
+INSERT INTO `format` VALUES (51, '#080', 265, '9', '1', 0.00);
+INSERT INTO `format` VALUES (52, '#520', 285, '9', '1', 0.00);
+INSERT INTO `format` VALUES (53, '#567', 285, '9', '1', 0.00);
+INSERT INTO `format` VALUES (54, 'Whoo 后 天气丹津率享水乳七件套装', 880, '1346', '1', 0.00);
+INSERT INTO `format` VALUES (55, '拱辰享水妍平衡水乳霜6件套装', 700, '1347', '1', 0.00);
+INSERT INTO `format` VALUES (56, '60ml', 300, '1348', '1', 0.00);
+INSERT INTO `format` VALUES (57, '150ml', 280, '1349', '1', 0.00);
+INSERT INTO `format` VALUES (58, '300ml', 450, '1349', '1', 0.00);
 
 -- ----------------------------
 -- Table structure for history
@@ -359,7 +396,7 @@ CREATE TABLE `orderitem`  (
   `productId` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   `formatName` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 78 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 79 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of orderitem
@@ -431,6 +468,7 @@ INSERT INTO `orderitem` VALUES (74, 10, '20190415233245256045', 'SK-II 护肤精
 INSERT INTO `orderitem` VALUES (75, 37, '20190415234038637522', 'Dior 迪奥 烈焰蓝金唇膏', 288.00, NULL, '5', '9', '#999 哑光');
 INSERT INTO `orderitem` VALUES (76, 1, '20190416000548101598', 'SK-II 护肤精华 神仙水', 1050.00, NULL, '10', '23', '230ml');
 INSERT INTO `orderitem` VALUES (77, 1, '20190416000548101598', 'Tom Ford汤姆福特 lip color 黑金唇膏', 348.00, NULL, '3', '15', '#80');
+INSERT INTO `orderitem` VALUES (78, 1, '2019041814561080353021', 'Tom Ford汤姆福特 lip color 黑金唇膏', 348.00, NULL, '3', '15', '#80');
 
 -- ----------------------------
 -- Table structure for parentcategory
@@ -486,7 +524,7 @@ CREATE TABLE `product`  (
   INDEX `name`(`name`, `state`) USING BTREE,
   INDEX `categoryIdState`(`categoryId`, `state`) USING BTREE,
   INDEX `brandIdState`(`brandId`, `state`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1346 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1350 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of product
@@ -495,29 +533,33 @@ INSERT INTO `product` VALUES (1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'prod
 INSERT INTO `product` VALUES (2, 'YSL口红', '方管圆管', NULL, NULL, NULL, 10, 10, 'http://i2.bvimg.com/677237/3495e004b28872ec.jpg', NULL, NULL, NULL, '0', NULL, '2019-03-05 14:17:56', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `product` VALUES (3, 'YSL口红', '方管圆管', NULL, NULL, NULL, 10, 10, 'http://i2.bvimg.com/677237/3495e004b28872ec.jpg', NULL, NULL, NULL, '0', NULL, '2019-03-05 14:17:56', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `product` VALUES (4, 'YSL口红', '方管圆管', NULL, NULL, NULL, 10, 10, 'http://i2.bvimg.com/677237/3495e004b28872ec.jpg', NULL, NULL, NULL, '0', NULL, '2019-03-05 14:17:56', '2019-03-24 01:03:36', NULL, NULL, NULL, NULL, NULL, '1');
-INSERT INTO `product` VALUES (8, 'MAC 魅可 唇膏', 'MAC唇膏', 138.00, 130.00, 0.00, 100, 32, NULL, '2', '5', 5, '1', '2', '2019-03-05 14:17:56', '2019-04-15 17:23:29', NULL, NULL, NULL, NULL, NULL, '');
-INSERT INTO `product` VALUES (9, 'Dior 迪奥 烈焰蓝金唇膏', 'Dior魅惑唇膏', 320.00, 266.00, 288.00, 10, 13, NULL, '2', '5', 11, '1', '2', '2019-03-05 14:17:56', '2019-04-15 17:22:05', NULL, NULL, NULL, NULL, NULL, '1');
-INSERT INTO `product` VALUES (10, '阿玛尼漆亮水漾唇釉', '阿玛尼漆亮水漾唇釉', 258.00, NULL, NULL, 100, 13, 'http://i1.bvimg.com/677237/28b8fff357968901.jpg', '2', '5', 2, '1', '2', '2019-03-05 14:17:56', '2019-03-11 17:18:48', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `product` VALUES (11, 'NYX 16色眼影盘', 'NYX 16色眼影盘', 175.00, 136.00, 0.00, 100, 19, NULL, '3', '5', 3, '1', '0', '2019-03-05 14:17:56', '2019-04-15 16:55:06', NULL, NULL, NULL, NULL, NULL, '');
-INSERT INTO `product` VALUES (12, 'MAC 魅可 时尚焦点小眼影', 'MAC 魅可 时尚焦点小眼影', 158.00, 129.00, 0.00, 100, 19, NULL, '3', '5', 5, '1', '0', '2019-03-05 14:17:56', '2019-04-15 16:55:22', NULL, NULL, NULL, NULL, NULL, '');
-INSERT INTO `product` VALUES (13, 'Canmake 井田 完美高效眼影', 'Canmake 井田 完美高效眼影', 75.00, 49.00, 0.00, 100, 19, NULL, '3', '5', 4, '1', '0', '2019-03-05 14:17:56', '2019-04-15 16:57:58', NULL, NULL, NULL, NULL, NULL, '');
-INSERT INTO `product` VALUES (15, 'Tom Ford  汤姆福特 TF lip color 黑金唇膏', 'Tom Ford汤姆福特 lip color 黑金唇膏', 348.00, 300.00, 0.00, 99, 24, NULL, '2', '5', 6, '1', '2', '2019-03-07 16:06:46', '2019-04-17 17:09:22', NULL, NULL, NULL, NULL, NULL, '');
-INSERT INTO `product` VALUES (21, '蒂佳婷 Dr.Jart+ 蓝色药丸面膜 专业瞬间锁水', '适合易缺水干燥肌肤。面膜蕴含水润精华，面膜纸以超细纤维制成，更贴合面部，将精华完整传送到肌底。', 68.00, 43.00, 0.00, 58, 42, NULL, '4', '6', 8, '1', '0', '2019-03-12 12:46:57', '2019-04-15 11:09:54', 'http://localhost:8080/backend/resources/eshop/image/product/21-1.jpg', 'http://localhost:8080/backend/resources/eshop/image/product/21-2.jpg', 'http://localhost:8080/backend/resources/eshop/image/product/21-3.jpg', 'http://localhost:8080/backend/resources/eshop/image/product/21-4.jpg', NULL, '');
-INSERT INTO `product` VALUES (22, 'Shiseido 资生堂 Anessa 安耐晒 超防水美肌UV乳液 SPF50', '具有防水、防汗、防皮脂的特性，不论进行海边、游泳池或户外休闲活动等，等能安心阻挡强烈日晒', 330.00, 266.00, 290.00, 40, 31, NULL, '7', '7', 9, '1', '0', '2019-03-12 13:02:40', '2019-04-15 17:04:33', 'http://localhost:8080/backend/resources/eshop/image/product/22-1.jpg', 'http://localhost:8080/backend/resources/eshop/image/product/22-2.jpg', 'http://localhost:8080/backend/resources/eshop/image/product/22-3.jpg', 'http://localhost:8080/backend/resources/eshop/image/product/22-4.jpg', NULL, '1');
-INSERT INTO `product` VALUES (23, 'SK-II 护肤精华 神仙水', 'SK-II 护肤精华 神仙水', 1050.00, 963.00, 0.00, 24, 32, NULL, '10', '6', 13, '1', '0', '2019-03-19 09:46:09', '2019-04-16 00:06:18', 'http://pnwhn87vf.bkt.clouddn.com/product/23-1.jpg', 'http://pnwhn87vf.bkt.clouddn.com/product/23-2.jpg', 'http://pnwhn87vf.bkt.clouddn.com/product/23-3.jpg', 'http://pnwhn87vf.bkt.clouddn.com/product/23-4.jpg', NULL, '0');
-INSERT INTO `product` VALUES (24, 'JM Solution肌司妍 水光蜂蜜面膜', 'JM Solution肌司妍 水光蜂蜜面膜', 80.00, 37.00, 70.00, 10, 82, NULL, '4', '6', 10, '1', '0', '2019-03-19 10:43:00', '2019-04-15 11:09:28', 'http://pnwhn87vf.bkt.clouddn.com/product/24-1.jpg', 'http://pnwhn87vf.bkt.clouddn.com/product/24-2.jpg', 'http://pnwhn87vf.bkt.clouddn.com/product/24-3.jpg', 'http://pnwhn87vf.bkt.clouddn.com/product/24-4.jpg', NULL, '1');
-INSERT INTO `product` VALUES (1334, 'JM Solution肌司妍 海洋珍珠深层保湿面膜', 'JM Solution肌司妍 海洋珍珠深层保湿面膜', 80.00, 37.00, 68.00, 100, 20, NULL, '4', '6', 10, '1', '0', '2019-04-14 12:51:40', '2019-04-15 10:58:51', 'http://ppf0hsoua.bkt.clouddn.com/product/1334-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1334-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1334-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1334-4.jpg', NULL, '1');
-INSERT INTO `product` VALUES (1335, 'Chanel香奈儿 可可小姐淡香水喷雾', 'Chanel香奈儿 可可小姐淡香水喷雾', 608.00, 585.00, NULL, 23, 102, 'http://ppf0hsoua.bkt.clouddn.com/product/1335-0.jpg', '9', '5', 12, '1', '0', '2019-04-15 11:37:56', '2019-04-15 11:39:03', 'http://ppf0hsoua.bkt.clouddn.com/product/1335-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1335-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1335-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1335-4.jpg', NULL, '0');
-INSERT INTO `product` VALUES (1336, 'Estee Lauder 雅诗兰黛 小棕瓶密集修护眼精华', 'Estee Lauder 雅诗兰黛 小棕瓶密集修护眼精华', 388.00, 338.00, 0.00, 73, 85, NULL, '12', '6', 7, '1', '0', '2019-04-15 16:16:21', '2019-04-15 16:27:43', 'http://ppf0hsoua.bkt.clouddn.com/product/1336-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1336-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1336-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1336-4.jpg', NULL, '0');
-INSERT INTO `product` VALUES (1337, 'Decorte 黛珂 牛油果乳液', 'Decorte 黛珂 牛油果乳液', 480.00, 431.00, NULL, 13, 46, 'http://ppf0hsoua.bkt.clouddn.com/product/1337-0.jpg', '11', '6', 14, '1', '0', '2019-04-15 16:38:57', '2019-04-15 16:39:12', 'http://ppf0hsoua.bkt.clouddn.com/product/1337-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1337-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1337-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1337-4.jpg', NULL, '0');
-INSERT INTO `product` VALUES (1338, 'Nars 纳斯 炫色腮红', 'Nars 纳斯 炫色腮红', 175.00, 149.00, NULL, 21, 57, 'http://ppf0hsoua.bkt.clouddn.com/product/1338-0.jpg', '6', '5', 15, '1', '0', '2019-04-15 17:09:26', '2019-04-15 17:09:46', 'http://ppf0hsoua.bkt.clouddn.com/product/1338-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1338-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1338-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1338-4.jpg', NULL, '0');
+INSERT INTO `product` VALUES (8, 'MAC 魅可 全色号子弹头口红唇膏 ', 'MAC唇膏', 138.00, 132.00, 0.00, 42, 32, NULL, '2', '5', 5, '1', '2', '2019-03-05 14:17:56', '2019-04-18 16:30:58', NULL, NULL, NULL, NULL, NULL, '0');
+INSERT INTO `product` VALUES (9, 'Dior 迪奥 口红 烈焰蓝金唇膏', 'Dior魅惑唇膏', 260.00, 266.00, 240.00, 10, 13, NULL, '2', '5', 11, '1', '2', '2019-03-05 14:17:56', '2019-04-18 16:49:35', NULL, NULL, NULL, NULL, NULL, '0');
+INSERT INTO `product` VALUES (10, '阿玛尼漆亮水漾唇釉', '阿玛尼漆亮水漾唇釉', 258.00, NULL, NULL, 100, 13, 'http://i1.bvimg.com/677237/28b8fff357968901.jpg', '2', '5', 2, '0', '2', '2019-03-05 14:17:56', '2019-04-18 16:50:41', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `product` VALUES (11, 'NYX 16色眼影盘', 'NYX 16色眼影盘', 178.00, 136.00, 0.00, 21, 19, NULL, '3', '5', 3, '1', '0', '2019-03-05 14:17:56', '2019-04-18 16:58:28', NULL, NULL, NULL, NULL, NULL, '');
+INSERT INTO `product` VALUES (12, 'MAC 魅可 时尚焦点小眼影', 'MAC 魅可 时尚焦点小眼影', 158.00, 129.00, 0.00, 100, 19, NULL, '3', '5', 5, '1', '0', '2019-03-05 14:17:56', '2019-04-18 16:56:38', NULL, NULL, NULL, NULL, NULL, '');
+INSERT INTO `product` VALUES (13, 'Canmake 井田 完美高效眼影', 'Canmake 井田 完美高效眼影', 75.00, 49.00, 0.00, 32, 19, NULL, '3', '5', 4, '1', '0', '2019-03-05 14:17:56', '2019-04-18 16:59:13', NULL, NULL, NULL, NULL, NULL, '');
+INSERT INTO `product` VALUES (15, 'Tom Ford  汤姆福特 口红 TF lip color 黑金唇膏', 'Tom Ford汤姆福特 lip color 黑金唇膏', 348.00, 300.00, 0.00, 99, 24, NULL, '2', '5', 6, '1', '2', '2019-03-07 16:06:46', '2019-04-18 16:46:39', NULL, NULL, NULL, NULL, NULL, '');
+INSERT INTO `product` VALUES (21, '蒂佳婷 Dr.Jart+ 蓝色药丸面膜 专业瞬间锁水', '适合易缺水干燥肌肤。面膜蕴含水润精华，面膜纸以超细纤维制成，更贴合面部，将精华完整传送到肌底。', 80.00, 43.00, 60.00, 58, 92, NULL, '4', '6', 8, '1', '0', '2019-03-12 12:46:57', '2019-04-18 17:19:35', 'http://localhost:8080/backend/resources/eshop/image/product/21-1.jpg', 'http://localhost:8080/backend/resources/eshop/image/product/21-2.jpg', 'http://localhost:8080/backend/resources/eshop/image/product/21-3.jpg', 'http://localhost:8080/backend/resources/eshop/image/product/21-4.jpg', NULL, '0');
+INSERT INTO `product` VALUES (22, 'Shiseido 资生堂 Anessa 安耐晒 超防水美肌UV乳液 SPF50', '具有防水、防汗、防皮脂的特性，不论进行海边、游泳池或户外休闲活动等，等能安心阻挡强烈日晒', 240.00, 173.00, 220.00, 40, 31, NULL, '7', '7', 9, '1', '0', '2019-03-12 13:02:40', '2019-04-18 17:22:14', 'http://localhost:8080/backend/resources/eshop/image/product/22-1.jpg', 'http://localhost:8080/backend/resources/eshop/image/product/22-2.jpg', 'http://localhost:8080/backend/resources/eshop/image/product/22-3.jpg', 'http://localhost:8080/backend/resources/eshop/image/product/22-4.jpg', NULL, '1');
+INSERT INTO `product` VALUES (23, 'SK-II 护肤精华 神仙水', 'SK-II 护肤精华 神仙水', 1100.00, 963.00, 0.00, 24, 32, NULL, '10', '6', 13, '1', '0', '2019-03-19 09:46:09', '2019-04-18 17:07:53', 'http://pnwhn87vf.bkt.clouddn.com/product/23-1.jpg', 'http://pnwhn87vf.bkt.clouddn.com/product/23-2.jpg', 'http://pnwhn87vf.bkt.clouddn.com/product/23-3.jpg', 'http://pnwhn87vf.bkt.clouddn.com/product/23-4.jpg', NULL, '0');
+INSERT INTO `product` VALUES (24, 'JM Solution肌司妍 水光蜂蜜面膜', 'JM Solution肌司妍 水光蜂蜜面膜', 80.00, 37.00, 70.00, 10, 82, NULL, '4', '6', 10, '1', '0', '2019-03-19 10:43:00', '2019-04-18 17:01:17', 'http://pnwhn87vf.bkt.clouddn.com/product/24-1.jpg', 'http://pnwhn87vf.bkt.clouddn.com/product/24-2.jpg', 'http://pnwhn87vf.bkt.clouddn.com/product/24-3.jpg', 'http://pnwhn87vf.bkt.clouddn.com/product/24-4.jpg', NULL, '1');
+INSERT INTO `product` VALUES (1334, 'JM Solution肌司妍 海洋珍珠深层保湿面膜', 'JM Solution肌司妍 海洋珍珠深层保湿面膜', 80.00, 37.00, 68.00, 30, 20, NULL, '4', '6', 10, '1', '0', '2019-04-14 12:51:40', '2019-04-18 17:23:42', 'http://ppf0hsoua.bkt.clouddn.com/product/1334-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1334-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1334-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1334-4.jpg', NULL, '1');
+INSERT INTO `product` VALUES (1335, 'Chanel香奈儿 可可小姐淡香水喷雾', 'Chanel香奈儿 可可小姐淡香水喷雾', 650.00, 585.00, 618.00, 23, 57, NULL, '9', '5', 12, '1', '0', '2019-04-15 11:37:56', '2019-04-18 17:01:10', 'http://ppf0hsoua.bkt.clouddn.com/product/1335-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1335-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1335-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1335-4.jpg', NULL, '1');
+INSERT INTO `product` VALUES (1336, 'Estee Lauder 雅诗兰黛 小棕瓶密集修护眼精华', 'Estee Lauder 雅诗兰黛 小棕瓶密集修护眼精华', 388.00, 338.00, 0.00, 73, 85, NULL, '12', '6', 7, '1', '0', '2019-04-15 16:16:21', '2019-04-18 17:10:38', 'http://ppf0hsoua.bkt.clouddn.com/product/1336-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1336-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1336-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1336-4.jpg', NULL, '0');
+INSERT INTO `product` VALUES (1337, 'Decorte 黛珂 牛油果乳液', 'Decorte 黛珂 牛油果乳液', 500.00, 431.00, 480.00, 13, 46, NULL, '11', '6', 14, '1', '0', '2019-04-15 16:38:57', '2019-04-18 17:10:51', 'http://ppf0hsoua.bkt.clouddn.com/product/1337-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1337-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1337-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1337-4.jpg', NULL, '1');
+INSERT INTO `product` VALUES (1338, 'Nars 纳斯 炫色腮红', 'Nars 纳斯 炫色腮红', 220.00, 149.00, 0.00, 21, 13, NULL, '6', '5', 15, '1', '0', '2019-04-15 17:09:26', '2019-04-18 16:57:35', 'http://ppf0hsoua.bkt.clouddn.com/product/1338-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1338-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1338-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1338-4.jpg', NULL, '0');
 INSERT INTO `product` VALUES (1339, 'CLARINS 娇韵诗 透白光感洁面霜 洗面奶', '均匀肤色，给肌肤从内到外的透白均匀光泽。美白洁面泡沫质地轻盈，有效净化肌肤，使肌肤更为透亮、柔润，倍感清新舒适。', 260.00, 194.00, NULL, 23, 12, 'http://ppf0hsoua.bkt.clouddn.com/product/1339-0.jpg', '13', '6', 16, '1', '0', '2019-04-16 00:42:49', '2019-04-16 00:44:51', 'http://ppf0hsoua.bkt.clouddn.com/product/1339-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1339-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1339-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1339-4.jpg', NULL, '0');
-INSERT INTO `product` VALUES (1340, 'fresh馥蕾诗 玫瑰保湿面膜', '玫瑰润泽保湿舒缓面膜舒缓肌肤，有效补水，帮助改善肌肤暗哑。柔滑的?喱配方包含玫瑰的多种形态，玫瑰花瓣、纯正玫瑰花水、玫瑰精油，层层沁润，让肌肤如同沉醉于玫瑰花海中，尽享润泽透亮，长时间补水。适合各种肤质使用。  使用方法：取适量产品于清洁后的湿润面部肌肤，避开眼部区域。停留5-10分钟后用水清洗去除。可每天使用。', 385.00, 297.00, NULL, 11, 24, 'http://ppf0hsoua.bkt.clouddn.com/product/1340-0.jpg', '4', '6', 17, '1', '0', '2019-04-16 00:55:28', '2019-04-16 00:55:38', 'http://ppf0hsoua.bkt.clouddn.com/product/1340-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1340-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1340-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1340-4.jpg', NULL, '0');
-INSERT INTO `product` VALUES (1341, 'fresh馥蕾诗 红茶瞬间修复面膜', '红茶抗皱紧致修护面膜给予肌肤出色紧致体验，肌肤更柔软顺滑、幼嫩饱满，焕发亮泽神采。面膜天鹅绒般柔软的特别质地有效肌肤降温，有效润泽，再现水滢剔透。   使用建议：清洁面部后用毛巾擦干，之后使用本品于脸部，避开眼部区域。停留5-10分钟后冲洗干净。每周使用2-3次。', 550.00, 461.00, NULL, 11, 24, 'http://ppf0hsoua.bkt.clouddn.com/product/1341-0.jpg', '4', '6', 17, '1', '0', '2019-04-16 00:57:57', '2019-04-16 00:58:09', 'http://ppf0hsoua.bkt.clouddn.com/product/1341-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1341-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1341-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1341-4.jpg', NULL, '0');
-INSERT INTO `product` VALUES (1342, 'fresh馥蕾诗 黄糖滋润亮采面膜', 'Fresh畅销单品之一，以澄糖、野草莓果提取物与滋润精华油等调和制成的去角质面膜，呈现肌肤润泽质感，改善肤色暗沉。滋养肌肤，温和去除老化角质，使肌肤重现光泽，神采飞扬。   使用方法：取适量本产品轻柔按摩于清洁、湿润的肌肤，避开眼部。静待5至10分钟后用温水冲洗干净即可。建议每周使用3至4次。', 400.00, 291.00, 0.00, 61, 39, NULL, '4', '6', 17, '1', '0', '2019-04-16 01:00:17', '2019-04-16 01:00:57', 'http://ppf0hsoua.bkt.clouddn.com/product/1342-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1342-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1342-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1342-4.jpg', NULL, '0');
-INSERT INTO `product` VALUES (1343, 'Creer Beaute凡尔赛玫瑰面膜', '银色（深层珍珠美白保湿面膜）：蕴含珍珠粉、针叶樱桃萃取物、玫瑰水、四季柑果皮萃取物、葡萄柚皮萃取物及透明质酸，为肌肤注入充沛水份，同时有效发挥锁水功能，并散发迷人白玫瑰香气。 红色（安东尼特白金保湿面膜）：含有白金纳米、玻尿酸、蜂王浆萃取保湿精华成分配合，采用柔和的纤维材质，温和包覆肌肤，吸收性极佳，浸透肌肤。 金色（黄金润透亮弹力保湿面膜）：蕴含白金纳米成分、蜂王浆萃取物、玫瑰水、热情果果皮萃取物、葡萄柚籽萃取物及透明质酸，为肌肤注入充沛水分，同时有效滋润肌肤，并给肌肤倍增魅力，散发迷人玫瑰香氛。', 35.00, 27.00, NULL, 83, 103, 'http://ppf0hsoua.bkt.clouddn.com/product/1343-0.jpg', '4', '6', 18, '1', '0', '2019-04-16 01:08:06', '2019-04-16 01:10:14', 'http://ppf0hsoua.bkt.clouddn.com/product/1343-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1343-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1343-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1343-4.jpg', NULL, '0');
-INSERT INTO `product` VALUES (1344, 'SK-II SK2 护肤洁面霜 洗面奶', '氨基酸温和洁面，幼细的保湿泡沫，并加入“神仙水”成分PITERATM，有助调理肌肤，焕现晶莹剔透，柔软有弹性。', 420.00, 369.00, 0.00, 32, 86, NULL, '13', '6', 13, '1', '0', '2019-04-16 01:13:03', '2019-04-16 01:13:19', 'http://ppf0hsoua.bkt.clouddn.com/product/1344-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1344-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1344-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1344-4.jpg', NULL, '0');
-INSERT INTO `product` VALUES (1345, 'Cle de Peau Beaute 肌肤之钥 cpb 光采洁面膏 洗面奶 滋润型/清爽型', '轻柔绵密泡沫，温和地去除肌肤表层多余的老旧角质和油脂，同时保湿滋润，改善暗沉问题及提升肌肤细致度，加强护肤瓶的吸收，令肌肤透亮细致，尽享清新触感。', 400.00, 358.00, 0.00, 53, 68, NULL, '13', '6', 19, '1', '0', '2019-04-16 01:15:42', '2019-04-16 01:16:48', 'http://ppf0hsoua.bkt.clouddn.com/product/1345-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1345-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1345-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1345-4.jpg', NULL, '0');
+INSERT INTO `product` VALUES (1340, 'fresh馥蕾诗 玫瑰润泽保湿舒缓面膜 100ml补水 正品女涂抹式', '玫瑰润泽保湿舒缓面膜舒缓肌肤，有效补水，帮助改善肌肤暗哑。柔滑?喱配方包含玫瑰的多种形态，玫瑰花瓣、纯正玫瑰花水、玫瑰精油，层层沁润，让肌肤如同沉醉于玫瑰花海中，尽享润泽透亮，长时间补水。适合各种肤质使用。  使用方法：取适量产品于清洁后的湿润面部肌肤，避开眼部区域。停留5-10分钟后用水清洗去除。可每天使用。', 435.00, 297.00, 0.00, 11, 24, NULL, '4', '6', 17, '1', '0', '2019-04-16 00:55:28', '2019-04-18 17:06:03', 'http://ppf0hsoua.bkt.clouddn.com/product/1340-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1340-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1340-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1340-4.jpg', NULL, '0');
+INSERT INTO `product` VALUES (1341, 'fresh馥蕾诗 红茶凝时修护面膜 100ml 补水保湿女紧致 涂抹式', '红茶抗皱紧致修护面膜给予肌肤出色紧致体验，肌肤更柔软顺滑、幼嫩饱满，焕发亮泽神采。面膜天鹅绒般柔软的特别质地有效肌肤降温，有效润泽，再现水滢剔透。   使用建议：清洁面部后用毛巾擦干，之后使用本品于脸部，避开眼部区域。停留5-10分钟后冲洗干净。每周使用2-3次。', 650.00, 461.00, 0.00, 11, 24, NULL, '4', '6', 17, '1', '0', '2019-04-16 00:57:57', '2019-04-18 17:03:18', 'http://ppf0hsoua.bkt.clouddn.com/product/1341-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1341-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1341-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1341-4.jpg', NULL, '0');
+INSERT INTO `product` VALUES (1342, 'fresh馥蕾诗 黄糖滋润亮采面膜', 'Fresh畅销单品之一，以澄糖、野草莓果提取物与滋润精华油等调和制成的去角质面膜，呈现肌肤润泽质感，改善肤色暗沉。滋养肌肤，温和去除老化角质，使肌肤重现光泽，神采飞扬。   使用方法：取适量本产品轻柔按摩于清洁、湿润的肌肤，避开眼部。静待5至10分钟后用温水冲洗干净即可。建议每周使用3至4次。', 400.00, 291.00, 0.00, 61, 39, NULL, '4', '6', 17, '1', '0', '2019-04-16 01:00:17', '2019-04-18 17:01:23', 'http://ppf0hsoua.bkt.clouddn.com/product/1342-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1342-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1342-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1342-4.jpg', NULL, '0');
+INSERT INTO `product` VALUES (1343, 'Creer Beaute凡尔赛玫瑰面膜', '银色（深层珍珠美白保湿面膜）：蕴含珍珠粉、针叶樱桃萃取物、玫瑰水、四季柑果皮萃取物、葡萄柚皮萃取物及透明质酸，为肌肤注入充沛水份，同时有效发挥锁水功能，并散发迷人白玫瑰香气。 红色（安东尼特白金保湿面膜）：含有白金纳米、玻尿酸、蜂王浆萃取保湿精华成分配合，采用柔和的纤维材质，温和包覆肌肤，吸收性极佳，浸透肌肤。 金色（黄金润透亮弹力保湿面膜）：蕴含白金纳米成分、蜂王浆萃取物、玫瑰水、热情果果皮萃取物、葡萄柚籽萃取物及透明质酸，为肌肤注入充沛水分，同时有效滋润肌肤，并给肌肤倍增魅力，散发迷人玫瑰香氛。', 35.00, 27.00, 0.00, 83, 33, NULL, '4', '6', 18, '1', '0', '2019-04-16 01:08:06', '2019-04-18 17:15:24', 'http://ppf0hsoua.bkt.clouddn.com/product/1343-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1343-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1343-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1343-4.jpg', NULL, '0');
+INSERT INTO `product` VALUES (1344, 'SK-II SK2 护肤洁面霜 洗面奶', '氨基酸温和洁面，幼细的保湿泡沫，并加入“神仙水”成分PITERATM，有助调理肌肤，焕现晶莹剔透，柔软有弹性。', 420.00, 369.00, 0.00, 32, 86, NULL, '13', '6', 13, '1', '0', '2019-04-16 01:13:03', '2019-04-18 17:11:03', 'http://ppf0hsoua.bkt.clouddn.com/product/1344-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1344-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1344-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1344-4.jpg', NULL, '0');
+INSERT INTO `product` VALUES (1345, 'Cle de Peau Beaute 肌肤之钥 cpb 光采洁面膏 洗面奶 滋润型/清爽型', '轻柔绵密泡沫，温和地去除肌肤表层多余的老旧角质和油脂，同时保湿滋润，改善暗沉问题及提升肌肤细致度，加强护肤瓶的吸收，令肌肤透亮细致，尽享清新触感。', 400.00, 358.00, 0.00, 53, 68, NULL, '13', '6', 19, '1', '0', '2019-04-16 01:15:42', '2019-04-18 17:11:03', 'http://ppf0hsoua.bkt.clouddn.com/product/1345-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1345-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1345-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1345-4.jpg', NULL, '0');
+INSERT INTO `product` VALUES (1346, 'Whoo 后 天气丹津率享水乳七件套装', '津率享平衡水150ml + 津率享乳液110ml + 津率享面霜30ml + 津率享洁面乳13ml + 津率享平衡水20ml + 津率享乳液20ml + 唇膏一支', 880.00, 726.00, 0.00, 10, 8, NULL, '8', '6', 20, '1', '0', '2019-04-18 20:38:32', '2019-04-18 20:45:13', 'http://ppf0hsoua.bkt.clouddn.com/product/1346-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1346-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1346-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1346-4.jpg', NULL, '0');
+INSERT INTO `product` VALUES (1347, 'Whoo 后 拱辰享水妍平衡水乳霜6件套装', '水妍平衡水 150ml + 水妍平衡乳 110ml + 水妍面霜 30ml + 水妍平衡水20ml + 水妍平衡乳20ml + 洗面乳13ml', 700.00, 579.00, NULL, 14, 18, 'http://ppf0hsoua.bkt.clouddn.com/product/1347-0.jpg', '8', '6', 20, '1', '0', '2019-04-18 20:51:53', '2019-04-18 20:52:07', 'http://ppf0hsoua.bkt.clouddn.com/product/1347-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1347-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1347-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1347-4.jpg', NULL, '0');
+INSERT INTO `product` VALUES (1348, '科颜氏 Kiehl\'s 防晒霜 隔离乳', '科颜氏 Kiehl\'s 防晒霜 隔离乳 ', 300.00, 245.00, 0.00, 32, 23, NULL, '7', '7', 21, '1', '0', '2019-04-18 21:05:51', '2019-04-18 21:08:52', 'http://ppf0hsoua.bkt.clouddn.com/product/1348-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1348-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1348-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1348-4.jpg', NULL, '0');
+INSERT INTO `product` VALUES (1349, 'Cosme Decorte 黛珂 紫苏水', 'Cosme Decorte 黛珂 紫苏水', 280.00, 255.00, NULL, 12, 32, 'http://ppf0hsoua.bkt.clouddn.com/product/1349-0.jpg', '14', '6', 14, '1', '0', '2019-04-18 21:15:30', '2019-04-18 21:17:39', 'http://ppf0hsoua.bkt.clouddn.com/product/1349-1.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1349-2.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1349-3.jpg', 'http://ppf0hsoua.bkt.clouddn.com/product/1349-4.jpg', NULL, '0');
 
 -- ----------------------------
 -- Table structure for promotion
@@ -557,7 +599,7 @@ CREATE TABLE `searchhistory`  (
   `openId` varchar(255) CHARACTER SET gb2312 COLLATE gb2312_chinese_ci NULL DEFAULT NULL,
   `time` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of searchhistory
@@ -572,6 +614,8 @@ INSERT INTO `searchhistory` VALUES (7, 'mac', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '2
 INSERT INTO `searchhistory` VALUES (8, '面膜', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '2019-04-17 17:07:46');
 INSERT INTO `searchhistory` VALUES (9, '神仙水', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '2019-04-17 17:07:48');
 INSERT INTO `searchhistory` VALUES (10, 'TF', 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '2019-04-17 17:09:26');
+INSERT INTO `searchhistory` VALUES (11, '护肤', 'oX-br4tEuhioR2BCdBAEV-1BUCsg', '2019-04-17 21:40:52');
+INSERT INTO `searchhistory` VALUES (12, '孕妇', 'oX-br4tEuhioR2BCdBAEV-1BUCsg', '2019-04-17 21:41:03');
 
 -- ----------------------------
 -- Table structure for user
@@ -593,13 +637,14 @@ CREATE TABLE `user`  (
   `continuousNum` int(255) NULL DEFAULT NULL COMMENT '连续签到天数',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `openId`(`openId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES (1, 'oX-br4rfqn2ia4g6kGdbFKlkgBYw', NULL, '1', 30, '0', 622, NULL, 0, 622, 427, '2019-04-15 14:54:25', 1);
-INSERT INTO `user` VALUES (3, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', NULL, '1', 0, '3', 24885, '2019-04-15 15:29:57', 0, 24885, 20595, '2019-04-15 16:10:40', 2);
+INSERT INTO `user` VALUES (3, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', NULL, '1', 0, '3', 24885, '2019-04-15 15:29:57', 0, 24885, 18595, '2019-04-15 16:10:40', 2);
+INSERT INTO `user` VALUES (4, 'oX-br4vPsMGtKCRNpIv_-MMbkcWg', NULL, '0', 0, '0', 0, NULL, NULL, NULL, 5, '2019-04-18 02:40:04', 1);
 
 -- ----------------------------
 -- Table structure for viewhistory
@@ -613,7 +658,7 @@ CREATE TABLE `viewhistory`  (
   `time` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `openId`(`openId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 82 CHARACTER SET = gb2312 COLLATE = gb2312_chinese_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of viewhistory
@@ -655,5 +700,49 @@ INSERT INTO `viewhistory` VALUES (34, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '1345', '1
 INSERT INTO `viewhistory` VALUES (35, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '1345', '13', '2019-04-16 18:52:03');
 INSERT INTO `viewhistory` VALUES (36, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '15', '2', '2019-04-17 17:09:33');
 INSERT INTO `viewhistory` VALUES (37, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '15', '2', '2019-04-17 17:11:43');
+INSERT INTO `viewhistory` VALUES (38, 'oX-br4vPsMGtKCRNpIv_-MMbkcWg', '1343', '4', '2019-04-17 18:30:09');
+INSERT INTO `viewhistory` VALUES (39, 'oX-br4vPsMGtKCRNpIv_-MMbkcWg', '1343', '4', '2019-04-17 18:30:25');
+INSERT INTO `viewhistory` VALUES (40, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '1343', '4', '2019-04-17 18:32:20');
+INSERT INTO `viewhistory` VALUES (41, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '1341', '4', '2019-04-17 18:33:04');
+INSERT INTO `viewhistory` VALUES (42, 'oX-br4tEuhioR2BCdBAEV-1BUCsg', '22', '7', '2019-04-17 21:38:02');
+INSERT INTO `viewhistory` VALUES (43, 'oX-br4m3Feg7FdV0GkZ86r95QZC4', '1343', '4', '2019-04-17 21:51:25');
+INSERT INTO `viewhistory` VALUES (44, 'oX-br4m3Feg7FdV0GkZ86r95QZC4', '1342', '4', '2019-04-17 21:51:55');
+INSERT INTO `viewhistory` VALUES (45, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '8', '2', '2019-04-18 10:14:51');
+INSERT INTO `viewhistory` VALUES (46, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '1345', '13', '2019-04-18 10:26:42');
+INSERT INTO `viewhistory` VALUES (47, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '15', '2', '2019-04-18 10:36:49');
+INSERT INTO `viewhistory` VALUES (48, 'oX-br4qaKM4DyIjZRp3iaMFye_9I', '1', 'null', '2019-04-18 10:45:49');
+INSERT INTO `viewhistory` VALUES (49, 'oX-br4skFoptPpZg1Fjya9_JDalA', '22', '7', '2019-04-18 14:22:21');
+INSERT INTO `viewhistory` VALUES (50, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '13', '3', '2019-04-18 16:00:36');
+INSERT INTO `viewhistory` VALUES (51, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '1339', '13', '2019-04-18 16:00:50');
+INSERT INTO `viewhistory` VALUES (52, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '13', '3', '2019-04-18 16:01:57');
+INSERT INTO `viewhistory` VALUES (53, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '1343', '4', '2019-04-18 16:02:05');
+INSERT INTO `viewhistory` VALUES (54, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '15', '2', '2019-04-18 16:03:56');
+INSERT INTO `viewhistory` VALUES (55, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '15', '2', '2019-04-18 16:05:02');
+INSERT INTO `viewhistory` VALUES (56, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '15', '2', '2019-04-18 16:18:27');
+INSERT INTO `viewhistory` VALUES (57, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '15', '2', '2019-04-18 16:19:30');
+INSERT INTO `viewhistory` VALUES (58, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '15', '2', '2019-04-18 16:19:42');
+INSERT INTO `viewhistory` VALUES (59, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '1339', '13', '2019-04-18 16:20:01');
+INSERT INTO `viewhistory` VALUES (60, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '15', '2', '2019-04-18 16:22:01');
+INSERT INTO `viewhistory` VALUES (61, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '13', '3', '2019-04-18 16:22:39');
+INSERT INTO `viewhistory` VALUES (62, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '13', '3', '2019-04-18 16:22:47');
+INSERT INTO `viewhistory` VALUES (63, 'oX-br4m3Feg7FdV0GkZ86r95QZC4', '13', '3', '2019-04-18 16:23:22');
+INSERT INTO `viewhistory` VALUES (64, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '8', '2', '2019-04-18 16:40:54');
+INSERT INTO `viewhistory` VALUES (65, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '8', '2', '2019-04-18 16:41:34');
+INSERT INTO `viewhistory` VALUES (66, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '15', '2', '2019-04-18 16:45:37');
+INSERT INTO `viewhistory` VALUES (67, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '9', '2', '2019-04-18 16:45:56');
+INSERT INTO `viewhistory` VALUES (68, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '9', '2', '2019-04-18 16:49:41');
+INSERT INTO `viewhistory` VALUES (69, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '10', '2', '2019-04-18 16:50:08');
+INSERT INTO `viewhistory` VALUES (70, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '1341', '4', '2019-04-18 17:03:37');
+INSERT INTO `viewhistory` VALUES (71, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '1341', '4', '2019-04-18 17:04:21');
+INSERT INTO `viewhistory` VALUES (72, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '21', '4', '2019-04-18 17:15:02');
+INSERT INTO `viewhistory` VALUES (73, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '1336', '12', '2019-04-18 17:21:23');
+INSERT INTO `viewhistory` VALUES (74, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '1337', '11', '2019-04-18 17:23:11');
+INSERT INTO `viewhistory` VALUES (75, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '22', '7', '2019-04-18 17:23:18');
+INSERT INTO `viewhistory` VALUES (76, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '1334', '4', '2019-04-18 17:23:25');
+INSERT INTO `viewhistory` VALUES (77, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '1346', '8', '2019-04-18 20:43:13');
+INSERT INTO `viewhistory` VALUES (78, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '1346', '8', '2019-04-18 20:44:25');
+INSERT INTO `viewhistory` VALUES (79, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '1346', '8', '2019-04-18 20:45:19');
+INSERT INTO `viewhistory` VALUES (80, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '1348', '7', '2019-04-18 21:08:09');
+INSERT INTO `viewhistory` VALUES (81, 'oX-br4neGzmMBKR7ByjoXRUA1-NM', '1349', '14', '2019-04-18 21:20:26');
 
 SET FOREIGN_KEY_CHECKS = 1;
