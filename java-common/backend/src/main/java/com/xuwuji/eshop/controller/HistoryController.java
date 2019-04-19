@@ -19,6 +19,7 @@ import com.xuwuji.eshop.model.Product;
 import com.xuwuji.eshop.model.SearchHistory;
 import com.xuwuji.eshop.model.ViewHistory;
 import com.xuwuji.eshop.util.EshopConfigUtil;
+import com.xuwuji.eshop.util.TokenUtil;
 
 @Controller
 @RequestMapping(value = "/history")
@@ -36,6 +37,9 @@ public class HistoryController {
 	@ResponseBody
 	public void add(HttpServletRequest request, HttpServletResponse response) {
 		String openId = request.getParameter("openId");
+		if (openId.equals(TokenUtil.SELF_OPENID)) {
+			return;
+		}
 		String productId = request.getParameter("productId");
 		String categoryId = request.getParameter("categoryId");
 		ViewHistory history = new ViewHistory();
@@ -59,7 +63,7 @@ public class HistoryController {
 			String productId = history.getProductId();
 			System.out.print(productId);
 			Product product = productDao.getById(productId);
-			if(product==null||!product.getState().equals("1")) {
+			if (product == null || !product.getState().equals("1")) {
 				continue;
 			}
 			if (product.getMainImgUrl() == null || product.getMainImgUrl().isEmpty()) {
