@@ -74,8 +74,8 @@ public class ProductController {
 		products = productDao.getActiveByCategory(id);
 		String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
 		for (Product product : products) {
-			 product.setMainImgUrl(PRODUCT_IMG_BASE + product.getId() + "-0.jpg");
-			//product.setMainImgUrl("http://ppf0hsoua.bkt.clouddn.com/product/10-0.jpg");
+			product.setMainImgUrl(PRODUCT_IMG_BASE + product.getId() + "-0.jpg");
+			// product.setMainImgUrl("http://ppf0hsoua.bkt.clouddn.com/product/10-0.jpg");
 
 		}
 		products = productUtil.sort(products, sortRequset);
@@ -108,15 +108,17 @@ public class ProductController {
 			imgUrls.add(PRODUCT_IMG_BASE + id + "-" + i + ".jpg");
 		}
 		product.setImgUrls(imgUrls);
+		// 由于检查详情图片时间较长，此版本先省略
 		// detail img urls
-		List<String> detailImgUrls = new ArrayList<String>();
-		for (int i = 1; i < 6; i++) {
-			String detailImgUrl = PRODUCT_DETAIL_IMG_BASE + id + "-" + i + ".jpg";
-			if (HttpUtil.checkValid(detailImgUrl)) {
-				detailImgUrls.add(detailImgUrl);
-			}
-		}
-		product.setDetailImgUrls(detailImgUrls);
+		// List<String> detailImgUrls = new ArrayList<String>();
+		// for (int i = 1; i < 6; i++) {
+		// String detailImgUrl = PRODUCT_DETAIL_IMG_BASE + id + "-" + i +
+		// ".jpg";
+		// if (HttpUtil.checkValid(detailImgUrl)) {
+		// detailImgUrls.add(detailImgUrl);
+		// }
+		// }
+		// product.setDetailImgUrls(detailImgUrls);
 		String mainImgUrl = PRODUCT_IMG_BASE + id + "-0.jpg";
 		product.setMainImgUrl(mainImgUrl);
 		return product;
