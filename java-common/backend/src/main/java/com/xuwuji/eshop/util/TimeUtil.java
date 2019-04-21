@@ -10,10 +10,17 @@ import org.springframework.stereotype.Component;
 public class TimeUtil {
 
 	public final static String FULL_TIME_FORMAT = "yyyyMMddHHmmss";
+	public final static String FROMAT_FULL_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	public final static String SIMPLE_TIME_FORMAT = "yyyyMMdd";
 
-	public String dateToString(Date date) {
+	public static String dateToString(Date date) {
 		SimpleDateFormat sdf = new SimpleDateFormat(TimeUtil.FULL_TIME_FORMAT);
+		String dateStr = sdf.format(date);
+		return dateStr;
+	}
+	
+	public static String dateToFormatString(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat(TimeUtil.FROMAT_FULL_TIME_FORMAT);
 		String dateStr = sdf.format(date);
 		return dateStr;
 	}

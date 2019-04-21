@@ -123,4 +123,19 @@ public class UserController {
 		}
 	}
 
+	@RequestMapping(value = "/addFormId", method = RequestMethod.GET)
+	@ResponseBody
+	public void addFormId(HttpServletRequest request, HttpServletResponse response) {
+		String openId = request.getParameter("openId");
+		String wechatId = request.getParameter("formId");
+		User user = new User();
+		if (openId != null && !openId.isEmpty()) {
+			user.setOpenId(openId);
+		}
+		if (wechatId != null && !wechatId.isEmpty()) {
+			user.setWechatId(wechatId);
+		}
+		userDao.add(user);
+	}
+
 }

@@ -1,11 +1,18 @@
 package com.xuwuji.eshop.util;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.RequestEntity;
+import org.apache.commons.httpclient.methods.StringRequestEntity;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -56,4 +63,25 @@ public class HttpUtil {
 		}
 		return true;
 	}
+
+	// post
+	public static void postMethod(String url, String payload) {
+		HttpClient client = new HttpClient();
+		PostMethod method = new PostMethod(url);
+		RequestEntity requestEntity = new StringRequestEntity(payload); // 字符串请求参数
+		String result = "";
+		method.setRequestEntity(requestEntity); // 设置请求参数
+		try {
+			int code = client.executeMethod(method);
+			if (200 == code) {
+				result = method.getResponseBodyAsString();
+				System.out.println(result);
+			}
+		} catch (HttpException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 }
