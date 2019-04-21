@@ -17,6 +17,8 @@ public interface OrderMapper {
 
 	public List<Order> getAllByOpenIdAndState(HashMap<String, Object> map);
 	
+	public List<Order> getAllByOpenId(HashMap<String, Object> map);
+	
 	public List<Order> getOrderInfoByOrderId(HashMap<String, Object> map);
 
 	public List<Order> getAll();

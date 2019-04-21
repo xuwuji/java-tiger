@@ -3,6 +3,7 @@ package com.xuwuji.eshop.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +28,7 @@ import com.xuwuji.eshop.db.dao.ProductDao;
 import com.xuwuji.eshop.db.dao.UserDao;
 import com.xuwuji.eshop.model.Order;
 import com.xuwuji.eshop.model.OrderItem;
+import com.xuwuji.eshop.model.OrderStatus;
 import com.xuwuji.eshop.model.Product;
 import com.xuwuji.eshop.model.User;
 import com.xuwuji.eshop.util.EshopConfigUtil;
@@ -196,6 +198,28 @@ public class OrderController {
 			order.setOrderItemsList(orderItemsList);
 		}
 		return orders;
+	}
+
+	@RequestMapping(value = "/getOrderInfoCountByUser", method = RequestMethod.GET)
+	@ResponseBody
+	public HashMap<String, Integer> getOrderInfoByUserAndStatus(@RequestParam("openId") String openId,
+			HttpServletRequest request, HttpServletResponse response) {
+		List<Order> orders = new ArrayList<Order>();
+		orders = orderDao.getAllByOpenId(openId);
+		HashMap<String, Integer> count = new HashMap<String, Integer>();
+		count.put("notPay",0);
+		count.put("notSend",0);
+		count.put("delivered",0);
+		for (Order order : orders) {
+			if (order.getState().equals(OrderStatus.NOTPAY.getCode())) {
+				count.put("notPay", count.get("notPay") + 1);
+			} else if (order.getState().equals(OrderStatus.NOTSEND.getCode())) {
+				count.put("notSend", count.get("notSend") + 1);
+			} else if (order.getState().equals(OrderStatus.NOTPAY.getCode())) {
+				count.put("delivered", count.get("delivered") + 1);
+			}
+		}
+		return count;
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.GET)

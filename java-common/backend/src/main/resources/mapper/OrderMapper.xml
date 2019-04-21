@@ -82,6 +82,12 @@
 		eshoporder where
 		openId=#{openId} and state=#{state};
 	</select>
+	
+	<select id="getAllByOpenId" resultType="order">
+		select * from
+		eshoporder where
+		openId=#{openId};
+	</select>
 
 	<select id="getOrderInfoByOrderId" resultType="order">
 		select
