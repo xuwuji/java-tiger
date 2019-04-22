@@ -13,7 +13,9 @@ public class Brand {
 	// {@link} BrandLevel
 	private String brandLevel;
 	private String country;
+	private String countryFlagImg;
 	private String state;
+	private String imgUrl;
 
 	public int getId() {
 		return id;
@@ -55,12 +57,28 @@ public class Brand {
 		this.country = country;
 	}
 
+	public String getCountryFlagImg() {
+		return countryFlagImg;
+	}
+
+	public void setCountryFlagImg(String countryFlagImg) {
+		this.countryFlagImg = countryFlagImg;
+	}
+
 	public String getState() {
 		return state;
 	}
 
 	public void setState(String state) {
 		this.state = state;
+	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 }

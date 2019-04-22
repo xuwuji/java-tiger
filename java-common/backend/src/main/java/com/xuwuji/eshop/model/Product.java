@@ -14,6 +14,7 @@ public class Product {
 	private String name;
 	private String description;
 	private double price;
+	private double hkPrice;
 	private int inventory;
 	private int salesCount;
 	private Img mainImg;
@@ -35,6 +36,9 @@ public class Product {
 	private String imgUrl3;
 	private String imgUrl4;
 	private String formatId;
+	private double flashPrice;
+	private String flashState;
+	private List<String> detailImgUrls;
 
 	public Product() {
 
@@ -240,16 +244,49 @@ public class Product {
 		this.formatId = formatId;
 	}
 
+	public double getFlashPrice() {
+		return flashPrice;
+	}
+
+	public void setFlashPrice(double flashPrice) {
+		this.flashPrice = flashPrice;
+	}
+
+	public String getFlashState() {
+		return flashState;
+	}
+
+	public void setFlashState(String flashState) {
+		this.flashState = flashState;
+	}
+
+	public List<String> getDetailImgUrls() {
+		return detailImgUrls;
+	}
+
+	public void setDetailImgUrls(List<String> detailImgUrls) {
+		this.detailImgUrls = detailImgUrls;
+	}
+
+	public double getHkPrice() {
+		return hkPrice;
+	}
+
+	public void setHkPrice(double hkPrice) {
+		this.hkPrice = hkPrice;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
-				+ ", inventory=" + inventory + ", salesCount=" + salesCount + ", mainImg=" + mainImg + ", mainImgUrl="
-				+ mainImgUrl + ", mainImgId=" + mainImgId + ", imgs=" + imgs + ", imgUrls=" + imgUrls
-				+ ", parentCategoryId=" + parentCategoryId + ", categoryId=" + categoryId + ", brandId=" + brandId
-				+ ", brandNameCN=" + brandNameCN + ", brandNameEN=" + brandNameEN + ", state=" + state
+				+ ", hkPrice=" + hkPrice + ", inventory=" + inventory + ", salesCount=" + salesCount + ", mainImg="
+				+ mainImg + ", mainImgUrl=" + mainImgUrl + ", mainImgId=" + mainImgId + ", imgs=" + imgs + ", imgUrls="
+				+ imgUrls + ", parentCategoryId=" + parentCategoryId + ", categoryId=" + categoryId + ", brandId="
+				+ brandId + ", brandNameCN=" + brandNameCN + ", brandNameEN=" + brandNameEN + ", state=" + state
 				+ ", bannerItemId=" + bannerItemId + ", bannerItemName=" + bannerItemName + ", country=" + country
 				+ ", imgUrl1=" + imgUrl1 + ", imgUrl2=" + imgUrl2 + ", imgUrl3=" + imgUrl3 + ", imgUrl4=" + imgUrl4
-				+ "]";
+				+ ", formatId=" + formatId + ", flashPrice=" + flashPrice + ", flashState=" + flashState
+				+ ", detailImgUrls=" + detailImgUrls + "]";
 	}
 
 }

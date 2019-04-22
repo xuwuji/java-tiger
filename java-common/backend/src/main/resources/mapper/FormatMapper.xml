@@ -11,18 +11,19 @@
 		<result property="name" column="type"></result>
 		<result property="price" column="type"></result>
 		<result property="productId" column="type"></result>
+		<result property="flashPrice" column="type"></result>
 	</resultMap>
 
 	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
 		keyProperty="id">
 		insert into format
-		(name,price,productId,state)
-		values(#{name},#{price},#{productId},'0')
+		(name,price,flashPrice,productId,state)
+		values(#{name},#{price},#{flashPrice},#{productId},'0')
 	</insert>
 
 	<update id="update" parameterType="hashmap">
 		update format set
-		name=#{name},price=#{price}
+		name=#{name},price=#{price},flashPrice=#{flashPrice}
 		where id=#{id};
 	</update>
 

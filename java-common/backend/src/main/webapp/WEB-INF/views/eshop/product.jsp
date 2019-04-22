@@ -114,6 +114,11 @@
 							class="form-control" id="productPrice" placeholder="商品价格">
 					</div>
 					<div class="form-group">
+						<label for="txt_departmentname">商品港币进货价格</label> <input
+							type="text" class="form-control" id="productHKPrice"
+							placeholder="商品港币进货价格">
+					</div>
+					<div class="form-group">
 						<label for="txt_departmentname">商品库存</label> <input type="text"
 							class="form-control" id="productInventory" placeholder="库存">
 					</div>
@@ -190,6 +195,11 @@
 							class="form-control" id="edit-productPrice" placeholder="商品价格">
 					</div>
 					<div class="form-group">
+						<label for="txt_departmentname">商品港币进货价格</label> <input
+							type="text" class="form-control" id="edit-productHKPrice"
+							placeholder="商品港币进货价格">
+					</div>
+					<div class="form-group">
 						<label for="txt_departmentname">商品库存</label> <input type="text"
 							class="form-control" id="edit-productInventory" placeholder="库存">
 					</div>
@@ -197,6 +207,15 @@
 						<label for="txt_departmentname">商品销售量</label> <input type="text"
 							class="form-control" id="edit-productSalesCount"
 							placeholder="销售量">
+					</div>
+					<div class="form-group">
+						<label for="txt_departmentname">商品促销价</label> <input type="text"
+							class="form-control" id="edit-flashPrice" placeholder="闪购时的价格">
+					</div>
+					<div class="form-group">
+						<label for="txt_departmentname">是否闪购</label> <input type="text"
+							class="form-control" id="edit-flashState"
+							placeholder="0-不参加，1-参加">
 					</div>
 					<!-- 	<div class="form-group">
 						<label for="txt_departmentname">商品主图Url</label> <input type="text"
@@ -254,6 +273,11 @@
 					<div class="form-group">
 						<label for="txt_departmentname">商品id</label> <input type="text"
 							class="form-control" id="banner-id" placeholder="商品id"
+							disabled="disabled">
+					</div>
+					<div class="form-group">
+						<label for="txt_departmentname">修改类型</label> <input type="text"
+							class="form-control" id="banner-type" placeholder="商品id"
 							disabled="disabled">
 					</div>
 					<div class="form-group">
@@ -395,6 +419,14 @@
 								align : 'center'
 							},
 							{
+								field : 'hkPrice',
+								title : '港币进货价格',
+								align : 'center',
+								formatter : function(value, row, index) {
+									return value + "(" + value * 0.87 + ")";
+								}
+							},
+							{
 								field : 'inventory',
 								title : '库存',
 								align : 'center'
@@ -435,6 +467,27 @@
 								align : 'center',
 							},
 							{
+								field : 'flashPrice',
+								title : '促销价格',
+								align : 'center',
+							},
+							{
+								field : 'flashState',
+								title : '是否促销',
+								align : 'center',
+								formatter : function(value, row, index) {
+									if (row.flashState) {
+										if (row.flashState == '0') {
+											return "否";
+										} else if (row.flashState == '1') {
+											return "是";
+										} else {
+											return "错误数据";
+										}
+									}
+								}
+							},
+							{
 								field : 'state',
 								title : '状态',
 								align : 'center',
@@ -464,7 +517,7 @@
 											+ id + ')">修改banner位</a>';
 									html += '　<a href="javascript:updateBrand('
 											+ id + ')">修改品牌</a>';
-									html += '　<a href="http://localhost:8080/backend/admin/format/index/'
+									html += '　<a href="/backend/admin/format/index/'
 											+ id + '">规格管理</a>';
 									return html;
 								}
@@ -631,6 +684,7 @@
 		var price = $('#productPrice').val();
 		var inventory = $('#productInventory').val();
 		var salesCount = $('#productSalesCount').val();
+		var hkPrice = $('#productHKPrice').val();
 		//var mainImgUrl = $('#productMainImgUrl').val();
 		//var brandNameCN = $('#productBrandNameCN').val();
 		//var brandNameEN = $('#productBrandNameEN').val();
@@ -641,6 +695,7 @@
 				name : name,
 				desc : desc,
 				price : price,
+				hkPrice : hkPrice,
 				inventory : inventory,
 				salesCount : salesCount,
 				//mainImgUrl : mainImgUrl,
@@ -670,6 +725,9 @@
 			$('#edit-productPrice').val(row.price);
 			$('#edit-productSalesCount').val(row.salesCount);
 			$('#edit-productInventory').val(row.inventory);
+			$('#edit-flashPrice').val(row.flashPrice);
+			$('#edit-flashState').val(row.flashState);
+			$('#edit-productHKPrice').val(row.hkPrice);
 			//$('#edit-productMainImgUrl').val(row.mainImgUrl);
 			//$('#edit-productBrandNameCN').val(row.brandNameCN);
 			//$('#edit-productBrandNameEN').val(row.brandNameEN);
@@ -686,6 +744,9 @@
 		var price = $('#edit-productPrice').val();
 		var inventory = $('#edit-productInventory').val();
 		var salesCount = $('#edit-productSalesCount').val();
+		var flashPrice = $('#edit-flashPrice').val();
+		var flashState = $('#edit-flashState').val();
+		var hkPrice = $('#edit-productHKPrice').val();
 		//var mainImgUrl = $('#edit-productMainImgUrl').val();
 		//var brandNameCN = $('#edit-productBrandNameCN').val();
 		//var brandNameEN = $('#edit-productBrandNameEN').val();
@@ -698,11 +759,14 @@
 				name : name,
 				desc : desc,
 				price : price,
+				hkPrice : hkPrice,
 				inventory : inventory,
 				salesCount : salesCount,
 				//mainImgUrl : mainImgUrl,
 				parentCategoryId : parentCategoryId,
 				categoryId : categoryId,
+				flashPrice : flashPrice,
+				flashState : flashState,
 			//brandNameCN : brandNameCN,
 			//brandNameEN : brandNameEN,
 			},
@@ -808,9 +872,11 @@
 						$
 								.ajax({
 									url : "/backend/category/getCategoryByParent/"
-											+ parentCategoryId, //url
+											+ parentCategoryId,
 									type : "get",
 									success : function(data) {
+										$('#selectpicker-child').find("option")
+												.remove();
 										var depart_list = data;
 										var opts = "";
 										for (var depart_index = 0; depart_index < depart_list.length; depart_index++) {

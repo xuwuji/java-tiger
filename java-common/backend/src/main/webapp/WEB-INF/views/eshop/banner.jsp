@@ -34,6 +34,9 @@
 
 <body>
 	<h1 align="center">banner管理</h1>
+	<h4 align="left">首页中间栏展示分类的跳转页面是商品列表，路径为../productList/productList?id={{对应的类别categoryId}}&type=category</h4>
+	<h4 align="left">0首页轮播，1首页主题推荐 , 2首页中间栏展示分类，3活动大类，4活动小类</h4>
+	
 	<!--工具-->
 	<div id="toolbar" class="btn-group">
 		<button id="btn-add" type="button" class="btn">
@@ -68,11 +71,11 @@
 							name="txt_departmentname" data-bind="value:Name"
 							class="form-control" id="add-name" placeholder="名称">
 					</div>
-					<!-- 	<div class="form-group">
+					<div class="form-group">
 						<label for="txt_departmentname">图片url</label> <input type="text"
 							name="txt_departmentname" data-bind="value:Name"
 							class="form-control" id="add-imgUrl" placeholder="图片url">
-					</div> -->
+					</div>
 					<div class="form-group">
 						<label for="txt_departmentname">跳转页面</label> <input type="text"
 							name="txt_departmentname" data-bind="value:Name"
@@ -82,7 +85,12 @@
 						<label for="txt_departmentname">banner位</label> <input type="text"
 							name="txt_departmentname" data-bind="value:Name"
 							class="form-control" id="add-bannerId"
-							placeholder="0首页轮播，1首页分类推荐">
+							placeholder="0首页轮播，1首页主题推荐 , 2首页中间栏展示分类，3活动大类，4活动小类">
+					</div>
+					<div class="form-group">
+						<label for="txt_departmentname">活动信息</label> <input type="text"
+							name="txt_departmentname" data-bind="value:Name"
+							class="form-control" id="add-info" placeholder="活动信息">
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">
@@ -120,11 +128,11 @@
 						name="txt_departmentname" data-bind="value:Name"
 						class="form-control" id="edit-name" placeholder="名称">
 				</div>
-				<!-- <div class="form-group">
+				<div class="form-group">
 					<label for="txt_departmentname">图片url</label> <input type="text"
 						name="txt_departmentname" data-bind="value:Name"
 						class="form-control" id="edit-imgUrl" placeholder="图片url">
-				</div> -->
+				</div>
 				<div class="form-group">
 					<label for="txt_departmentname">跳转页面</label> <input type="text"
 						name="txt_departmentname" data-bind="value:Name"
@@ -135,6 +143,11 @@
 						name="txt_departmentname" data-bind="value:Name"
 						class="form-control" id="edit-bannerId"
 						placeholder="0首页轮播，1首页分类推荐">
+				</div>
+				<div class="form-group">
+					<label for="txt_departmentname">活动信息</label> <input type="text"
+						name="txt_departmentname" data-bind="value:Name"
+						class="form-control" id="edit-info" placeholder="活动信息">
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">
@@ -190,7 +203,15 @@
 			field : 'name',
 			title : '名称',
 			align : 'center'
-		}, /* {
+		}, {
+			field : 'info',
+			title : '活动信息',
+			align : 'center'
+		},{
+			field : 'imgUrl',
+			title : '图片地址',
+			align : 'center'
+		},  /* {
 				field : '
 	imgUrl',
 					title : '图片链接',
@@ -208,8 +229,14 @@
 					if (row.bannerId == '0') {
 						return "首页轮播位";
 					} else if (row.bannerId == '1') {
-						return "首页推荐分类栏";
-					} else {
+						return "首页主题推荐";
+					} else if (row.bannerId == '2') {
+						return "首页中间栏展示分类";
+					}else if (row.bannerId == '3') {
+						return "首页活动大类";
+					}else if (row.bannerId == '4') {
+						return "首页活动小类";
+					}else {
 						return "错误数据";
 					}
 				}
@@ -255,16 +282,18 @@
 	$('#btn_submit').on("click", function() {
 		var name = $('#add-name').val();
 		var redirectUrl = $('#add-redirectUrl').val();
-		//var imgUrl = $('#add-imgUrl').val();
+		var imgUrl = $('#add-imgUrl').val();
 		var bannerId = $('#add-bannerId').val();
+		var info = $('#add-info').val();
 		$.ajax({
 			url : "/backend/admin/banner/add",
 			type : "post",
 			data : {
 				name : name,
 				redirectUrl : redirectUrl,
-				//imgUrl : imgUrl,
+				imgUrl : imgUrl,
 				bannerId : bannerId,
+				info:info,
 			},
 			success : function(status) {
 				$table.bootstrapTable('refresh');
@@ -278,9 +307,10 @@
 		$("#editModal").modal().on("shown.bs.modal", function() {
 			$('#edit-name').val(row.name);
 			$('#edit-redirectUrl').val(row.redirectUrl);
-			//$('#edit-imgUrl').val(row.imgUrl);
+			$('#edit-imgUrl').val(row.imgUrl);
 			$('#edit-bannerId').val(row.bannerId);
 			$('#edit-id').val(row.id);
+			$('#edit-info').val(row.info);
 		});
 	}
 
@@ -288,9 +318,10 @@
 	$('#btn_edit_submit').on("click", function() {
 		var name = $('#edit-name').val();
 		var redirectUrl = $('#edit-redirectUrl').val();
-		//var imgUrl = $('#edit-imgUrl').val();
+		var imgUrl = $('#edit-imgUrl').val();
 		var bannerId = $('#edit-bannerId').val();
 		var id = $('#edit-id').val();
+		var info = $('#edit-info').val();
 		$.ajax({
 			url : "/backend/admin/banner/update",
 			type : "post",
@@ -298,8 +329,9 @@
 				id : id,
 				name : name,
 				redirectUrl : redirectUrl,
-				//imgUrl : imgUrl,
+				imgUrl : imgUrl,
 				bannerId : bannerId,
+				info:info,
 			},
 			success : function(status) {
 				$table.bootstrapTable('refresh');

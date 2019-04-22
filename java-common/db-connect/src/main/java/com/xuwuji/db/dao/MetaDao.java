@@ -3,9 +3,6 @@ package com.xuwuji.db.dao;
 import java.util.HashMap;
 import java.util.List;
 
-import org.ansj.domain.Result;
-import org.ansj.domain.Term;
-import org.ansj.splitWord.analysis.ToAnalysis;
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 

@@ -18,7 +18,6 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
-import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -32,38 +31,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class QRCodeUtil {
+	public static final String ACCESS_TOKEN = "access_token";
 
-	public static String getToken() {
-		String appId = "wx7561e2d8b255ea10";
-		String appSecret = "fb82f205d7c0163e76437465d5882c09";
-		String url = "https://api.weixin.qq.com/cgi-bin/token?appid=" + appId + "&secret=" + appSecret
-				+ "&grant_type=client_credential";
-		GetMethod request = null;
-		request = new GetMethod(url);
-		HttpClient client = new HttpClient();
-		client.getParams().setSoTimeout(3 * 60 * 1000); // timeout 3 minutes
-		String token = "";
-		int status = -1;
-		try {
-			status = client.executeMethod(request);
-			if (status != 200) {
-				throw new RuntimeException("Got unexpected response code " + status);
-			}
-			token = request.getResponseBodyAsString();
-			ObjectMapper mapper = new ObjectMapper();
-			JsonNode rootNode = mapper.readTree(token);
-			token = rootNode.get("access_token").asText();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			request.releaseConnection();
-		}
-		return token;
+	public static String getAccessToken() {
+		String url = "https://api.weixin.qq.com/cgi-bin/token?appid=" + TokenUtil.APPID + "&secret="
+				+ TokenUtil.APPSECRET + "&grant_type=client_credential";
+		return HttpUtil.getMethod(url, ACCESS_TOKEN);
 	}
 
 	public static byte[] getQRCoderByte(String productId) {
 		RestTemplate rest = new RestTemplate();
-		String url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=" + getToken();
+		String url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=" + getAccessToken();
 		Map<String, Object> param = new HashMap<>();
 		param.put("scene", productId);
 		param.put("path", "pages/product/product");
@@ -85,10 +63,10 @@ public class QRCodeUtil {
 		RestTemplate rest = new RestTemplate();
 		InputStream inputStream = null;
 		OutputStream outputStream = null;
-		System.out.print(getToken());
+		System.out.print(getAccessToken());
 		String encoded = "";
 		try {
-			String url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=" + getToken();
+			String url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=" + getAccessToken();
 			Map<String, Object> param = new HashMap<>();
 			param.put("scene", "aaa");
 			param.put("path", "pages/home/home");

@@ -14,19 +14,20 @@
 		<result property="country" column="type"></result>
 		<result property="brandLevel" column="type"></result>
 		<result property="state" column="type"></result>
+		<result property="imgUrl" column="type"></result>
 
 	</resultMap>
 
 	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
 		keyProperty="id">
 		insert into brand
-		(brandCN,brandEN,brandLevel,country,state)
-		values(#{brandCN},#{brandEN},#{brandLevel},#{country},'0')
+		(brandCN,brandEN,brandLevel,country,state,imgUrl)
+		values(#{brandCN},#{brandEN},#{brandLevel},#{country},'0',#{imgUrl})
 	</insert>
 
 	<update id="update" parameterType="hashmap">
 		update brand set
-		brandCN=#{brandCN},brandEN=#{brandEN},brandLevel=#{brandLevel},country=#{country}
+		brandCN=#{brandCN},brandEN=#{brandEN},brandLevel=#{brandLevel},country=#{country},imgUrl=#{imgUrl}
 		where id=#{id};
 	</update>
 
@@ -47,9 +48,36 @@
 		brand;
 	</select>
 
+	<select id="getById" resultType="brand">
+		select * from
+		brand where
+		id=#{id};
+	</select>
+
 	<select id="getActiveAll" resultType="brand">
 		select * from
 		brand where
+		state='1';
+	</select>
+
+	<select id="getActiveAllByBrandId" resultType="brand"
+		parameterType="hashmap">
+		select * from
+		brand where
+		id=#{id} and
+		state='1';
+	</select>
+
+	<select id="getActiveCountry" resultType="hashmap"
+		parameterType="java.lang.String">
+		select DISTINCT(country) from brand where state='1';
+	</select>
+
+	<select id="getActiveAllByCountry" resultType="brand"
+		parameterType="hashmap">
+		select * from
+		brand where
+		country=#{country} and
 		state='1';
 	</select>
 

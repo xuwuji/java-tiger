@@ -5,62 +5,63 @@
 
 <mapper namespace="com.xuwuji.eshop.db.mapper.BannerItemMapper">
 
-	<resultMap type="BannerItem" id="bannerItemResult">
+	<resultMap type="banneritem" id="bannerItemResult">
 		<id property="id" column="id"></id>
 		<result property="name" column="type"></result>
 		<result property="imgUrl" column="type"></result>
 		<result property="redirectUrl" column="type"></result>
 		<result property="bannerId" column="type"></result>
 		<result property="state" column="state"></result>
+		<result property="info" column="info"></result>
 	</resultMap>
 
 	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
 		keyProperty="id" keyColumn="id">
-		insert into bannerItem
-		(name,imgUrl,redirectUrl,bannerId,state)
-		values(#{name},#{imgUrl},#{redirectUrl},#{bannerId},'0')
+		insert into banneritem
+		(name,imgUrl,redirectUrl,bannerId,state,info)
+		values(#{name},#{imgUrl},#{redirectUrl},#{bannerId},'0',#{info})
 	</insert>
 	
 	<update id="updateImg" parameterType="hashmap">
-		update bannerItem set
+		update banneritem set
 		imgUrl=#{imgUrl}
 		where id=#{id};
 	</update>
 
 	<update id="update" parameterType="hashmap">
-		update bannerItem set
+		update banneritem set
 		name=#{name},imgUrl=#{imgUrl},redirectUrl=#{redirectUrl},
-		bannerId=#{bannerId}
+		bannerId=#{bannerId},info=#{info}
 		where id=#{id};
 	</update>
 
 	<update id="disable" parameterType="hashmap">
-		update bannerItem set
+		update banneritem set
 		state='0'
 		where id=#{id};
 	</update>
 
 	<update id="reActive" parameterType="hashmap">
-		update bannerItem set
+		update banneritem set
 		state='1'
 		where id=#{id};
 	</update>
 
 	<select id="getAll" resultType="BannerItem">
 		select * from
-		bannerItem;
+		banneritem;
 	</select>
 
 	<select id="getAllActive" resultType="BannerItem">
 		select * from
-		bannerItem
+		banneritem
 		where
 		state='1';
 	</select>
 
 	<select id="getById" resultType="BannerItem">
 		select * from
-		bannerItem
+		banneritem
 		where
 		id=#{id};
 	</select>
@@ -68,7 +69,7 @@
 	<select id="getActiveAllByBannerId" parameterType="hashmap"
 		resultType="BannerItem">
 		select * from
-		bannerItem where bannerId=#{bannerId} and
+		banneritem where bannerId=#{bannerId} and
 		state='1';
 	</select>
 

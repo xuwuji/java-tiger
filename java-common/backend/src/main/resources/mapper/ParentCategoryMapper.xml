@@ -9,7 +9,7 @@
 	<!-- <cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true" 
 		type="org.mybatis.caches.redis.RedisCache" /> -->
 
-	<resultMap type="ParentCategory" id="parentCategoryResult">
+	<resultMap type="parentcategory" id="parentcategoryResult">
 		<id property="id" column="id"></id>
 		<result property="name" column="type"></result>
 		<result property="state" column="state"></result>
@@ -17,30 +17,30 @@
 
 	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
 		keyProperty="id">
-		insert into parentCategory (name,state)
+		insert into parentcategory (name,state)
 		values(#{name},'0')
 	</insert>
 
 	<update id="disable" parameterType="hashmap">
-		update parentCategory set
+		update parentcategory set
 		state='0'
 		where id=#{id};
 	</update>
 
 	<update id="reActive" parameterType="hashmap">
-		update parentCategory set
+		update parentcategory set
 		state='1'
 		where id=#{id};
 	</update>
 	
-	<select id="getAll" resultType="ParentCategory">
+	<select id="getAll" resultType="parentcategory">
 		select * from
-		parentCategory;
+		parentcategory;
 	</select>
 	
-	<select id="getActiveAll" resultType="ParentCategory">
+	<select id="getActiveAll" resultType="parentcategory">
 		select * from
-		parentCategory where state='1';
+		parentcategory where state='1';
 	</select>
 
 </mapper>

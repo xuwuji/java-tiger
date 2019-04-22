@@ -1,0 +1,14 @@
+package com.xuwuji.eshop.model.template;
+
+public class TemplateData {
+	private String value;
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+}

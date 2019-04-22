@@ -40,6 +40,10 @@ public class AdminFormatController {
 		Format format = new Format();
 		String name = request.getParameter("name");
 		double price = Double.valueOf(request.getParameter("price"));
+		if (request.getParameter("flashPrice") != null && !request.getParameter("flashPrice").isEmpty()) {
+			double flashPrice = Double.valueOf(request.getParameter("flashPrice"));
+			format.setFlashPrice(flashPrice);
+		}
 		String productId = request.getParameter("productId");
 		format.setName(name);
 		format.setPrice(price);
@@ -55,6 +59,10 @@ public class AdminFormatController {
 		String name = request.getParameter("name");
 		double price = Double.valueOf(request.getParameter("price"));
 		String productId = request.getParameter("productId");
+		if (request.getParameter("flashPrice") != null) {
+			double flashPrice = Double.valueOf(request.getParameter("flashPrice"));
+			format.setFlashPrice(flashPrice);
+		}
 		format.setId(id);
 		format.setName(name);
 		format.setPrice(price);

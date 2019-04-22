@@ -10,8 +10,8 @@
 		<id property="id" column="id"></id>
 		<result property="time" column="DATE" javaType="java.util.Date"
 			jdbcType="DATE"></result>
-		<result property="lastModifyTime" column="DATE"
-			javaType="java.util.Date" jdbcType="DATE"></result>
+		<result property="lastModifyTime" column="DATE" javaType="java.util.Date"
+			jdbcType="DATE"></result>
 		<result property="wechatId" column="type"></result>
 		<result property="state" column="type"></result>
 		<result property="orderId" column="type"></result>
@@ -24,17 +24,27 @@
 		<result property="logisticsId" column="type"></result>
 		<result property="logisticsName" column="type"></result>
 		<result property="memo" column="type"></result>
+		<result property="source" column="type"></result>
+		<result property="sourceWechatId" column="type"></result>
+		<result property="sourceOpenId" column="type"></result>
+		<result property="bonusAmount" column="type"></result>
+		<result property="promotionIds" column="type"></result>
+		<result property="couponId" column="type"></result>
+		<result property="usedBonus" column="type"></result>
+		<result property="usedPoints" column="type"></result>
+		<result property="usedCouponCash" column="type"></result>
+
 	</resultMap>
 
 	<insert id="add" parameterType="Order" useGeneratedKeys="true"
 		keyProperty="id" keyColumn="id">
-		insert into eshopOrder
-		(wechatId,time,state,orderId,phoneNum,amount,totalCount,recieverName,address,openId,memo)
-		values(#{wechatId},#{time},'0',#{orderId},#{phoneNum},#{amount},#{totalCount},#{recieverName},#{address},#{openId},#{memo})
+		insert into eshoporder
+		(wechatId,promotionIds,time,state,orderId,phoneNum,amount,totalCount,recieverName,address,openId,memo,source,sourceOpenId,sourceWechatId,couponId,usedBonus,usedPoints,usedCouponCash)
+		values(#{wechatId},#{promotionIds},#{time},'0',#{orderId},#{phoneNum},#{amount},#{totalCount},#{recieverName},#{address},#{openId},#{memo},#{source},#{sourceOpenId},#{sourceWechatId},#{couponId},#{usedBonus},#{usedPoints},#{usedCouponCash})
 	</insert>
 
 	<update id="update" parameterType="hashmap">
-		update eshopOrder set
+		update eshoporder set
 		lastModifyTime = now()
 		<if test="state != null and state !=''">
 			,state=#{state}
@@ -53,7 +63,7 @@
 	</update>
 
 	<update id="updateMemo" parameterType="hashmap">
-		update eshopOrder set
+		update eshoporder set
 		lastModifyTime = now(),
 		memo=#{memo}
 		where
@@ -62,21 +72,33 @@
 
 	<select id="getAllByWechatIdAndState" resultType="order">
 		select * from
-		eshopOrder
+		eshoporder
 		where
 		wechatId=#{wechatId} and state=#{state};
 	</select>
 
 	<select id="getAllByOpenIdAndState" resultType="order">
 		select * from
-		eshopOrder where
+		eshoporder where
 		openId=#{openId} and state=#{state};
+	</select>
+	
+	<select id="getAllByOpenId" resultType="order">
+		select * from
+		eshoporder where
+		openId=#{openId};
 	</select>
 
 	<select id="getOrderInfoByOrderId" resultType="order">
+		select
+		eshoporder.*, user.bonusAmount from eshoporder left join user
+		on
+		eshoporder.openId=user.openId where eshoporder.orderId=#{orderId} ;
+	</select>
+
+	<select id="getAll" resultType="order">
 		select * from
-		eshopOrder where
-		orderId=#{orderId} ;
+		eshoporder ;
 	</select>
 
 </mapper>

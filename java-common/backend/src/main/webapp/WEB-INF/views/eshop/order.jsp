@@ -288,11 +288,50 @@
 						title : '物流公司',
 						align : 'center'
 					},
-
+					{
+						field : 'source',
+						title : '来源',
+						align : 'center'
+					},
+					{
+						field : 'sourceOpenId',
+						title : '分享人openId',
+						align : 'center'
+					},
 					{
 						field : 'memo',
 						title : '备注',
 						align : 'center'
+					},
+					{
+						field : 'promotionIds',
+						title : '参与的活动id号',
+						align : 'center'
+					},
+					{
+						field : 'bonusAmount',
+						title : '付款人红包金额',
+						align : 'center',
+					},
+					{
+						field : 'couponId',
+						title : '优惠券id',
+						align : 'center',
+					},
+					{
+						field : 'usedBonus',
+						title : '使用的红包金额',
+						align : 'center',
+					},
+					{
+						field : 'usedPoints',
+						title : '使用的积分数',
+						align : 'center',
+					},
+					{
+						field : 'usedCouponCash',
+						title : '使用的优惠券金额',
+						align : 'center',
 					},
 					{
 						title : '操作',
@@ -301,7 +340,7 @@
 							var html = '<a href="javascript:editMemo(' + id
 									+ ')">编辑备注</a>';
 							html += '　<a href="javascript:payOrder(' + id
-									+ ')">已付款</a>';
+									+ ')">付款</a>';
 							html += '　<a href="javascript:deliverOrder(' + id
 									+ ')">发货</a>';
 							html += '　<a href="javascript:finishOrder(' + id
@@ -445,9 +484,10 @@
 	function payOrder(id) {
 		var row = $table.bootstrapTable('getRowByUniqueId', id);
 		var orderId = row.orderId;
+
 		if (confirm("确定此订单已付款了吗？")) {
 			$.ajax({
-				url : "/backend/admin/order/update",
+				url : "/backend/admin/order/pay",
 				type : "post",
 				data : {
 					orderId : orderId,
@@ -465,8 +505,7 @@
 	function viewOrder(id) {
 		var row = $table.bootstrapTable('getRowByUniqueId', id);
 		var orderId = row.orderId;
-		window.location.href = "http://localhost:8080/backend/admin/index/orderItem/"
-				+ orderId;
+		window.location.href = "/backend/admin/orderItem/index/" + orderId;
 	}
 
 	/* 批量上架 */

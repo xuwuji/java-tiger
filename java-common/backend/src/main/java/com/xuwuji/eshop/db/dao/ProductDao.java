@@ -15,10 +15,11 @@ import com.xuwuji.eshop.util.EshopConfigUtil;
 
 @Component
 public class ProductDao {
-	
+
 	@Autowired
 	private EshopConfigUtil eshopConfigUtil;
 
+	@SuppressWarnings("static-access")
 	public void add(Product product) {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
@@ -27,11 +28,11 @@ public class ProductDao {
 			int id = product.getId();
 			HashMap<String, Object> imgMap = new HashMap<String, Object>();
 			imgMap.put("id", id);
-			imgMap.put("mainImgUrl", eshopConfigUtil.PRODUCT_IMG_BASE + id + "-0.jpg");
-			imgMap.put("imgUrl1", eshopConfigUtil.PRODUCT_IMG_BASE + id + "-1.jpg");
-			imgMap.put("imgUrl2", eshopConfigUtil.PRODUCT_IMG_BASE + id + "-2.jpg");
-			imgMap.put("imgUrl3", eshopConfigUtil.PRODUCT_IMG_BASE + id + "-3.jpg");
-			imgMap.put("imgUrl4", eshopConfigUtil.PRODUCT_IMG_BASE + id + "-4.jpg");
+			imgMap.put("mainImgUrl", eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + id + "-0.jpg");
+			imgMap.put("imgUrl1", eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + id + "-1.jpg");
+			imgMap.put("imgUrl2", eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + id + "-2.jpg");
+			imgMap.put("imgUrl3", eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + id + "-3.jpg");
+			imgMap.put("imgUrl4", eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE) + id + "-4.jpg");
 			mapper.updateImgUrl(imgMap);
 			session.commit();
 		} catch (Exception e) {
@@ -65,6 +66,23 @@ public class ProductDao {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("id", id);
 			mapper.reActive(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+	};
+
+	public void updatePrice(int id, int price) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("id", id);
+			map.put("price", price);
+			mapper.updatePrice(map);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -117,13 +135,16 @@ public class ProductDao {
 			map.put("name", product.getName());
 			map.put("description", product.getDescription());
 			map.put("price", product.getPrice());
+			map.put("hkPrice", product.getHkPrice());
 			map.put("inventory", product.getInventory());
 			map.put("salesCount", product.getSalesCount());
 			map.put("mainImgUrl", product.getMainImgUrl());
 			map.put("parentCategoryId", product.getParentCategoryId());
 			map.put("categoryId", product.getCategoryId());
-			//map.put("brandNameCN", product.getBrandNameCN());
-			//map.put("brandNameEN", product.getBrandNameEN());
+			map.put("flashPrice", product.getFlashPrice());
+			map.put("flashState", product.getFlashState());
+			// map.put("brandNameCN", product.getBrandNameCN());
+			// map.put("brandNameEN", product.getBrandNameEN());
 			mapper.update(map);
 			session.commit();
 		} catch (Exception e) {
@@ -232,6 +253,74 @@ public class ProductDao {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("bannerItemId", bannerItemId);
 			result = mapper.getActiveByBannerItem(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+
+	public List<Product> getActiveByBrandId(String brandId) {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<Product> result = new ArrayList<Product>();
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("brandId", brandId);
+			result = mapper.getActiveByBrandId(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+
+	public List<Product> getRankByTop() {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<Product> result = new ArrayList<Product>();
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			result = mapper.getRankByTop();
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+
+	public List<Product> getActiveByFlash() {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<Product> result = new ArrayList<Product>();
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			result = mapper.getActiveByFlash();
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+
+	public List<Product> getMultiByIds(List<Integer> ids) {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<Product> result = new ArrayList<Product>();
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("ids", ids);
+			result = mapper.getMultiByIds(map);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -13,6 +13,7 @@ public class BannerItem {
 	private String redirectUrl;
 	private String state;
 	private String bannerId;
+	private String info;
 
 	public int getId() {
 		return id;
@@ -62,12 +63,18 @@ public class BannerItem {
 		this.bannerId = bannerId;
 	}
 
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
+	}
+
 	@Override
 	public String toString() {
 		return "BannerItem [id=" + id + ", name=" + name + ", imgUrl=" + imgUrl + ", redirectUrl=" + redirectUrl
-				+ ", state=" + state + ", bannerId=" + bannerId + "]";
+				+ ", state=" + state + ", bannerId=" + bannerId + ", info=" + info + "]";
 	}
-	
-	
 
 }

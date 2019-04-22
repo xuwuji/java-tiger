@@ -23,6 +23,7 @@ public class BrandDao {
 			map.put("brandEN", brand.getBrandEN());
 			map.put("country", brand.getCountry());
 			map.put("brandLevel", brand.getBrandLevel());
+			map.put("imgUrl", brand.getImgUrl());
 			mapper.add(map);
 			session.commit();
 		} catch (Exception e) {
@@ -38,10 +39,12 @@ public class BrandDao {
 		try {
 			BrandMapper mapper = session.getMapper(BrandMapper.class);
 			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("id", brand.getId());
 			map.put("brandCN", brand.getBrandCN());
 			map.put("brandEN", brand.getBrandEN());
 			map.put("country", brand.getCountry());
 			map.put("brandLevel", brand.getBrandLevel());
+			map.put("imgUrl", brand.getImgUrl());
 			mapper.update(map);
 			session.commit();
 		} catch (Exception e) {
@@ -106,6 +109,76 @@ public class BrandDao {
 		try {
 			BrandMapper mapper = session.getMapper(BrandMapper.class);
 			result = mapper.getActiveAll();
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+
+	public List<Brand> getById(String id) {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<Brand> result = new ArrayList<Brand>();
+		try {
+			BrandMapper mapper = session.getMapper(BrandMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("id", id);
+			result = mapper.getById(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+
+	public List<Brand> getActiveAllByBrandId(String brandId) {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<Brand> result = new ArrayList<Brand>();
+		try {
+			BrandMapper mapper = session.getMapper(BrandMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("id", brandId);
+			result = mapper.getActiveAllByBrandId(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+
+	public List<Brand> getActiveAllByCountry(String country) {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<Brand> result = new ArrayList<Brand>();
+		try {
+			BrandMapper mapper = session.getMapper(BrandMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("country", country);
+			result = mapper.getActiveAllByCountry(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+
+	public List<String> getActiveCountry() {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<String> result = new ArrayList<String>();
+		try {
+			BrandMapper mapper = session.getMapper(BrandMapper.class);
+			result = mapper.getActiveCountry();
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();

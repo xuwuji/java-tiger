@@ -5,6 +5,7 @@ public class Format {
 	private int id;
 	private String name;
 	private double price;
+	private double flashPrice;
 	private String productId;
 	private String state;
 
@@ -46,6 +47,14 @@ public class Format {
 
 	public void setState(String state) {
 		this.state = state;
+	}
+
+	public double getFlashPrice() {
+		return flashPrice;
+	}
+
+	public void setFlashPrice(double flashPrice) {
+		this.flashPrice = flashPrice;
 	}
 
 }

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,6 +23,8 @@ import com.xuwuji.eshop.model.BannerItem;
 public class AdminBannerController {
 	@Autowired
 	private BannerDao bannerDao;
+	@Autowired
+	private com.xuwuji.eshop.util.EshopConfigUtil EshopConfigUtil;
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
@@ -34,14 +35,17 @@ public class AdminBannerController {
 	@ResponseBody
 	public void add(HttpServletRequest request, HttpServletResponse response) {
 		String name = request.getParameter("name");
-		//String imgUrl = request.getParameter("imgUrl");
+		String imgUrl = request.getParameter("imgUrl");
 		String redirectUrl = request.getParameter("redirectUrl");
 		String bannerId = request.getParameter("bannerId");
+		String info = request.getParameter("info");
 		BannerItem bannerItem = new BannerItem();
 		bannerItem.setBannerId(bannerId);
-		//bannerItem.setImgUrl(imgUrl);
+		//bannerItem.setImgUrl(EshopConfigUtil.getParam(EshopConfigUtil.BANNER_IMG_BASE) + bannerItem.getId() + ".jpg");
+		bannerItem.setImgUrl(imgUrl);
 		bannerItem.setName(name);
 		bannerItem.setRedirectUrl(redirectUrl);
+		bannerItem.setInfo(info);
 		bannerDao.add(bannerItem);
 	}
 
@@ -83,12 +87,14 @@ public class AdminBannerController {
 		String redirectUrl = request.getParameter("redirectUrl");
 		String bannerId = request.getParameter("bannerId");
 		String id = request.getParameter("id");
+		String info = request.getParameter("info");
 		BannerItem bannerItem = new BannerItem();
 		bannerItem.setBannerId(bannerId);
 		bannerItem.setImgUrl(imgUrl);
 		bannerItem.setName(name);
 		bannerItem.setRedirectUrl(redirectUrl);
 		bannerItem.setId(Integer.valueOf(id));
+		bannerItem.setInfo(info);
 		bannerDao.update(bannerItem);
 
 	}
@@ -99,6 +105,10 @@ public class AdminBannerController {
 		System.out.println("banner/getAll");
 		List<BannerItem> list = new ArrayList<BannerItem>();
 		list = bannerDao.getAll();
+//		for (BannerItem bannerItem : list) {
+//			bannerItem
+//					.setImgUrl(EshopConfigUtil.getParam(EshopConfigUtil.BANNER_IMG_BASE) + bannerItem.getId() + ".jpg");
+//		}
 		return list;
 	}
 
@@ -109,6 +119,10 @@ public class AdminBannerController {
 		System.out.println("banner/getById");
 		List<BannerItem> list = new ArrayList<BannerItem>();
 		list = bannerDao.getById(id);
+//		for (BannerItem bannerItem : list) {
+//			bannerItem
+//					.setImgUrl(EshopConfigUtil.getParam(EshopConfigUtil.BANNER_IMG_BASE) + bannerItem.getId() + ".jpg");
+//		}
 		return list;
 	}
 
@@ -118,6 +132,10 @@ public class AdminBannerController {
 		System.out.println("banner/getAllActive");
 		List<BannerItem> list = new ArrayList<BannerItem>();
 		list = bannerDao.getAllActive();
+//		for (BannerItem bannerItem : list) {
+//			bannerItem
+//					.setImgUrl(EshopConfigUtil.getParam(EshopConfigUtil.BANNER_IMG_BASE) + bannerItem.getId() + ".jpg");
+//		}
 		return list;
 	}
 
@@ -127,6 +145,10 @@ public class AdminBannerController {
 		List<BannerItem> list = new ArrayList<BannerItem>();
 		String bannerId = request.getParameter("bannerId");
 		list = bannerDao.getActiveAllByBannerId(bannerId);
+//		for (BannerItem bannerItem : list) {
+//			bannerItem
+//					.setImgUrl(EshopConfigUtil.getParam(EshopConfigUtil.BANNER_IMG_BASE) + bannerItem.getId() + ".jpg");
+//		}
 		return list;
 	}
 

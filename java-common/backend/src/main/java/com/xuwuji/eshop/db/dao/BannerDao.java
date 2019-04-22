@@ -18,12 +18,8 @@ public class BannerDao {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
 			BannerItemMapper mapper = session.getMapper(BannerItemMapper.class);
-			HashMap<String, Object> map = new HashMap<String, Object>();
+			//HashMap<String, Object> map = new HashMap<String, Object>();
 			mapper.add(bannerItem);
-			int id = bannerItem.getId();
-			map.put("imgUrl", "bannerItem/" + id + ".jpg");
-			map.put("id", id);
-			mapper.updateImg(map);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -42,6 +38,7 @@ public class BannerDao {
 			map.put("imgUrl", bannerItem.getImgUrl());
 			map.put("redirectUrl", bannerItem.getRedirectUrl());
 			map.put("state", bannerItem.getState());
+			map.put("info", bannerItem.getInfo());
 			map.put("bannerId", bannerItem.getBannerId());
 			map.put("id", bannerItem.getId());
 			mapper.update(map);
