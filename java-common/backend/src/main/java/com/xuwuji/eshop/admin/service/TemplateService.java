@@ -82,8 +82,8 @@ public class TemplateService {
 		ObjectMapper mapper = new ObjectMapper();
 		String payload = mapper.writeValueAsString(WechatTemplate);
 		System.out.println(payload);
-		PayUtil.httpRequest(BASE_URL, "POST", payload);
-		// HttpUtil.postMethod(BASE_URL, payload);
+		String result=PayUtil.httpRequest(BASE_URL, "POST", payload);
+		System.out.println(result);
 	}
 
 	/**
