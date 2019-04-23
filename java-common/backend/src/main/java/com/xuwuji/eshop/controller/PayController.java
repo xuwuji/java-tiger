@@ -204,20 +204,21 @@ public class PayController {
 					String trade_state = (String) map.get("trade_state");
 					// 此订单交易成功
 					if (trade_state.equals(WxTradeState.SUCCESS.getCode())) {
-						// 对已经付款成功的订单进行更新，此时订单应该还系统内还处于未支付状态
+						// 对已经付款成功的订单进行更新，此时订单此时在系统内还处于未支付状态
 						if (order.getState().equals(OrderStatus.NOTPAY.getCode())) {
 							// 微信支付交易单号
 							String transactionId = (String) map.get("transaction_id");
 							// 更新订单，状态设为已付款，添加交易单号
 							orderDao.updateState(orderId, OrderStatus.NOTSEND.getCode());
 							orderDao.updateTransactionId(orderId, transactionId);
-							// templateService.handleWaitPay(order);
+							// 发送模板消息，提示已经支付成功
+							templateService.handlePayed(order);
 						}
 					}
 					// 此订单还未付款
 					else if (trade_state.equals(WxTradeState.NOTPAY.getCode())) {
 						// 说明唤起收银台了，但是还没有付款成功，此时提醒其有待支付的订单
-						// templateService.handleWaitPay(order);
+						templateService.handleWaitPay(order);
 					}
 				}
 				// 结果码为SUCCESS时说明此订单号没有调用统一支付，订单不存在
@@ -242,8 +243,8 @@ public class PayController {
 		try {
 			Thread.sleep(5000);
 			TemplateService.handleWaitPay(order);
-		}catch(Exception e) {
-			
+		} catch (Exception e) {
+
 		}
 		return "OK";
 	}

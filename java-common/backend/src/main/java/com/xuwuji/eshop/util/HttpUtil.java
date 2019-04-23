@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -65,25 +66,36 @@ public class HttpUtil {
 	}
 
 	// post
-	public static void postMethod(String url, String payload) {
-		HttpClient client = new HttpClient();
-		PostMethod method = new PostMethod(url);
-		RequestEntity requestEntity = new StringRequestEntity(payload); // 字符串请求参数
-		String result = "";
-		method.setRequestEntity(requestEntity); // 设置请求参数
+	public static String postMethod(String requestUrl, String payload) {
+		// 创建SSLContext
+		StringBuffer buffer = null;
 		try {
-			int code = client.executeMethod(method);
-			if (200 == code) {
-				result = method.getResponseBodyAsString();
-				System.out.println(result);
+			URL url = new URL(requestUrl);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("POST");
+			conn.setDoOutput(true);
+			conn.setDoInput(true);
+			conn.connect();
+			// 往服务器端写内容
+			if (null != payload) {
+				OutputStream os = conn.getOutputStream();
+				os.write(payload.getBytes("utf-8"));
+				os.close();
 			}
-		} catch (HttpException e) {
+			// 读取服务器端返回的内容
+			InputStream is = conn.getInputStream();
+			InputStreamReader isr = new InputStreamReader(is, "utf-8");
+			BufferedReader br = new BufferedReader(isr);
+			buffer = new StringBuffer();
+			String line = null;
+			while ((line = br.readLine()) != null) {
+				buffer.append(line);
+			}
+			br.close();
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}finally {
-			method.releaseConnection();
 		}
+		return buffer.toString();
 	}
 
 }
