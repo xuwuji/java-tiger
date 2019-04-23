@@ -50,6 +50,57 @@ public class OrderDao {
 		}
 	}
 
+	public void updateState(String orderId, String state) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			OrderMapper mapper = session.getMapper(OrderMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("state", state);
+			map.put("orderId", orderId);
+			mapper.updateState(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+	}
+
+	public void updateTransactionId(String orderId, String transactionId) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			OrderMapper mapper = session.getMapper(OrderMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("transactionId", transactionId);
+			map.put("orderId", orderId);
+			mapper.updateTransactionId(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+	}
+
+	public void updatePrepayId(String orderId, String prepayId) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			OrderMapper mapper = session.getMapper(OrderMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("prepayId", prepayId);
+			map.put("orderId", orderId);
+			mapper.updatePrepayId(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+	}
+
 	public List<Order> getAllByWechatIdAndStatus(String wechatId, String state) {
 		SqlSession session = SessionFactory.openDEVSession();
 		List<Order> result = new ArrayList<Order>();

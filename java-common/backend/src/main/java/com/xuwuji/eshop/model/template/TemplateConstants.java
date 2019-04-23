@@ -7,5 +7,5 @@ public class TemplateConstants {
 	public final static String KEYWORD3 = "keyword3";
 	public final static String KEYWORD4 = "keyword4";
 	public final static String KEYWORD5 = "keyword5";
-	public final static String WAIT_PAY_FORMID = "L8mKN7UecvVRtqRGx2gpgGGswuaSA7yJn2p_z5GSvMA";
+	public final static String WAIT_PAY_TEMPLATEID = "L8mKN7UecvVRtqRGx2gpgGGswuaSA7yJn2p_z5GSvMA";
 }

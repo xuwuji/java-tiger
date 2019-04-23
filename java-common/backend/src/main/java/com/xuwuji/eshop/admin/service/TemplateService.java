@@ -39,24 +39,26 @@ public class TemplateService {
 	/**
 	 * 对待支付的订单进行提醒
 	 * 
+	 * 用prepay_id当做formId
+	 * 
 	 * @throws JsonProcessingException
 	 */
 	public void handleWaitPay(Order order) throws JsonProcessingException {
 		String orderId = order.getOrderId();
-		List<OrderItem> items = order.getOrderItemsList();
+		//List<OrderItem> items = orderItemDao.getByOrderId(orderId);
 		String orderName = "";
-		for (OrderItem item : items) {
-			orderName = orderName + item.getName() + ";";
-		}
+//		for (OrderItem item : items) {
+//			orderName = orderName + item.getName() + ";";
+//		}
 		String openId = order.getOpenId();
 		String amount = String.valueOf(order.getAmount());
 		String orderDate = String.valueOf(TimeUtil.dateToFormatString(order.getTime()));
-		String tip = "您有一笔订单未支付，请尽快支付；如需支付宝或花呗付款，请询问客服";
+		String tip = "您有一笔订单未支付，请尽快支付，若已支付，请忽略；如需使用支付宝或花呗付款，请询问客服";
 		// 构造模板消息
 		WechatTemplate WechatTemplate = new WechatTemplate();
-		WechatTemplate.setForm_id("617fb373b2f24689a797ebf5c5579a43");
-		WechatTemplate.setTemplate_id(TemplateConstants.WAIT_PAY_FORMID);
-		WechatTemplate.setTouser("oX-br4neGzmMBKR7ByjoXRUA1-NM");
+		WechatTemplate.setForm_id(order.getFormId());
+		WechatTemplate.setTemplate_id(TemplateConstants.WAIT_PAY_TEMPLATEID);
+		WechatTemplate.setTouser(openId);
 		WechatTemplate.setPage("pages/orderDetail/orderDetail?orderStatus=0");
 		Map<String, TemplateData> data = new HashMap<>(5);
 		TemplateData templateData1 = new TemplateData();
@@ -86,7 +88,7 @@ public class TemplateService {
 		TemplateService TemplateService = new TemplateService();
 		OrderDao orderDao = new OrderDao();
 		OrderItemDao orderItemDao = new OrderItemDao();
-		Order order = orderDao.getOrderInfoByOrderId("2019042015115715822186");
+		Order order = orderDao.getOrderInfoByOrderId("201904231726337371115");
 		order.setOrderItemsList(orderItemDao.getByOrderId(order.getOrderId()));
 		TemplateService.handleWaitPay(order);
 	}

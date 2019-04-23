@@ -32,6 +32,12 @@ public class Order {
 	private double usedBonus;
 	private double usedPoints;
 	private double usedCouponCash;
+	// 微信支付成功后生成的交易单号
+	private String transactionId;
+	// 调用统一支付后生成
+	private String prepayId;
+	// 用于发送模板消息
+	private String formId;
 
 	public int getId() {
 		return id;
@@ -225,6 +231,30 @@ public class Order {
 		this.usedCouponCash = usedCouponCash;
 	}
 
+	public String getTransactionId() {
+		return transactionId;
+	}
+
+	public void setTransactionId(String transactionId) {
+		this.transactionId = transactionId;
+	}
+
+	public String getPrepayId() {
+		return prepayId;
+	}
+
+	public void setPrepayId(String prepayId) {
+		this.prepayId = prepayId;
+	}
+
+	public String getFormId() {
+		return formId;
+	}
+
+	public void setFormId(String formId) {
+		this.formId = formId;
+	}
+
 	@Override
 	public String toString() {
 		return "Order [id=" + id + ", wechatId=" + wechatId + ", time=" + time + ", state=" + state + ", orderId="
@@ -234,7 +264,7 @@ public class Order {
 				+ ", source=" + source + ", sourceWechatId=" + sourceWechatId + ", sourceOpenId=" + sourceOpenId
 				+ ", bonusAmount=" + bonusAmount + ", promotionIds=" + promotionIds + ", couponId=" + couponId
 				+ ", usedBonus=" + usedBonus + ", usedPoints=" + usedPoints + ", usedCouponCash=" + usedCouponCash
-				+ "]";
+				+ ", transactionId=" + transactionId + ", prepayId=" + prepayId + ", formId=" + formId + "]";
 	}
 
 }

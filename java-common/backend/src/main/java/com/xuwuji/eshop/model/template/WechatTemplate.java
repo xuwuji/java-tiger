@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * 待支付通知
+ * 微信基础模板
  * 
  * @author xuwuji
  *

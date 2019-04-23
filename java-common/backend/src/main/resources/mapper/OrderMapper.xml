@@ -10,8 +10,8 @@
 		<id property="id" column="id"></id>
 		<result property="time" column="DATE" javaType="java.util.Date"
 			jdbcType="DATE"></result>
-		<result property="lastModifyTime" column="DATE" javaType="java.util.Date"
-			jdbcType="DATE"></result>
+		<result property="lastModifyTime" column="DATE"
+			javaType="java.util.Date" jdbcType="DATE"></result>
 		<result property="wechatId" column="type"></result>
 		<result property="state" column="type"></result>
 		<result property="orderId" column="type"></result>
@@ -33,14 +33,17 @@
 		<result property="usedBonus" column="type"></result>
 		<result property="usedPoints" column="type"></result>
 		<result property="usedCouponCash" column="type"></result>
+		<result property="transactionId" column="type"></result>
+		<result property="prepayId" column="type"></result>
+		<result property="formId" column="type"></result>
 
 	</resultMap>
 
 	<insert id="add" parameterType="Order" useGeneratedKeys="true"
 		keyProperty="id" keyColumn="id">
 		insert into eshoporder
-		(wechatId,promotionIds,time,state,orderId,phoneNum,amount,totalCount,recieverName,address,openId,memo,source,sourceOpenId,sourceWechatId,couponId,usedBonus,usedPoints,usedCouponCash)
-		values(#{wechatId},#{promotionIds},#{time},'0',#{orderId},#{phoneNum},#{amount},#{totalCount},#{recieverName},#{address},#{openId},#{memo},#{source},#{sourceOpenId},#{sourceWechatId},#{couponId},#{usedBonus},#{usedPoints},#{usedCouponCash})
+		(wechatId,promotionIds,time,state,orderId,phoneNum,amount,totalCount,recieverName,address,openId,memo,source,sourceOpenId,sourceWechatId,couponId,usedBonus,usedPoints,usedCouponCash,formId)
+		values(#{wechatId},#{promotionIds},#{time},'0',#{orderId},#{phoneNum},#{amount},#{totalCount},#{recieverName},#{address},#{openId},#{memo},#{source},#{sourceOpenId},#{sourceWechatId},#{couponId},#{usedBonus},#{usedPoints},#{usedCouponCash},#{formId})
 	</insert>
 
 	<update id="update" parameterType="hashmap">
@@ -62,10 +65,35 @@
 		orderId=#{orderId};
 	</update>
 
+	<update id="updateState" parameterType="hashmap">
+		update eshoporder set
+		lastModifyTime = now(),
+		state=#{state}
+		where
+		orderId=#{orderId};
+	</update>
+
 	<update id="updateMemo" parameterType="hashmap">
 		update eshoporder set
 		lastModifyTime = now(),
 		memo=#{memo}
+		where
+		orderId=#{orderId};
+	</update>
+
+	<update id="updateTransactionId" parameterType="hashmap">
+		update eshoporder
+		set
+		lastModifyTime = now(),
+		transactionId=#{transactionId}
+		where
+		orderId=#{orderId};
+	</update>
+
+	<update id="updatePrepayId" parameterType="hashmap">
+		update eshoporder set
+		lastModifyTime = now(),
+		prepayId=#{prepayId}
 		where
 		orderId=#{orderId};
 	</update>
@@ -82,10 +110,11 @@
 		eshoporder where
 		openId=#{openId} and state=#{state};
 	</select>
-	
+
 	<select id="getAllByOpenId" resultType="order">
 		select * from
-		eshoporder where
+		eshoporder
+		where
 		openId=#{openId};
 	</select>
 

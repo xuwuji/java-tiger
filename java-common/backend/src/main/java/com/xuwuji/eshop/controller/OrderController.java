@@ -88,6 +88,7 @@ public class OrderController {
 		order.setTotalCount(orderNode.get("totalCount").asInt());
 		order.setAddress(orderNode.get("address").asText());
 		order.setRecieverName(orderNode.get("recieverName").asText());
+		order.setFormId(orderNode.get("formId").asText());
 		String openId = orderNode.get("openId").asText();
 		order.setOpenId(openId);
 		if (orderNode.get("memo") != null) {
