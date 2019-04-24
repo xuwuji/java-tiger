@@ -11,5 +11,7 @@ public class TemplateConstants {
 	public final static String WAIT_PAY_TEMPLATEID = "L8mKN7UecvVRtqRGx2gpgGGswuaSA7yJn2p_z5GSvMA";
 	// 已支付的模板号
 	public final static String PAYED_TEMPLATEID = "0MNPbf7J_71jbbRXfXsFtvRabEIz04UgBILF9Jriyss";
+	
+	public final static String DElIVERED_TEMPLATEID = "anmH8c0EXq_tAkWFUk4b1YtPn3K3NiJjnYht1OsTVOg";
 
 }

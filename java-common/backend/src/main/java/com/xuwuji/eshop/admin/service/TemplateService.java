@@ -46,7 +46,7 @@ public class TemplateService {
 	 */
 	public String handleWaitPay(Order order) throws JsonProcessingException {
 		String orderId = order.getOrderId();
-		orderItemDao=new OrderItemDao();
+		orderItemDao = new OrderItemDao();
 		List<OrderItem> items = orderItemDao.getByOrderId(orderId);
 		String orderName = "";
 		for (OrderItem item : items) {
@@ -124,6 +124,57 @@ public class TemplateService {
 		TemplateData templateData4 = new TemplateData();
 		templateData4.setValue(tip);
 		data.put(TemplateConstants.KEYWORD4, templateData4);
+		WechatTemplate.setData(data);
+		// 向微信后端发送消息
+		ObjectMapper mapper = new ObjectMapper();
+		String payload = mapper.writeValueAsString(WechatTemplate);
+		System.out.println(payload);
+		String result = PayUtil.httpRequest(BASE_URL, "POST", payload);
+		System.out.println(result);
+		return result;
+	}
+
+	/**
+	 * 对已发货的订单进行提醒
+	 * 
+	 * 用统一支付得到的prepay_id当做formId
+	 * 
+	 * @throws JsonProcessingException
+	 */
+	public String handleDelivered(Order order) throws JsonProcessingException {
+		String orderId = order.getOrderId();
+		List<OrderItem> items = orderItemDao.getByOrderId(orderId);
+		String orderName = "";
+		for (OrderItem item : items) {
+			orderName = orderName + item.getName() + " ; ";
+		}
+		String openId = order.getOpenId();
+		String logisticsName = String.valueOf(order.getLogisticsName());
+		String logisticsId = String.valueOf(order.getLogisticsId());
+		String tip = "请您在收到确认无误后点击确认收货";
+		// 构造模板消息
+		WechatTemplate WechatTemplate = new WechatTemplate();
+		WechatTemplate.setForm_id(order.getPrepayId());
+		WechatTemplate.setTemplate_id(TemplateConstants.DElIVERED_TEMPLATEID);
+		WechatTemplate.setTouser(openId);
+		WechatTemplate.setPage("pages/orderDetail/orderDetail?orderStatus=2");
+		Map<String, TemplateData> data = new HashMap<>(5);
+		TemplateData templateData1 = new TemplateData();
+		templateData1.setValue(orderId);
+		data.put(TemplateConstants.KEYWORD1, templateData1);
+		TemplateData templateData2 = new TemplateData();
+		templateData2.setValue(orderName);
+		data.put(TemplateConstants.KEYWORD2, templateData2);
+		TemplateData templateData3 = new TemplateData();
+		templateData3.setValue(logisticsName);
+		data.put(TemplateConstants.KEYWORD3, templateData3);
+		TemplateData templateData4 = new TemplateData();
+		templateData4.setValue(logisticsId);
+		data.put(TemplateConstants.KEYWORD4, templateData4);
+		WechatTemplate.setData(data);
+		TemplateData templateData5 = new TemplateData();
+		templateData5.setValue(tip);
+		data.put(TemplateConstants.KEYWORD5, templateData5);
 		WechatTemplate.setData(data);
 		// 向微信后端发送消息
 		ObjectMapper mapper = new ObjectMapper();
