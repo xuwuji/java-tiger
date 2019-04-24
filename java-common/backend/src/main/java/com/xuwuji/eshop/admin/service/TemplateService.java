@@ -44,7 +44,7 @@ public class TemplateService {
 	 * 
 	 * @throws JsonProcessingException
 	 */
-	public void handleWaitPay(Order order) throws JsonProcessingException {
+	public String handleWaitPay(Order order) throws JsonProcessingException {
 		String orderId = order.getOrderId();
 		List<OrderItem> items = orderItemDao.getByOrderId(orderId);
 		String orderName = "";
@@ -82,8 +82,9 @@ public class TemplateService {
 		ObjectMapper mapper = new ObjectMapper();
 		String payload = mapper.writeValueAsString(WechatTemplate);
 		System.out.println(payload);
-		String result=PayUtil.httpRequest(BASE_URL, "POST", payload);
+		String result = PayUtil.httpRequest(BASE_URL, "POST", payload);
 		System.out.println(result);
+		return result;
 	}
 
 	/**
@@ -93,7 +94,7 @@ public class TemplateService {
 	 * 
 	 * @throws JsonProcessingException
 	 */
-	public void handlePayed(Order order) throws JsonProcessingException {
+	public String handlePayed(Order order) throws JsonProcessingException {
 		String orderId = order.getOrderId();
 		List<OrderItem> items = orderItemDao.getByOrderId(orderId);
 		String orderName = "";
@@ -127,7 +128,17 @@ public class TemplateService {
 		ObjectMapper mapper = new ObjectMapper();
 		String payload = mapper.writeValueAsString(WechatTemplate);
 		System.out.println(payload);
-		PayUtil.httpRequest(BASE_URL, "POST", payload);
+		String result = PayUtil.httpRequest(BASE_URL, "POST", payload);
+		System.out.println(result);
+		return result;
 	}
 
+	public static void main(String[] args) throws JsonProcessingException {
+		TemplateService TemplateService = new TemplateService();
+		OrderDao orderDao = new OrderDao();
+		OrderItemDao orderItemDao = new OrderItemDao();
+		Order order = orderDao.getOrderInfoByOrderId("2019042412325603164041");
+		order.setOrderItemsList(orderItemDao.getByOrderId(order.getOrderId()));
+		TemplateService.handleWaitPay(order);
+	}
 }

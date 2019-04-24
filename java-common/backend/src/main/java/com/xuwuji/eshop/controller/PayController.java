@@ -240,13 +240,8 @@ public class PayController {
 		TemplateService TemplateService = new TemplateService();
 		OrderItemDao orderItemDao = new OrderItemDao();
 		order.setOrderItemsList(orderItemDao.getByOrderId(order.getOrderId()));
-		try {
-			Thread.sleep(5000);
-			TemplateService.handleWaitPay(order);
-		} catch (Exception e) {
-
-		}
-		return "OK";
+		String result = TemplateService.handleWaitPay(order);
+		return result;
 	}
 
 	// 获取IP
