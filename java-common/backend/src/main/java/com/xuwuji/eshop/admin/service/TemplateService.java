@@ -46,6 +46,7 @@ public class TemplateService {
 	 */
 	public String handleWaitPay(Order order) throws JsonProcessingException {
 		String orderId = order.getOrderId();
+		orderItemDao=new OrderItemDao();
 		List<OrderItem> items = orderItemDao.getByOrderId(orderId);
 		String orderName = "";
 		for (OrderItem item : items) {
