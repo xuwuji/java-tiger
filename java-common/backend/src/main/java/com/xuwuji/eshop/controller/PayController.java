@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.wxpay.sdk.WXPayUtil;
+import com.xuwuji.eshop.admin.service.PayService;
 import com.xuwuji.eshop.admin.service.TemplateService;
 import com.xuwuji.eshop.db.dao.OrderDao;
 import com.xuwuji.eshop.db.dao.OrderItemDao;
@@ -35,6 +36,9 @@ public class PayController {
 	@Autowired
 	// 发送模板消息
 	private TemplateService templateService;
+	@Autowired
+	// 支付处理服务
+	private PayService payService;
 
 	/**
 	 * 对订单进行付款
@@ -213,6 +217,7 @@ public class PayController {
 							orderDao.updateTransactionId(orderId, transactionId);
 							// 发送模板消息，提示已经支付成功
 							templateService.handlePayed(order);
+							payService.pay(orderId);
 						}
 					}
 					// 此订单还未付款

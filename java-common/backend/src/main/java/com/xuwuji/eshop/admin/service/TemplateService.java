@@ -107,7 +107,15 @@ public class TemplateService {
 		String tip = "您可以在小程序中查看物流信息";
 		// 构造模板消息
 		WechatTemplate WechatTemplate = new WechatTemplate();
-		WechatTemplate.setForm_id(order.getPrepayId());
+		String prepayId = order.getPrepayId();
+		String formId = "";
+		// 只有通过微信支付付款成功的订单，才可以通过prepayId进行发送模板消息
+		if (prepayId == null || prepayId.isEmpty()) {
+			formId = order.getFormId();
+		} else {
+			formId = prepayId;
+		}
+		WechatTemplate.setForm_id(formId);
 		WechatTemplate.setTemplate_id(TemplateConstants.PAYED_TEMPLATEID);
 		WechatTemplate.setTouser(openId);
 		WechatTemplate.setPage("pages/orderDetail/orderDetail?orderStatus=1");
@@ -135,14 +143,16 @@ public class TemplateService {
 	}
 
 	/**
-	 * 对已发货的订单进行提醒
+	 * 发送发货提醒
 	 * 
 	 * 用统一支付得到的prepay_id当做formId
 	 * 
 	 * @throws JsonProcessingException
 	 */
-	public String handleDelivered(Order order) throws JsonProcessingException {
-		String orderId = order.getOrderId();
+	public String handleDelivered(String orderId) throws JsonProcessingException {
+		orderDao = new OrderDao();
+		orderItemDao = new OrderItemDao();
+		Order order = orderDao.getOrderInfoByOrderId(orderId);
 		List<OrderItem> items = orderItemDao.getByOrderId(orderId);
 		String orderName = "";
 		for (OrderItem item : items) {
@@ -151,10 +161,19 @@ public class TemplateService {
 		String openId = order.getOpenId();
 		String logisticsName = String.valueOf(order.getLogisticsName());
 		String logisticsId = String.valueOf(order.getLogisticsId());
-		String tip = "请您在收到确认无误后点击确认收货";
+		String tip = "请您在收到后仔细检查；如有问题请联系在线客服";
 		// 构造模板消息
 		WechatTemplate WechatTemplate = new WechatTemplate();
-		WechatTemplate.setForm_id(order.getPrepayId());
+		String prepayId = order.getPrepayId();
+		String formId = "";
+		// 只有通过微信支付付款成功的订单，才可以通过prepayId进行发送模板消息
+		if (prepayId == null || prepayId.isEmpty()) {
+			formId = order.getFormId();
+		} else {
+			formId = prepayId;
+		}
+		WechatTemplate.setForm_id(formId);
+		// System.out.println(formId);
 		WechatTemplate.setTemplate_id(TemplateConstants.DElIVERED_TEMPLATEID);
 		WechatTemplate.setTouser(openId);
 		WechatTemplate.setPage("pages/orderDetail/orderDetail?orderStatus=2");
@@ -189,8 +208,9 @@ public class TemplateService {
 		TemplateService TemplateService = new TemplateService();
 		OrderDao orderDao = new OrderDao();
 		OrderItemDao orderItemDao = new OrderItemDao();
-		Order order = orderDao.getOrderInfoByOrderId("2019042412325603164041");
+		Order order = orderDao.getOrderInfoByOrderId("20190425132045214490");
 		order.setOrderItemsList(orderItemDao.getByOrderId(order.getOrderId()));
-		TemplateService.handleWaitPay(order);
+		// TemplateService.handleWaitPay(order);
+		TemplateService.handleDelivered("20190425132045214490");
 	}
 }

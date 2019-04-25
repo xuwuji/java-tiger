@@ -118,7 +118,7 @@
 		openId=#{openId};
 	</select>
 
-	<select id="getOrderInfoByOrderId" resultType="order">
+	<select id="getOrderInfoByOrderId" resultType="Order">
 		select
 		eshoporder.*, user.bonusAmount from eshoporder left join user
 		on
