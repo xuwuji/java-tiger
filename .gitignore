@@ -11,3 +11,8 @@ java-common/backend/.settings/org.eclipse.jdt.core.prefs
 java-common/db-connect/.project
 java-common/java-common/.classpath
 java-common/java-common/.project
+java-common/backend/.classpath
+java-common/backend/.DS_Store
+*.prefs
+*.component
+java-common/backend/src/main/resources/application.properties
