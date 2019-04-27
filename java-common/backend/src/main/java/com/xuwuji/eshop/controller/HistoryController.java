@@ -38,7 +38,7 @@ public class HistoryController {
 	public void add(HttpServletRequest request, HttpServletResponse response) {
 		String openId = request.getParameter("openId");
 		if (openId.equals(TokenUtil.SELF_OPENID)) {
-			return;
+			//return;
 		}
 		String productId = request.getParameter("productId");
 		String categoryId = request.getParameter("categoryId");

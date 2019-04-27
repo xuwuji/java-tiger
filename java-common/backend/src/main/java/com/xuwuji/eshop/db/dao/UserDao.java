@@ -79,6 +79,23 @@ public class UserDao {
 		}
 	}
 
+	public void updateBalance(User user) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			UserMapper mapper = session.getMapper(UserMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("openId", user.getOpenId());
+			map.put("balance", user.getBalance());
+			mapper.updateState(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+	}
+
 	public void updatePoints(User user) {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
@@ -132,7 +149,7 @@ public class UserDao {
 			session.close();
 		}
 	}
-	
+
 	public void updatePointsInfo(User user) {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
@@ -144,6 +161,26 @@ public class UserDao {
 			map.put("continuousNum", user.getContinuousNum());
 			map.put("points", user.getPoints());
 			mapper.updatePointsInfo(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+	}
+
+	public void updateLotteryInfo(User user) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			UserMapper mapper = session.getMapper(UserMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("openId", user.getOpenId());
+			map.put("lotteryRemainCount", user.getLotteryRemainCount());
+			map.put("lotteryTotalCount", user.getLotteryTotalCount());
+			map.put("balance", user.getBalance());
+			map.put("lotteryAmount", user.getLotteryAmount());
+			mapper.updateLotteryInfo(map);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();

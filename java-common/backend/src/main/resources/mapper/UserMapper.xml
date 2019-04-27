@@ -19,13 +19,18 @@
 		<result property="lastCheckInDate" column="DATE"
 			javaType="java.util.Date" jdbcType="DATE"></result>
 		<result property="continuousNum" column="info"></result>
+		<result property="lotteryRemainCount" column="info"></result>
+		<result property="lotteryTotalCount" column="info"></result>
+		<result property="balance" column="info"></result>
 	</resultMap>
 
+
+	<!-- 默认给每一个新加进来的用户一次抽奖机会 -->
 	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
 		keyProperty="id" keyColumn="id">
 		insert into user
-		(openId,wechatId,state,bonusAmount,level,totalPay,points,lastCheckInDate,continuousNum)
-		values(#{openId},#{wechatId},#{state},0,'0',0,#{points},#{lastCheckInDate},#{continuousNum})
+		(openId,wechatId,state,bonusAmount,level,totalPay,points,lastCheckInDate,continuousNum,lotteryRemainCount,balance)
+		values(#{openId},#{wechatId},#{state},0,'0',0,#{points},#{lastCheckInDate},#{continuousNum},1,0)
 	</insert>
 
 	<update id="update" parameterType="hashmap">
@@ -34,6 +39,15 @@
 		membershipFirstDay=#{membershipFirstDay},amountAfterMSFD=#{amountAfterMSFD},amountThisMonth=#{amountThisMonth},
 		points=#{points}
 		where openId=#{openId};
+	</update>
+
+	<update id="updateBalance" parameterType="hashmap">
+		update user set
+		balance=#{balance}
+		where
+		<if test="openId != null and openId !=''">
+			openId=#{openId};
+		</if>
 	</update>
 
 
@@ -53,6 +67,12 @@
 		<if test="openId != null and openId !=''">
 			openId=#{openId};
 		</if>
+	</update>
+
+	<update id="updateLotteryInfo" parameterType="hashmap">
+		update user set
+		lotteryRemainCount=#{lotteryRemainCount},lotteryTotalCount=#{lotteryTotalCount},balance=#{balance},lotteryAmount=#{lotteryAmount}
+		where openId=#{openId};
 	</update>
 
 	<update id="updateContinuousNum" parameterType="hashmap">

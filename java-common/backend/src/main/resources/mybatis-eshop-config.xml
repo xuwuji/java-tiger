@@ -115,6 +115,7 @@
 		<mapper resource="mapper/CouponMapper.xml" />
 		<mapper resource="mapper/ViewHistoryMapper.xml" />
 		<mapper resource="mapper/SearchMapper.xml" />
+		<mapper resource="mapper/LotteryHistoryMapper.xml" />
 	</mappers>
 
 

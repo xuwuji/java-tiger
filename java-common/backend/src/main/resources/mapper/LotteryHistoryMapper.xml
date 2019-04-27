@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.xuwuji.eshop.db.mapper.LotteryHistoryMapper">
+
+
+	<resultMap type="lotteryHistory" id="LotteryHistoryResult">
+		<id property="id" column="id"></id>
+		<result property="name" column="type"></result>
+		<result property="openId" column="type"></result>
+		<result property="amount" column="type"></result>
+		<result property="type" column="type"></result>
+		<result property="time" column="DATE" javaType="java.util.Date"
+			jdbcType="DATE"></result>
+		<result property="state" column="type"></result>
+		<result property="lotteryTranscationId" column="type"></result>
+		<result property="isLuck" column="type"></result>
+	</resultMap>
+
+	<insert id="add" parameterType="lotteryHistory"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into lotteryhistory
+		(name,openId,amount,type,time,state,lotteryTranscationId,isLuck)
+		values(#{name},#{openId},#{amount},#{type},now(),0,#{lotteryTranscationId},#{isLuck})
+	</insert>
+
+	<select id="getByOpenId" resultType="lotteryHistory">
+		select * from
+		lotteryhistory
+		where
+		openId=#{openId} order by id desc;
+	</select>
+
+</mapper>

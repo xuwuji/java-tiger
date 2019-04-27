@@ -18,6 +18,14 @@ public class User {
 	private double points;
 	private Date lastCheckInDate;
 	private int continuousNum;
+	// 剩余抽奖次数
+	private int lotteryRemainCount;
+	// 抽奖累计次数
+	private int lotteryTotalCount;
+	// 账户余额
+	private double balance;
+	// 通过抽奖得到的金额
+	private double lotteryAmount;
 
 	public int getId() {
 		return id;
@@ -123,13 +131,47 @@ public class User {
 		this.continuousNum = continuousNum;
 	}
 
+	public int getLotteryRemainCount() {
+		return lotteryRemainCount;
+	}
+
+	public void setLotteryRemainCount(int lotteryRemainCount) {
+		this.lotteryRemainCount = lotteryRemainCount;
+	}
+
+	public int getLotteryTotalCount() {
+		return lotteryTotalCount;
+	}
+
+	public void setLotteryTotalCount(int lotteryTotalCount) {
+		this.lotteryTotalCount = lotteryTotalCount;
+	}
+
+	public double getBalance() {
+		return balance;
+	}
+
+	public void setBalance(double balance) {
+		this.balance = balance;
+	}
+
+	public double getLotteryAmount() {
+		return lotteryAmount;
+	}
+
+	public void setLotteryAmount(double lotteryAmount) {
+		this.lotteryAmount = lotteryAmount;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", openId=" + openId + ", wechatId=" + wechatId + ", state=" + state
 				+ ", bonusAmount=" + bonusAmount + ", level=" + level + ", totalPay=" + totalPay
 				+ ", membershipFirstDay=" + membershipFirstDay + ", amountAfterMSFD=" + amountAfterMSFD
 				+ ", amountThisMonth=" + amountThisMonth + ", points=" + points + ", lastCheckInDate=" + lastCheckInDate
-				+ ", continuousNum=" + continuousNum + "]";
+				+ ", continuousNum=" + continuousNum + ", lotteryRemainCount=" + lotteryRemainCount
+				+ ", lotteryTotalCount=" + lotteryTotalCount + ", balance=" + balance + ", lotteryAmount="
+				+ lotteryAmount + "]";
 	}
 
 }

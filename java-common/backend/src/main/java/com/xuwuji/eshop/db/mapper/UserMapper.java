@@ -26,5 +26,7 @@ public interface UserMapper {
 	public List<User> getAllByState(HashMap<String, Object> map);
 
 	public void updatePointsInfo(HashMap<String, Object> map);
+	
+	public void updateLotteryInfo(HashMap<String, Object> map);
 
 }
