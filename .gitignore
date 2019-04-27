@@ -19,3 +19,7 @@ java-common/backend/src/main/resources/application.properties
 java-common/backend/src/main/resources/application.properties
 java-common/backend/.settings/org.eclipse.jdt.core.prefs
 java-common/backend/.classpath
+java-common/backend/.classpath
+java-common/backend/.DS_Store
+java-common/backend/.settings/org.eclipse.jdt.core.prefs
+java-common/backend/src/main/resources/application.properties

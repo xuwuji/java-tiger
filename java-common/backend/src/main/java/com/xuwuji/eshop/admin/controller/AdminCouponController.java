@@ -2,7 +2,6 @@ package com.xuwuji.eshop.admin.controller;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +39,7 @@ public class AdminCouponController {
 		String startDate = request.getParameter("startDate");
 		String endDate = request.getParameter("endDate");
 		String type = request.getParameter("type");
+		String targetUser = request.getParameter("targetUser");
 		Coupon coupon = new Coupon();
 		coupon.setName(name);
 		coupon.setReduction(reduction);
@@ -48,6 +48,7 @@ public class AdminCouponController {
 		coupon.setStartDate(TimeUtil.stringToDate(startDate));
 		coupon.setEndDate(TimeUtil.stringToDate(endDate));
 		coupon.setType(type);
+		coupon.setTargetUser(targetUser);
 		couponDao.add(coupon);
 	}
 
@@ -59,9 +60,8 @@ public class AdminCouponController {
 		double total = Double.valueOf(request.getParameter("total"));
 		double reduction = Double.valueOf(request.getParameter("reduction"));
 		String state = request.getParameter("state");
-		//String startDate = request.getParameter("startDate");
-		//String endDate = request.getParameter("endDate");
 		String type = request.getParameter("type");
+		String targetUser = request.getParameter("targetUser");
 		Coupon coupon = new Coupon();
 		coupon.setId(Integer.valueOf(id));
 		coupon.setName(name);
@@ -69,8 +69,7 @@ public class AdminCouponController {
 		coupon.setTotal(total);
 		coupon.setType(type);
 		coupon.setState(state);
-		//coupon.setStartDate(TimeUtil.stringToDate(startDate));
-		//coupon.setEndDate(TimeUtil.stringToDate(endDate));
+		coupon.setTargetUser(targetUser);
 		couponDao.update(coupon);
 	}
 

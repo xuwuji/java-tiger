@@ -5,7 +5,6 @@
 
 <mapper namespace="com.xuwuji.eshop.db.mapper.CouponMapper">
 
-
 	<resultMap type="coupon" id="couponResult">
 		<id property="id" column="id"></id>
 		<result property="name" column="type"></result>
@@ -13,6 +12,7 @@
 		<result property="reduction" column="type"></result>
 		<result property="state" column="type"></result>
 		<result property="type" column="type"></result>
+		<result property="targetUser" column="type"></result>
 		<result property="startDate" column="type"
 			javaType="java.util.Date" jdbcType="DATE"></result>
 		<result property="endDate" column="type"
@@ -22,13 +22,13 @@
 	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
 		keyProperty="id">
 		insert into coupon
-		(name,total,reduction,state,startDate,endDate,type)
-		values(#{name},#{total},#{reduction},'0',#{startDate},#{endDate},#{type})
+		(name,total,reduction,state,startDate,endDate,type,targetUser)
+		values(#{name},#{total},#{reduction},'0',#{startDate},#{endDate},#{type},#{targetUser})
 	</insert>
 
 	<update id="update" parameterType="hashmap">
 		update coupon set
-		name=#{name},total=#{total},reduction=#{reduction},state=#{state},type=#{type}
+		name=#{name},total=#{total},reduction=#{reduction},state=#{state},type=#{type},targetUser=#{targetUser}
 		where id=#{id};
 	</update>
 

@@ -25,6 +25,7 @@ public class CouponDao {
 			map.put("startDate", coupon.getStartDate());
 			map.put("endDate", coupon.getEndDate());
 			map.put("type", coupon.getType());
+			map.put("targetUser", coupon.getTargetUser());
 			mapper.add(map);
 			session.commit();
 		} catch (Exception e) {
@@ -44,10 +45,11 @@ public class CouponDao {
 			map.put("total", coupon.getTotal());
 			map.put("reduction", coupon.getReduction());
 			map.put("id", coupon.getId());
-			//map.put("startDate", coupon.getStartDate());
-			//map.put("endDate", coupon.getEndDate());
+			// map.put("startDate", coupon.getStartDate());
+			// map.put("endDate", coupon.getEndDate());
 			map.put("type", coupon.getType());
 			map.put("state", coupon.getState());
+			map.put("targetUser", coupon.getTargetUser());
 			mapper.update(map);
 			session.commit();
 		} catch (Exception e) {
