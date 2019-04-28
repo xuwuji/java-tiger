@@ -21,6 +21,7 @@ public class CouponDao {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("name", coupon.getName());
 			map.put("total", coupon.getTotal());
+			map.put("targetUser", coupon.getTargetUser());
 			map.put("reduction", coupon.getReduction());
 			map.put("startDate", coupon.getStartDate());
 			map.put("endDate", coupon.getEndDate());
@@ -43,6 +44,7 @@ public class CouponDao {
 			map.put("name", coupon.getName());
 			map.put("total", coupon.getTotal());
 			map.put("reduction", coupon.getReduction());
+			map.put("targetUser", coupon.getTargetUser());
 			map.put("id", coupon.getId());
 			//map.put("startDate", coupon.getStartDate());
 			//map.put("endDate", coupon.getEndDate());

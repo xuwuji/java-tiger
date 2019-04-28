@@ -12,6 +12,8 @@ public class Coupon {
 	private Date startDate;
 	private Date endDate;
 	private String type;
+	// 发给的用户群体@{link CouponTargetUser}
+	private String targetUser;
 
 	public int getId() {
 		return id;
@@ -75,6 +77,14 @@ public class Coupon {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getTargetUser() {
+		return targetUser;
+	}
+
+	public void setTargetUser(String targetUser) {
+		this.targetUser = targetUser;
 	}
 
 }
