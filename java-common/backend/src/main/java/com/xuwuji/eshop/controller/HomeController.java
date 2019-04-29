@@ -149,8 +149,8 @@ public class HomeController {
 				List<Product> products = new ArrayList<Product>();
 				products = productDao.getActiveByCategory(String.valueOf(categoryId));
 				productUtil.sort(products, SortEnum.SALE);
-				if (products.size() > 5) {
-					products = products.subList(0, 5);
+				if (products.size() > 10) {
+					products = products.subList(0, 10);
 				} else {
 					products = products.subList(0, products.size());
 				}
@@ -169,8 +169,8 @@ public class HomeController {
 			List<Product> products = new ArrayList<Product>();
 			products = productDao.getActiveByCategory(String.valueOf(categoryId));
 			products = productUtil.sort(products, SortEnum.SALE);
-			if (products.size() > 5) {
-				products = products.subList(0, 5);
+			if (products.size() > 10) {
+				products = products.subList(0, 10);
 			} else {
 				products = products.subList(0, products.size());
 			}
@@ -188,8 +188,8 @@ public class HomeController {
 			List<Product> products = new ArrayList<Product>();
 			products = productDao.getActiveByKW(kw);
 			products = productUtil.sort(products, SortEnum.SALE);
-			if (products.size() > 5) {
-				products = products.subList(0, 5);
+			if (products.size() > 10) {
+				products = products.subList(0, 10);
 			} else {
 				products = products.subList(0, products.size());
 			}
@@ -207,9 +207,9 @@ public class HomeController {
 			product.setMainImgUrl(mainImgUrl);
 			// }
 		}
-		// max 50
-		if (results.size() > 50) {
-			results = results.subList(0, 50);
+		// max 100
+		if (results.size() > 100) {
+			results = results.subList(0, 100);
 		}
 		return results;
 	}
