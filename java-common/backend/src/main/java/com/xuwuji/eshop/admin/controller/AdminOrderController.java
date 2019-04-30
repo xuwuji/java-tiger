@@ -66,6 +66,11 @@ public class AdminOrderController {
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
 		return new ModelAndView("/eshop/order");
 	}
+	
+	@RequestMapping(value = "/indexAll", method = RequestMethod.GET)
+	public ModelAndView indexAll(HttpServletRequest request, HttpServletResponse response) {
+		return new ModelAndView("/eshop/orderAll");
+	}
 
 	@RequestMapping(value = "/finish", method = RequestMethod.POST)
 	@ResponseBody
