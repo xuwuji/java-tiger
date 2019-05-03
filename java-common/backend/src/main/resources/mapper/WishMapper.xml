@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuwuji.eshop.db.mapper.WishMapper">
+
+
+	<resultMap type="Wish" id="wishResult">
+		<id property="id" column="id"></id>
+		<result property="name" column="type"></result>
+		<result property="wechatId" column="type"></result>
+		<result property="openId" column="type"></result>
+		<result property="memo" column="type"></result>
+		<result property="time" column="type" javaType="java.util.Date"
+			jdbcType="DATE"></result>
+	</resultMap>
+
+	<insert id="add" parameterType="com.xuwuji.eshop.model.Wish" useGeneratedKeys="true"
+		keyProperty="id" keyColumn="id">
+		insert into wish
+		(name,openId,wechatId,memo,time)
+		values(#{name},#{openId},#{wechatId},#{memo},#{time})
+	</insert>
+
+	<select id="getAll" resultType="com.xuwuji.eshop.model.Wish">
+		select * from
+		wish order by id
+		desc;
+	</select>
+
+</mapper>
