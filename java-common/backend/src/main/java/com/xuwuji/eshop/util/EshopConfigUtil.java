@@ -37,6 +37,7 @@ public class EshopConfigUtil {
 	public static final String BONUS_IMG_URL = "bonusImgUrl";
 	public static final String PRODUCT_DETAIL_IMG_BASE="productDetailImgBase";
 	public static final String SHOW_DETAIL_IDS="showDetailIds";
+	public static final String SHOW_TWO_CATEGORY_IDS="showTwoCategoryIds";
 	public static Map<String, Object> configMap = new HashMap<String, Object>();
 
 	public String getParam(String paramName) {
