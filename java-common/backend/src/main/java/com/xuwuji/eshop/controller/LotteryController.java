@@ -100,18 +100,19 @@ public class LotteryController {
 				lottery.setName(luckMoney + "元红包");
 				lottery.setLuck(true);
 			}
-		} else if (currentLotteryTranscationId == LotteryConstants.TEN) {
-			// 若经过九次还没达到10元，则第十次补剩余金额
-			if (lotteryAmount < LotteryConstants.AMOUNT_MAX_IN_TEN) {
-				luckMoney = (double) (10.00 - lotteryAmount);
-				// 保留两位小数
-				luckMoney = (double) Math.round(luckMoney * 100) / 100;
-				lottery.setType(LotteryType.MONEY.getCode());
-				lottery.setAmount(luckMoney);
-				lottery.setName(luckMoney + "元红包");
-				lottery.setLuck(true);
-			}
 		}
+//		else if (currentLotteryTranscationId == LotteryConstants.TEN) {
+//			// 若经过九次还没达到10元，则第十次补剩余金额
+//			if (lotteryAmount < LotteryConstants.AMOUNT_MAX_IN_TEN) {
+//				luckMoney = (double) (10.00 - lotteryAmount);
+//				// 保留两位小数
+//				luckMoney = (double) Math.round(luckMoney * 100) / 100;
+//				lottery.setType(LotteryType.MONEY.getCode());
+//				lottery.setAmount(luckMoney);
+//				lottery.setName(luckMoney + "元红包");
+//				lottery.setLuck(true);
+//			}
+//		}
 		// 将剩余次数减一
 		userFromDB.setLotteryRemainCount(userFromDB.getLotteryRemainCount() - 1);
 		// 将累计抽奖次数加一
