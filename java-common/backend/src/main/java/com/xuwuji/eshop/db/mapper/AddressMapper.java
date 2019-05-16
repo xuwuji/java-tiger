@@ -8,6 +8,8 @@ import com.xuwuji.eshop.model.Address;
 public interface AddressMapper {
 
 	public void add(Address address);
+	
+	public void delete(String id);
 
 	public List<Address> getAllByOpenId(HashMap<String, Object> map);
 

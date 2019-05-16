@@ -30,6 +30,20 @@ public class AddressDao {
 		return Address;
 	}
 
+	public void delete(String id) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			AddressMapper mapper = session.getMapper(AddressMapper.class);
+			mapper.delete(id);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+	}
+
 	public List<Address> getAllByOpenId(String openId) {
 		SqlSession session = SessionFactory.openDEVSession();
 		List<Address> result = new ArrayList<Address>();

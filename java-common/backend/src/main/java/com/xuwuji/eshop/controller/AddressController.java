@@ -37,6 +37,13 @@ public class AddressController {
 		addressDao.add(addressDTO);
 	}
 
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	@ResponseBody
+	public void delete(HttpServletRequest request, HttpServletResponse response) {
+		String addressId = request.getParameter("id");
+		addressDao.delete(addressId);
+	}
+
 	@RequestMapping(value = "/getByOpenId", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Address> getByOpenId(HttpServletRequest request, HttpServletResponse response) {

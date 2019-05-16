@@ -14,6 +14,7 @@ public class Address {
 	private String phone;
 	private String openId;
 	private String wechatId;
+	private String state;
 
 	public int getId() {
 		return id;
@@ -61,6 +62,14 @@ public class Address {
 
 	public void setWechatId(String wechatId) {
 		this.wechatId = wechatId;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 
 }
