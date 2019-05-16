@@ -116,6 +116,7 @@
 		<mapper resource="mapper/ViewHistoryMapper.xml" />
 		<mapper resource="mapper/SearchMapper.xml" />
 		<mapper resource="mapper/WishMapper.xml" />
+		<mapper resource="mapper/AddressMapper.xml" />
 	</mappers>
 
 
