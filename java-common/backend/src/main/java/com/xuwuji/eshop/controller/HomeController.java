@@ -1,6 +1,7 @@
 package com.xuwuji.eshop.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
@@ -143,25 +144,26 @@ public class HomeController {
 		List<Category> categories = new ArrayList<Category>();
 		categories = categoryDao.getRecommend();
 		// 如果是新用户或者是没在user表中的里
-		//if (user.getState() == null || user.getState().isEmpty() || user.getState().equals(UserState.NEW.getCode())) {
-			for (Category c : categories) {
-				int categoryId = c.getId();
-				List<Product> products = new ArrayList<Product>();
-				products = productDao.getActiveByCategory(String.valueOf(categoryId));
-				productUtil.sort(products, SortEnum.SALE);
-				if (products.size() > 10) {
-					products = products.subList(0, 10);
-				} else {
-					products = products.subList(0, products.size());
-				}
-				for (Product product : products) {
-					if (!ids.contains(product.getId())) {
-						results.add(product);
-						ids.add(product.getId());
-					}
+		// if (user.getState() == null || user.getState().isEmpty() ||
+		// user.getState().equals(UserState.NEW.getCode())) {
+		for (Category c : categories) {
+			int categoryId = c.getId();
+			List<Product> products = new ArrayList<Product>();
+			products = productDao.getActiveByCategory(String.valueOf(categoryId));
+			productUtil.sort(products, SortEnum.SALE);
+			if (products.size() > 20) {
+				products = products.subList(0, 20);
+			} else {
+				products = products.subList(0, products.size());
+			}
+			for (Product product : products) {
+				if (!ids.contains(product.getId())) {
+					results.add(product);
+					ids.add(product.getId());
 				}
 			}
-		//}
+		}
+		// }
 		// view history
 		List<ViewHistory> viewHistoryList = viewHistoryDao.getAllByOpenId(openId);
 		for (ViewHistory viewHistory : viewHistoryList) {
@@ -169,8 +171,8 @@ public class HomeController {
 			List<Product> products = new ArrayList<Product>();
 			products = productDao.getActiveByCategory(String.valueOf(categoryId));
 			products = productUtil.sort(products, SortEnum.SALE);
-			if (products.size() > 10) {
-				products = products.subList(0, 10);
+			if (products.size() > 20) {
+				products = products.subList(0, 20);
 			} else {
 				products = products.subList(0, products.size());
 			}
@@ -188,8 +190,8 @@ public class HomeController {
 			List<Product> products = new ArrayList<Product>();
 			products = productDao.getActiveByKW(kw);
 			products = productUtil.sort(products, SortEnum.SALE);
-			if (products.size() > 10) {
-				products = products.subList(0, 10);
+			if (products.size() > 20) {
+				products = products.subList(0, 20);
 			} else {
 				products = products.subList(0, products.size());
 			}
@@ -207,10 +209,12 @@ public class HomeController {
 			product.setMainImgUrl(mainImgUrl);
 			// }
 		}
-		// max 100
-		if (results.size() > 100) {
-			results = results.subList(0, 100);
+		// 最多展示 200个商品
+		if (results.size() > 200) {
+			results = results.subList(0, 200);
 		}
+		// 打乱排序
+		Collections.shuffle(results);
 		return results;
 	}
 
