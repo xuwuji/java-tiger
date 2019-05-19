@@ -19,13 +19,14 @@
 		<result property="lastCheckInDate" column="DATE"
 			javaType="java.util.Date" jdbcType="DATE"></result>
 		<result property="continuousNum" column="info"></result>
+		<result property="balance" column="info"></result>
 	</resultMap>
 
 	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
 		keyProperty="id" keyColumn="id">
 		insert into user
-		(openId,wechatId,state,bonusAmount,level,totalPay,points,lastCheckInDate,continuousNum)
-		values(#{openId},#{wechatId},#{state},0,'0',0,#{points},#{lastCheckInDate},#{continuousNum})
+		(openId,wechatId,state,bonusAmount,level,totalPay,points,lastCheckInDate,continuousNum,balance)
+		values(#{openId},#{wechatId},#{state},0,'0',0,#{points},#{lastCheckInDate},#{continuousNum},0)
 	</insert>
 
 	<update id="update" parameterType="hashmap">
@@ -44,6 +45,12 @@
 		<if test="openId != null and openId !=''">
 			openId=#{openId};
 		</if>
+	</update>
+
+	<update id="updateBalance" parameterType="hashmap">
+		update user set
+		balance=#{balance}
+		where openId=#{openId};
 	</update>
 
 	<update id="updateLastCheckInDate" parameterType="hashmap">

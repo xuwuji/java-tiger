@@ -18,6 +18,8 @@ public interface UserMapper {
 	public void updateLastCheckInDate(HashMap<String, Object> map);
 
 	public void updateContinuousNum(HashMap<String, Object> map);
+	
+	public void updateBalance(HashMap<String, Object> map);
 
 	public List<User> getByCondition(HashMap<String, Object> map);
 

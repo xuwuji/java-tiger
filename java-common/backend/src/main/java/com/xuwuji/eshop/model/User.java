@@ -18,6 +18,10 @@ public class User {
 	private double points;
 	private Date lastCheckInDate;
 	private int continuousNum;
+	/**
+	 * 用户账户余额
+	 */
+	private double balance;
 
 	public int getId() {
 		return id;
@@ -123,13 +127,21 @@ public class User {
 		this.continuousNum = continuousNum;
 	}
 
+	public double getBalance() {
+		return balance;
+	}
+
+	public void setBalance(double balance) {
+		this.balance = balance;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", openId=" + openId + ", wechatId=" + wechatId + ", state=" + state
 				+ ", bonusAmount=" + bonusAmount + ", level=" + level + ", totalPay=" + totalPay
 				+ ", membershipFirstDay=" + membershipFirstDay + ", amountAfterMSFD=" + amountAfterMSFD
 				+ ", amountThisMonth=" + amountThisMonth + ", points=" + points + ", lastCheckInDate=" + lastCheckInDate
-				+ ", continuousNum=" + continuousNum + "]";
+				+ ", continuousNum=" + continuousNum + ", balance=" + balance + "]";
 	}
 
 }
