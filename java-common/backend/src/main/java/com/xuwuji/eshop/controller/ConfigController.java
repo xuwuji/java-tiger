@@ -38,6 +38,7 @@ public class ConfigController {
 		eshopConfig.setLicenceImgUrl(eshopConfigUtil.getParam(eshopConfigUtil.LICENCE_IMG_URL));
 		eshopConfig.setShareImgUrl(eshopConfigUtil.getParam(eshopConfigUtil.SHARE_IMG_URL));
 		eshopConfig.setBonusImgUrl(eshopConfigUtil.getParam(eshopConfigUtil.BONUS_IMG_URL));
+		eshopConfig.setMinMoney(eshopConfigUtil.getParam(eshopConfigUtil.MIN_MONEY));
 		return eshopConfig;
 	}
 
@@ -122,7 +123,8 @@ public class ConfigController {
 		public String licenceImgUrl;
 		public String shareImgUrl;
 		public String articleImgUrl;
-		private String bonusImgUrl;
+		public String bonusImgUrl;
+		public String minMoney;
 
 		public String getXxcUrl() {
 			return xxcUrl;
@@ -234,6 +236,14 @@ public class ConfigController {
 
 		public void setBonusImgUrl(String bonusImgUrl) {
 			this.bonusImgUrl = bonusImgUrl;
+		}
+
+		public String getMinMoney() {
+			return minMoney;
+		}
+
+		public void setMinMoney(String minMoney) {
+			this.minMoney = minMoney;
 		}
 
 	}
