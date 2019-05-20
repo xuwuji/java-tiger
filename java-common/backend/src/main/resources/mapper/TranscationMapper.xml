@@ -16,19 +16,29 @@
 		<result property="state" column="type"></result>
 		<result property="amount" column="type"></result>
 		<result property="lastModified" column="type"></result>
+		<result property="wxTranscationId" column="type"></result>
 	</resultMap>
 
 	<insert id="add" parameterType="Transcation"
 		useGeneratedKeys="true" keyProperty="id" keyColumn="id">
 		insert into
 		transcation
-		(transcationId,openId,type,occur,lastModified,prepayId,amount,state)
-		values(#{transcationId},#{openId},#{type},#{occur},#{lastModified},#{prepayId},#{amount},#{state})
+		(transcationId,openId,type,occur,lastModified,amount,state)
+		values(#{transcationId},#{openId},#{type},#{occur},#{lastModified},#{amount},#{state})
 	</insert>
 
-	<update id="updatePrepayId" parameterType="hashmap">
+	<update id="update" parameterType="hashmap">
 		update transcation set
-		prePayId=#{prePayId} and lastModified=#{lastModified} where
-		openId=#{openId};
+		prePayId=#{prePayId} ,
+		state=#{state},wxTranscationId=#{wxTranscationId},lastModified=#{lastModified}
+		where
+		transcationId=#{transcationId};
 	</update>
+
+	<select id="getByTranscationId" resultType="Transcation">
+		select * from
+		transcation
+		where
+		transcationId=#{transcationId};
+	</select>
 </mapper>

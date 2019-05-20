@@ -1,5 +1,6 @@
 package com.xuwuji.eshop.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.xuwuji.eshop.model.BannerItem;
 import com.xuwuji.eshop.model.Config;
+import com.xuwuji.eshop.model.Topup;
 import com.xuwuji.eshop.util.EshopConfigUtil;
 import com.xuwuji.eshop.util.TokenUtil;
 
@@ -23,6 +25,9 @@ import com.xuwuji.eshop.util.TokenUtil;
 public class ConfigController {
 	@Autowired
 	private EshopConfigUtil eshopConfigUtil;
+
+	@Autowired
+	private List<Topup> topupConfig;
 
 	@RequestMapping(value = "/getBaseConfig", method = RequestMethod.GET)
 	@ResponseBody
@@ -49,6 +54,12 @@ public class ConfigController {
 		String code = request.getParameter("code");
 		eshopConfig.setOpenId(TokenUtil.getOpenId(code));
 		return eshopConfig;
+	}
+
+	@RequestMapping(value = "/topupConfig", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Topup> topupConfig(HttpServletRequest request, HttpServletResponse response) {
+		return topupConfig.subList(0, topupConfig.size()-1);
 	}
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)

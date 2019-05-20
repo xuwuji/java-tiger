@@ -117,6 +117,7 @@
 		<mapper resource="mapper/SearchMapper.xml" />
 		<mapper resource="mapper/WishMapper.xml" />
 		<mapper resource="mapper/AddressMapper.xml" />
+		<mapper resource="mapper/TranscationMapper.xml" />
 	</mappers>
 
 

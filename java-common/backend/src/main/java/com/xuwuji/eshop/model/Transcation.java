@@ -19,9 +19,12 @@ public class Transcation {
 	private String openId;
 	private Date occur;
 	private Date lastModified;
+	// 微信统一支付号
 	private String prepayId;
 	// @link TranscationStateEnum
 	private String state;
+	// 微信支付流水号
+	private String wxTranscationId;
 
 	public int getId() {
 		return id;
@@ -93,6 +96,14 @@ public class Transcation {
 
 	public void setLastModified(Date lastModified) {
 		this.lastModified = lastModified;
+	}
+
+	public String getWxTranscationId() {
+		return wxTranscationId;
+	}
+
+	public void setWxTranscationId(String wxTranscationId) {
+		this.wxTranscationId = wxTranscationId;
 	}
 
 }

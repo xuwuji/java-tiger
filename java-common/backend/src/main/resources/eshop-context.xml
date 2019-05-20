@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<bean id="topup100" class="com.xuwuji.eshop.model.Topup">
+		<property name="amount" value="100"></property>
+		<property name="getAmount" value="105"></property>
+	</bean>
+
+	<bean id="topup200" class="com.xuwuji.eshop.model.Topup">
+		<property name="amount" value="200"></property>
+		<property name="getAmount" value="215"></property>
+	</bean>
+
+	<bean id="topup300" class="com.xuwuji.eshop.model.Topup">
+		<property name="amount" value="300"></property>
+		<property name="getAmount" value="330"></property>
+	</bean>
+
+	<bean id="topup500" class="com.xuwuji.eshop.model.Topup">
+		<property name="amount" value="500"></property>
+		<property name="getAmount" value="550"></property>
+	</bean>
+
+	<bean id="topup1000" class="com.xuwuji.eshop.model.Topup">
+		<property name="amount" value="1000"></property>
+		<property name="getAmount" value="1150"></property>
+	</bean>
+
+	<bean id="topup2000" class="com.xuwuji.eshop.model.Topup">
+		<property name="amount" value="2000"></property>
+		<property name="getAmount" value="2350"></property>
+	</bean>
+
+	<bean id="topupConfig" class="java.util.ArrayList">
+		<constructor-arg>
+			<list>
+				<ref bean="topup100" />
+				<ref bean="topup200" />
+				<ref bean="topup300" />
+				<ref bean="topup500" />
+				<ref bean="topup1000" />
+				<ref bean="topup2000" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+
+</beans>
+
