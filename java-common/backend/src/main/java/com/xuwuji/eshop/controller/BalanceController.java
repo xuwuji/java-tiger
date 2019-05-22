@@ -2,6 +2,7 @@ package com.xuwuji.eshop.controller;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,9 +19,14 @@ import com.xuwuji.eshop.db.dao.TranscationDao;
 import com.xuwuji.eshop.db.dao.UserDao;
 import com.xuwuji.eshop.model.Order;
 import com.xuwuji.eshop.model.OrderStatus;
+import com.xuwuji.eshop.model.TopUpConfig;
+import com.xuwuji.eshop.model.Topup;
 import com.xuwuji.eshop.model.Transcation;
 import com.xuwuji.eshop.model.TranscationStateEnum;
 import com.xuwuji.eshop.model.TranscationTypeEnum;
+import com.xuwuji.eshop.model.User;
+import com.xuwuji.eshop.model.UserLevel;
+import com.xuwuji.eshop.model.UserState;
 import com.xuwuji.eshop.model.WxTradeState;
 import com.xuwuji.eshop.util.PayUtil;
 import com.xuwuji.eshop.util.TimeUtil;
@@ -39,6 +45,9 @@ public class BalanceController {
 	@Autowired
 	private TranscationDao transcationDao;
 
+	@Autowired
+	private TopUpConfig topupConfig;
+
 	@RequestMapping(value = "/topUp", method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> topUp(HttpServletRequest request) {
@@ -46,7 +55,8 @@ public class BalanceController {
 			String amount = request.getParameter("amount");
 			String openId = request.getParameter("openId");
 			String topUpAmount = String.valueOf((int) (Double.valueOf(amount) * 100));
-			String transcationId = TimeUtil.dateToString(new Date()) + TranscationTypeEnum.TOPUP.getCode() + topUpAmount;
+			String transcationId = TimeUtil.dateToString(new Date()) + TranscationTypeEnum.TOPUP.getCode()
+					+ topUpAmount;
 			// 1. 初始化一条交易记录
 			Transcation transcation = new Transcation();
 			transcation.setAmount(Double.valueOf(amount));
@@ -115,6 +125,7 @@ public class BalanceController {
 				transcationDao.update(transcation);
 			}
 			response.put("appid", TokenUtil.APPID);
+			response.put("transcationId", transcationId);
 			return response;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -129,6 +140,7 @@ public class BalanceController {
 	 * @return
 	 */
 	@RequestMapping(value = "/topupQuery", method = RequestMethod.GET)
+	@ResponseBody
 	public Map<String, Object> topupQuery(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			String transcationId = request.getParameter("transcationId");
@@ -172,19 +184,38 @@ public class BalanceController {
 					if (trade_state.equals(WxTradeState.SUCCESS.getCode())) {
 						// 对已经付款成功的充值记录进行更新，此时在系统内应处于进行中状态
 						if (transcation.getState().equals(TranscationStateEnum.D.getCode())) {
-							// 微信支付交易单号
+							// 微信支付交易流水号
 							String wxTranscationId = (String) map.get("transaction_id");
-							// 更新订单，状态设为已付款，添加交易单号
+							// 更新流水，状态更新为已成功，添加微信交易流水号
 							transcation.setLastModified(new Date());
 							transcation.setState(TranscationStateEnum.S.getCode());
 							transcation.setWxTranscationId(wxTranscationId);
 							transcationDao.update(transcation);
+							// 付款成功后，更新用户余额
+							User user = new User();
+							String openId = transcation.getOpenId();
+							user.setOpenId(openId);
+							user = userDao.getByCondition(user);
+							// 如果是一个新用户，需要先在表中添加此用户
+							if (user.getId() == 0) {
+								user.setOpenId(openId);
+								user.setState(UserState.NEW.getCode());
+								// user.setLevel(UserLevel.NORMAL.getCode());
+								userDao.add(user);
+								userDao.updateBalance(openId, getTopUpAmount(transcation.getAmount()));
+							} else {
+								userDao.updateBalance(openId,
+										user.getBalance() + getTopUpAmount(transcation.getAmount()));
+							}
 						}
 					}
 					// 此订单还未付款
 					else if (trade_state.equals(WxTradeState.NOTPAY.getCode())) {
 						// 说明唤起收银台了，但是还没有付款成功，此时提醒其有待支付的订单
 						System.out.println("not pay");
+						transcation.setLastModified(new Date());
+						transcation.setState(TranscationStateEnum.F.getCode());
+						transcationDao.update(transcation);
 					}
 				}
 				// 结果码为FAIL时说明此订单号没有调用统一支付，订单不存在
@@ -192,11 +223,19 @@ public class BalanceController {
 
 				}
 			}
-			map.put("transcationId", transcationId);
 			return map;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	private double getTopUpAmount(double amount) {
+		for (Topup config : topupConfig.getTopupList()) {
+			if (config.getAmount() == amount) {
+				return config.getGetAmount();
+			}
+		}
+		return amount;
 	}
 }

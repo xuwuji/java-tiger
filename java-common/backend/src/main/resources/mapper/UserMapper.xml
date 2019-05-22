@@ -33,7 +33,7 @@
 		update user set
 		state=#{state},bonusAmount=#{bonusAmount},level=#{level},totalPay=#{totalPay},
 		membershipFirstDay=#{membershipFirstDay},amountAfterMSFD=#{amountAfterMSFD},amountThisMonth=#{amountThisMonth},
-		points=#{points}
+		points=#{points},balance=#{balance}
 		where openId=#{openId};
 	</update>
 

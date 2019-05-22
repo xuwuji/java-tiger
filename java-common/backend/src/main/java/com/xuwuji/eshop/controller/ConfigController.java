@@ -14,9 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.xuwuji.eshop.model.BannerItem;
 import com.xuwuji.eshop.model.Config;
-import com.xuwuji.eshop.model.Topup;
+import com.xuwuji.eshop.model.TopUpConfig;
 import com.xuwuji.eshop.util.EshopConfigUtil;
 import com.xuwuji.eshop.util.TokenUtil;
 
@@ -27,7 +26,7 @@ public class ConfigController {
 	private EshopConfigUtil eshopConfigUtil;
 
 	@Autowired
-	private List<Topup> topupConfig;
+	private TopUpConfig topupConfig;
 
 	@RequestMapping(value = "/getBaseConfig", method = RequestMethod.GET)
 	@ResponseBody
@@ -58,8 +57,8 @@ public class ConfigController {
 
 	@RequestMapping(value = "/topupConfig", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Topup> topupConfig(HttpServletRequest request, HttpServletResponse response) {
-		return topupConfig.subList(0, topupConfig.size()-1);
+	public TopUpConfig topupConfig(HttpServletRequest request, HttpServletResponse response) {
+		return topupConfig;
 	}
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)

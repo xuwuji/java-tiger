@@ -37,10 +37,10 @@ public class TranscationDao {
 		try {
 			TranscationMapper mapper = session.getMapper(TranscationMapper.class);
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("openId", transcation.getOpenId());
 			map.put("lastModified", transcation.getLastModified());
 			map.put("prePayId", transcation.getPrepayId());
 			map.put("state", transcation.getState());
+			map.put("transcationId", transcation.getTranscationId());
 			map.put("wxTranscationId", transcation.getWxTranscationId());
 			mapper.update(map);
 			session.commit();

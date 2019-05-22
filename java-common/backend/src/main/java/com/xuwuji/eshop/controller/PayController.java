@@ -20,8 +20,10 @@ import com.xuwuji.eshop.admin.service.PayService;
 import com.xuwuji.eshop.admin.service.TemplateService;
 import com.xuwuji.eshop.db.dao.OrderDao;
 import com.xuwuji.eshop.db.dao.OrderItemDao;
+import com.xuwuji.eshop.db.dao.UserDao;
 import com.xuwuji.eshop.model.Order;
 import com.xuwuji.eshop.model.OrderStatus;
+import com.xuwuji.eshop.model.User;
 import com.xuwuji.eshop.model.WxTradeState;
 import com.xuwuji.eshop.util.PayUtil;
 import com.xuwuji.eshop.util.TokenUtil;
@@ -31,6 +33,8 @@ import com.xuwuji.eshop.util.TokenUtil;
 public class PayController {
 	private static final String SUCCESS = "SUCCESS";
 	private static final String FAIL = "FAIL";
+	@Autowired
+	private UserDao userDao;
 	@Autowired
 	private OrderDao orderDao;
 	@Autowired
@@ -55,8 +59,17 @@ public class PayController {
 		try {
 			String orderId = request.getParameter("orderId");
 			Order order = orderDao.getOrderInfoByOrderId(orderId);
+			double orderAmount = order.getAmount();
+			String amount = String.valueOf((int) (orderAmount * 100));
 			String openId = order.getOpenId();
-			String amount = String.valueOf((int) (order.getAmount() * 100));
+			User user = new User();
+			user.setOpenId(openId);
+			user = userDao.getByCondition(user);
+			// 如果是老用户，则查看是否有余额，有的话，减掉余额
+			if (user.getId() > 0) {
+				double balance = user.getBalance();
+				amount = String.valueOf((int) ((orderAmount - balance) * 100));
+			}
 			// 生成的随机字符串
 			String nonce_str = WXPayUtil.generateNonceStr();
 			// 商品名称
@@ -88,7 +101,7 @@ public class PayController {
 			System.out.println(xml);
 			// 调用统一下单接口，并接受返回的结果
 			String result = PayUtil.httpRequest(TokenUtil.PAY_URL, "POST", xml);
-			result = "<?xml version=\"1.0\" encoding=\"gbk\"?>" + result;
+			//result = "<?xml version=\"1.0\" encoding=\"gbk\"?>" + result;
 			System.out.println(result);
 			// 将解析结果存储在HashMap中
 			Map map = PayUtil.doXMLParse(result);
@@ -193,7 +206,7 @@ public class PayController {
 			System.out.println(xml);
 			// 调用统一下单接口，并接受返回的结果
 			String result = PayUtil.httpRequest(TokenUtil.ORDER_QUERY_URL, "POST", xml);
-			result = "<?xml version=\"1.0\" encoding=\"gbk\"?>" + result;
+			//result = "<?xml version=\"1.0\" encoding=\"gbk\"?>" + result;
 			System.out.println(result);
 			// 将解析结果存储在HashMap中
 			Map map = PayUtil.doXMLParse(result);
@@ -218,6 +231,12 @@ public class PayController {
 							// 发送模板消息，提示已经支付成功
 							templateService.handlePayed(order);
 							payService.pay(orderId);
+							// 因为使用微信付款时优先从余额中划扣，此时需要将用户的余额置空
+							User user = new User();
+							user.setOpenId(order.getOpenId());
+							user = userDao.getByCondition(user);
+							user.setBalance(0);
+							userDao.update(user);
 						}
 					}
 					// 此订单还未付款

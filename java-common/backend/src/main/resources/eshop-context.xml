@@ -2,47 +2,83 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans>
 
-	<bean id="topup100" class="com.xuwuji.eshop.model.Topup">
-		<property name="amount" value="100"></property>
-		<property name="getAmount" value="105"></property>
-	</bean>
-
-	<bean id="topup200" class="com.xuwuji.eshop.model.Topup">
-		<property name="amount" value="200"></property>
-		<property name="getAmount" value="215"></property>
-	</bean>
-
-	<bean id="topup300" class="com.xuwuji.eshop.model.Topup">
-		<property name="amount" value="300"></property>
-		<property name="getAmount" value="330"></property>
-	</bean>
-
 	<bean id="topup500" class="com.xuwuji.eshop.model.Topup">
 		<property name="amount" value="500"></property>
-		<property name="getAmount" value="550"></property>
+		<property name="getAmount" value="520"></property>
 	</bean>
 
 	<bean id="topup1000" class="com.xuwuji.eshop.model.Topup">
 		<property name="amount" value="1000"></property>
-		<property name="getAmount" value="1150"></property>
+		<property name="getAmount" value="1050"></property>
+	</bean>
+
+	<bean id="topup1500" class="com.xuwuji.eshop.model.Topup">
+		<property name="amount" value="1500"></property>
+		<property name="getAmount" value="1600"></property>
 	</bean>
 
 	<bean id="topup2000" class="com.xuwuji.eshop.model.Topup">
 		<property name="amount" value="2000"></property>
-		<property name="getAmount" value="2350"></property>
+		<property name="getAmount" value="2150"></property>
 	</bean>
 
-	<bean id="topupConfig" class="java.util.ArrayList">
+	<bean id="topup3000" class="com.xuwuji.eshop.model.Topup">
+		<property name="amount" value="3000"></property>
+		<property name="getAmount" value="3200"></property>
+	</bean>
+
+	<bean id="topup5000" class="com.xuwuji.eshop.model.Topup">
+		<property name="amount" value="5000"></property>
+		<property name="getAmount" value="5400"></property>
+	</bean>
+
+	<bean id="topupList" class="java.util.ArrayList">
 		<constructor-arg>
 			<list>
-				<ref bean="topup100" />
-				<ref bean="topup200" />
-				<ref bean="topup300" />
 				<ref bean="topup500" />
 				<ref bean="topup1000" />
+				<ref bean="topup1500" />
 				<ref bean="topup2000" />
+				<ref bean="topup3000" />
+				<ref bean="topup5000" />
 			</list>
 		</constructor-arg>
+	</bean>
+
+	<bean id="topupInfo" class="java.util.ArrayList">
+		<constructor-arg>
+			<list>
+				<ref bean="topup500" />
+				<ref bean="topup1000" />
+				<ref bean="topup1500" />
+				<ref bean="topup2000" />
+				<ref bean="topup3000" />
+				<ref bean="topup5000" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+
+	<bean id="topupConfig" class="com.xuwuji.eshop.model.TopUpConfig">
+		<property name="topupList">
+			<list>
+				<ref bean="topup500" />
+				<ref bean="topup1000" />
+				<ref bean="topup1500" />
+				<ref bean="topup2000" />
+				<ref bean="topup3000" />
+				<ref bean="topup5000" />
+			</list>
+		</property>
+		<property name="info">
+			<list>
+				<value>3、首次充值1000元额外赠送安耐晒防晒乳液25ml一瓶；</value>
+				<value>4、首次充值2000元额外赠送MAC自选色号口红一支/安耐晒防晒喷雾60ml一瓶（二选一）；</value>
+				<value>5、首次充值3000元额外赠送YSL自选色号口红一支/安耐晒防晒乳液60ml一瓶（二选一）；</value>
+				<value>6、首次充值5000元额外赠送TF自选色号口红一支；</value>
+			</list>
+		</property>
+
 	</bean>
 
 
