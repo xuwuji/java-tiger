@@ -36,6 +36,7 @@
 		<result property="transactionId" column="type"></result>
 		<result property="prepayId" column="type"></result>
 		<result property="formId" column="type"></result>
+		<result property="balanceAmount" column="type"></result>
 
 	</resultMap>
 
@@ -94,6 +95,15 @@
 		update eshoporder set
 		lastModifyTime = now(),
 		prepayId=#{prepayId}
+		where
+		orderId=#{orderId};
+	</update>
+
+	<update id="updateBalanceAmount" parameterType="hashmap">
+		update eshoporder
+		set
+		lastModifyTime = now(),
+		balanceAmount=#{balanceAmount}
 		where
 		orderId=#{orderId};
 	</update>

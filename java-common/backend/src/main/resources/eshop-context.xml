@@ -72,6 +72,8 @@
 		</property>
 		<property name="info">
 			<list>
+				<value>1、充值金额不退不换；；</value>
+				<value>2、余额可以在小柴精选平台上消费，付款时从余额中优先划扣；</value>
 				<value>3、首次充值1000元额外赠送安耐晒防晒乳液25ml一瓶；</value>
 				<value>4、首次充值2000元额外赠送MAC自选色号口红一支/安耐晒防晒喷雾60ml一瓶（二选一）；</value>
 				<value>5、首次充值3000元额外赠送YSL自选色号口红一支/安耐晒防晒乳液60ml一瓶（二选一）；</value>

@@ -3,6 +3,7 @@ package com.xuwuji.eshop.controller;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,12 +21,17 @@ import com.xuwuji.eshop.admin.service.PayService;
 import com.xuwuji.eshop.admin.service.TemplateService;
 import com.xuwuji.eshop.db.dao.OrderDao;
 import com.xuwuji.eshop.db.dao.OrderItemDao;
+import com.xuwuji.eshop.db.dao.TranscationDao;
 import com.xuwuji.eshop.db.dao.UserDao;
 import com.xuwuji.eshop.model.Order;
 import com.xuwuji.eshop.model.OrderStatus;
+import com.xuwuji.eshop.model.Transcation;
+import com.xuwuji.eshop.model.TranscationStateEnum;
+import com.xuwuji.eshop.model.TranscationTypeEnum;
 import com.xuwuji.eshop.model.User;
 import com.xuwuji.eshop.model.WxTradeState;
 import com.xuwuji.eshop.util.PayUtil;
+import com.xuwuji.eshop.util.TimeUtil;
 import com.xuwuji.eshop.util.TokenUtil;
 
 @RestController
@@ -44,8 +50,13 @@ public class PayController {
 	// 支付处理服务
 	private PayService payService;
 
+	@Autowired
+	private TranscationDao transcationDao;
+
 	/**
-	 * 对订单进行付款
+	 * 使用微信对订单进行付款
+	 * 
+	 * 使用条件：余额 < 待付款金额
 	 * 
 	 * 1.调用微信的统一支付接口
 	 * 
@@ -70,6 +81,17 @@ public class PayController {
 				double balance = user.getBalance();
 				amount = String.valueOf((int) ((orderAmount - balance) * 100));
 			}
+			// 添加此条流水记录
+			String transcationId = System.nanoTime() + TranscationTypeEnum.WXPAY.getCode() + amount;
+			Transcation transcation = new Transcation();
+			transcation.setOrderId(orderId);
+			transcation.setAmount(Double.valueOf(amount));
+			transcation.setOccur(new Date());
+			transcation.setOpenId(openId);
+			transcation.setTranscationId(transcationId);
+			transcation.setType(TranscationTypeEnum.WXPAY.getCode());
+			transcation.setState(TranscationStateEnum.I.getCode());
+			transcationDao.add(transcation);
 			// 生成的随机字符串
 			String nonce_str = WXPayUtil.generateNonceStr();
 			// 商品名称
@@ -101,7 +123,7 @@ public class PayController {
 			System.out.println(xml);
 			// 调用统一下单接口，并接受返回的结果
 			String result = PayUtil.httpRequest(TokenUtil.PAY_URL, "POST", xml);
-			//result = "<?xml version=\"1.0\" encoding=\"gbk\"?>" + result;
+			// result = "<?xml version=\"1.0\" encoding=\"gbk\"?>" + result;
 			System.out.println(result);
 			// 将解析结果存储在HashMap中
 			Map map = PayUtil.doXMLParse(result);
@@ -122,8 +144,14 @@ public class PayController {
 				String paySign = PayUtil.sign(stringSignTemp, TokenUtil.MERCHANT_KEY, "utf-8").toUpperCase();
 				response.put("paySign", paySign);
 				orderDao.updatePrepayId(orderId, prepay_id);
+				// 更新流水，将状态设置为进行中
+				transcation.setPrepayId(prepay_id);
+				transcation.setLastModified(new Date());
+				transcation.setState(TranscationStateEnum.D.getCode());
+				transcationDao.update(transcation);
 			}
 			response.put("appid", TokenUtil.APPID);
+			response.put("transcationId", transcationId);
 			return response;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -187,6 +215,8 @@ public class PayController {
 			if (order == null) {
 				return null;
 			}
+			String transcationId = request.getParameter("transcationId");
+			Transcation transcation = transcationDao.getByTranscationId(transcationId);
 			// 生成的随机字符串
 			String nonce_str = WXPayUtil.generateNonceStr();
 			// 组装参数，用户生成统一下单接口的签名
@@ -206,7 +236,7 @@ public class PayController {
 			System.out.println(xml);
 			// 调用统一下单接口，并接受返回的结果
 			String result = PayUtil.httpRequest(TokenUtil.ORDER_QUERY_URL, "POST", xml);
-			//result = "<?xml version=\"1.0\" encoding=\"gbk\"?>" + result;
+			// result = "<?xml version=\"1.0\" encoding=\"gbk\"?>" + result;
 			System.out.println(result);
 			// 将解析结果存储在HashMap中
 			Map map = PayUtil.doXMLParse(result);
@@ -224,30 +254,52 @@ public class PayController {
 						// 对已经付款成功的订单进行更新，此时订单此时在系统内还处于未支付状态
 						if (order.getState().equals(OrderStatus.NOTPAY.getCode())) {
 							// 微信支付交易单号
-							String transactionId = (String) map.get("transaction_id");
+							String wxTranscationId = (String) map.get("transaction_id");
 							// 更新订单，状态设为已付款，添加交易单号
 							orderDao.updateState(orderId, OrderStatus.NOTSEND.getCode());
-							orderDao.updateTransactionId(orderId, transactionId);
+							orderDao.updateTransactionId(orderId, wxTranscationId);
 							// 发送模板消息，提示已经支付成功
 							templateService.handlePayed(order);
 							payService.pay(orderId);
-							// 因为使用微信付款时优先从余额中划扣，此时需要将用户的余额置空
-							User user = new User();
-							user.setOpenId(order.getOpenId());
-							user = userDao.getByCondition(user);
-							user.setBalance(0);
-							userDao.update(user);
+							/**
+							 * 因为能够使用微信付款时，说明:
+							 * 
+							 * 1、余额小于待付款金额，此时余额已被全部抵扣
+							 * 
+							 * 2、余额为0
+							 * 
+							 * 此时需要:
+							 * 
+							 * 1、更新此订单，明确有多少是从余额中划扣（其实是此用户所有的余额）
+							 * 
+							 * 2、将用户的余额置空
+							 */
+							updateBalance(orderId, order.getOpenId(), 0, true);
+							if (transcation != null
+									&& transcation.getState().equals(TranscationStateEnum.D.getCode())) {
+								// 更新流水，状态更新为已成功，添加微信交易流水号
+								transcation.setLastModified(new Date());
+								transcation.setState(TranscationStateEnum.S.getCode());
+								transcation.setWxTranscationId(wxTranscationId);
+								transcationDao.update(transcation);
+							}
 						}
 					}
 					// 此订单还未付款
 					else if (trade_state.equals(WxTradeState.NOTPAY.getCode())) {
 						// 说明唤起收银台了，但是还没有付款成功，此时提醒其有待支付的订单
 						templateService.handleWaitPay(order);
+						// 将此条流水置为失败状态
+						transcation.setLastModified(new Date());
+						transcation.setState(TranscationStateEnum.F.getCode());
+						transcationDao.update(transcation);
 					}
 				}
-				// 结果码为SUCCESS时说明此订单号没有调用统一支付，订单不存在
+				// 结果码为FAIL时说明此订单号没有调用统一支付，订单不存在或者出现异常
 				else if (result_code.equals(FAIL)) {
-
+					transcation.setLastModified(new Date());
+					transcation.setState(TranscationStateEnum.F.getCode());
+					transcationDao.update(transcation);
 				}
 			}
 			return map;
@@ -287,4 +339,75 @@ public class PayController {
 		return request.getRemoteAddr();
 	}
 
+	/**
+	 * 使用余额对订单进行付款
+	 * 
+	 * 使用条件：余额 >= 待付款金额
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/balancePay", method = RequestMethod.GET)
+	public void balancePay(HttpServletRequest request) {
+		String orderId = request.getParameter("orderId");
+		Order order = orderDao.getOrderInfoByOrderId(orderId);
+		double orderAmount = order.getAmount();
+		String openId = order.getOpenId();
+		// 添加此条流水记录
+		String transcationId = System.nanoTime() + TranscationTypeEnum.BALANCEPAY.getCode()
+				+ (int) (Double.valueOf(orderAmount) * 100);
+		Transcation transcation = new Transcation();
+		transcation.setOrderId(orderId);
+		// 流水表内金额以分为单位
+		transcation.setAmount((int) (Double.valueOf(orderAmount) * 100));
+		transcation.setOccur(new Date());
+		transcation.setOpenId(openId);
+		transcation.setTranscationId(transcationId);
+		transcation.setType(TranscationTypeEnum.BALANCEPAY.getCode());
+		transcation.setState(TranscationStateEnum.I.getCode());
+		transcationDao.add(transcation);
+		payService.pay(orderId);
+		/**
+		 * 1、从用户余额中划扣此次的消费，也就是订单的金额
+		 * 
+		 * 2、更新订单，所有金额均是由用户余额进行支付
+		 */
+		updateBalance(orderId, openId, orderAmount, false);
+		// 更新流水状态
+		transcation.setState(TranscationStateEnum.S.getCode());
+		transcation.setLastModified(new Date());
+		// 更新订单，状态设为已付款
+		orderDao.updateState(orderId, OrderStatus.NOTSEND.getCode());
+		// 由于是余额支付，支付的流水单号为系统内部流水单号
+		orderDao.updateTransactionId(orderId, transcationId);
+		transcationDao.update(transcation);
+	}
+
+	/**
+	 * 更新订单余额字段、划扣用户余额
+	 * 
+	 * @param openId
+	 * @param orderAmount
+	 * @param toZero
+	 */
+	private void updateBalance(String orderId, String openId, double orderAmount, boolean isWxPay) {
+		User user = new User();
+		user.setOpenId(openId);
+		user = userDao.getByCondition(user);
+		// 使用微信支付
+		if (isWxPay) {
+			// 此订单使用了用户全部的余额，剩余部分用微信进行支付
+			orderDao.updateBalanceAmount(orderId, user.getBalance());
+			// 用户余额归零
+			user.setBalance(0);
+		}
+		// 使用余额支付
+		else {
+			// 此订单全部都由用户余额进行支付
+			orderDao.updateBalanceAmount(orderId, orderAmount);
+			// 划扣用户余额
+			user.setBalance(user.getBalance() - orderAmount);
+		}
+		userDao.update(user);
+	}
 }

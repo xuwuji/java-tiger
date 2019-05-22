@@ -55,11 +55,10 @@ public class BalanceController {
 			String amount = request.getParameter("amount");
 			String openId = request.getParameter("openId");
 			String topUpAmount = String.valueOf((int) (Double.valueOf(amount) * 100));
-			String transcationId = TimeUtil.dateToString(new Date()) + TranscationTypeEnum.TOPUP.getCode()
-					+ topUpAmount;
+			String transcationId = System.nanoTime() + TranscationTypeEnum.TOPUP.getCode() + topUpAmount;
 			// 1. 初始化一条交易记录
 			Transcation transcation = new Transcation();
-			transcation.setAmount(Double.valueOf(amount));
+			transcation.setAmount(Double.valueOf(topUpAmount));
 			transcation.setOccur(new Date());
 			transcation.setOpenId(openId);
 			transcation.setTranscationId(transcationId);
@@ -192,26 +191,14 @@ public class BalanceController {
 							transcation.setWxTranscationId(wxTranscationId);
 							transcationDao.update(transcation);
 							// 付款成功后，更新用户余额
-							User user = new User();
 							String openId = transcation.getOpenId();
-							user.setOpenId(openId);
-							user = userDao.getByCondition(user);
-							// 如果是一个新用户，需要先在表中添加此用户
-							if (user.getId() == 0) {
-								user.setOpenId(openId);
-								user.setState(UserState.NEW.getCode());
-								// user.setLevel(UserLevel.NORMAL.getCode());
-								userDao.add(user);
-								userDao.updateBalance(openId, getTopUpAmount(transcation.getAmount()));
-							} else {
-								userDao.updateBalance(openId,
-										user.getBalance() + getTopUpAmount(transcation.getAmount()));
-							}
+							// 流水表内以分为单位，用户表内余额以元单位
+							topUpForUser(openId, transcation.getAmount() / 100);
 						}
 					}
 					// 此订单还未付款
 					else if (trade_state.equals(WxTradeState.NOTPAY.getCode())) {
-						// 说明唤起收银台了，但是还没有付款成功，此时提醒其有待支付的订单
+						// 说明唤起收银台了，但是还没有付款成功，将此条流水置为失败状态
 						System.out.println("not pay");
 						transcation.setLastModified(new Date());
 						transcation.setState(TranscationStateEnum.F.getCode());
@@ -230,6 +217,12 @@ public class BalanceController {
 		return null;
 	}
 
+	/**
+	 * 获得充值金额
+	 * 
+	 * @param amount
+	 * @return
+	 */
 	private double getTopUpAmount(double amount) {
 		for (Topup config : topupConfig.getTopupList()) {
 			if (config.getAmount() == amount) {
@@ -237,5 +230,26 @@ public class BalanceController {
 			}
 		}
 		return amount;
+	}
+
+	/**
+	 * 为用户进行充值
+	 * 
+	 * @param openId
+	 * @param amount
+	 */
+	private void topUpForUser(String openId, double amount) {
+		User user = new User();
+		user.setOpenId(openId);
+		user = userDao.getByCondition(user);
+		// 如果是一个新用户，需要先在表中添加此用户
+		if (user.getId() == 0) {
+			user.setOpenId(openId);
+			user.setState(UserState.NEW.getCode());
+			userDao.add(user);
+			userDao.updateBalance(openId, getTopUpAmount(amount));
+		} else {
+			userDao.updateBalance(openId, user.getBalance() + getTopUpAmount(amount));
+		}
 	}
 }

@@ -1,7 +1,7 @@
 package com.xuwuji.eshop.model;
 
 public enum TranscationTypeEnum {
-	TOPUP("topup", "topup"), CONSUME("consume", "consume");
+	TOPUP("topup", "topup"), WXPAY("wxPay", "wxPay"), BALANCEPAY("balancePay", "balancePay");
 
 	private String desc;
 	private String code;

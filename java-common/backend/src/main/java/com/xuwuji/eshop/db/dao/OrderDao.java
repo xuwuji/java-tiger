@@ -66,6 +66,23 @@ public class OrderDao {
 			session.close();
 		}
 	}
+	
+	public void updateBalanceAmount(String orderId, double balanceAmount) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			OrderMapper mapper = session.getMapper(OrderMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("balanceAmount", balanceAmount);
+			map.put("orderId", orderId);
+			mapper.updateBalanceAmount(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+	}
 
 	public void updateTransactionId(String orderId, String transactionId) {
 		SqlSession session = SessionFactory.openDEVSession();

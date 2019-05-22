@@ -25,6 +25,8 @@ public class Transcation {
 	private String state;
 	// 微信支付流水号
 	private String wxTranscationId;
+	// 对应的订单号
+	private String orderId;
 
 	public int getId() {
 		return id;
@@ -104,6 +106,14 @@ public class Transcation {
 
 	public void setWxTranscationId(String wxTranscationId) {
 		this.wxTranscationId = wxTranscationId;
+	}
+
+	public String getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
 
 }

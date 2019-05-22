@@ -38,6 +38,8 @@ public class Order {
 	private String prepayId;
 	// 用于发送模板消息
 	private String formId;
+	// 从余额中划扣了多少钱
+	private double balanceAmount;
 
 	public int getId() {
 		return id;
@@ -255,6 +257,14 @@ public class Order {
 		this.formId = formId;
 	}
 
+	public double getBalanceAmount() {
+		return balanceAmount;
+	}
+
+	public void setBalanceAmount(double balanceAmount) {
+		this.balanceAmount = balanceAmount;
+	}
+
 	@Override
 	public String toString() {
 		return "Order [id=" + id + ", wechatId=" + wechatId + ", time=" + time + ", state=" + state + ", orderId="
@@ -264,7 +274,8 @@ public class Order {
 				+ ", source=" + source + ", sourceWechatId=" + sourceWechatId + ", sourceOpenId=" + sourceOpenId
 				+ ", bonusAmount=" + bonusAmount + ", promotionIds=" + promotionIds + ", couponId=" + couponId
 				+ ", usedBonus=" + usedBonus + ", usedPoints=" + usedPoints + ", usedCouponCash=" + usedCouponCash
-				+ ", transactionId=" + transactionId + ", prepayId=" + prepayId + ", formId=" + formId + "]";
+				+ ", transactionId=" + transactionId + ", prepayId=" + prepayId + ", formId=" + formId
+				+ ", balanceAmount=" + balanceAmount + "]";
 	}
 
 }

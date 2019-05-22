@@ -23,8 +23,8 @@
 		useGeneratedKeys="true" keyProperty="id" keyColumn="id">
 		insert into
 		transcation
-		(transcationId,openId,type,occur,lastModified,amount,state)
-		values(#{transcationId},#{openId},#{type},#{occur},#{lastModified},#{amount},#{state})
+		(transcationId,openId,type,occur,lastModified,amount,state,orderId)
+		values(#{transcationId},#{openId},#{type},#{occur},#{lastModified},#{amount},#{state},#{orderId})
 	</insert>
 
 	<update id="update" parameterType="hashmap">
