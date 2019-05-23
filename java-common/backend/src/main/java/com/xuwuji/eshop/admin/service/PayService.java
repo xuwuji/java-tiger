@@ -99,9 +99,9 @@ public class PayService {
 				updateUser.setMembershipFirstDay(new Date());
 			}
 		}
-		// 付款后，将积分添加至用户账户内
-		updateUser.setPoints(updateUser.getPoints() + (int) (order.getAmount()));
-		userDao.update(updateUser);
+		// 在用户确认收货后，才将积分进行发放
+		// updateUser.setPoints(updateUser.getPoints() + (int) (order.getAmount()));
+		// userDao.update(updateUser);
 		// 付款后更新库存和销量
 		List<OrderItem> orderItems = orderItemDao.getByOrderId(orderId);
 		for (OrderItem orderItem : orderItems) {
