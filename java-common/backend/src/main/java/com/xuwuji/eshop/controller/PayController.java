@@ -293,16 +293,20 @@ public class PayController {
 						// 说明唤起收银台了，但是还没有付款成功，此时提醒其有待支付的订单
 						templateService.handleWaitPay(order);
 						// 将此条流水置为失败状态
-						transcation.setLastModified(new Date());
-						transcation.setState(TranscationStateEnum.F.getCode());
-						transcationDao.update(transcation);
+						if (transcation != null) {
+							transcation.setLastModified(new Date());
+							transcation.setState(TranscationStateEnum.F.getCode());
+							transcationDao.update(transcation);
+						}
 					}
 				}
 				// 结果码为FAIL时说明此订单号没有调用统一支付，订单不存在或者出现异常
 				else if (result_code.equals(FAIL)) {
-					transcation.setLastModified(new Date());
-					transcation.setState(TranscationStateEnum.F.getCode());
-					transcationDao.update(transcation);
+					if (transcation != null) {
+						transcation.setLastModified(new Date());
+						transcation.setState(TranscationStateEnum.F.getCode());
+						transcationDao.update(transcation);
+					}
 				}
 			}
 			return map;
