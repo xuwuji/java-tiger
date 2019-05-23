@@ -216,7 +216,10 @@ public class PayController {
 				return null;
 			}
 			String transcationId = request.getParameter("transcationId");
-			Transcation transcation = transcationDao.getByTranscationId(transcationId);
+			Transcation transcation = null;
+			if (transcationId != null) {
+				transcation = transcationDao.getByTranscationId(transcationId);
+			}
 			// 生成的随机字符串
 			String nonce_str = WXPayUtil.generateNonceStr();
 			// 组装参数，用户生成统一下单接口的签名
