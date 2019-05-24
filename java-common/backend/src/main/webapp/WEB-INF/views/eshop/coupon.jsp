@@ -93,6 +93,11 @@
 							name="txt_departmentname" data-bind="value:Name"
 							class="form-control" id="add-type" placeholder="0-全场">
 					</div>
+					<div class="form-group">
+						<label for="txt_departmentname">使用对象</label> <input type="text"
+							name="txt_departmentname" data-bind="value:Name"
+							class="form-control" id="add-targetUser" placeholder="1-新人，0-全部">
+					</div>
 
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">
@@ -140,7 +145,7 @@
 						name="txt_departmentname" data-bind="value:Name"
 						class="form-control" id="edit-reduction" placeholder="减额">
 				</div>
-			<!-- 	<div class="form-group">
+				<!-- 	<div class="form-group">
 					<label for="txt_departmentname">起始日期</label> <input type="text"
 						name="txt_departmentname" data-bind="value:Name"
 						class="form-control" id="edit-startDate" placeholder="格式用YYYYMMDD">
@@ -150,16 +155,21 @@
 						name="txt_departmentname" data-bind="value:Name"
 						class="form-control" id="edit-endDate" placeholder="格式用YYYYMMDD">
 				</div> -->
-					<div class="form-group">
-						<label for="txt_departmentname">使用类型</label> <input type="text"
-							name="txt_departmentname" data-bind="value:Name"
-							class="form-control" id="edit-type" placeholder="0-全场">
-					</div>
-						<div class="form-group">
-						<label for="txt_departmentname">状态</label> <input type="text"
-							name="txt_departmentname" data-bind="value:Name"
-							class="form-control" id="edit-state" placeholder="状态">
-					</div>
+				<div class="form-group">
+					<label for="txt_departmentname">使用类型</label> <input type="text"
+						name="txt_departmentname" data-bind="value:Name"
+						class="form-control" id="edit-type" placeholder="0-全场">
+				</div>
+				<div class="form-group">
+					<label for="txt_departmentname">使用对象</label> <input type="text"
+						name="txt_departmentname" data-bind="value:Name"
+						class="form-control" id="edit-targetUser" placeholder="1-新人，0-全部">
+				</div>
+				<div class="form-group">
+					<label for="txt_departmentname">状态</label> <input type="text"
+						name="txt_departmentname" data-bind="value:Name"
+						class="form-control" id="edit-state" placeholder="状态">
+				</div>
 
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">
@@ -205,123 +215,145 @@
 		// clickToSelect: true,                //是否启用点击选中行
 		height : 500, //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
 		uniqueId : "id", //每一行的唯一标识，一般为主键列
-		columns : [ {
-			checkbox : true
-		}, {
-			field : 'id',
-			title : 'id',
-			align : 'center'
-		}, {
-			field : 'name',
-			title : '优惠券名',
-			align : 'center'
-		}, {
-			field : 'total',
-			title : '满额',
-			align : 'center'
-		}, {
-			field : 'reduction',
-			title : '减额',
-			align : 'center',
-		}, 
-		 {
-			field : 'type',
-			title : '使用类型',
-			align : 'center',
-			formatter : function(value, row, index) {
-				if (row.type) {
-					if (row.type == '0') {
-						return "全场通用";
-					} else {
-						return "错误数据";
+		columns : [
+				{
+					checkbox : true
+				},
+				{
+					field : 'id',
+					title : 'id',
+					align : 'center'
+				},
+				{
+					field : 'name',
+					title : '优惠券名',
+					align : 'center'
+				},
+				{
+					field : 'total',
+					title : '满额',
+					align : 'center'
+				},
+				{
+					field : 'reduction',
+					title : '减额',
+					align : 'center',
+				},
+				{
+					field : 'type',
+					title : '使用类型',
+					align : 'center',
+					formatter : function(value, row, index) {
+						if (row.type) {
+							if (row.type == '0') {
+								return "全场通用";
+							} else {
+								return "错误数据";
+							}
+						}
+					}
+				},
+				{
+					field : 'targetUser',
+					title : '使用对象',
+					align : 'center',
+					formatter : function(value, row, index) {
+						if (row.targetUser) {
+							if (row.targetUser == '0') {
+								return "全部";
+							} else if (row.targetUser == '1') {
+								return "新人";
+							} else {
+								return "错误数据";
+							}
+						}
+					}
+				},
+				{
+					field : 'startDate',
+					title : '开始日期',
+					align : 'center',
+					formatter : function(value, row, index) {
+						var unixtimestamp = new Date((row.startDate));
+						var year = 1900 + unixtimestamp.getYear();
+						var month = "0" + (unixtimestamp.getMonth() + 1);
+						var date = "0" + unixtimestamp.getDate();
+						var hour = "0" + unixtimestamp.getHours();
+						var minute = "0" + unixtimestamp.getMinutes();
+						var second = "0" + unixtimestamp.getSeconds();
+						return year
+								+ "-"
+								+ month.substring(month.length - 2,
+										month.length)
+								+ "-"
+								+ date.substring(date.length - 2, date.length)
+								+ " "
+								+ hour.substring(hour.length - 2, hour.length)
+								+ ":"
+								+ minute.substring(minute.length - 2,
+										minute.length)
+								+ ":"
+								+ second.substring(second.length - 2,
+										second.length);
+					}
+				},
+				{
+					field : 'endDate',
+					title : '结束日期',
+					align : 'center',
+					formatter : function(value, row, index) {
+						var unixtimestamp = new Date((row.endDate));
+						var year = 1900 + unixtimestamp.getYear();
+						var month = "0" + (unixtimestamp.getMonth() + 1);
+						var date = "0" + unixtimestamp.getDate();
+						var hour = "0" + unixtimestamp.getHours();
+						var minute = "0" + unixtimestamp.getMinutes();
+						var second = "0" + unixtimestamp.getSeconds();
+						return year
+								+ "-"
+								+ month.substring(month.length - 2,
+										month.length)
+								+ "-"
+								+ date.substring(date.length - 2, date.length)
+								+ " "
+								+ hour.substring(hour.length - 2, hour.length)
+								+ ":"
+								+ minute.substring(minute.length - 2,
+										minute.length)
+								+ ":"
+								+ second.substring(second.length - 2,
+										second.length);
+					}
+				},
+				{
+					field : 'state',
+					title : '状态',
+					align : 'center',
+					formatter : function(value, row, index) {
+						if (row.state) {
+							if (row.state == '0') {
+								return "已下架";
+							} else if (row.state == '1') {
+								return "已上架";
+							} else {
+								return "错误数据";
+							}
+						}
+					}
+				},
+				{
+					title : '操作',
+					field : 'id',
+					formatter : function(id) {
+						var html = '<a href="javascript:edit(' + id
+								+ ')">编辑</a>';
+						html += '　<a href="javascript:disable(' + id
+								+ ')">下架</a>';
+						html += '　<a href="javascript:reActive(' + id
+								+ ')">上架</a>';
+						return html;
 					}
 				}
-			}
-		}, 
-		{
-			field : 'startDate',
-			title : '开始日期',
-			align : 'center',
-			formatter : function(value, row, index) {
-				var unixtimestamp = new Date((row.startDate));
-				var year = 1900 + unixtimestamp.getYear();
-				var month = "0" + (unixtimestamp.getMonth() + 1);
-				var date = "0" + unixtimestamp.getDate();
-				var hour = "0" + unixtimestamp.getHours();
-				var minute = "0" + unixtimestamp.getMinutes();
-				var second = "0" + unixtimestamp.getSeconds();
-				return year
-						+ "-"
-						+ month.substring(month.length - 2,
-								month.length)
-						+ "-"
-						+ date.substring(date.length - 2,
-								date.length)
-						+ " "
-						+ hour.substring(hour.length - 2,
-								hour.length)
-						+ ":"
-						+ minute.substring(minute.length - 2,
-								minute.length)
-						+ ":"
-						+ second.substring(second.length - 2,
-								second.length);
-			}
-		},
-		{
-			field : 'endDate',
-			title : '结束日期',
-			align : 'center',
-			formatter : function(value, row, index) {
-				var unixtimestamp = new Date((row.endDate));
-				var year = 1900 + unixtimestamp.getYear();
-				var month = "0" + (unixtimestamp.getMonth() + 1);
-				var date = "0" + unixtimestamp.getDate();
-				var hour = "0" + unixtimestamp.getHours();
-				var minute = "0" + unixtimestamp.getMinutes();
-				var second = "0" + unixtimestamp.getSeconds();
-				return year
-						+ "-"
-						+ month.substring(month.length - 2,
-								month.length)
-						+ "-"
-						+ date.substring(date.length - 2,
-								date.length)
-						+ " "
-						+ hour.substring(hour.length - 2,
-								hour.length)
-						+ ":"
-						+ minute.substring(minute.length - 2,
-								minute.length)
-						+ ":"
-						+ second.substring(second.length - 2,
-								second.length);
-			}
-		},{
-			field : 'state',
-			title : '状态',
-			align : 'center',
-			formatter : function(value, row, index) {
-				if (row.state) {
-					if (row.state == '0') {
-						return "已下架";
-					} else if (row.state == '1') {
-						return "已上架";
-					} else {
-						return "错误数据";
-					}
-				}
-			}
-		}, {
-			title : '操作',
-			field : 'id',
-			formatter : function(id) {
-				var html = '<a href="javascript:edit(' + id + ')">编辑</a>';
-				html += '　<a href="javascript:disable(' + id + ')">下架</a>';
-				html += '　<a href="javascript:reActive(' + id + ')">上架</a>';
-				return html;
-			}
-		}
 
 		]
 	});
@@ -342,6 +374,7 @@
 		var startDate = $('#add-startDate').val();
 		var endDate = $('#add-endDate').val();
 		var type = $('#add-type').val();
+		var targetUser = $('#add-targetUser').val();
 		$.ajax({
 			url : "/backend/admin/coupon/add",
 			type : "post",
@@ -349,9 +382,10 @@
 				name : name,
 				total : total,
 				reduction : reduction,
-				startDate:startDate,
-				endDate:endDate,
-				type:type,
+				startDate : startDate,
+				endDate : endDate,
+				type : type,
+				targetUser : targetUser,
 			},
 			success : function(status) {
 				$table.bootstrapTable('refresh');
@@ -371,6 +405,7 @@
 			$('#edit-endDate').val(row.endDate);
 			$('#edit-type').val(row.type);
 			$('#edit-state').val(row.state);
+			$('#edit-targetUser').val(row.targetUser);
 		});
 	}
 
@@ -384,6 +419,7 @@
 		var type = $('#edit-type').val();
 		var state = $('#edit-state').val();
 		var id = $('#edit-id').val();
+		var targetUser = $('#edit-targetUser').val();
 		$.ajax({
 			url : "/backend/admin/coupon/update",
 			type : "post",
@@ -394,8 +430,10 @@
 				reduction : reduction,
 				//startDate:startDate,
 				//endDate:endDate,
-				type:type,
-				state:state
+				type : type,
+				state : state,
+				targetUser : targetUser,
+
 			},
 			success : function(status) {
 				$table.bootstrapTable('refresh');

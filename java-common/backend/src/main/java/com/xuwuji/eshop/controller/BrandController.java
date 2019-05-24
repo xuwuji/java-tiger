@@ -2,8 +2,10 @@ package com.xuwuji.eshop.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.TreeSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -90,6 +92,25 @@ public class BrandController {
 			return brand;
 		}
 		return null;
+	}
+
+	@RequestMapping(value = "/getByIds", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Brand> getByIds(@RequestParam("ids") String ids, HttpServletRequest request,
+			HttpServletResponse response) {
+		List<Brand> list = new ArrayList<Brand>();
+		List<Brand> result = new ArrayList<Brand>();
+		Set<String> idsList = new HashSet<String>();
+		String[] temp = ids.split(",");
+		for (String t : temp) {
+			idsList.add(t);
+		}
+		list = brandDao.getByIds(idsList);
+		for (Brand brand : list) {
+			brand.setImgUrl(eshopConfigUtil.getParam(eshopConfigUtil.BRAND_IMG_BASE) + brand.getId() + ".jpg");
+			result.add(brand);
+		}
+		return result;
 	}
 
 	@RequestMapping(value = "/getActiveCountry", method = RequestMethod.GET)

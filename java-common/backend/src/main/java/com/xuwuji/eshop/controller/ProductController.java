@@ -103,11 +103,26 @@ public class ProductController {
 		List<String> imgUrls = new ArrayList<String>();
 		String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
 		String PRODUCT_DETAIL_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_DETAIL_IMG_BASE);
-
 		for (int i = 1; i < 5; i++) {
 			imgUrls.add(PRODUCT_IMG_BASE + id + "-" + i + ".jpg");
 		}
 		product.setImgUrls(imgUrls);
+		// 获得需要展示详情的分类id
+		String[] showDetailIds = eshopConfigUtil.getParam(eshopConfigUtil.SHOW_DETAIL_IDS).split(";");
+		String categoryId = product.getCategoryId();
+		for (String cid : showDetailIds) {
+			if (cid.equals(categoryId)) {
+				List<String> detailImgUrls = new ArrayList<String>();
+				for (int i = 0; i < 6; i++) {
+					String detailImgUrl = PRODUCT_DETAIL_IMG_BASE + id + "-" + i + ".jpg";
+					// 检查详情图片是否存在
+					if (HttpUtil.checkValid(detailImgUrl)) {
+						detailImgUrls.add(detailImgUrl);
+					}
+					product.setDetailImgUrls(detailImgUrls);
+				}
+			}
+		}
 		// 由于检查详情图片时间较长，此版本先省略
 		// detail img urls
 		// List<String> detailImgUrls = new ArrayList<String>();

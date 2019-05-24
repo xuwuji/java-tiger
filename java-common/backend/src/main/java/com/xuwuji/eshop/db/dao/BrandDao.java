@@ -3,6 +3,7 @@ package com.xuwuji.eshop.db.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Component;
@@ -127,6 +128,24 @@ public class BrandDao {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("id", id);
 			result = mapper.getById(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+
+	public List<Brand> getByIds(Set<String> ids) {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<Brand> result = new ArrayList<Brand>();
+		try {
+			BrandMapper mapper = session.getMapper(BrandMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("ids", ids);
+			result = mapper.getByIds(map);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();

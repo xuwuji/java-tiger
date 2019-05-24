@@ -1,5 +1,6 @@
 package com.xuwuji.eshop.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.xuwuji.eshop.model.BannerItem;
 import com.xuwuji.eshop.model.Config;
+import com.xuwuji.eshop.model.TopUpConfig;
 import com.xuwuji.eshop.util.EshopConfigUtil;
 import com.xuwuji.eshop.util.TokenUtil;
 
@@ -23,6 +24,9 @@ import com.xuwuji.eshop.util.TokenUtil;
 public class ConfigController {
 	@Autowired
 	private EshopConfigUtil eshopConfigUtil;
+
+	@Autowired
+	private TopUpConfig topupConfig;
 
 	@RequestMapping(value = "/getBaseConfig", method = RequestMethod.GET)
 	@ResponseBody
@@ -38,6 +42,7 @@ public class ConfigController {
 		eshopConfig.setLicenceImgUrl(eshopConfigUtil.getParam(eshopConfigUtil.LICENCE_IMG_URL));
 		eshopConfig.setShareImgUrl(eshopConfigUtil.getParam(eshopConfigUtil.SHARE_IMG_URL));
 		eshopConfig.setBonusImgUrl(eshopConfigUtil.getParam(eshopConfigUtil.BONUS_IMG_URL));
+		eshopConfig.setMinMoney(eshopConfigUtil.getParam(eshopConfigUtil.MIN_MONEY));
 		return eshopConfig;
 	}
 
@@ -48,6 +53,12 @@ public class ConfigController {
 		String code = request.getParameter("code");
 		eshopConfig.setOpenId(TokenUtil.getOpenId(code));
 		return eshopConfig;
+	}
+
+	@RequestMapping(value = "/topupConfig", method = RequestMethod.GET)
+	@ResponseBody
+	public TopUpConfig topupConfig(HttpServletRequest request, HttpServletResponse response) {
+		return topupConfig;
 	}
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
@@ -122,7 +133,8 @@ public class ConfigController {
 		public String licenceImgUrl;
 		public String shareImgUrl;
 		public String articleImgUrl;
-		private String bonusImgUrl;
+		public String bonusImgUrl;
+		public String minMoney;
 
 		public String getXxcUrl() {
 			return xxcUrl;
@@ -234,6 +246,14 @@ public class ConfigController {
 
 		public void setBonusImgUrl(String bonusImgUrl) {
 			this.bonusImgUrl = bonusImgUrl;
+		}
+
+		public String getMinMoney() {
+			return minMoney;
+		}
+
+		public void setMinMoney(String minMoney) {
+			this.minMoney = minMoney;
 		}
 
 	}

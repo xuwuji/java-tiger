@@ -19,6 +19,7 @@ import com.xuwuji.eshop.db.dao.CategoryDao;
 import com.xuwuji.eshop.db.dao.ParentCategoryDao;
 import com.xuwuji.eshop.model.Category;
 import com.xuwuji.eshop.model.ParentCategory;
+import com.xuwuji.eshop.util.EshopConfigUtil;
 
 /**
  * 
@@ -32,6 +33,9 @@ public class AdminCategoryController {
 	@Autowired
 	private CategoryDao categoryDao;
 
+	@Autowired
+	private EshopConfigUtil eshopConfigUtil;
+
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
 		return new ModelAndView("/eshop/category");
@@ -43,13 +47,13 @@ public class AdminCategoryController {
 		String name = request.getParameter("name");
 		String desc = request.getParameter("desc");
 		String parentCategoryId = request.getParameter("parentCategoryId");
-		//String imgUrl = request.getParameter("imgUrl");
-		//System.out.println(imgUrl);
-		//System.out.println(parentCategoryId);
+		// String imgUrl = request.getParameter("imgUrl");
+		// System.out.println(imgUrl);
+		// System.out.println(parentCategoryId);
 		Category category = new Category();
 		category.setDescription(desc);
 		category.setName(name);
-		//category.setImgUrl(imgUrl);
+		// category.setImgUrl(imgUrl);
 		category.setParentCategoryId(parentCategoryId);
 		categoryDao.add(category);
 	}
@@ -129,6 +133,12 @@ public class AdminCategoryController {
 		category.setImgUrl(imgUrl);
 		category.setParentCategoryId(parentCategoryId);
 		categoryDao.update(category);
+	}
+
+	@RequestMapping(value = "/getShowTwoCategoryIds", method = RequestMethod.GET)
+	@ResponseBody
+	public String getShowTwoCategoryIds() {
+		return eshopConfigUtil.getParam(eshopConfigUtil.SHOW_TWO_CATEGORY_IDS);
 	}
 
 }

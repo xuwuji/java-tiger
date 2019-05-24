@@ -17,6 +17,8 @@ public interface BrandMapper {
 
 	public List<Brand> getById(HashMap<String, Object> map);
 
+	public List<Brand> getByIds(HashMap<String, Object> map);
+
 	public List<Brand> getAll();
 
 	public List<Brand> getActiveAll();
@@ -26,5 +28,5 @@ public interface BrandMapper {
 	public List<String> getActiveCountry();
 
 	public List<Brand> getActiveAllByCountry(HashMap<String, Object> map);
-	
+
 }

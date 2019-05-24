@@ -37,7 +37,7 @@
 		update user set
 		state=#{state},bonusAmount=#{bonusAmount},level=#{level},totalPay=#{totalPay},
 		membershipFirstDay=#{membershipFirstDay},amountAfterMSFD=#{amountAfterMSFD},amountThisMonth=#{amountThisMonth},
-		points=#{points}
+		points=#{points},balance=#{balance}
 		where openId=#{openId};
 	</update>
 
@@ -58,6 +58,12 @@
 		<if test="openId != null and openId !=''">
 			openId=#{openId};
 		</if>
+	</update>
+
+	<update id="updateBalance" parameterType="hashmap">
+		update user set
+		balance=#{balance}
+		where openId=#{openId};
 	</update>
 
 	<update id="updateLastCheckInDate" parameterType="hashmap">

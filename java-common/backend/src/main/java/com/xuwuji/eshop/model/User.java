@@ -22,10 +22,12 @@ public class User {
 	private int lotteryRemainCount;
 	// 抽奖累计次数
 	private int lotteryTotalCount;
-	// 账户余额
-	private double balance;
 	// 通过抽奖得到的金额
 	private double lotteryAmount;
+	/**
+	 * 用户账户余额
+	 */
+	private double balance;
 
 	public int getId() {
 		return id;
@@ -43,20 +45,20 @@ public class User {
 		this.openId = openId;
 	}
 
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
 	public String getWechatId() {
 		return wechatId;
 	}
 
 	public void setWechatId(String wechatId) {
 		this.wechatId = wechatId;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 
 	public double getBonusAmount() {
@@ -147,20 +149,20 @@ public class User {
 		this.lotteryTotalCount = lotteryTotalCount;
 	}
 
-	public double getBalance() {
-		return balance;
-	}
-
-	public void setBalance(double balance) {
-		this.balance = balance;
-	}
-
 	public double getLotteryAmount() {
 		return lotteryAmount;
 	}
 
 	public void setLotteryAmount(double lotteryAmount) {
 		this.lotteryAmount = lotteryAmount;
+	}
+
+	public double getBalance() {
+		return balance;
+	}
+
+	public void setBalance(double balance) {
+		this.balance = balance;
 	}
 
 	@Override
@@ -170,8 +172,8 @@ public class User {
 				+ ", membershipFirstDay=" + membershipFirstDay + ", amountAfterMSFD=" + amountAfterMSFD
 				+ ", amountThisMonth=" + amountThisMonth + ", points=" + points + ", lastCheckInDate=" + lastCheckInDate
 				+ ", continuousNum=" + continuousNum + ", lotteryRemainCount=" + lotteryRemainCount
-				+ ", lotteryTotalCount=" + lotteryTotalCount + ", balance=" + balance + ", lotteryAmount="
-				+ lotteryAmount + "]";
+				+ ", lotteryTotalCount=" + lotteryTotalCount + ", lotteryAmount=" + lotteryAmount + ", balance="
+				+ balance + "]";
 	}
 
 }

@@ -17,6 +17,7 @@
 			javaType="java.util.Date" jdbcType="DATE"></result>
 		<result property="endDate" column="type"
 			javaType="java.util.Date" jdbcType="DATE"></result>
+		<result property="targetUser" column="type"></result>
 	</resultMap>
 
 	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"

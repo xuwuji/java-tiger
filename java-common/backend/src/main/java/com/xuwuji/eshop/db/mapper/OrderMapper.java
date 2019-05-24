@@ -29,4 +29,6 @@ public interface OrderMapper {
 
 	public List<Order> getAll();
 
+	public void updateBalanceAmount(HashMap<String, Object> map);
+
 }

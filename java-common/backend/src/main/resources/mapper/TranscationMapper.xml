@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuwuji.eshop.db.mapper.TranscationMapper">
+
+
+	<resultMap type="Transcation" id="transcationResult">
+		<id property="id" column="id"></id>
+		<result property="transcationId" column="type"></result>
+		<result property="openId" column="type"></result>
+		<result property="type" column="type"></result>
+		<result property="occur" column="java.util.Date"></result>
+		<result property="prepayId" column="type"></result>
+		<result property="state" column="type"></result>
+		<result property="amount" column="type"></result>
+		<result property="lastModified" column="type"></result>
+		<result property="wxTranscationId" column="type"></result>
+	</resultMap>
+
+	<insert id="add" parameterType="Transcation"
+		useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		insert into
+		transcation
+		(transcationId,openId,type,occur,lastModified,amount,state,orderId)
+		values(#{transcationId},#{openId},#{type},#{occur},#{lastModified},#{amount},#{state},#{orderId})
+	</insert>
+
+	<update id="update" parameterType="hashmap">
+		update transcation set
+		prePayId=#{prePayId} ,
+		state=#{state},wxTranscationId=#{wxTranscationId},lastModified=#{lastModified}
+		where
+		transcationId=#{transcationId};
+	</update>
+
+	<select id="getByTranscationId" resultType="Transcation">
+		select * from
+		transcation
+		where
+		transcationId=#{transcationId};
+	</select>
+</mapper>

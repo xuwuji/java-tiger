@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuwuji.eshop.db.mapper.AddressMapper">
+
+
+	<resultMap type="Address" id="addressResult">
+		<id property="id" column="id"></id>
+		<result property="name" column="type"></result>
+		<result property="openId" column="type"></result>
+		<result property="wechatId" column="type"></result>
+		<result property="phone" column="type"></result>
+		<result property="address" column="type"></result>
+		<result property="state" column="type"></result>
+	</resultMap>
+
+	<insert id="add" parameterType="Address" useGeneratedKeys="true"
+		keyProperty="id" keyColumn="id">
+		insert into address
+		(name,openId,wechatId,phone,address,state)
+		values(#{name},#{openId},#{wechatId},#{phone},#{address},'1')
+	</insert>
+
+	<select id="getAllByOpenId" resultType="Address">
+		select * from
+		address
+		where
+		openId=#{openId} and state='1';
+	</select>
+
+	<select id="delete" resultType="Address">
+		update address set state ='0'
+		where id=#{id}
+	</select>
+</mapper>

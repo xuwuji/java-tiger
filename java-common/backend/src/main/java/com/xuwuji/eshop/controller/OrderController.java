@@ -208,15 +208,15 @@ public class OrderController {
 		List<Order> orders = new ArrayList<Order>();
 		orders = orderDao.getAllByOpenId(openId);
 		HashMap<String, Integer> count = new HashMap<String, Integer>();
-		count.put("notPay",0);
-		count.put("notSend",0);
-		count.put("delivered",0);
+		count.put("notPay", 0);
+		count.put("notSend", 0);
+		count.put("delivered", 0);
 		for (Order order : orders) {
 			if (order.getState().equals(OrderStatus.NOTPAY.getCode())) {
 				count.put("notPay", count.get("notPay") + 1);
 			} else if (order.getState().equals(OrderStatus.NOTSEND.getCode())) {
 				count.put("notSend", count.get("notSend") + 1);
-			} else if (order.getState().equals(OrderStatus.NOTPAY.getCode())) {
+			} else if (order.getState().equals(OrderStatus.DELIVERED.getCode())) {
 				count.put("delivered", count.get("delivered") + 1);
 			}
 		}
@@ -235,16 +235,22 @@ public class OrderController {
 		order.setState(state);
 		order.setLogisticsId(logisticsId);
 		order.setLogisticsName(logisticsName);
+		Order tempOrder = orderDao.getOrderInfoByOrderId(orderId);
+		String openId = tempOrder.getOpenId();
+		User user = new User();
+		user.setOpenId(openId);
+		user = userDao.getByCondition(user);
+		// 取消订单
 		if (state.equals("-1")) {
-			Order tempOrder = orderDao.getOrderInfoByOrderId(orderId);
-			String openId = tempOrder.getOpenId();
 			// 取消付款，将积分和红包加回去
-			User user = new User();
-			user.setOpenId(openId);
-			user = userDao.getByCondition(user);
 			user.setPoints(user.getPoints() + tempOrder.getUsedPoints());
 			user.setBonusAmount(user.getBonusAmount() + tempOrder.getUsedBonus());
 			userDao.update(user);
+		}
+		// 确认收货
+		else if (state.equals("3")) {
+			// 将积分添加至用户账户内
+			user.setPoints(user.getPoints() + (int) (tempOrder.getAmount()));
 			userDao.updatePoints(user);
 		}
 		orderDao.update(order);

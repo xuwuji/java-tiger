@@ -51,6 +51,7 @@ public class UserDao {
 			map.put("amountAfterMSFD", user.getAmountAfterMSFD());
 			map.put("amountThisMonth", user.getAmountThisMonth());
 			map.put("points", user.getPoints());
+			map.put("balance", user.getBalance());
 			mapper.update(map);
 			session.commit();
 		} catch (Exception e) {
@@ -79,14 +80,14 @@ public class UserDao {
 		}
 	}
 
-	public void updateBalance(User user) {
+	public void updateBalance(String openId, double balance) {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
 			UserMapper mapper = session.getMapper(UserMapper.class);
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("openId", user.getOpenId());
-			map.put("balance", user.getBalance());
-			mapper.updateState(map);
+			map.put("openId", openId);
+			map.put("balance", balance);
+			mapper.updateBalance(map);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
