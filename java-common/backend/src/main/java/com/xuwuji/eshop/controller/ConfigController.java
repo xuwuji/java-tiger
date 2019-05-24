@@ -1,6 +1,5 @@
 package com.xuwuji.eshop.controller;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.xuwuji.eshop.model.Config;
+import com.xuwuji.eshop.model.LotteryConstants;
 import com.xuwuji.eshop.model.TopUpConfig;
 import com.xuwuji.eshop.util.EshopConfigUtil;
 import com.xuwuji.eshop.util.TokenUtil;
@@ -43,6 +43,13 @@ public class ConfigController {
 		eshopConfig.setShareImgUrl(eshopConfigUtil.getParam(eshopConfigUtil.SHARE_IMG_URL));
 		eshopConfig.setBonusImgUrl(eshopConfigUtil.getParam(eshopConfigUtil.BONUS_IMG_URL));
 		eshopConfig.setMinMoney(eshopConfigUtil.getParam(eshopConfigUtil.MIN_MONEY));
+		eshopConfig.setLotteryStageOne(eshopConfigUtil.getParam(LotteryConstants.LOTTERY_STAGE_ONE));
+		eshopConfig.setLotteryStageTwo(eshopConfigUtil.getParam(LotteryConstants.LOTTERY_STAGE_TWO));
+		eshopConfig.setAmountPerInStageOne(eshopConfigUtil.getParam(LotteryConstants.AMOUNT_PER_IN_STAGE_ONE));
+		eshopConfig.setAmountMaxInStageOne(eshopConfigUtil.getParam(LotteryConstants.AMOUNT_MAX_IN_STAGE_ONE));
+		eshopConfig.setAmountPerInStageTwo(eshopConfigUtil.getParam(LotteryConstants.AMOUNT_PER_IN_STAGE_TWO));
+		eshopConfig.setAmountMaxInStageTwo(eshopConfigUtil.getParam(LotteryConstants.AMOUNT_MAX_IN_STAGE_TWO));
+		eshopConfig.setAmountPerOverStageTwo(eshopConfigUtil.getParam(LotteryConstants.AMOUNR_PER_OVER_STAGE_TWO));
 		return eshopConfig;
 	}
 
@@ -135,6 +142,20 @@ public class ConfigController {
 		public String articleImgUrl;
 		public String bonusImgUrl;
 		public String minMoney;
+		// 第一阶段
+		public String lotteryStageOne;
+		// 第二阶段
+		public String lotteryStageTwo;
+		// 第一阶段内单次最多抽到的金额
+		public String amountPerInStageOne;
+		// 第一阶段最多抽到的金额
+		public String amountMaxInStageOne;
+		// 第二阶段内单次最多抽到的金额
+		public String amountPerInStageTwo;
+		// 第二阶段最多抽到的金额
+		public String amountMaxInStageTwo;
+		// 第二阶段外单次最多抽到的金额
+		public String amountPerOverStageTwo;
 
 		public String getXxcUrl() {
 			return xxcUrl;
@@ -254,6 +275,62 @@ public class ConfigController {
 
 		public void setMinMoney(String minMoney) {
 			this.minMoney = minMoney;
+		}
+
+		public String getLotteryStageOne() {
+			return lotteryStageOne;
+		}
+
+		public void setLotteryStageOne(String lotteryStageOne) {
+			this.lotteryStageOne = lotteryStageOne;
+		}
+
+		public String getLotteryStageTwo() {
+			return lotteryStageTwo;
+		}
+
+		public void setLotteryStageTwo(String lotteryStageTwo) {
+			this.lotteryStageTwo = lotteryStageTwo;
+		}
+
+		public String getAmountPerInStageOne() {
+			return amountPerInStageOne;
+		}
+
+		public void setAmountPerInStageOne(String amountPerInStageOne) {
+			this.amountPerInStageOne = amountPerInStageOne;
+		}
+
+		public String getAmountMaxInStageOne() {
+			return amountMaxInStageOne;
+		}
+
+		public void setAmountMaxInStageOne(String amountMaxInStageOne) {
+			this.amountMaxInStageOne = amountMaxInStageOne;
+		}
+
+		public String getAmountPerInStageTwo() {
+			return amountPerInStageTwo;
+		}
+
+		public void setAmountPerInStageTwo(String amountPerInStageTwo) {
+			this.amountPerInStageTwo = amountPerInStageTwo;
+		}
+
+		public String getAmountMaxInStageTwo() {
+			return amountMaxInStageTwo;
+		}
+
+		public void setAmountMaxInStageTwo(String amountMaxInStageTwo) {
+			this.amountMaxInStageTwo = amountMaxInStageTwo;
+		}
+
+		public String getAmountPerOverStageTwo() {
+			return amountPerOverStageTwo;
+		}
+
+		public void setAmountPerOverStageTwo(String amountPerOverStageTwo) {
+			this.amountPerOverStageTwo = amountPerOverStageTwo;
 		}
 
 	}

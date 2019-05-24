@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.xuwuji.eshop.db.mapper.LotteryShareHistoryMapper">
+
+
+	<resultMap type="lotteryShareHistory"
+	id="LotteryHistoryResult">
+		<id property="id" column="id"></id>
+		<result property="sourceUser" column="type"></result>
+		<result property="openUser" column="type"></result>
+		<result property="occur" column="DATE"
+			javaType="java.util.Date" jdbcType="DATE"></result>
+	</resultMap>
+
+	<insert id="add" parameterType="lotteryShareHistory"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into lotterysharehistory
+		(sourceUser,openUser,occur)
+		values(#{sourceUser},#{openUser},now())
+	</insert>
+
+	<select id="getBysourceUser" resultType="lotteryShareHistory">
+		select * from
+		lotterysharehistory
+		where
+		sourceUser=#{sourceUser} order by id desc;
+	</select>
+
+	<select id="checkExist" resultType="lotteryShareHistory">
+		select * from
+		lotterysharehistory
+		where
+		sourceUser=#{sourceUser} and openUser
+		=#{openUser};
+	</select>
+
+</mapper>

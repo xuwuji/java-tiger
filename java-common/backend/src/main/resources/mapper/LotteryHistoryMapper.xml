@@ -15,7 +15,7 @@
 		<result property="type" column="type"></result>
 		<result property="time" column="DATE" javaType="java.util.Date"
 			jdbcType="DATE"></result>
-		<result property="state" column="type"></result>
+		<result property="checkState" column="type"></result>
 		<result property="lotteryTranscationId" column="type"></result>
 		<result property="isLuck" column="type"></result>
 	</resultMap>
@@ -23,7 +23,7 @@
 	<insert id="add" parameterType="lotteryHistory"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into lotteryhistory
-		(name,openId,amount,type,time,state,lotteryTranscationId,isLuck)
+		(name,openId,amount,type,time,checkState,lotteryTranscationId,isLuck)
 		values(#{name},#{openId},#{amount},#{type},now(),0,#{lotteryTranscationId},#{isLuck})
 	</insert>
 

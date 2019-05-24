@@ -1,5 +1,11 @@
 package com.xuwuji.eshop.controller;
 
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,14 +16,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xuwuji.eshop.db.dao.LotteryHistoryDao;
+import com.xuwuji.eshop.db.dao.LotteryShareHistoryDao;
 import com.xuwuji.eshop.db.dao.UserDao;
 import com.xuwuji.eshop.model.Lottery;
+import com.xuwuji.eshop.model.LotteryConfig;
 import com.xuwuji.eshop.model.LotteryConstants;
 import com.xuwuji.eshop.model.LotteryHistory;
+import com.xuwuji.eshop.model.LotteryShareHistory;
 import com.xuwuji.eshop.model.LotteryState;
 import com.xuwuji.eshop.model.LotteryType;
 import com.xuwuji.eshop.model.User;
 import com.xuwuji.eshop.model.UserState;
+import com.xuwuji.eshop.util.EshopConfigUtil;
 import com.xuwuji.eshop.util.StringUtil;
 
 /**
@@ -34,6 +44,10 @@ public class LotteryController {
 	private UserDao userDao;
 	@Autowired
 	private LotteryHistoryDao lotteryHistoryDao;
+	@Autowired
+	private EshopConfigUtil eshopConfigUtil;
+	@Autowired
+	private LotteryShareHistoryDao lotteryShareHistoryDao;
 
 	/**
 	 * 获取此用户的抽奖相关信息
@@ -69,6 +83,7 @@ public class LotteryController {
 	@RequestMapping(value = "/getLotteryByOpenId", method = RequestMethod.GET)
 	@ResponseBody
 	public Lottery getLotteryByOpenId(HttpServletRequest request, HttpServletResponse response) {
+		Random random = new Random();
 		String openId = request.getParameter("openId");
 		User user = new User();
 		user.setOpenId(openId);
@@ -88,11 +103,13 @@ public class LotteryController {
 		// 默认不中奖
 		lottery.setName("再接再厉哦");
 		lottery.setLuck(false);
-		if (currentLotteryTranscationId < LotteryConstants.TEN) {
-			// 若目前抽奖累计金额还未到达10次可以得到的最大金额，则可以继续抽奖
-			if (lotteryAmount < LotteryConstants.AMOUNT_MAX_IN_TEN) {
-				// 1-10次，单次max
-				luckMoney = Math.random() * LotteryConstants.AMOUNT_MAX_PER_IN_TEN;
+		LotteryConfig lotteryConfig = getLotteryConfig();
+		// 处于第一阶段内
+		if (currentLotteryTranscationId < lotteryConfig.getLotteryStageOne()) {
+			// 若目前抽奖累计金额还未到达第一阶段最大金额，则可以继续抽奖
+			if (lotteryAmount < lotteryConfig.getAmountMaxInStageOne()) {
+				// 单次
+				luckMoney = random.nextDouble() * lotteryConfig.getAmountPerInStageOne();
 				// 保留两位小数
 				luckMoney = (double) Math.round(luckMoney * 100) / 100;
 				lottery.setType(LotteryType.MONEY.getCode());
@@ -101,18 +118,35 @@ public class LotteryController {
 				lottery.setLuck(true);
 			}
 		}
-//		else if (currentLotteryTranscationId == LotteryConstants.TEN) {
-//			// 若经过九次还没达到10元，则第十次补剩余金额
-//			if (lotteryAmount < LotteryConstants.AMOUNT_MAX_IN_TEN) {
-//				luckMoney = (double) (10.00 - lotteryAmount);
-//				// 保留两位小数
-//				luckMoney = (double) Math.round(luckMoney * 100) / 100;
-//				lottery.setType(LotteryType.MONEY.getCode());
-//				lottery.setAmount(luckMoney);
-//				lottery.setName(luckMoney + "元红包");
-//				lottery.setLuck(true);
-//			}
-//		}
+		// 处于第二阶段内
+		else if (currentLotteryTranscationId < lotteryConfig.getLotteryStageTwo()) {
+			// 若目前抽奖累计金额还未到达第二阶段最大金额，则可以继续抽奖
+			if (lotteryAmount < lotteryConfig.getAmountMaxInStageTwo()) {
+				// 单次
+				luckMoney = random.nextDouble() * lotteryConfig.getAmountPerInStageTwo();
+				// 保留两位小数
+				luckMoney = (double) Math.round(luckMoney * 100) / 100;
+				lottery.setType(LotteryType.MONEY.getCode());
+				lottery.setAmount(luckMoney);
+				lottery.setName(luckMoney + "元红包");
+				lottery.setLuck(true);
+			}
+		}
+		// 抽奖次数已经超过第二阶段
+		else {
+			// 随机判断是否中奖，三分之一的概率
+			int randomNum = random.nextInt(3);
+			if (randomNum == 0) {
+				// 单次
+				luckMoney = Math.random() * lotteryConfig.getAmountPerOverStageTwo();
+				// 保留两位小数
+				luckMoney = (double) Math.round(luckMoney * 100) / 100;
+				lottery.setType(LotteryType.MONEY.getCode());
+				lottery.setAmount(luckMoney);
+				lottery.setName(luckMoney + "元红包");
+				lottery.setLuck(true);
+			}
+		}
 		// 将剩余次数减一
 		userFromDB.setLotteryRemainCount(userFromDB.getLotteryRemainCount() - 1);
 		// 将累计抽奖次数加一
@@ -134,6 +168,44 @@ public class LotteryController {
 	}
 
 	/**
+	 * 打开分享页面，增加分享人的抽奖次
+	 * 
+	 * 增加抽奖次数条件：打开人是第一次打开分享人的页面
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/getLotteryByOpenId", method = RequestMethod.GET)
+	@ResponseBody
+	public void openLotterySharePage(HttpServletRequest request, HttpServletResponse response) {
+		String sourceUser = request.getParameter("sourceUser");
+		String openUser = request.getParameter("openUser");
+		List<LotteryShareHistory> result = lotteryShareHistoryDao.checkExist(sourceUser, openUser);
+		// 表里无记录，说明此打开人是第一次打开此分享人的记录
+		if (result.size() == 0) {
+			/**
+			 * 
+			 * 1、增加分享人的抽奖次数
+			 * 
+			 * 2、添加此分享的记录，下次再分享给这个打开人就不会重复增加抽奖次数了
+			 * 
+			 */
+			User user = new User();
+			user.setOpenId(sourceUser);
+			user = userDao.getByCondition(user);
+			user.setLotteryRemainCount(user.getLotteryRemainCount() + 1);
+			userDao.updateLotteryInfo(user);
+			
+			LotteryShareHistory lotteryShareHistory = new LotteryShareHistory();
+			lotteryShareHistory.setOccur(new Date());
+			lotteryShareHistory.setOpenUser(openUser);
+			lotteryShareHistory.setSourceUser(sourceUser);
+			lotteryShareHistoryDao.add(lotteryShareHistory);
+		}
+	}
+
+	/**
 	 * 将用户此次抽奖情况纪录在表内
 	 * 
 	 * @return
@@ -151,4 +223,20 @@ public class LotteryController {
 		return lotteryHistory;
 	}
 
+	private LotteryConfig getLotteryConfig() {
+		LotteryConfig lotteryConfig = new LotteryConfig();
+		lotteryConfig.setLotteryStageOne(Integer.valueOf(eshopConfigUtil.getParam(LotteryConstants.LOTTERY_STAGE_ONE)));
+		lotteryConfig.setLotteryStageTwo(Integer.valueOf(eshopConfigUtil.getParam(LotteryConstants.LOTTERY_STAGE_TWO)));
+		lotteryConfig.setAmountPerInStageOne(
+				Double.valueOf(eshopConfigUtil.getParam(LotteryConstants.AMOUNT_PER_IN_STAGE_ONE)));
+		lotteryConfig.setAmountMaxInStageOne(
+				Double.valueOf(eshopConfigUtil.getParam(LotteryConstants.AMOUNT_MAX_IN_STAGE_ONE)));
+		lotteryConfig.setAmountPerInStageTwo(
+				Double.valueOf(eshopConfigUtil.getParam(LotteryConstants.AMOUNT_PER_IN_STAGE_TWO)));
+		lotteryConfig.setAmountMaxInStageTwo(
+				Double.valueOf(eshopConfigUtil.getParam(LotteryConstants.AMOUNT_MAX_IN_STAGE_TWO)));
+		lotteryConfig.setAmountPerOverStageTwo(
+				Double.valueOf(eshopConfigUtil.getParam(LotteryConstants.AMOUNR_PER_OVER_STAGE_TWO)));
+		return lotteryConfig;
+	}
 }

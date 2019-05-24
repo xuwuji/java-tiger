@@ -12,12 +12,13 @@ public class LotteryHistory {
 
 	private int id;
 	private String openId;
+	// @{link LotteryType} 现金还是礼品
 	private String type;
 	private String name;
 	private double amount;
 	private Date time;
 	// 如果是抽到商品的话，判断是否已经兑换
-	private String state;
+	private String checkState;
 	// 这一次属于用户的第几次抽奖
 	private String lotteryTranscationId;
 	// @{link LotteryState} 是否中奖
@@ -67,16 +68,16 @@ public class LotteryHistory {
 		return time;
 	}
 
+	public String getCheckState() {
+		return checkState;
+	}
+
+	public void setCheckState(String checkState) {
+		this.checkState = checkState;
+	}
+
 	public void setTime(Date time) {
 		this.time = time;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
 	}
 
 	public String getLotteryTranscationId() {
