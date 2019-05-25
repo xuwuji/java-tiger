@@ -119,6 +119,8 @@ public class UserController {
 			user.setPoints(user.getPoints() + Double.valueOf(point));
 			user.setLastCheckInDate(new Date());
 			user.setContinuousNum(Integer.valueOf(continuousNum));
+			user.setLotteryRemainCount(user.getLotteryRemainCount()+1);
+			userDao.updateLotteryInfo(user);
 			userDao.updatePointsInfo(user);
 		}
 	}
