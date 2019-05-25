@@ -181,6 +181,9 @@ public class LotteryController {
 	public void openLotterySharePage(HttpServletRequest request, HttpServletResponse response) {
 		String sourceUser = request.getParameter("sourceUser");
 		String openUser = request.getParameter("openUser");
+		if (sourceUser.equals(openUser)) {
+			return;
+		}
 		List<LotteryShareHistory> result = lotteryShareHistoryDao.checkExist(sourceUser, openUser);
 		// 表里无记录，说明此打开人是第一次打开此分享人的记录
 		if (result.size() == 0) {
@@ -196,7 +199,7 @@ public class LotteryController {
 			user = userDao.getByCondition(user);
 			user.setLotteryRemainCount(user.getLotteryRemainCount() + 1);
 			userDao.updateLotteryInfo(user);
-			
+
 			LotteryShareHistory lotteryShareHistory = new LotteryShareHistory();
 			lotteryShareHistory.setOccur(new Date());
 			lotteryShareHistory.setOpenUser(openUser);
