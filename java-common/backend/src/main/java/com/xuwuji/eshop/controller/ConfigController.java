@@ -50,6 +50,7 @@ public class ConfigController {
 		eshopConfig.setAmountPerInStageTwo(eshopConfigUtil.getParam(LotteryConstants.AMOUNT_PER_IN_STAGE_TWO));
 		eshopConfig.setAmountMaxInStageTwo(eshopConfigUtil.getParam(LotteryConstants.AMOUNT_MAX_IN_STAGE_TWO));
 		eshopConfig.setAmountPerOverStageTwo(eshopConfigUtil.getParam(LotteryConstants.AMOUNR_PER_OVER_STAGE_TWO));
+		eshopConfig.setLotteryShareTitle(eshopConfigUtil.getParam(eshopConfigUtil.LOTTERY_SHARE_TITLE));
 		return eshopConfig;
 	}
 
@@ -156,6 +157,7 @@ public class ConfigController {
 		public String amountMaxInStageTwo;
 		// 第二阶段外单次最多抽到的金额
 		public String amountPerOverStageTwo;
+		public String lotteryShareTitle;
 
 		public String getXxcUrl() {
 			return xxcUrl;
@@ -331,6 +333,14 @@ public class ConfigController {
 
 		public void setAmountPerOverStageTwo(String amountPerOverStageTwo) {
 			this.amountPerOverStageTwo = amountPerOverStageTwo;
+		}
+
+		public String getLotteryShareTitle() {
+			return lotteryShareTitle;
+		}
+
+		public void setLotteryShareTitle(String lotteryShareTitle) {
+			this.lotteryShareTitle = lotteryShareTitle;
 		}
 
 	}

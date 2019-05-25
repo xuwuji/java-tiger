@@ -119,6 +119,7 @@
 		<mapper resource="mapper/WishMapper.xml" />
 		<mapper resource="mapper/AddressMapper.xml" />
 		<mapper resource="mapper/TranscationMapper.xml" />
+		<mapper resource="mapper/LotteryShareHistoryMapper.xml" />
 	</mappers>
 
 

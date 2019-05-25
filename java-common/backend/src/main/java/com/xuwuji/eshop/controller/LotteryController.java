@@ -176,7 +176,7 @@ public class LotteryController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value = "/getLotteryByOpenId", method = RequestMethod.GET)
+	@RequestMapping(value = "/openLotterySharePage", method = RequestMethod.GET)
 	@ResponseBody
 	public void openLotterySharePage(HttpServletRequest request, HttpServletResponse response) {
 		String sourceUser = request.getParameter("sourceUser");
