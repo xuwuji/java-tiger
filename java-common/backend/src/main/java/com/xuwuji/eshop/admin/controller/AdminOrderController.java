@@ -66,7 +66,7 @@ public class AdminOrderController {
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
 		return new ModelAndView("/eshop/order");
 	}
-	
+
 	@RequestMapping(value = "/indexAll", method = RequestMethod.GET)
 	public ModelAndView indexAll(HttpServletRequest request, HttpServletResponse response) {
 		return new ModelAndView("/eshop/orderAll");
@@ -123,7 +123,7 @@ public class AdminOrderController {
 	 * 
 	 * @param request
 	 * @param response
-	 * @throws JsonProcessingException 
+	 * @throws JsonProcessingException
 	 */
 	@RequestMapping(value = "/pay", method = RequestMethod.POST)
 	@ResponseBody
@@ -194,7 +194,7 @@ public class AdminOrderController {
 		}
 		// 在用户确认收货后，才将积分进行发放
 		// updateUser.setPoints(updateUser.getPoints() + (int) (order.getAmount()));
-		// userDao.update(updateUser);
+		userDao.update(updateUser);
 		// 付款后更新库存和销量
 		List<OrderItem> orderItems = orderItemDao.getByOrderId(orderId);
 		for (OrderItem orderItem : orderItems) {
