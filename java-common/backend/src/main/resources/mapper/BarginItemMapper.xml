@@ -20,19 +20,26 @@
 		<result property="stageTwoPrice" column="type"></result>
 		<result property="state" column="type"></result>
 		<result property="lastHour" column="type"></result>
+		<result property="price" column="type"></result>
 	</resultMap>
 
 	<insert id="add" parameterType="BarginItem"
 		useGeneratedKeys="true" keyProperty="id" keyColumn="id">
 		insert into
 		barginitem
-		(productId,formatId,categoryId,name,stageOnePeople,stageOnePrice,stageTwoPeople,stageTwoPrice,lastHour,state)
-		values(#{productId},#{formatId},#{categoryId},#{name},#{stageOnePeople},#{stageOnePrice},#{stageTwoPeople},#{stageTwoPrice},#{lastHour},'0')
+		(productId,formatId,categoryId,name,stageOnePeople,stageOnePrice,stageTwoPeople,stageTwoPrice,lastHour,state,price)
+		values(#{productId},#{formatId},#{categoryId},#{name},#{stageOnePeople},#{stageOnePrice},#{stageTwoPeople},#{stageTwoPrice},#{lastHour},'0',#{price})
 	</insert>
 
 	<select id="getAll" resultType="BarginItem">
-		select * from
-		barginitem
+		select format.name as
+		formatName,a.* from format right
+		join (select barginitem.*
+		,product.name as productName from barginitem
+		left join product
+		on
+		barginitem.productId=product.id) as a on
+		a.formatId=format.id
 	</select>
 
 	<update id="disable" parameterType="hashmap">
@@ -50,7 +57,7 @@
 	<update id="update" parameterType="hashmap">
 		update barginitem set
 		productId=#{productId},categoryId=#{categoryId},name=#{name},stageOnePeople=#{stageOnePeople},stageOnePrice=#{stageOnePrice},
-		stageTwoPeople=#{stageTwoPeople},stageTwoPrice=#{stageTwoPrice},lastHour=#{lastHour}
+		stageTwoPeople=#{stageTwoPeople},stageTwoPrice=#{stageTwoPrice},lastHour=#{lastHour},price=#{price}
 		where id=#{id};
 	</update>
 
@@ -69,7 +76,8 @@
 		join (select barginitem.* ,product.name as productName from barginitem
 		left join product
 		on barginitem.productId=product.id where
-		barginitem.state='1') as a on a.formatId=format.id
+		barginitem.state='1' and barginitem.categoryId=#{categoryId}) as a on
+		a.formatId=format.id
 	</select>
 
 	<select id="getByCategoryId" resultType="BarginItem"
@@ -77,7 +85,8 @@
 		select format.name as formatName,a.* from format right
 		join (select barginitem.* ,product.name as productName from barginitem
 		left join product
-		on barginitem.productId=product.id) as a on
+		on barginitem.productId=product.id where
+		barginitem.categoryId=#{categoryId}) as a on
 		a.formatId=format.id
 	</select>
 

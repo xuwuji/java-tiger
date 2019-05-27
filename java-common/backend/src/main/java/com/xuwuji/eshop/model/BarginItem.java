@@ -12,10 +12,12 @@ public class BarginItem {
 	private int id;
 	private String name;
 	private String productId;
+	private String productImg;
 	private String productName;
 	private String formatId;
 	private String formatName;
 	private String categoryId;
+	private double price;
 	private int stageOnePeople;
 	private double stageOnePrice;
 	private int stageTwoPeople;
@@ -45,6 +47,14 @@ public class BarginItem {
 
 	public void setProductId(String productId) {
 		this.productId = productId;
+	}
+
+	public String getProductImg() {
+		return productImg;
+	}
+
+	public void setProductImg(String productImg) {
+		this.productImg = productImg;
 	}
 
 	public String getCategoryId() {
@@ -125,6 +135,14 @@ public class BarginItem {
 
 	public void setFormatName(String formatName) {
 		this.formatName = formatName;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 }

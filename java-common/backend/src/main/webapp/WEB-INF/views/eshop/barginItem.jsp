@@ -93,6 +93,10 @@
 							class="form-control" id="formatId" placeholder="规格id">
 					</div>
 					<div class="form-group">
+						<label for="txt_departmentname">原价</label> <input type="text"
+							class="form-control" id="price" placeholder="原价">
+					</div>
+					<div class="form-group">
 						<label for="txt_departmentname">第一阶段需要人数</label> <input
 							type="text" class="form-control" id="stageOnePeople"
 							placeholder="介绍">
@@ -268,6 +272,11 @@
 						align : 'center'
 					},
 					{
+						field : 'price',
+						title : '原价',
+						align : 'center'
+					},
+					{
 						field : 'stageOnePeople',
 						title : '第一阶段需要人数',
 						align : 'center'
@@ -342,6 +351,7 @@
 		var categoryId = $("#add-categoryId").val();
 		var name = $('#name').val();
 		var formatId = $('#formatId').val();
+		var price = $('#price').val();
 		var productId = $('#productId').val();
 		var stageOnePeople = $('#stageOnePeople').val();
 		var stageOnePrice = $('#stageOnePrice').val();
@@ -361,6 +371,7 @@
 				stageTwoPrice : stageTwoPrice,
 				lastHour : lastHour,
 				categoryId : categoryId,
+				price : price,
 			},
 			success : function(status) {
 				$table.bootstrapTable('destroy');
@@ -383,6 +394,7 @@
 			$('#edit-stageTwoPeople').val(row.stageTwoPeople);
 			$('#edit-stageTwoPrice').val(row.stageTwoPrice);
 			$('#edit-lastHour').val(row.lastHour);
+			$('#edit-price').val(row.price);
 		});
 	}
 
@@ -396,6 +408,7 @@
 		var stageTwoPeople = $('#edit-stageTwoPeople').val();
 		var stageTwoPrice = $('#edit-stageTwoPrice').val();
 		var lastHour = $('#edit-lastHour').val();
+		var price = $('#edit-price').val();
 		$.ajax({
 			url : "/backend/admin/barginItem/update",
 			type : "post",
@@ -407,6 +420,7 @@
 				stageTwoPeople : stageTwoPeople,
 				stageTwoPrice : stageTwoPrice,
 				lastHour : lastHour,
+				price : price,
 			},
 			success : function(status) {
 				$table.bootstrapTable('destroy');

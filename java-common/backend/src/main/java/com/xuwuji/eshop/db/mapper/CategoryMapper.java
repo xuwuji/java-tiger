@@ -27,4 +27,6 @@ public interface CategoryMapper {
 
 	public List<Category> getRecommend();
 
+	public List<Category> getAll();
+
 }

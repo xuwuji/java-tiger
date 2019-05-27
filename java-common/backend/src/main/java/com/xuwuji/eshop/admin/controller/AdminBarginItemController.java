@@ -41,6 +41,7 @@ public class AdminBarginItemController {
 		String stageTwoPeople = request.getParameter("stageTwoPeople");
 		String stageTwoPrice = request.getParameter("stageTwoPrice");
 		String lastHour = request.getParameter("lastHour");
+		String price = request.getParameter("price");
 		BarginItem barginItem = new BarginItem();
 		barginItem.setProductId(productId);
 		barginItem.setFormatId(formatId);
@@ -49,6 +50,7 @@ public class AdminBarginItemController {
 		barginItem.setStageOnePrice(Double.valueOf(stageOnePrice));
 		barginItem.setStageTwoPeople(Integer.valueOf(stageTwoPeople));
 		barginItem.setStageTwoPrice(Double.valueOf(stageTwoPrice));
+		barginItem.setPrice(Double.valueOf(price));
 		barginItem.setLastHour(Integer.valueOf(lastHour));
 		barginItem.setName(name);
 		barginItemDao.add(barginItem);
@@ -78,6 +80,7 @@ public class AdminBarginItemController {
 		String stageTwoPrice = request.getParameter("stageTwoPrice");
 		String lastHour = request.getParameter("lastHour");
 		String name = request.getParameter("name");
+		String price = request.getParameter("price");
 		BarginItem barginItem = new BarginItem();
 		barginItem.setId(Integer.valueOf(id));
 		barginItem.setStageOnePeople(Integer.valueOf(stageOnePeople));
@@ -86,6 +89,7 @@ public class AdminBarginItemController {
 		barginItem.setStageTwoPrice(Double.valueOf(stageTwoPrice));
 		barginItem.setLastHour(Integer.valueOf(lastHour));
 		barginItem.setName(name);
+		barginItem.setPrice(Double.valueOf(price));
 		barginItemDao.update(barginItem);
 
 	}

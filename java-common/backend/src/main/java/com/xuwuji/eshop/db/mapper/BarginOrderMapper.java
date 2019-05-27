@@ -7,13 +7,15 @@ import com.xuwuji.eshop.model.BarginOrder;
 
 public interface BarginOrderMapper {
 
-	public void add(BarginOrder barginItem);
+	public int add(BarginOrder barginItem);
 
 	public List<BarginOrder> getByOpenId(HashMap<String, Object> map);
 
 	public void update(HashMap<String, Object> map);
 
 	public List<BarginOrder> getByBarginOrderId(HashMap<String, Object> map);
+
+	public List<BarginOrder> getById(HashMap<String, Object> map);
 
 	public void updateState(HashMap<String, Object> map);
 

@@ -168,4 +168,20 @@ public class CategoryDao {
 		}
 		return result;
 	}
+
+	public List<Category> getAll() {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<Category> result = new ArrayList<Category>();
+		try {
+			CategoryMapper mapper = session.getMapper(CategoryMapper.class);
+			result = mapper.getAll();
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
 }

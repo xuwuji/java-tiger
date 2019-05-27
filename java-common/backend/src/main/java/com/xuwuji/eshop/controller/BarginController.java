@@ -38,7 +38,7 @@ public class BarginController {
 	 */
 	@RequestMapping(value = "/addBarginOrder", method = RequestMethod.GET)
 	@ResponseBody
-	public void addBarginOrder(HttpServletRequest request, HttpServletResponse response) {
+	public BarginOrder addBarginOrder(HttpServletRequest request, HttpServletResponse response) {
 		String openId = request.getParameter("openId");
 		String barginItemId = request.getParameter("barginItemId");
 		String lastHour = request.getParameter("lastHour");
@@ -50,6 +50,7 @@ public class BarginController {
 		barginOrder.setBarginOrderId(barginOrderId);
 		barginOrder.setLastHour(Integer.valueOf(lastHour));
 		barginOrderDao.add(barginOrder);
+		return barginOrder;
 	}
 
 	@RequestMapping(value = "/cancelBarginOrder", method = RequestMethod.GET)

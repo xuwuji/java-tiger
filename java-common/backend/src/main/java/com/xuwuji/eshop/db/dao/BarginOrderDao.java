@@ -28,6 +28,28 @@ public class BarginOrderDao {
 		}
 	}
 
+	public BarginOrder getById(String id) {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<BarginOrder> result = new ArrayList<BarginOrder>();
+		try {
+			BarginOrderMapper mapper = session.getMapper(BarginOrderMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("id", id);
+			result = mapper.getById(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		if (result.size() == 1) {
+			return result.get(0);
+		} else {
+			return null;
+		}
+	}
+
 	public List<BarginOrder> getByOpenId(String openId) {
 		SqlSession session = SessionFactory.openDEVSession();
 		List<BarginOrder> result = new ArrayList<BarginOrder>();
