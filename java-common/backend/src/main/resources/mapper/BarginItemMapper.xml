@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuwuji.eshop.db.mapper.BarginItemMapper">
+
+
+	<resultMap type="BarginItem" id="barginItemResult">
+		<id property="id" column="id"></id>
+		<result property="productId" column="type"></result>
+		<result property="productName" column="type"></result>
+		<result property="formatId" column="type"></result>
+		<result property="formatName" column="type"></result>
+		<result property="categoryId" column="type"></result>
+		<result property="name" column="type"></result>
+		<result property="stageOnePeople" column="type"></result>
+		<result property="stageOnePrice" column="type"></result>
+		<result property="stageTwoPeople" column="type"></result>
+		<result property="stageTwoPrice" column="type"></result>
+		<result property="state" column="type"></result>
+		<result property="lastHour" column="type"></result>
+	</resultMap>
+
+	<insert id="add" parameterType="BarginItem"
+		useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		insert into
+		barginitem
+		(productId,formatId,categoryId,name,stageOnePeople,stageOnePrice,stageTwoPeople,stageTwoPrice,lastHour,state)
+		values(#{productId},#{formatId},#{categoryId},#{name},#{stageOnePeople},#{stageOnePrice},#{stageTwoPeople},#{stageTwoPrice},#{lastHour},'0')
+	</insert>
+
+	<select id="getAll" resultType="BarginItem">
+		select * from
+		barginitem
+	</select>
+
+	<update id="disable" parameterType="hashmap">
+		update barginitem set
+		state='0'
+		where id=#{id};
+	</update>
+
+	<update id="reActive" parameterType="hashmap">
+		update barginitem set
+		state='1'
+		where id=#{id};
+	</update>
+
+	<update id="update" parameterType="hashmap">
+		update barginitem set
+		productId=#{productId},categoryId=#{categoryId},name=#{name},stageOnePeople=#{stageOnePeople},stageOnePrice=#{stageOnePrice},
+		stageTwoPeople=#{stageTwoPeople},stageTwoPrice=#{stageTwoPrice},lastHour=#{lastHour}
+		where id=#{id};
+	</update>
+
+	<select id="getActiveCategories" resultType="hashmap">
+		select
+		distinct(categoryId) as categoryId
+		,category.name from
+		barginitem left
+		join category on
+		barginitem.categoryId =category.id;
+	</select>
+
+	<select id="getActiveByCategoryId" resultType="BarginItem"
+		parameterType="hashmap">
+		select format.name as formatName,a.* from format right
+		join (select barginitem.* ,product.name as productName from barginitem
+		left join product
+		on barginitem.productId=product.id where
+		barginitem.state='1') as a on a.formatId=format.id
+	</select>
+
+	<select id="getByCategoryId" resultType="BarginItem"
+		parameterType="hashmap">
+		select format.name as formatName,a.* from format right
+		join (select barginitem.* ,product.name as productName from barginitem
+		left join product
+		on barginitem.productId=product.id) as a on
+		a.formatId=format.id
+	</select>
+
+	<select id="getById" resultType="BarginItem"
+		parameterType="hashmap">
+		select format.name as formatName,a.* from format right
+		join (select barginitem.* ,product.name as productName from barginitem
+		left join product
+		on barginitem.productId=product.id where
+		barginitem.id=#{id}) as a on
+		a.formatId=format.id
+	</select>
+</mapper>

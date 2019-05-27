@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuwuji.eshop.db.mapper.BarginOrderMapper">
+
+	<resultMap type="BarginOrder" id="barginOrderResult">
+		<id property="id" column="id"></id>
+		<result property="barginOrderId" column="type"></result>
+		<result property="barginItemId" column="type"></result>
+		<result property="openId" column="type"></result>
+		<result property="occur" column="java.util.Date"></result>
+		<result property="people" column="type"></result>
+		<result property="state" column="type"></result>
+		<result property="lastHour" column="type"></result>
+	</resultMap>
+
+	<insert id="add" parameterType="BarginOrder"
+		useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		insert into
+		barginorder
+		(barginOrderId,barginItemId,openId,occur,people,state,lastHour)
+		values(#{barginOrderId},#{barginItemId},#{openId},#{occur},0,'D',#{lastHour})
+	</insert>
+
+	<select id="getByOpenId" resultType="BarginOrder">
+		select * from
+		barginorder
+		where
+		openId=#{openId};
+	</select>
+
+	<select id="getByOpenIdAndState" resultType="BarginOrder">
+		select * from
+		barginorder
+		where
+		openId=#{openId} and state=#{state};
+	</select>
+
+	<select id="getByBarginOrderId" resultType="BarginOrder">
+		select * from
+		barginorder
+		where
+		barginOrderId=#{barginOrderId};
+	</select>
+
+	<update id="update" parameterType="hashmap">
+		update barginorder set
+		people=#{people},
+		state=#{state}
+		where barginOrderId=#{barginOrderId};
+	</update>
+
+	<update id="updateState" parameterType="hashmap">
+		update barginorder set
+		state=#{state}
+		where barginOrderId=#{barginOrderId};
+	</update>
+
+</mapper>

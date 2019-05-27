@@ -120,6 +120,9 @@
 		<mapper resource="mapper/AddressMapper.xml" />
 		<mapper resource="mapper/TranscationMapper.xml" />
 		<mapper resource="mapper/LotteryShareHistoryMapper.xml" />
+		<mapper resource="mapper/BarginItemMapper.xml" />
+		<mapper resource="mapper/BarginOrderMapper.xml" />
+		<mapper resource="mapper/BarginOrderHistoryMapper.xml" />
 	</mappers>
 
 
