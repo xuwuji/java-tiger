@@ -171,6 +171,10 @@
 							disabled="disabled">
 					</div>
 					<div class="form-group">
+						<label for="txt_departmentname">价格</label> <input type="text"
+							class="form-control" id="edit-price" placeholder="价格">
+					</div>
+					<div class="form-group">
 						<label for="txt_departmentname">第一阶段需要人数</label> <input
 							type="text" class="form-control" id="edit-stageOnePeople"
 							placeholder="第一阶段需要人数">
@@ -265,7 +269,8 @@
 						field : 'productName',
 						title : '商品名称',
 						align : 'center'
-					},{
+					},
+					{
 						field : 'productId',
 						title : '商品Id',
 						align : 'center'
@@ -410,8 +415,9 @@
 	/* 提交变更 */
 	$('#btn_edit_submit').on("click", function() {
 		console.log($('#editModalParentCategoryId').val());
+		var categoryId = $("#edit-categoryId").val();
 		var id = $('#edit-id').val();
-		var name = $('#edit-productName').val();
+		var name = $('#edit-name').val();
 		var stageOnePeople = $('#edit-stageOnePeople').val();
 		var stageOnePrice = $('#edit-stageOnePrice').val();
 		var stageTwoPeople = $('#edit-stageTwoPeople').val();

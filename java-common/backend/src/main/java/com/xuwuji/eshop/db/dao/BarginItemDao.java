@@ -106,6 +106,7 @@ public class BarginItemDao {
 			map.put("stageTwoPrice", barginItem.getStageTwoPrice());
 			map.put("lastHour", barginItem.getLastHour());
 			map.put("price", barginItem.getPrice());
+			map.put("id", barginItem.getId());
 			mapper.update(map);
 			session.commit();
 		} catch (Exception e) {

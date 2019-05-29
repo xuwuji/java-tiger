@@ -74,6 +74,7 @@ public class AdminBarginItemController {
 	@ResponseBody
 	public void update(HttpServletRequest request, HttpServletResponse response) {
 		String id = request.getParameter("id");
+		BarginItem barginItem =barginItemDao.getById(id);
 		String stageOnePeople = request.getParameter("stageOnePeople");
 		String stageOnePrice = request.getParameter("stageOnePrice");
 		String stageTwoPeople = request.getParameter("stageTwoPeople");
@@ -81,8 +82,6 @@ public class AdminBarginItemController {
 		String lastHour = request.getParameter("lastHour");
 		String name = request.getParameter("name");
 		String price = request.getParameter("price");
-		BarginItem barginItem = new BarginItem();
-		barginItem.setId(Integer.valueOf(id));
 		barginItem.setStageOnePeople(Integer.valueOf(stageOnePeople));
 		barginItem.setStageOnePrice(Double.valueOf(stageOnePrice));
 		barginItem.setStageTwoPeople(Integer.valueOf(stageTwoPeople));
@@ -91,7 +90,6 @@ public class AdminBarginItemController {
 		barginItem.setName(name);
 		barginItem.setPrice(Double.valueOf(price));
 		barginItemDao.update(barginItem);
-
 	}
 
 	@RequestMapping(value = "/getAll", method = RequestMethod.GET)
