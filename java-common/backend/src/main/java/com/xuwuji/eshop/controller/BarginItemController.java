@@ -39,28 +39,31 @@ public class BarginItemController {
 		List<BarginData> result = new ArrayList<BarginData>();
 		String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
 		for (BarginItem barginItem : allItems) {
-			boolean match = false;
-			barginItem.setProductImg(PRODUCT_IMG_BASE + barginItem.getProductId() + "-0.jpg");
-			String categoryId = barginItem.getCategoryId();
-			for (BarginData barginData : result) {
-				if (barginData.getCategoryId().equals(categoryId)) {
+			//只显示上架的
+			if(barginItem.getState().equals("1")) {
+				boolean match = false;
+				barginItem.setProductImg(PRODUCT_IMG_BASE + barginItem.getProductId() + "-0.jpg");
+				String categoryId = barginItem.getCategoryId();
+				for (BarginData barginData : result) {
+					if (barginData.getCategoryId().equals(categoryId)) {
+						// 在砍价首页每个种类最多展示六件商品
+						if (barginData.getItems().size() < 6) {
+							barginData.getItems().add(barginItem);
+						}
+						match = true;
+						continue;
+					}
+				}
+				if (!match) {
+					BarginData barginData = new BarginData();
+					barginData.setCategoryId(categoryId);
+					barginData.setCategoryName(categoryNameMap.get(Integer.valueOf(categoryId)));
 					// 在砍价首页每个种类最多展示六件商品
 					if (barginData.getItems().size() < 6) {
 						barginData.getItems().add(barginItem);
 					}
-					match = true;
-					continue;
+					result.add(barginData);
 				}
-			}
-			if (!match) {
-				BarginData barginData = new BarginData();
-				barginData.setCategoryId(categoryId);
-				barginData.setCategoryName(categoryNameMap.get(Integer.valueOf(categoryId)));
-				// 在砍价首页每个种类最多展示六件商品
-				if (barginData.getItems().size() < 6) {
-					barginData.getItems().add(barginItem);
-				}
-				result.add(barginData);
 			}
 		}
 		return result;

@@ -23,6 +23,7 @@
 		<result property="lotteryTotalCount" column="info"></result>
 		<result property="lotteryAmount" column="info"></result>
 		<result property="balance" column="info"></result>
+		<result property="gmtCreate" column="info"></result>
 	</resultMap>
 
 
@@ -30,8 +31,8 @@
 	<insert id="add" parameterType="hashmap" useGeneratedKeys="true"
 		keyProperty="id" keyColumn="id">
 		insert into user
-		(openId,wechatId,state,bonusAmount,level,totalPay,points,lastCheckInDate,continuousNum,lotteryRemainCount)
-		values(#{openId},#{wechatId},#{state},0,'0',0,#{points},#{lastCheckInDate},#{continuousNum},1)
+		(openId,wechatId,state,bonusAmount,level,totalPay,points,lastCheckInDate,continuousNum,lotteryRemainCount,gmtCreate)
+		values(#{openId},#{wechatId},#{state},0,'0',0,#{points},#{lastCheckInDate},#{continuousNum},1,now())
 	</insert>
 
 	<update id="update" parameterType="hashmap">

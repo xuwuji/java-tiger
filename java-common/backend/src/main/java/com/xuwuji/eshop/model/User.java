@@ -28,6 +28,7 @@ public class User {
 	 * 用户账户余额
 	 */
 	private double balance;
+	private Date gmtCreate;
 
 	public int getId() {
 		return id;
@@ -163,6 +164,14 @@ public class User {
 
 	public void setBalance(double balance) {
 		this.balance = balance;
+	}
+
+	public Date getGmtCreate() {
+		return gmtCreate;
+	}
+
+	public void setGmtCreate(Date gmtCreate) {
+		this.gmtCreate = gmtCreate;
 	}
 
 	@Override
