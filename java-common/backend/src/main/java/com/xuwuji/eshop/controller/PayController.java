@@ -39,6 +39,7 @@ import com.xuwuji.eshop.util.TokenUtil;
 public class PayController {
 	private static final String SUCCESS = "SUCCESS";
 	private static final String FAIL = "FAIL";
+	private static final String INVALID_REQUEST = "INVALID_REQUEST";
 	@Autowired
 	private UserDao userDao;
 	@Autowired
@@ -124,7 +125,7 @@ public class PayController {
 			// 调用统一下单接口，并接受返回的结果
 			String result = PayUtil.httpRequest(TokenUtil.PAY_URL, "POST", xml);
 			// result = "<?xml version=\"1.0\" encoding=\"gbk\"?>" + result;
-			System.out.println("127" + result);
+			System.out.println(result);
 			// 将解析结果存储在HashMap中
 			Map map = PayUtil.doXMLParse(result);
 			System.out.println(map);
