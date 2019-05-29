@@ -109,6 +109,25 @@ public class BarginOrderDao {
 		}
 	}
 
+	public List<BarginOrder> isJoined(String openId, String barginItemId) {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<BarginOrder> result = new ArrayList<BarginOrder>();
+		try {
+			BarginOrderMapper mapper = session.getMapper(BarginOrderMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("openId", openId);
+			map.put("barginItemId", barginItemId);
+			result = mapper.isJoined(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+
 	public void update(BarginOrder barginOrder) {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
@@ -116,6 +135,7 @@ public class BarginOrderDao {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("people", barginOrder.getPeople());
 			map.put("state", barginOrder.getState());
+			map.put("barginOrderId", barginOrder.getBarginOrderId());
 			mapper.update(map);
 			session.commit();
 		} catch (Exception e) {

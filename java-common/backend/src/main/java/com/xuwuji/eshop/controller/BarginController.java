@@ -15,11 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.xuwuji.eshop.db.dao.BarginItemDao;
 import com.xuwuji.eshop.db.dao.BarginOrderDao;
 import com.xuwuji.eshop.db.dao.BarginOrderHistoryDao;
+import com.xuwuji.eshop.model.BarginItem;
 import com.xuwuji.eshop.model.BarginOrder;
 import com.xuwuji.eshop.model.BarginOrderHistory;
 import com.xuwuji.eshop.model.BarginOrderState;
+import com.xuwuji.eshop.util.EshopConfigUtil;
 
 @Controller
 @RequestMapping(value = "/bargin")
@@ -28,6 +31,10 @@ public class BarginController {
 	private BarginOrderDao barginOrderDao;
 	@Autowired
 	private BarginOrderHistoryDao barginOrderHistoryDao;
+	@Autowired
+	private BarginItemDao barginItemDao;
+	@Autowired
+	private EshopConfigUtil eshopConfigUtil;
 
 	/**
 	 * 
@@ -77,15 +84,22 @@ public class BarginController {
 		String openId = request.getParameter("openId");
 		// 第一次会把超时的显示出来，然后再更新操作结束后，第二次再点进来时就看不到超时的
 		List<BarginOrder> list = barginOrderDao.getByOpenIdAndState(openId, BarginOrderState.DOING.getCode());
+		String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
 		for (BarginOrder barginOrder : list) {
 			Calendar occur = Calendar.getInstance();
+			occur.setTime(barginOrder.getOccur());
 			occur.set(Calendar.HOUR_OF_DAY, occur.get(Calendar.HOUR_OF_DAY) + barginOrder.getLastHour());
+			Date deadline = occur.getTime();
 			Calendar now = Calendar.getInstance();
 			// 说明已经过期了，需要更新状态
 			if (occur.compareTo(now) < 0) {
 				barginOrder.setState(BarginOrderState.FAILED.getCode());
 				barginOrderDao.update(barginOrder);
 			}
+			BarginItem barginItem = barginItemDao.getById(barginOrder.getBarginItemId());
+			barginItem.setProductImg(PRODUCT_IMG_BASE + barginItem.getProductId() + "-0.jpg");
+			barginOrder.setBarginItem(barginItem);
+			barginOrder.setDeadline(deadline);
 		}
 		return list;
 	}
@@ -101,7 +115,12 @@ public class BarginController {
 	@ResponseBody
 	public BarginOrder viewBarginOrder(HttpServletRequest request, HttpServletResponse response) {
 		String barginOrderId = request.getParameter("barginOrderId");
-		return barginOrderDao.getByBarginOrderId(barginOrderId);
+		BarginOrder barginOrder = barginOrderDao.getByBarginOrderId(barginOrderId);
+		BarginItem barginItem = barginItemDao.getById(barginOrder.getBarginItemId());
+		String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
+		barginItem.setProductImg(PRODUCT_IMG_BASE + barginItem.getProductId() + "-0.jpg");
+		barginOrder.setBarginItem(barginItem);
+		return barginOrder;
 	}
 
 	/**
@@ -113,9 +132,9 @@ public class BarginController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value = "/checkBargin", method = RequestMethod.GET)
+	@RequestMapping(value = "/checkHelp", method = RequestMethod.GET)
 	@ResponseBody
-	public HashMap<String, Object> checkBargin(HttpServletRequest request, HttpServletResponse response) {
+	public HashMap<String, Object> checkHelp(HttpServletRequest request, HttpServletResponse response) {
 		String barginOrderId = request.getParameter("barginOrderId");
 		String openUser = request.getParameter("openUser");
 		BarginOrder barginOrder = barginOrderDao.getByBarginOrderId(barginOrderId);
@@ -124,12 +143,11 @@ public class BarginController {
 		boolean isExist = barginOrderHistoryDao.checkExist(sourceUser, openUser, barginOrderId);
 		// 已经帮忙砍过价
 		if (isExist) {
-			result.put("isBargined", "1");
+			result.put("isHelped", true);
 		} else {
-			result.put("isBargined", "0");
+			result.put("isHelped", false);
 		}
 		return result;
-
 	}
 
 	/**
@@ -150,6 +168,11 @@ public class BarginController {
 		String barginOrderId = request.getParameter("barginOrderId");
 		String openUser = request.getParameter("openUser");
 		BarginOrder barginOrder = barginOrderDao.getByBarginOrderId(barginOrderId);
+		// 检查是不是点过了
+		boolean isExist = barginOrderHistoryDao.checkExist(barginOrder.getOpenId(), openUser, barginOrderId);
+		if (isExist) {
+			return;
+		}
 		barginOrder.setPeople(barginOrder.getPeople() + 1);
 		barginOrderDao.update(barginOrder);
 		BarginOrderHistory barginOrderHistory = new BarginOrderHistory();
@@ -158,6 +181,28 @@ public class BarginController {
 		barginOrderHistory.setSourceUser(barginOrder.getOpenId());
 		barginOrderHistory.setOccur(new Date());
 		barginOrderHistoryDao.add(barginOrderHistory);
+	}
+
+	/**
+	 * 检查此用户是否已经参加此砍价活动
+	 * 
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/checkJoined", method = RequestMethod.GET)
+	@ResponseBody
+	public HashMap<String, Object> checkJoined(HttpServletRequest request, HttpServletResponse response) {
+		String openId = request.getParameter("openId");
+		String barginItemId = request.getParameter("barginItemId");
+		List<BarginOrder> orders = barginOrderDao.isJoined(openId, barginItemId);
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		result.put("isJoined", orders.size() > 0);
+		if( orders.size() > 0) {
+			result.put("barginOrder",orders.get(0));
+		}
+		return result;
 	}
 
 }

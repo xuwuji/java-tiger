@@ -17,6 +17,8 @@ public interface BarginItemMapper {
 
 	public List<BarginItem> getAll();
 
+	public List<BarginItem> isJoinedBargin(HashMap<String, Object> map);
+
 	public List<HashMap<String, Object>> getActiveCategories();
 
 	public List<BarginItem> getActiveByCategoryId(HashMap<String, Object> map);

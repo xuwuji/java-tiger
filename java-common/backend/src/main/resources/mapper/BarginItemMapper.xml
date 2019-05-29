@@ -99,4 +99,10 @@
 		barginitem.id=#{id}) as a on
 		a.formatId=format.id
 	</select>
+
+	<select id="isJoinedBargin" resultType="BarginItem"
+		parameterType="hashmap">
+		select * from barginitem where productId=#{productId};
+	</select>
+
 </mapper>

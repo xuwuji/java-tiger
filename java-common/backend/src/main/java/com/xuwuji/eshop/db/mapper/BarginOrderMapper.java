@@ -21,4 +21,6 @@ public interface BarginOrderMapper {
 
 	public List<BarginOrder> getByOpenIdAndState(HashMap<String, Object> map);
 
+	public List<BarginOrder> isJoined(HashMap<String, Object> map);
+
 }

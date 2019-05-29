@@ -31,17 +31,6 @@ public class BarginItemController {
 
 	private static HashMap<Integer, String> categoryNameMap = new HashMap<Integer, String>();
 
-	/**
-	 * 用户查看自己的砍价
-	 * 
-	 * 在查看时，首先判断是不是已经超时了，从而更改状态
-	 * 
-	 * 这样就省去了定时扫描的功能
-	 * 
-	 * @param request
-	 * @param response
-	 * @return
-	 */
 	@RequestMapping(value = "/getBarginData", method = RequestMethod.GET)
 	@ResponseBody
 	public List<BarginData> getBarginData(HttpServletRequest request, HttpServletResponse response) {
@@ -55,7 +44,10 @@ public class BarginItemController {
 			String categoryId = barginItem.getCategoryId();
 			for (BarginData barginData : result) {
 				if (barginData.getCategoryId().equals(categoryId)) {
-					barginData.getItems().add(barginItem);
+					// 在砍价首页每个种类最多展示六件商品
+					if (barginData.getItems().size() < 6) {
+						barginData.getItems().add(barginItem);
+					}
 					match = true;
 					continue;
 				}
@@ -64,7 +56,10 @@ public class BarginItemController {
 				BarginData barginData = new BarginData();
 				barginData.setCategoryId(categoryId);
 				barginData.setCategoryName(categoryNameMap.get(Integer.valueOf(categoryId)));
-				barginData.getItems().add(barginItem);
+				// 在砍价首页每个种类最多展示六件商品
+				if (barginData.getItems().size() < 6) {
+					barginData.getItems().add(barginItem);
+				}
 				result.add(barginData);
 			}
 		}
@@ -82,13 +77,28 @@ public class BarginItemController {
 		}
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/getById", method = RequestMethod.GET)
 	@ResponseBody
 	public BarginItem getById(HttpServletRequest request, HttpServletResponse response) {
 		String id = request.getParameter("id");
-		BarginItem barginItem=barginItemDao.getById(id);
+		BarginItem barginItem = barginItemDao.getById(id);
+		String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
+		barginItem.setProductImg(PRODUCT_IMG_BASE + barginItem.getProductId() + "-0.jpg");
 		return barginItem;
+	}
+
+	@RequestMapping(value = "/isJoinedBargin", method = RequestMethod.GET)
+	@ResponseBody
+	public HashMap<String, Object> isJoinedBargin(HttpServletRequest request, HttpServletResponse response) {
+		String productId = request.getParameter("productId");
+		List<BarginItem> items = barginItemDao.isJoinedBargin(productId);
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		result.put("isJoinedBargin", items.size() > 0);
+		if (items.size() > 0) {
+			result.put("barginItem", items.get(0));
+		}
+		return result;
 	}
 
 	class BarginData {

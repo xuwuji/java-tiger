@@ -44,6 +44,24 @@ public class BarginItemDao {
 		return result;
 	};
 
+	public List<BarginItem> isJoinedBargin(String productId) {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<BarginItem> result = new ArrayList<BarginItem>();
+		try {
+			BarginItemMapper mapper = session.getMapper(BarginItemMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("productId", productId);
+			result = mapper.isJoinedBargin(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	};
+
 	public void disable(String id) {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {

@@ -265,10 +265,19 @@
 						field : 'productName',
 						title : '商品名称',
 						align : 'center'
+					},{
+						field : 'productId',
+						title : '商品Id',
+						align : 'center'
 					},
 					{
 						field : 'formatName',
 						title : '规格名称',
+						align : 'center'
+					},
+					{
+						field : 'formatId',
+						title : '规格Id',
 						align : 'center'
 					},
 					{

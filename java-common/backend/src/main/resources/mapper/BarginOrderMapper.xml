@@ -65,4 +65,11 @@
 		where barginOrderId=#{barginOrderId};
 	</update>
 
+	<select id="isJoined" resultType="BarginOrder">
+		select * from
+		barginorder
+		where
+		openId=#{openId} and barginItemId=#{barginItemId} and state='D';
+	</select>
+
 </mapper>

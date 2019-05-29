@@ -8,7 +8,7 @@ package com.xuwuji.eshop.model;
  *
  */
 public enum BarginOrderState {
-	DOING("正在进行中", "D"), SUCCESS("已完成", "S"), CANCEL("用户取消", "C"), FAILED("已超时", "F");
+	DOING("正在进行中", "D"), SUCCESS("已完成", "S"), CANCEL("用户取消", "C"), FAILED("已超时", "F"), PAY("用户提交了订单（无论是否支付成功）", "P");
 
 	private String desc;
 	private String code;

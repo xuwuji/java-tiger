@@ -40,6 +40,7 @@ public class Order {
 	private String formId;
 	// 从余额中划扣了多少钱
 	private double balanceAmount;
+	private String barginOrderId;
 
 	public int getId() {
 		return id;
@@ -263,6 +264,14 @@ public class Order {
 
 	public void setBalanceAmount(double balanceAmount) {
 		this.balanceAmount = balanceAmount;
+	}
+
+	public String getBarginOrderId() {
+		return barginOrderId;
+	}
+
+	public void setBarginOrderId(String barginOrderId) {
+		this.barginOrderId = barginOrderId;
 	}
 
 	@Override

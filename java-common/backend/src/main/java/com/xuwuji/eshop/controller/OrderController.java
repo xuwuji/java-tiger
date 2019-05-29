@@ -22,10 +22,12 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xuwuji.eshop.db.dao.BarginOrderDao;
 import com.xuwuji.eshop.db.dao.OrderDao;
 import com.xuwuji.eshop.db.dao.OrderItemDao;
 import com.xuwuji.eshop.db.dao.ProductDao;
 import com.xuwuji.eshop.db.dao.UserDao;
+import com.xuwuji.eshop.model.BarginOrderState;
 import com.xuwuji.eshop.model.Order;
 import com.xuwuji.eshop.model.OrderItem;
 import com.xuwuji.eshop.model.OrderStatus;
@@ -52,6 +54,8 @@ public class OrderController {
 
 	@Autowired
 	private EshopConfigUtil eshopConfigUtil;
+	@Autowired
+	private BarginOrderDao barginOrderDao;
 
 	@RequestMapping(value = "/submitOrder", method = RequestMethod.POST)
 	@ResponseBody
@@ -138,6 +142,16 @@ public class OrderController {
 			order.setUsedBonus(Double.valueOf(usedBonus));
 		} else {
 			order.setUsedBonus(0);
+		}
+		// 如果是来自砍价的订单
+		/**
+		 * 无论后续是否支付成功，都将此砍价单置为P状态，从砍价列表里移除
+		 */
+		if (orderNode.get("barginOrderId") != null) {
+			order.setBarginOrderId(orderNode.get("barginOrderId").asText());
+			barginOrderDao.updateState(orderNode.get("barginOrderId").asText(), BarginOrderState.PAY.getCode());
+		} else {
+			order.setBarginOrderId("");
 		}
 		// 此订单的买家
 		User user = new User();

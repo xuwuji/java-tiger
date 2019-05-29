@@ -7,8 +7,10 @@ public class BarginOrder {
 	private int id;
 	private String barginOrderId;
 	private String barginItemId;
+	private BarginItem barginItem;
 	private String openId;
 	private Date occur;
+	private Date deadline;
 	private int people;
 	private int lastHour;
 	// @link BarginOrderState
@@ -76,6 +78,22 @@ public class BarginOrder {
 
 	public void setLastHour(int lastHour) {
 		this.lastHour = lastHour;
+	}
+
+	public BarginItem getBarginItem() {
+		return barginItem;
+	}
+
+	public void setBarginItem(BarginItem barginItem) {
+		this.barginItem = barginItem;
+	}
+
+	public Date getDeadline() {
+		return deadline;
+	}
+
+	public void setDeadline(Date deadline) {
+		this.deadline = deadline;
 	}
 
 }
