@@ -5,7 +5,8 @@ package com.xuwuji.eshop.model;
  */
 public enum OrderStatus {
 
-	NOTPAY("待付款", "0"), NOTSEND("待发货", "1"), DELIVERED("已发货", "2"), FINISH("已完成", "3"), AFTERSALE("售后", "4");
+	FAIL("系统异常", "-2"), CANCEL("用户取消", "-1"), NOTPAY("待付款", "0"), NOTSEND("待发货", "1"), DELIVERED("已发货", "2"),
+	FINISH("已完成", "3"), AFTERSALE("售后", "4");
 
 	private String desc;
 	private String code;

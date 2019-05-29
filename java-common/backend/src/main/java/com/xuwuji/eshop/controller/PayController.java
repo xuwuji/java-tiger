@@ -124,7 +124,7 @@ public class PayController {
 			// 调用统一下单接口，并接受返回的结果
 			String result = PayUtil.httpRequest(TokenUtil.PAY_URL, "POST", xml);
 			// result = "<?xml version=\"1.0\" encoding=\"gbk\"?>" + result;
-			System.out.println(result);
+			System.out.println("127" + result);
 			// 将解析结果存储在HashMap中
 			Map map = PayUtil.doXMLParse(result);
 			System.out.println(map);
@@ -149,6 +149,24 @@ public class PayController {
 				transcation.setLastModified(new Date());
 				transcation.setState(TranscationStateEnum.D.getCode());
 				transcationDao.update(transcation);
+			}
+			/**
+			 * 出现场景：
+			 * 
+			 * 1、用户第一次唤起收银台，但是点叉没付款，此订单进入待支付
+			 * 
+			 * 2、用户在操作后，余额发生了变化，然后重新对此订单进行付款
+			 * 
+			 * 3、由于支持余额和微信共同支付，且默认先划扣余额 此时需要支付的金额，和最初下单时唤起收银台后在微信支付内部保存的金额产生了不一致
+			 * 
+			 * 4、返回的错误结果result_code=FAIL && err_code=INVALID_REQUEST
+			 * 
+			 * 5、此时返回给前台，金额不对，自动将此订单直接关闭，让用户重新下单
+			 */
+			else if (return_code.equals(SUCCESS) && result_code.equals(FAIL)
+					&& ((String) map.get("err_code")).equals("INVALID_REQUEST")) {
+				response.put("amountChange", true);
+				orderDao.updateState(orderId, OrderStatus.FAIL.getCode());
 			}
 			response.put("appid", TokenUtil.APPID);
 			response.put("transcationId", transcationId);
