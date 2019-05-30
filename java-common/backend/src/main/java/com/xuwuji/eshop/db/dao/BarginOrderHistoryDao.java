@@ -55,7 +55,7 @@ public class BarginOrderHistoryDao {
 			map.put("barginOrderId", barginOrderId);
 			map.put("sourceUser", sourceUser);
 			map.put("openUser", openUser);
-			result = mapper.getByBarginOrderId(map);
+			result = mapper.checkExist(map);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
