@@ -41,11 +41,9 @@ public class AdminParentCategoryController {
 	public void disable(HttpServletRequest request, HttpServletResponse response) {
 		String id = request.getParameter("id");
 		String type = request.getParameter("type");
-		// 单条删除
 		if (type.equals("single")) {
 			parentCategoryDao.disable(id);
 		}
-		// 批量删除
 		else if (type.equals("batch")) {
 			List<String> ids = Arrays.asList(id.split(","));
 			System.out.println(ids);
@@ -58,11 +56,9 @@ public class AdminParentCategoryController {
 	public void reActive(HttpServletRequest request, HttpServletResponse response) {
 		String id = request.getParameter("id");
 		String type = request.getParameter("type");
-		// 单条上架
 		if (type.equals("single")) {
 			parentCategoryDao.reActive(id);
 		}
-		// 批量上架
 		else if (type.equals("batch")) {
 			List<String> ids = Arrays.asList(id.split(","));
 			System.out.println(ids);
@@ -75,6 +71,7 @@ public class AdminParentCategoryController {
 	public void update(HttpServletRequest request, HttpServletResponse response) {
 		String id = request.getParameter("id");
 		String name = request.getParameter("name");
+		parentCategoryDao.update(id, name);
 		System.out.println(id);
 		System.out.println(name);
 

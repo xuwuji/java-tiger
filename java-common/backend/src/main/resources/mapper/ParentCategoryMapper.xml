@@ -32,12 +32,18 @@
 		state='1'
 		where id=#{id};
 	</update>
-	
+
+	<update id="update" parameterType="hashmap">
+		update parentcategory set
+		name=#{name}
+		where id=#{id};
+	</update>
+
 	<select id="getAll" resultType="parentcategory">
 		select * from
 		parentcategory;
 	</select>
-	
+
 	<select id="getActiveAll" resultType="parentcategory">
 		select * from
 		parentcategory where state='1';

@@ -94,4 +94,22 @@ public class ParentCategoryDao {
 		return result;
 	}
 
+	public void update(String id, String name) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			ParentCategoryMapper mapper = session.getMapper(ParentCategoryMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("id", id);
+			map.put("name", name);
+			mapper.update(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+
+	}
+
 }

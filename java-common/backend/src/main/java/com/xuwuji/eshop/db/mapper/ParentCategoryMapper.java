@@ -16,4 +16,6 @@ public interface ParentCategoryMapper {
 	public List<ParentCategory> getAll();
 	
 	public List<ParentCategory> getActiveAll();
+
+	public void update(HashMap<String, Object> map);
 }
