@@ -1,10 +1,8 @@
 package com.xuwuji.eshop.controller;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -108,34 +106,42 @@ public class LotteryController {
 		if (currentLotteryTranscationId < lotteryConfig.getLotteryStageOne()) {
 			// 若目前抽奖累计金额还未到达第一阶段最大金额，则可以继续抽奖
 			if (lotteryAmount < lotteryConfig.getAmountMaxInStageOne()) {
-				// 单次
-				luckMoney = random.nextDouble() * lotteryConfig.getAmountPerInStageOne();
-				// 保留两位小数
-				luckMoney = (double) Math.round(luckMoney * 100) / 100;
-				lottery.setType(LotteryType.MONEY.getCode());
-				lottery.setAmount(luckMoney);
-				lottery.setName(luckMoney + "元红包");
-				lottery.setLuck(true);
+				// 随机判断是否中奖，二分之一的概率
+				int randomNum = random.nextInt(2);
+				if (randomNum == 0) {
+					// 单次
+					luckMoney = random.nextDouble() * lotteryConfig.getAmountPerInStageOne();
+					// 保留两位小数
+					luckMoney = (double) Math.round(luckMoney * 100) / 100;
+					lottery.setType(LotteryType.MONEY.getCode());
+					lottery.setAmount(luckMoney);
+					lottery.setName(luckMoney + "元红包");
+					lottery.setLuck(true);
+				}
 			}
 		}
 		// 处于第二阶段内
 		else if (currentLotteryTranscationId < lotteryConfig.getLotteryStageTwo()) {
 			// 若目前抽奖累计金额还未到达第二阶段最大金额，则可以继续抽奖
 			if (lotteryAmount < lotteryConfig.getAmountMaxInStageTwo()) {
-				// 单次
-				luckMoney = random.nextDouble() * lotteryConfig.getAmountPerInStageTwo();
-				// 保留两位小数
-				luckMoney = (double) Math.round(luckMoney * 100) / 100;
-				lottery.setType(LotteryType.MONEY.getCode());
-				lottery.setAmount(luckMoney);
-				lottery.setName(luckMoney + "元红包");
-				lottery.setLuck(true);
+				// 随机判断是否中奖，三分之一的概率
+				int randomNum = random.nextInt(3);
+				if (randomNum == 0) {
+					// 单次
+					luckMoney = random.nextDouble() * lotteryConfig.getAmountPerInStageTwo();
+					// 保留两位小数
+					luckMoney = (double) Math.round(luckMoney * 100) / 100;
+					lottery.setType(LotteryType.MONEY.getCode());
+					lottery.setAmount(luckMoney);
+					lottery.setName(luckMoney + "元红包");
+					lottery.setLuck(true);
+				}
 			}
 		}
 		// 抽奖次数已经超过第二阶段
 		else {
-			// 随机判断是否中奖，三分之一的概率
-			int randomNum = random.nextInt(3);
+			// 随机判断是否中奖，四分之一的概率
+			int randomNum = random.nextInt(4);
 			if (randomNum == 0) {
 				// 单次
 				luckMoney = Math.random() * lotteryConfig.getAmountPerOverStageTwo();

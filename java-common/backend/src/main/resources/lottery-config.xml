@@ -19,17 +19,17 @@
 
 	<bean id="topup2000" class="com.xuwuji.eshop.model.Topup">
 		<property name="amount" value="2000"></property>
-		<property name="getAmount" value="2150"></property>
+		<property name="getAmount" value="2100"></property>
 	</bean>
 
 	<bean id="topup3000" class="com.xuwuji.eshop.model.Topup">
 		<property name="amount" value="3000"></property>
-		<property name="getAmount" value="3200"></property>
+		<property name="getAmount" value="3150"></property>
 	</bean>
 
 	<bean id="topup5000" class="com.xuwuji.eshop.model.Topup">
 		<property name="amount" value="5000"></property>
-		<property name="getAmount" value="5400"></property>
+		<property name="getAmount" value="5300"></property>
 	</bean>
 
 	<bean id="topupList" class="java.util.ArrayList">
