@@ -52,6 +52,7 @@ public class UserDao {
 			map.put("amountThisMonth", user.getAmountThisMonth());
 			map.put("points", user.getPoints());
 			map.put("balance", user.getBalance());
+			map.put("lotteryAmount", user.getLotteryAmount());
 			mapper.update(map);
 			session.commit();
 		} catch (Exception e) {

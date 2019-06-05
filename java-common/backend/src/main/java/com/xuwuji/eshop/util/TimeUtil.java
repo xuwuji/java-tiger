@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,7 +19,7 @@ public class TimeUtil {
 		String dateStr = sdf.format(date);
 		return dateStr;
 	}
-	
+
 	public static String dateToFormatString(Date date) {
 		SimpleDateFormat sdf = new SimpleDateFormat(TimeUtil.FROMAT_FULL_TIME_FORMAT);
 		String dateStr = sdf.format(date);
@@ -30,5 +31,4 @@ public class TimeUtil {
 		Date date = sdf.parse(dateInput);
 		return date;
 	}
-
 }

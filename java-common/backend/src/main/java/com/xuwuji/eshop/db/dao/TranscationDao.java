@@ -71,4 +71,23 @@ public class TranscationDao {
 		return result.get(0);
 	}
 
+	public List<Transcation> getByOpenIdAndType(String openId, String type) {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<Transcation> result = new ArrayList<Transcation>();
+		try {
+			TranscationMapper mapper = session.getMapper(TranscationMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("openId", openId);
+			map.put("type", type);
+			result = mapper.getByOpenIdAndType(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+
 }

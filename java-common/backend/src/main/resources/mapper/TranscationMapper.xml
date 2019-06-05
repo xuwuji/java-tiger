@@ -17,14 +17,15 @@
 		<result property="amount" column="type"></result>
 		<result property="lastModified" column="type"></result>
 		<result property="wxTranscationId" column="type"></result>
+		<result property="wechatId" column="type"></result>
 	</resultMap>
 
 	<insert id="add" parameterType="Transcation"
 		useGeneratedKeys="true" keyProperty="id" keyColumn="id">
 		insert into
 		transcation
-		(transcationId,openId,type,occur,lastModified,amount,state,orderId)
-		values(#{transcationId},#{openId},#{type},#{occur},#{lastModified},#{amount},#{state},#{orderId})
+		(transcationId,openId,type,occur,lastModified,amount,state,orderId,wechatId)
+		values(#{transcationId},#{openId},#{type},#{occur},#{lastModified},#{amount},#{state},#{orderId},#{wechatId})
 	</insert>
 
 	<update id="update" parameterType="hashmap">
@@ -40,5 +41,12 @@
 		transcation
 		where
 		transcationId=#{transcationId};
+	</select>
+
+	<select id="getByOpenIdAndType" resultType="Transcation">
+		select * from
+		transcation
+		where
+		openId=#{openId} and type=#{type};
 	</select>
 </mapper>

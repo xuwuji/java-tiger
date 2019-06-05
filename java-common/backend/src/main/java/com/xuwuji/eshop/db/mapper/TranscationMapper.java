@@ -12,5 +12,7 @@ public interface TranscationMapper {
 	public List<Transcation> getByTranscationId(HashMap<String, Object> map);
 
 	public void update(HashMap<String, Object> map);
+	
+	public List<Transcation> getByOpenIdAndType(HashMap<String, Object> map);
 
 }

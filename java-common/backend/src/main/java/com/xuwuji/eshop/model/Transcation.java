@@ -27,6 +27,7 @@ public class Transcation {
 	private String wxTranscationId;
 	// 对应的订单号
 	private String orderId;
+	private String wechatId;
 
 	public int getId() {
 		return id;
@@ -114,6 +115,14 @@ public class Transcation {
 
 	public void setOrderId(String orderId) {
 		this.orderId = orderId;
+	}
+
+	public String getWechatId() {
+		return wechatId;
+	}
+
+	public void setWechatId(String wechatId) {
+		this.wechatId = wechatId;
 	}
 
 }

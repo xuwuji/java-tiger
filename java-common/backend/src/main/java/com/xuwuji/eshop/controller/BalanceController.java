@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -215,6 +216,60 @@ public class BalanceController {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	/**
+	 * 提现
+	 * 
+	 * 1、流水表中增加提现申请记录
+	 * 
+	 * 2、减去余额
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/withdraw", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> withdraw(HttpServletRequest request) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		String amount = request.getParameter("amount");
+		String openId = request.getParameter("openId");
+
+		String wechatId = request.getParameter("wechatId");
+		/**
+		 * 每个用户一天只可提现一次
+		 */
+		List<Transcation> list = transcationDao.getByOpenIdAndType(openId, TranscationTypeEnum.WITHDRAW.getCode());
+		boolean submittedToday = false;
+		for (Transcation t : list) {
+			submittedToday = DateUtils.isSameDay(t.getOccur(), new Date());
+			if (submittedToday) {
+				result.put("submittedToday", submittedToday);
+				return result;
+			}
+		}
+		String transcationId = System.nanoTime() + TranscationTypeEnum.WITHDRAW.getCode() + amount;
+		// 流水表金额以分为单位
+		Double withdrawAmount = Double.valueOf(amount) * 100;
+		Transcation transcation = new Transcation();
+		transcation.setAmount(withdrawAmount);
+		transcation.setOccur(new Date());
+		transcation.setOpenId(openId);
+		transcation.setTranscationId(transcationId);
+		transcation.setType(TranscationTypeEnum.WITHDRAW.getCode());
+		transcation.setState(TranscationStateEnum.D.getCode());
+		transcation.setWechatId(wechatId);
+		transcationDao.add(transcation);
+		User user = new User();
+		user.setOpenId(openId);
+		user = userDao.getByCondition(user);
+		// 用户表中金额以元为单位
+		user.setLotteryAmount(Math.round((user.getLotteryAmount() - Double.valueOf(amount)) * 100) / 100.0);
+		user.setBalance(Math.round((user.getBalance() - Double.valueOf(amount)) * 100) / 100.0);
+		userDao.update(user);
+		result.put("submittedToday", submittedToday);
+		result.put("user", user);
+		return result;
 	}
 
 	/**
