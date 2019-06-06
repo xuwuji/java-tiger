@@ -182,6 +182,7 @@ public class UserDao {
 			map.put("lotteryTotalCount", user.getLotteryTotalCount());
 			map.put("balance", user.getBalance());
 			map.put("lotteryAmount", user.getLotteryAmount());
+			map.put("points", user.getPoints());
 			mapper.updateLotteryInfo(map);
 			session.commit();
 		} catch (Exception e) {

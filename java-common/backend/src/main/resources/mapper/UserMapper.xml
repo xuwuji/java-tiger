@@ -69,7 +69,8 @@
 
 	<update id="updateLotteryInfo" parameterType="hashmap">
 		update user set
-		lotteryRemainCount=#{lotteryRemainCount},lotteryTotalCount=#{lotteryTotalCount},balance=#{balance},lotteryAmount=#{lotteryAmount}
+		lotteryRemainCount=#{lotteryRemainCount},lotteryTotalCount=#{lotteryTotalCount},
+		balance=#{balance},lotteryAmount=#{lotteryAmount},points=#{points}
 		where openId=#{openId};
 	</update>
 

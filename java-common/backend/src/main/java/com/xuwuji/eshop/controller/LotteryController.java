@@ -98,6 +98,7 @@ public class LotteryController {
 		Lottery lottery = new Lottery();
 		// 此次抽到的金额
 		double luckMoney = 0;
+		int points = 0;
 		// 默认不中奖
 		lottery.setName("再接再厉哦");
 		lottery.setLuck(false);
@@ -106,16 +107,26 @@ public class LotteryController {
 		if (currentLotteryTranscationId < lotteryConfig.getLotteryStageOne()) {
 			// 若目前抽奖累计金额还未到达第一阶段最大金额，则可以继续抽奖
 			if (lotteryAmount < lotteryConfig.getAmountMaxInStageOne()) {
-				// 随机判断是否中奖，二分之一的概率
+				// 随机判断是否中奖
+				/**
+				 * 1、二分之一概率得红包
+				 * 
+				 * 2、二分之一概率得积分,50~100
+				 */
 				int randomNum = random.nextInt(2);
 				if (randomNum == 0) {
-					// 单次
 					luckMoney = random.nextDouble() * lotteryConfig.getAmountPerInStageOne();
 					// 保留两位小数
 					luckMoney = (double) Math.round(luckMoney * 100) / 100;
 					lottery.setType(LotteryType.MONEY.getCode());
 					lottery.setAmount(luckMoney);
 					lottery.setName(luckMoney + "元红包");
+					lottery.setLuck(true);
+				} else {
+					points = random.nextInt(50) + 50;
+					lottery.setType(LotteryType.POINTS.getCode());
+					lottery.setAmount(points);
+					lottery.setName(luckMoney + "积分");
 					lottery.setLuck(true);
 				}
 			}
@@ -124,7 +135,11 @@ public class LotteryController {
 		else if (currentLotteryTranscationId < lotteryConfig.getLotteryStageTwo()) {
 			// 若目前抽奖累计金额还未到达第二阶段最大金额，则可以继续抽奖
 			if (lotteryAmount < lotteryConfig.getAmountMaxInStageTwo()) {
-				// 随机判断是否中奖，三分之一的概率
+				/**
+				 * 1、三分之一概率红包
+				 * 
+				 * 2、三分之一概率积分,40~80
+				 */
 				int randomNum = random.nextInt(3);
 				if (randomNum == 0) {
 					// 单次
@@ -135,12 +150,22 @@ public class LotteryController {
 					lottery.setAmount(luckMoney);
 					lottery.setName(luckMoney + "元红包");
 					lottery.setLuck(true);
+				} else if (randomNum == 1) {
+					points = random.nextInt(40) + 40;
+					lottery.setType(LotteryType.POINTS.getCode());
+					lottery.setAmount(points);
+					lottery.setName(luckMoney + "积分");
+					lottery.setLuck(true);
 				}
 			}
 		}
 		// 抽奖次数已经超过第二阶段
 		else {
-			// 随机判断是否中奖，四分之一的概率
+			/**
+			 * 1、四分之一概率红包
+			 * 
+			 * 2、四分之一概率积分,30~60
+			 */
 			int randomNum = random.nextInt(4);
 			if (randomNum == 0) {
 				// 单次
@@ -151,17 +176,29 @@ public class LotteryController {
 				lottery.setAmount(luckMoney);
 				lottery.setName(luckMoney + "元红包");
 				lottery.setLuck(true);
+			} else if (randomNum == 1) {
+				points = random.nextInt(30) + 30;
+				lottery.setType(LotteryType.POINTS.getCode());
+				lottery.setAmount(points);
+				lottery.setName(luckMoney + "积分");
+				lottery.setLuck(true);
 			}
 		}
 		// 将剩余次数减一
 		userFromDB.setLotteryRemainCount(userFromDB.getLotteryRemainCount() - 1);
 		// 将累计抽奖次数加一
 		userFromDB.setLotteryTotalCount(currentLotteryTranscationId);
-		if (lottery.isLuck()) {
+		// 现金红包更新金额相关
+		if (lottery.isLuck() && lottery.getType().equals(LotteryType.MONEY.getCode())) {
 			// 更新累计中奖金额
 			userFromDB.setLotteryAmount(userFromDB.getLotteryAmount() + luckMoney);
 			// 发送至用户账户余额
 			userFromDB.setBalance(userFromDB.getBalance() + luckMoney);
+		}
+		// 积分更新相关
+		if (lottery.isLuck() && lottery.getType().equals(LotteryType.POINTS.getCode())) {
+			// 更新累计中奖金额
+			userFromDB.setPoints(userFromDB.getPoints() + points);
 		}
 		userDao.updateLotteryInfo(userFromDB);
 		// 将本次抽奖进行记录
@@ -205,7 +242,7 @@ public class LotteryController {
 			user = userDao.getByCondition(user);
 			user.setLotteryRemainCount(user.getLotteryRemainCount() + 1);
 			userDao.updateLotteryInfo(user);
-
+			
 			LotteryShareHistory lotteryShareHistory = new LotteryShareHistory();
 			lotteryShareHistory.setOccur(new Date());
 			lotteryShareHistory.setOpenUser(openUser);

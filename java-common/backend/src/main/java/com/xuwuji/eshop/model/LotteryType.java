@@ -8,7 +8,7 @@ package com.xuwuji.eshop.model;
  *
  */
 public enum LotteryType {
-	MONEY("money", "money"), GIFT("gift", "gift");
+	MONEY("money", "money"), GIFT("gift", "gift"), POINTS("points", "points");
 
 	private String desc;
 	private String code;
