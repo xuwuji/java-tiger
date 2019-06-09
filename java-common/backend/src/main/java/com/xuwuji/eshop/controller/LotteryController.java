@@ -127,8 +127,18 @@ public class LotteryController {
 		LotteryConfig lotteryConfig = getLotteryConfig();
 		// 处于第一阶段内
 		if (currentLotteryTranscationId < lotteryConfig.getLotteryStageOne()) {
+			// 前面两次抽奖肯定都能中现金红包
+			if (currentLotteryTranscationId < 3) {
+				luckMoney = random.nextDouble() * lotteryConfig.getAmountPerInStageOne();
+				// 保留两位小数
+				luckMoney = (double) Math.round(luckMoney * 100) / 100;
+				lottery.setType(LotteryType.MONEY.getCode());
+				lottery.setAmount(luckMoney);
+				lottery.setName(luckMoney + "元红包");
+				lottery.setLuck(true);
+			}
 			// 若目前抽奖累计金额还未到达第一阶段最大金额，则可以继续抽奖
-			if (lotteryAmount < lotteryConfig.getAmountMaxInStageOne()) {
+			else if (lotteryAmount < lotteryConfig.getAmountMaxInStageOne()) {
 				// 随机判断是否中奖
 				/**
 				 * 1、三分之一概率得红包
@@ -153,7 +163,7 @@ public class LotteryController {
 				}
 			}
 			// 超过了只能中积分
-			else {
+			else if (lotteryAmount > lotteryConfig.getAmountMaxInStageOne()) {
 				int randomNum = random.nextInt(3);
 				if (randomNum == 0) {
 					points = random.nextInt(50) + 50;
