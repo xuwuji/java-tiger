@@ -131,11 +131,11 @@ public class LotteryController {
 			if (lotteryAmount < lotteryConfig.getAmountMaxInStageOne()) {
 				// 随机判断是否中奖
 				/**
-				 * 1、二分之一概率得红包
+				 * 1、三分之一概率得红包
 				 * 
-				 * 2、二分之一概率得积分,50~100
+				 * 2、三分之一概率得积分,50~100
 				 */
-				int randomNum = random.nextInt(2);
+				int randomNum = random.nextInt(3);
 				if (randomNum == 0) {
 					luckMoney = random.nextDouble() * lotteryConfig.getAmountPerInStageOne();
 					// 保留两位小数
@@ -144,7 +144,18 @@ public class LotteryController {
 					lottery.setAmount(luckMoney);
 					lottery.setName(luckMoney + "元红包");
 					lottery.setLuck(true);
-				} else {
+				} else if (randomNum == 1) {
+					points = random.nextInt(50) + 50;
+					lottery.setType(LotteryType.POINTS.getCode());
+					lottery.setAmount(points);
+					lottery.setName(luckMoney + "积分");
+					lottery.setLuck(true);
+				}
+			}
+			// 超过了只能中积分
+			else {
+				int randomNum = random.nextInt(3);
+				if (randomNum == 0) {
 					points = random.nextInt(50) + 50;
 					lottery.setType(LotteryType.POINTS.getCode());
 					lottery.setAmount(points);
@@ -179,16 +190,26 @@ public class LotteryController {
 					lottery.setName(luckMoney + "积分");
 					lottery.setLuck(true);
 				}
+			} // 超过了只能中积分
+			else {
+				int randomNum = random.nextInt(3);
+				if (randomNum == 0) {
+					points = random.nextInt(40) + 40;
+					lottery.setType(LotteryType.POINTS.getCode());
+					lottery.setAmount(points);
+					lottery.setName(luckMoney + "积分");
+					lottery.setLuck(true);
+				}
 			}
 		}
 		// 抽奖次数已经超过第二阶段
 		else {
 			/**
-			 * 1、四分之一概率红包
+			 * 1、十分之一概率红包
 			 * 
-			 * 2、四分之一概率积分,30~60
+			 * 2、十分之三概率积分,30~60
 			 */
-			int randomNum = random.nextInt(4);
+			int randomNum = random.nextInt(10);
 			if (randomNum == 0) {
 				// 单次
 				luckMoney = Math.random() * lotteryConfig.getAmountPerOverStageTwo();
@@ -198,7 +219,7 @@ public class LotteryController {
 				lottery.setAmount(luckMoney);
 				lottery.setName(luckMoney + "元红包");
 				lottery.setLuck(true);
-			} else if (randomNum == 1) {
+			} else if (randomNum > 6) {
 				points = random.nextInt(30) + 30;
 				lottery.setType(LotteryType.POINTS.getCode());
 				lottery.setAmount(points);
