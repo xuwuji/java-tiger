@@ -63,6 +63,15 @@ public class ConfigController {
 		return eshopConfig;
 	}
 
+	@RequestMapping(value = "/getShareImg", method = RequestMethod.GET)
+	@ResponseBody
+	public EshopConfigResponse getShareGroupImg(HttpServletRequest request, HttpServletResponse response) {
+		EshopConfigResponse eshopConfig = new EshopConfigResponse();
+		eshopConfig.setShareGroupImg(eshopConfigUtil.getParam(eshopConfigUtil.SHARE_GROUP_IMG));
+		eshopConfig.setWechatCode(eshopConfigUtil.getParam(eshopConfigUtil.WECHAT_CODE));
+		return eshopConfig;
+	}
+
 	@RequestMapping(value = "/topupConfig", method = RequestMethod.GET)
 	@ResponseBody
 	public TopUpConfig topupConfig(HttpServletRequest request, HttpServletResponse response) {
@@ -158,6 +167,8 @@ public class ConfigController {
 		// 第二阶段外单次最多抽到的金额
 		public String amountPerOverStageTwo;
 		public String lotteryShareTitle;
+		public String shareGroupImg;
+		public String wechatCode;
 
 		public String getXxcUrl() {
 			return xxcUrl;
@@ -341,6 +352,22 @@ public class ConfigController {
 
 		public void setLotteryShareTitle(String lotteryShareTitle) {
 			this.lotteryShareTitle = lotteryShareTitle;
+		}
+
+		public String getShareGroupImg() {
+			return shareGroupImg;
+		}
+
+		public void setShareGroupImg(String shareGroupImg) {
+			this.shareGroupImg = shareGroupImg;
+		}
+
+		public String getWechatCode() {
+			return wechatCode;
+		}
+
+		public void setWechatCode(String wechatCode) {
+			this.wechatCode = wechatCode;
 		}
 
 	}

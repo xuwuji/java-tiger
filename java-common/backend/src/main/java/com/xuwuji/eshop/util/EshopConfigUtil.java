@@ -40,6 +40,8 @@ public class EshopConfigUtil {
 	public static final String SHOW_TWO_CATEGORY_IDS="showTwoCategoryIds";
 	public static final String MIN_MONEY="minMoney";
 	public static final String LOTTERY_SHARE_TITLE="lotteryShareTitle";
+	public static final String SHARE_GROUP_IMG="shareGroupImg";
+	public static final String WECHAT_CODE="wechatCode";
 	public static Map<String, Object> configMap = new HashMap<String, Object>();
 
 	public String getParam(String paramName) {
