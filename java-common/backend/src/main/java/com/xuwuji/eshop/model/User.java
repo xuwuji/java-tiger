@@ -29,6 +29,8 @@ public class User {
 	 */
 	private double balance;
 	private Date gmtCreate;
+	// 好友助力次数
+	private int shareHelpCount;
 
 	public int getId() {
 		return id;
@@ -172,6 +174,14 @@ public class User {
 
 	public void setGmtCreate(Date gmtCreate) {
 		this.gmtCreate = gmtCreate;
+	}
+
+	public int getShareHelpCount() {
+		return shareHelpCount;
+	}
+
+	public void setShareHelpCount(int shareHelpCount) {
+		this.shareHelpCount = shareHelpCount;
 	}
 
 	@Override

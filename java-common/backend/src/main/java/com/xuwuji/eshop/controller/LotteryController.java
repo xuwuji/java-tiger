@@ -1,7 +1,9 @@
 package com.xuwuji.eshop.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -68,7 +70,27 @@ public class LotteryController {
 			userDao.add(userFromDB);
 			userFromDB = userDao.getByCondition(user);
 		}
+		// 好友助力次数
+		int shareHelpCount = lotteryShareHistoryDao.getBysourceUser(openId).size();
+		userFromDB.setShareHelpCount(shareHelpCount);
 		return userFromDB;
+	}
+
+	/**
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/checkHelp", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> checkHelp(HttpServletRequest request, HttpServletResponse response) {
+		String sourceUser = request.getParameter("sourceUser");
+		String openUser = request.getParameter("openUser");
+		List<LotteryShareHistory> items = lotteryShareHistoryDao.checkExist(sourceUser, openUser);
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		result.put("isHelped", items.size() > 0);
+		return result;
 	}
 
 	/**
@@ -242,7 +264,7 @@ public class LotteryController {
 			user = userDao.getByCondition(user);
 			user.setLotteryRemainCount(user.getLotteryRemainCount() + 1);
 			userDao.updateLotteryInfo(user);
-			
+
 			LotteryShareHistory lotteryShareHistory = new LotteryShareHistory();
 			lotteryShareHistory.setOccur(new Date());
 			lotteryShareHistory.setOpenUser(openUser);
