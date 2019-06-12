@@ -220,7 +220,7 @@ public class BarginController {
 	 * @param response
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "/getBarginQRCode/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/getBarginQRCode", method = RequestMethod.GET)
 	@ResponseBody
 	public void getBarginQRCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		@SuppressWarnings("static-access")
