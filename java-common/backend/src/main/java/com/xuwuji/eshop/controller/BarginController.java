@@ -1,5 +1,7 @@
 package com.xuwuji.eshop.controller;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,6 +26,7 @@ import com.xuwuji.eshop.model.BarginOrder;
 import com.xuwuji.eshop.model.BarginOrderHistory;
 import com.xuwuji.eshop.model.BarginOrderState;
 import com.xuwuji.eshop.util.EshopConfigUtil;
+import com.xuwuji.eshop.util.QRCodeUtil;
 
 @Controller
 @RequestMapping(value = "/bargin")
@@ -35,6 +39,9 @@ public class BarginController {
 	private BarginItemDao barginItemDao;
 	@Autowired
 	private EshopConfigUtil eshopConfigUtil;
+
+	@Autowired
+	private QRCodeUtil qRCodeUtil;
 
 	/**
 	 * 
@@ -199,10 +206,31 @@ public class BarginController {
 		List<BarginOrder> orders = barginOrderDao.isJoined(openId, barginItemId);
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		result.put("isJoined", orders.size() > 0);
-		if( orders.size() > 0) {
-			result.put("barginOrder",orders.get(0));
+		if (orders.size() > 0) {
+			result.put("barginOrder", orders.get(0));
 		}
 		return result;
+	}
+
+	/**
+	 * 生成砍价的二维码
+	 * 
+	 * @param id
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/getBarginQRCode/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public void getBarginQRCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		@SuppressWarnings("static-access")
+		String barginOrderId = request.getParameter("barginOrderId");
+		byte[] result = qRCodeUtil.getBarginQRCoderByte(barginOrderId);
+		response.setContentType("image/png");
+		OutputStream os = response.getOutputStream();
+		os.write(result);
+		os.flush();
+		os.close();
 	}
 
 }

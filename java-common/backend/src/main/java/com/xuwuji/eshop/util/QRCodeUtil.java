@@ -59,6 +59,26 @@ public class QRCodeUtil {
 		return result;
 	}
 
+	public static byte[] getBarginQRCoderByte(String barginOrderId) {
+		RestTemplate rest = new RestTemplate();
+		String url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=" + getAccessToken();
+		Map<String, Object> param = new HashMap<>();
+		param.put("scene", barginOrderId);
+		param.put("page", "pages/barginShare/barginShare");
+		param.put("width", 430);
+		param.put("auto_color", false);
+		Map<String, Object> line_color = new HashMap<>();
+		line_color.put("r", 0);
+		line_color.put("g", 0);
+		line_color.put("b", 0);
+		param.put("line_color", line_color);
+		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+		HttpEntity requestEntity = new HttpEntity(param, headers);
+		ResponseEntity<byte[]> entity = rest.exchange(url, HttpMethod.POST, requestEntity, byte[].class, new Object[0]);
+		byte[] result = entity.getBody();
+		return result;
+	}
+
 	public static String getQRCoder() {
 		RestTemplate rest = new RestTemplate();
 		InputStream inputStream = null;
