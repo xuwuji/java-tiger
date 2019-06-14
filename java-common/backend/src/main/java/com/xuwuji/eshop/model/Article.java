@@ -15,10 +15,14 @@ public class Article {
 	private String tags;
 	private List<String> imgUrlList;
 	private List<String> tagList;
+	// 0-公告，1-笔记
 	private String typeId;
 	private String announceStyle;
 	private String mainImgUrl;
+	// 放在首页时候展示的图片
+	private String homeImgUrl;
 	private String state;
+	private Product product;
 
 	public int getId() {
 		return id;
@@ -130,6 +134,22 @@ public class Article {
 
 	public void setReferCategoryId(String referCategoryId) {
 		this.referCategoryId = referCategoryId;
+	}
+
+	public String getHomeImgUrl() {
+		return homeImgUrl;
+	}
+
+	public void setHomeImgUrl(String homeImgUrl) {
+		this.homeImgUrl = homeImgUrl;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 }

@@ -2,6 +2,7 @@ package com.xuwuji.eshop.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
@@ -32,6 +33,7 @@ import com.xuwuji.eshop.model.UserState;
 import com.xuwuji.eshop.model.ViewHistory;
 import com.xuwuji.eshop.util.EshopConfigUtil;
 import com.xuwuji.eshop.util.HttpUtil;
+import com.xuwuji.eshop.util.ProductUtil;
 
 @Controller
 @RequestMapping(value = "/article")
@@ -43,13 +45,13 @@ public class ArticleController {
 	@Autowired
 	private ProductDao productDao;
 	@Autowired
-	private UserDao userDao;
-	@Autowired
 	private CategoryDao categoryDao;
 	@Autowired
 	private ViewHistoryDao viewHistoryDao;
 	@Autowired
 	private SearchHistoryDao searchHistoryDao;
+	@Autowired
+	private ProductUtil productUtil;
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
@@ -145,6 +147,34 @@ public class ArticleController {
 		List<Article> list = new ArrayList<Article>();
 		list = articleDao.getActiveAll();
 		return list;
+	}
+
+	@RequestMapping(value = "/getActiveAllForHomePage", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Article> getActiveAllForHomePage(HttpServletRequest request, HttpServletResponse response) {
+		List<Article> list = new ArrayList<Article>();
+		List<Article> result = new ArrayList<Article>();
+		list = articleDao.getActiveAllByCondition("", "1", "");
+		// 打乱顺序，随机展示
+		Collections.shuffle(list);
+		// 最多展示10个
+		if (list.size() > 10) {
+			list = list.subList(0, 10);
+		}
+		// 只返回简短信息
+		String ARTICLE_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.ARTICLE_IMG_BASE);
+		String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
+		for (Article article : list) {
+			Article temp = new Article();
+			temp.setId(article.getId());
+			temp.setReferProductId(article.getReferProductId());
+			temp.setHomeImgUrl(ARTICLE_IMG_BASE + "home-" + article.getId() + ".jpg");
+			Product product = productDao.getById(article.getReferProductId());
+			product.setMainImgUrl(PRODUCT_IMG_BASE + product.getId() + "-0.jpg");
+			temp.setProduct(product);
+			result.add(temp);
+		}
+		return result;
 	}
 
 	@RequestMapping(value = "/getActiveAllByCondition", method = RequestMethod.GET)
