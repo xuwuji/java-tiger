@@ -1,5 +1,7 @@
 package com.xuwuji.eshop.model;
 
+import java.util.List;
+
 /**
  * 
  * @author xuwuji
@@ -16,6 +18,8 @@ public class Brand {
 	private String countryFlagImg;
 	private String state;
 	private String imgUrl;
+	private String homeImg;
+	private List<Product> products;
 
 	public int getId() {
 		return id;
@@ -79,6 +83,22 @@ public class Brand {
 
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
+	}
+
+	public String getHomeImg() {
+		return homeImg;
+	}
+
+	public void setHomeImg(String homeImg) {
+		this.homeImg = homeImg;
+	}
+
+	public List<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
 	}
 
 }

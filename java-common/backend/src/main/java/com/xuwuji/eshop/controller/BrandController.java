@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xuwuji.eshop.db.dao.BrandDao;
+import com.xuwuji.eshop.db.dao.ProductDao;
 import com.xuwuji.eshop.model.Brand;
 import com.xuwuji.eshop.util.EshopConfigUtil;
 
@@ -28,9 +29,12 @@ import net.sourceforge.pinyin4j.PinyinHelper;
 public class BrandController {
 	@Autowired
 	private BrandDao brandDao;
-
 	@Autowired
 	private EshopConfigUtil eshopConfigUtil;
+	@Autowired
+	private String brandRecommendList;
+	@Autowired
+	private ProductDao productDao;
 
 	@RequestMapping(value = "/getAlphaBrandList", method = RequestMethod.GET)
 	@ResponseBody
@@ -111,6 +115,20 @@ public class BrandController {
 			result.add(brand);
 		}
 		return result;
+	}
+
+	@RequestMapping(value = "/getHomeRecommend", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Brand> getHomeRecommend(HttpServletRequest request, HttpServletResponse response) {
+		List<Brand> list = new ArrayList<Brand>();
+		for (String id : brandRecommendList.split(",")) {
+			Brand brand = brandDao.getById(id).get(0);
+			brand.setHomeImg(
+					eshopConfigUtil.getParam(eshopConfigUtil.BRAND_IMG_BASE) + "home-" + brand.getId() + ".jpg");
+			brand.setProducts(productDao.getActiveByBrandId(String.valueOf(brand.getId())));
+			list.add(brand);
+		}
+		return list;
 	}
 
 	@RequestMapping(value = "/getActiveCountry", method = RequestMethod.GET)

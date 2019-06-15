@@ -271,6 +271,11 @@ public class ProductDao {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("brandId", brandId);
 			result = mapper.getActiveByBrandId(map);
+			String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
+			for (Product product : result) {
+				String mainImgUrl = PRODUCT_IMG_BASE + product.getId() + "-0.jpg";
+				product.setMainImgUrl(mainImgUrl);
+			}
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
