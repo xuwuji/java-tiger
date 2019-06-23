@@ -110,6 +110,20 @@ public class AdminProductController {
 		}
 	}
 
+	@RequestMapping(value = "/disableGift", method = RequestMethod.POST)
+	@ResponseBody
+	public void disableGift(HttpServletRequest request, HttpServletResponse response) {
+		String id = request.getParameter("id");
+		productDao.disableGift(id);
+	}
+
+	@RequestMapping(value = "/enableGift", method = RequestMethod.POST)
+	@ResponseBody
+	public void enableGift(HttpServletRequest request, HttpServletResponse response) {
+		String id = request.getParameter("id");
+		productDao.enableGift(id);
+	}
+
 	@RequestMapping(value = "/updateBannerItem", method = RequestMethod.POST)
 	@ResponseBody
 	public void updateBannerItem(HttpServletRequest request, HttpServletResponse response) {
@@ -156,7 +170,7 @@ public class AdminProductController {
 		String desc = request.getParameter("desc");
 		String price = request.getParameter("price");
 		String hkPrice = request.getParameter("hkPrice");
-		//System.out.print(price);
+		// System.out.print(price);
 		String inventory = request.getParameter("inventory");
 		String salesCount = request.getParameter("salesCount");
 		String mainImgUrl = request.getParameter("mainImgUrl");

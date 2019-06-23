@@ -504,6 +504,22 @@
 								}
 							},
 							{
+								field : 'canBeGift',
+								title : '送礼',
+								align : 'center',
+								formatter : function(value, row, index) {
+									if (row.state) {
+										if (row.canBeGift == '0') {
+											return "不送礼";
+										} else if (row.canBeGift == '1') {
+											return "送礼";
+										} else {
+											return "错误数据";
+										}
+									}
+								}
+							},
+							{
 								title : '操作',
 								field : 'id',
 								formatter : function(id) {
@@ -513,6 +529,10 @@
 											+ id + ')">下架</a>';
 									html += '　<a href="javascript:reActiveProduct('
 											+ id + ')">上架</a>';
+									html += '　<a href="javascript:disableGift('
+											+ id + ')">不送礼</a>';
+									html += '　<a href="javascript:enableGift('
+											+ id + ')">送礼</a>';
 									html += '　<a href="javascript:updateBannerItem('
 											+ id + ')">修改banner位</a>';
 									html += '　<a href="javascript:updateBrand('
@@ -815,6 +835,43 @@
 		}
 	}
 
+	//不送礼
+	function disableGift(id) {
+		var categoryId = $("#selectpicker-child").val();
+		if (confirm("确定删除此分类吗？")) {
+			$.ajax({
+				url : "/backend/admin/product/disableGift",
+				type : "post",
+				data : {
+					id : id,
+					type : "single"
+				},
+				success : function(status) {
+					$table.bootstrapTable('destroy');
+					initTable(categoryId);
+				}
+			});
+		}
+	}
+
+	//送礼
+	function enableGift(id) {
+		var categoryId = $("#selectpicker-child").val();
+		if (confirm("确定重新上架吗？")) {
+			$.ajax({
+				url : "/backend/admin/product/enableGift", //url
+				type : "post",
+				data : {
+					id : id,
+					type : "single"
+				},
+				success : function(status) {
+					$table.bootstrapTable('destroy');
+					initTable(categoryId);
+				}
+			});
+		}
+	}
 	/* 批量上架 */
 	$('#btn-batch-reActive').on("click", function() {
 		var rows = $table.bootstrapTable('getSelections');

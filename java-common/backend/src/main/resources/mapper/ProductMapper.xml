@@ -29,14 +29,15 @@
 		<result property="imgUrl4" column="type"></result>
 		<result property="flashPrice" column="type"></result>
 		<result property="flashState" column="type"></result>
+		<result property="canBeGift" column="type"></result>
 	</resultMap>
 
 	<insert id="add" parameterType="Product" useGeneratedKeys="true"
 		keyProperty="id" keyColumn="id">
 		insert into product
 		(name,description,price,inventory,salesCount,parentCategoryId,categoryId,
-		state,flashState,hkPrice)
-		values(#{name},#{description},#{price},#{inventory},#{salesCount},#{parentCategoryId},#{categoryId},'0','0',#{hkPrice})
+		state,flashState,hkPrice,canBeGift)
+		values(#{name},#{description},#{price},#{inventory},#{salesCount},#{parentCategoryId},#{categoryId},'0','0',#{hkPrice},'0')
 	</insert>
 
 	<update id="disable" parameterType="hashmap">
@@ -48,6 +49,19 @@
 	<update id="reActive" parameterType="hashmap">
 		update product set
 		state='1'
+		where id=#{id};
+	</update>
+
+
+	<update id="disableGift" parameterType="hashmap">
+		update product set
+		canBeGift='0'
+		where id=#{id};
+	</update>
+
+	<update id="enableGift" parameterType="hashmap">
+		update product set
+		canBeGift='1'
 		where id=#{id};
 	</update>
 
@@ -77,14 +91,15 @@
 		categoryId=#{categoryId},flashPrice=#{flashPrice},flashState=#{flashState},hkPrice=#{hkPrice}
 		where id=#{id};
 	</update>
-	
+
 	<update id="updatePrice" parameterType="hashmap">
 		update product set
 		price=#{price}
 		where id=#{id};
 	</update>
 
-	<select id="getByCategory" resultType="Product" parameterType="hashmap">
+	<select id="getByCategory" resultType="Product"
+		parameterType="hashmap">
 		select * from
 		product where
 		categoryId=#{categoryId}; ;
@@ -118,30 +133,32 @@
 		state='1' order by id desc;
 	</select>
 
-	<select id="getActiveByCategoryOrderByPrice" resultType="Product"
-		parameterType="hashmap">
+	<select id="getActiveByCategoryOrderByPrice"
+		resultType="Product" parameterType="hashmap">
 		select * from
 		product where
 		categoryId=#{categoryId} and
 		state='1' order by price desc;
 	</select>
 
-	<select id="getActiveByCategoryOrderBySalesCount" resultType="Product"
-		parameterType="hashmap">
+	<select id="getActiveByCategoryOrderBySalesCount"
+		resultType="Product" parameterType="hashmap">
 		select * from
 		product where
 		categoryId=#{categoryId} and
 		state='1' order by salesCount desc;
 	</select>
 
-	<select id="getById" resultType="Product" parameterType="hashmap">
+	<select id="getById" resultType="Product"
+		parameterType="hashmap">
 		select *
 		from
 		product where
 		id=#{id};
 	</select>
 
-	<select id="getActiveByKW" resultType="Product" parameterType="hashmap">
+	<select id="getActiveByKW" resultType="Product"
+		parameterType="hashmap">
 		select * from
 		product where name like
 		CONCAT('%',#{KW},'%')
@@ -165,9 +182,11 @@
 		='1';
 	</select>
 
-	<select id="getRankByTop" resultType="Product" parameterType="hashmap">
+	<select id="getRankByTop" resultType="Product"
+		parameterType="hashmap">
 		select * from
-		product where state='1' order by salesCount desc limit
+		product where state='1' order by salesCount
+		desc limit
 		10;
 	</select>
 
@@ -178,7 +197,8 @@
 		='1' and flashState="1";
 	</select>
 
-	<select id="getMultiByIds" resultType="Product" parameterType="hashmap">
+	<select id="getMultiByIds" resultType="Product"
+		parameterType="hashmap">
 		select * from
 		product where state
 		='1' and id in
@@ -186,6 +206,13 @@
 			separator="," close=")">
 			#{item}
 		</foreach>
+	</select>
+
+	<select id="getActiveGift" resultType="Product"
+		parameterType="hashmap">
+		select * from
+		product where state='1' and canBeGift='1'
+		and price &lt;= #{budget} and price&gt;=#{limit};
 	</select>
 
 </mapper>

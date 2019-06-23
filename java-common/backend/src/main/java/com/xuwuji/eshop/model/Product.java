@@ -39,6 +39,7 @@ public class Product {
 	private double flashPrice;
 	private String flashState;
 	private List<String> detailImgUrls;
+	private String canBeGift;
 
 	public Product() {
 
@@ -276,6 +277,14 @@ public class Product {
 		this.hkPrice = hkPrice;
 	}
 
+	public String getCanBeGift() {
+		return canBeGift;
+	}
+
+	public void setCanBeGift(String canBeGift) {
+		this.canBeGift = canBeGift;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
@@ -286,7 +295,7 @@ public class Product {
 				+ ", bannerItemId=" + bannerItemId + ", bannerItemName=" + bannerItemName + ", country=" + country
 				+ ", imgUrl1=" + imgUrl1 + ", imgUrl2=" + imgUrl2 + ", imgUrl3=" + imgUrl3 + ", imgUrl4=" + imgUrl4
 				+ ", formatId=" + formatId + ", flashPrice=" + flashPrice + ", flashState=" + flashState
-				+ ", detailImgUrls=" + detailImgUrls + "]";
+				+ ", detailImgUrls=" + detailImgUrls + ", canBeGift=" + canBeGift + "]";
 	}
 
 }

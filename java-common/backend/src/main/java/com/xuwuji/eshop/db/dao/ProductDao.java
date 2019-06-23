@@ -75,6 +75,38 @@ public class ProductDao {
 		}
 	};
 
+	public void disableGift(String id) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("id", id);
+			mapper.disableGift(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+	};
+
+	public void enableGift(String id) {
+		SqlSession session = SessionFactory.openDEVSession();
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("id", id);
+			mapper.enableGift(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+	};
+
 	public void updatePrice(int id, int price) {
 		SqlSession session = SessionFactory.openDEVSession();
 		try {
@@ -326,6 +358,31 @@ public class ProductDao {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("ids", ids);
 			result = mapper.getMultiByIds(map);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+
+	public List<Product> getActiveGift(String budget) {
+		SqlSession session = SessionFactory.openDEVSession();
+		List<Product> result = new ArrayList<Product>();
+		try {
+			ProductMapper mapper = session.getMapper(ProductMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("budget", budget);
+			double limit = 0;
+			if (Double.valueOf(budget) == 1000) {
+				limit = 500;
+			} else if (Double.valueOf(budget) > 1000) {
+				limit = 1000;
+			}
+			map.put("limit", limit);
+			result = mapper.getActiveGift(map);
 			session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
