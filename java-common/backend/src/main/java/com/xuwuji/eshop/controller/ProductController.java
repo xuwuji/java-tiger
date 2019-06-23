@@ -221,4 +221,21 @@ public class ProductController {
 		return products;
 	}
 
+	@RequestMapping(value = "/getActiveByGiftId", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Product> getActiveByGiftId(@RequestParam("id") String id, @RequestParam("sort") String sort,
+			@RequestParam("budget") String budget, @RequestParam("gender") String gender, HttpServletRequest request,
+			HttpServletResponse response) {
+		List<Product> result = new ArrayList<Product>();
+		SortEnum sortRequset = SortEnum.getByCode(sort);
+		result = productDao.getActiveGift(budget);
+		result = productUtil.sort(result, sortRequset);
+		String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
+		for (Product product : result) {
+			String mainImgUrl = PRODUCT_IMG_BASE + product.getId() + "-0.jpg";
+			product.setMainImgUrl(mainImgUrl);
+		}
+		return result;
+	}
+
 }
