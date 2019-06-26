@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.xuwuji.eshop.db.mapper.TreasureJoinHistoryMapper">
+
+
+	<resultMap type="TreasureJoinHistory"
+		id="TreasureJoinHistoryResult">
+		<id property="id" column="id"></id>
+		<result property="treasureItemId" column="type"></result>
+		<result property="openId" column="type"></result>
+		<result property="count" column="type"></result>
+		<result property="occur" column="java.util.Date"></result>
+	</resultMap>
+
+	<insert id="add" parameterType="TreasureJoinHistory"
+		useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		insert into
+		treasurejoinhistory
+		(treasureItemId,openId,count,occur)
+		values(#{treasureItemId},#{openId},#{count},now())
+	</insert>
+
+	<select id="getByOpenIdAndTreasureId"
+		resultType="TreasureJoinHistory">
+		select * from
+		treasurejoinhistory
+		where
+		openId=#{0}
+		and treasureItemId=#{1};
+	</select>
+
+
+	<update id="update">
+		update
+		treasurejoinhistory
+		set
+		openId=#{0} and
+		count=#{1};
+	</update>
+
+	<select id="isJoined" resultType="TreasureJoinHistory">
+		select * from
+		treasurejoinhistory
+		where
+		openId=#{0} and
+		treasureItemId=#{1};
+	</select>
+
+</mapper>

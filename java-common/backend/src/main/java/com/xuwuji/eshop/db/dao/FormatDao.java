@@ -121,4 +121,22 @@ public class FormatDao {
 		return result;
 	}
 
+	public Format getById(String formatId) {
+		SqlSession session = SessionFactory.openDEVSession();
+		Format format = new Format();
+		try {
+			FormatMapper mapper = session.getMapper(FormatMapper.class);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("id", formatId);
+			format = mapper.getById(map).get(0);
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.close();
+		}
+		return format;
+	}
+
 }

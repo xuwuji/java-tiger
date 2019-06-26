@@ -52,4 +52,10 @@
 		productId=#{productId} and state='1';
 	</select>
 
+	<select id="getById" resultType="Format">
+		select * from
+		format where
+		id=#{id};
+	</select>
+
 </mapper>
