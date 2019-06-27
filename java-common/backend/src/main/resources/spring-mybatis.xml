@@ -49,6 +49,16 @@
 			value="classpath:mybatis-eshop-config.xml" />
 	</bean>
 
+	<!-- transaction support -->
+	<!-- PlatformTransactionMnager -->
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- enable transaction annotation support -->
+	<tx:annotation-driven
+		transaction-manager="txManager" />
+
 	<bean id="treasureItemMapper"
 		class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="mapperInterface"
@@ -60,6 +70,13 @@
 		class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="mapperInterface"
 			value="com.xuwuji.eshop.db.mapper.TreasureJoinHistoryMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="treasureShareMapper"
+		class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface"
+			value="com.xuwuji.eshop.db.mapper.TreasureShareMapper" />
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 </beans>

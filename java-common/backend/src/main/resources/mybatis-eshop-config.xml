@@ -125,6 +125,7 @@
 		<mapper resource="mapper/BarginOrderHistoryMapper.xml" />
 		<mapper resource="mapper/TreasureItemMapper.xml" />
 		<mapper resource="mapper/TreasureJoinHistoryMapper.xml" />
+		<mapper resource="mapper/TreasureShareMapper.xml" />
 	</mappers>
 
 

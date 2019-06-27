@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.xuwuji.eshop.db.mapper.TreasureItemMapper;
 import com.xuwuji.eshop.db.mapper.TreasureJoinHistoryMapper;
+import com.xuwuji.eshop.db.mapper.TreasureShareMapper;
 import com.xuwuji.eshop.model.TreasureItem;
 import com.xuwuji.eshop.model.TreasureJoinHistory;
+import com.xuwuji.eshop.model.TreasureShare;
 
 @RestController
 @RequestMapping(value = "/treasure")
@@ -23,6 +25,8 @@ public class TreasureController {
 	private TreasureJoinHistoryMapper treasureJoinHistoryMapper;
 	@Autowired
 	private TreasureItemMapper treasureItemMapper;
+	@Autowired
+	private TreasureShareMapper treasureShareMapper;
 
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
 	public void addJoinHistory(HttpServletRequest request) {
@@ -51,6 +55,41 @@ public class TreasureController {
 			map.put("joinHistory", list.get(0));
 		}
 		return map;
+	}
+
+	@RequestMapping(value = "/getById", method = RequestMethod.GET)
+	public TreasureJoinHistory getById(HttpServletRequest request) {
+		String id = request.getParameter("id");
+		TreasureJoinHistory treasureJoinHistory = treasureJoinHistoryMapper.getById(id);
+		return treasureJoinHistory;
+	}
+
+	@RequestMapping(value = "/checkHelp", method = RequestMethod.GET)
+	public HashMap<String, Object> checkHelp(HttpServletRequest request) {
+		String openUser = request.getParameter("openUser");
+		String sourceUser = request.getParameter("sourceUser");
+		String joinHistoryId = request.getParameter("joinHistoryId");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		List<TreasureShare> list = treasureShareMapper.checkExist(sourceUser, openUser, joinHistoryId);
+		List<TreasureShare> helpList = treasureShareMapper.getHelpInfo(sourceUser, joinHistoryId);
+		boolean isHelped = list.size() > 0;
+		map.put("isHelped", isHelped);
+		map.put("helpCount", helpList.size());
+		return map;
+	}
+
+	@RequestMapping(value = "/clickHelp", method = RequestMethod.GET)
+	public void clickHelp(HttpServletRequest request) {
+		String openUser = request.getParameter("openUser");
+		String joinHistoryId = request.getParameter("joinHistoryId");
+		TreasureJoinHistory treasureJoinHistory = treasureJoinHistoryMapper.getById(joinHistoryId);
+		TreasureShare treasureShare = new TreasureShare();
+		treasureShare.setJoinHistoryId(joinHistoryId);
+		treasureShare.setOccur(new Date());
+		treasureShare.setOpenUser(openUser);
+		treasureShare.setSourceUser(treasureJoinHistory.getOpenId());
+		treasureShare.setTreasureItemId(treasureJoinHistory.getTreasureItemId());
+		treasureShareMapper.add(treasureShare);
 	}
 
 }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.xuwuji.eshop.db.mapper.TreasureShareMapper">
+
+
+	<resultMap type="TreasureShare" id="TreasureShareResult">
+		<id property="id" column="id"></id>
+		<result property="sourceUser" column="type"></result>
+		<result property="openUser" column="type"></result>
+		<result property="joinHistoryId" column="type"></result>
+		<result property="treasureItemId" column="type"></result>
+		<result property="occur" column="java.util.Date"></result>
+	</resultMap>
+
+	<insert id="add" parameterType="TreasureShare"
+		useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		insert into
+		treasureshare
+		(sourceUser,openUser,joinHistoryId,treasureItemId,occur)
+		values(#{sourceUser},#{openUser},#{joinHistoryId},#{treasureItemId},now())
+	</insert>
+
+	<select id="checkExist" resultType="TreasureShare">
+		select * from
+		treasureshare
+		where
+		sourceUser=#{sourceUser} and openUser=#{openUser} and
+		joinHistoryId=#{joinHistoryId};
+	</select>
+
+	<select id="getHelpInfo" resultType="TreasureShare">
+		select * from
+		treasureshare
+		where
+		sourceUser=#{sourceUser} and joinHistoryId=#{joinHistoryId};
+	</select>
+
+</mapper>

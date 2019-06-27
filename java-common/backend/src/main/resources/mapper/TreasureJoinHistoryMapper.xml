@@ -30,7 +30,15 @@
 		treasurejoinhistory
 		where
 		openId=#{0}
-		and treasureItemId=#{1};
+		and
+		treasureItemId=#{1};
+	</select>
+
+	<select id="getById" resultType="TreasureJoinHistory">
+		select * from
+		treasurejoinhistory
+		where
+		id=#{id};
 	</select>
 
 
