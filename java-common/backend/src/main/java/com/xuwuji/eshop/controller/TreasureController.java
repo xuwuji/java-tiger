@@ -17,6 +17,7 @@ import com.xuwuji.eshop.db.mapper.TreasureShareMapper;
 import com.xuwuji.eshop.model.TreasureItem;
 import com.xuwuji.eshop.model.TreasureJoinHistory;
 import com.xuwuji.eshop.model.TreasureShare;
+import com.xuwuji.eshop.util.StringUtil;
 
 @RestController
 @RequestMapping(value = "/treasure")
@@ -78,11 +79,28 @@ public class TreasureController {
 		return map;
 	}
 
+	/**
+	 * 点击帮忙助力
+	 * 
+	 * @param request
+	 */
 	@RequestMapping(value = "/clickHelp", method = RequestMethod.GET)
 	public void clickHelp(HttpServletRequest request) {
 		String openUser = request.getParameter("openUser");
+		if (StringUtil.isEmpty(openUser)) {
+			return;
+		}
 		String joinHistoryId = request.getParameter("joinHistoryId");
 		TreasureJoinHistory treasureJoinHistory = treasureJoinHistoryMapper.getById(joinHistoryId);
+		TreasureItem treasureItem = treasureItemMapper.getById(treasureJoinHistory.getTreasureItemId());
+		int totalCount = treasureItem.getTotalCount();
+		int currentCount = treasureItem.getCurrentCount();
+		if (currentCount < totalCount) {
+			treasureItem.setCurrentCount(currentCount + 1);
+			treasureItemMapper.update(treasureItem);
+			treasureJoinHistory.setCount(treasureJoinHistory.getCount() + 1);
+			treasureJoinHistoryMapper.update(treasureJoinHistory);
+		}
 		TreasureShare treasureShare = new TreasureShare();
 		treasureShare.setJoinHistoryId(joinHistoryId);
 		treasureShare.setOccur(new Date());

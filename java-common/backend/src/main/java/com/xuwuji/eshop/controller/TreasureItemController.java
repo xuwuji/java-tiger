@@ -140,4 +140,28 @@ public class TreasureItemController {
 		result = result.subList(0, 50);
 		return result;
 	}
+
+	/**
+	 * 首页展示，最多显示4个
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/showForHomePage", method = RequestMethod.GET)
+	public List<TreasureItem> showForHomePage(HttpServletRequest request) {
+		List<TreasureItem> list = treasureItemMapper.getActiveAll();
+		List<TreasureItem> result = new ArrayList<TreasureItem>();
+		Collections.shuffle(list);
+		if (list.size() > 4) {
+			list = list.subList(0, 4);
+		}
+		for (TreasureItem treasureItem : list) {
+			Product product = productDao.getById(treasureItem.getProductId());
+			treasureItem.setMainImgUrl(PRODUCT_IMG_BASE + treasureItem.getProductId() + "-0.jpg");
+			treasureItem.setFormat(formatDao.getById(treasureItem.getFormatId()));
+			treasureItem.setProduct(product);
+			result.add(treasureItem);
+		}
+		return result;
+	}
 }

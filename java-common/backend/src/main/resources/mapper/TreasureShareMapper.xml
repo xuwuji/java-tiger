@@ -28,15 +28,15 @@
 		select * from
 		treasureshare
 		where
-		sourceUser=#{sourceUser} and openUser=#{openUser} and
-		joinHistoryId=#{joinHistoryId};
+		sourceUser=#{0} and openUser=#{1} and
+		joinHistoryId=#{2};
 	</select>
 
 	<select id="getHelpInfo" resultType="TreasureShare">
 		select * from
 		treasureshare
 		where
-		sourceUser=#{sourceUser} and joinHistoryId=#{joinHistoryId};
+		sourceUser=#{0} and joinHistoryId=#{1};
 	</select>
 
 </mapper>
