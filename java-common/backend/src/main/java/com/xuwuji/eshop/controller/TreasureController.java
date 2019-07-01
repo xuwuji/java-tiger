@@ -95,6 +95,20 @@ public class TreasureController {
 		TreasureItem treasureItem = treasureItemMapper.getById(treasureJoinHistory.getTreasureItemId());
 		int totalCount = treasureItem.getTotalCount();
 		int currentCount = treasureItem.getCurrentCount();
+		/**
+		 * 防止并发情况下，超卖情况
+		 */
+		if (currentCount >= totalCount) {
+			return;
+		}
+		/**
+		 * 检查是不是已经点过
+		 */
+		List<TreasureShare> list = treasureShareMapper.checkExist(treasureJoinHistory.getOpenId(), openUser,
+				joinHistoryId);
+		if (list.size() > 0) {
+			return;
+		}
 		if (currentCount < totalCount) {
 			treasureItem.setCurrentCount(currentCount + 1);
 			treasureItemMapper.update(treasureItem);

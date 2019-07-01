@@ -46,8 +46,8 @@
 		update
 		treasurejoinhistory
 		set
-		openId=#{0} and
-		count=#{1};
+		openId=#{openId},
+		count=#{count} where id=#{id};
 	</update>
 
 	<select id="isJoined" resultType="TreasureJoinHistory">
