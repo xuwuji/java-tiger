@@ -3,6 +3,7 @@ package com.xuwuji.eshop.controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -54,7 +55,9 @@ public class TreasureItemController {
 		TreasureItem treasureItem = new TreasureItem();
 		treasureItem.setProductId(productId);
 		treasureItem.setTotalCount(Integer.valueOf(totalCount));
-		treasureItem.setCurrentCount(Integer.valueOf(totalCount) / 4);
+		Random random = new Random();
+		int factor = random.nextInt(3) + 3;
+		treasureItem.setCurrentCount(Integer.valueOf(totalCount) / factor);
 		treasureItem.setFormatId(formatId);
 		treasureItemMapper.add(treasureItem);
 	}
