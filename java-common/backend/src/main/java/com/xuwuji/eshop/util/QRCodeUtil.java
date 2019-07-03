@@ -1,23 +1,15 @@
 package com.xuwuji.eshop.util;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.NameValuePair;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +17,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class QRCodeUtil {
@@ -65,6 +54,26 @@ public class QRCodeUtil {
 		Map<String, Object> param = new HashMap<>();
 		param.put("scene", barginOrderId);
 		param.put("page", "pages/barginShare/barginShare");
+		param.put("width", 430);
+		param.put("auto_color", false);
+		Map<String, Object> line_color = new HashMap<>();
+		line_color.put("r", 0);
+		line_color.put("g", 0);
+		line_color.put("b", 0);
+		param.put("line_color", line_color);
+		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+		HttpEntity requestEntity = new HttpEntity(param, headers);
+		ResponseEntity<byte[]> entity = rest.exchange(url, HttpMethod.POST, requestEntity, byte[].class, new Object[0]);
+		byte[] result = entity.getBody();
+		return result;
+	}
+
+	public static byte[] getQRCoderByte(String scene, String page) {
+		RestTemplate rest = new RestTemplate();
+		String url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=" + getAccessToken();
+		Map<String, Object> param = new HashMap<>();
+		param.put("scene", scene);
+		param.put("page", String.format("pages/%1$s/%2$s", page));
 		param.put("width", 430);
 		param.put("auto_color", false);
 		Map<String, Object> line_color = new HashMap<>();

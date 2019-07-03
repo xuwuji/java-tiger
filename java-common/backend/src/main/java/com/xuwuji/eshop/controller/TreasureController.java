@@ -1,14 +1,18 @@
 package com.xuwuji.eshop.controller;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xuwuji.eshop.db.mapper.TreasureItemMapper;
@@ -17,6 +21,7 @@ import com.xuwuji.eshop.db.mapper.TreasureShareMapper;
 import com.xuwuji.eshop.model.TreasureItem;
 import com.xuwuji.eshop.model.TreasureJoinHistory;
 import com.xuwuji.eshop.model.TreasureShare;
+import com.xuwuji.eshop.util.QRCodeUtil;
 import com.xuwuji.eshop.util.StringUtil;
 
 @RestController
@@ -28,6 +33,8 @@ public class TreasureController {
 	private TreasureItemMapper treasureItemMapper;
 	@Autowired
 	private TreasureShareMapper treasureShareMapper;
+	@Autowired
+	private QRCodeUtil qRCodeUtil;
 
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
 	public void addJoinHistory(HttpServletRequest request) {
@@ -122,6 +129,30 @@ public class TreasureController {
 		treasureShare.setSourceUser(treasureJoinHistory.getOpenId());
 		treasureShare.setTreasureItemId(treasureJoinHistory.getTreasureItemId());
 		treasureShareMapper.add(treasureShare);
+	}
+
+	@RequestMapping(value = "/getTreasureItemQRCode", method = RequestMethod.GET)
+	@ResponseBody
+	public void getTreasureItemQRCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String id = request.getParameter("id");
+		byte[] result = qRCodeUtil.getQRCoderByte(id, "treasureDetail");
+		response.setContentType("image/png");
+		OutputStream os = response.getOutputStream();
+		os.write(result);
+		os.flush();
+		os.close();
+	}
+
+	@RequestMapping(value = "/getJoinQRCode", method = RequestMethod.GET)
+	@ResponseBody
+	public void getJoinQRCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String joinHistoryId = request.getParameter("joinHistoryId");
+		byte[] result = qRCodeUtil.getQRCoderByte(joinHistoryId, "treasureShare");
+		response.setContentType("image/png");
+		OutputStream os = response.getOutputStream();
+		os.write(result);
+		os.flush();
+		os.close();
 	}
 
 }
