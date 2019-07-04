@@ -2,6 +2,7 @@ package com.xuwuji.eshop.util;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -71,14 +72,6 @@ public class PayUtil {
 		}
 	}
 
-	private static boolean isValidChar(char ch) {
-		if ((ch >= '0' && ch <= '9') || (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z'))
-			return true;
-		if ((ch >= 0x4e00 && ch <= 0x7fff) || (ch >= 0x8000 && ch <= 0x952f))
-			return true;// 简体中文汉字编码
-		return false;
-	}
-
 	/**
 	 * 除去数组中的空值和签名参数
 	 *
@@ -141,12 +134,12 @@ public class PayUtil {
 			// 往服务器端写内容
 			if (null != outputStr) {
 				OutputStream os = conn.getOutputStream();
-				os.write(outputStr.getBytes("utf-8"));
+				os.write(outputStr.getBytes("gbk"));
 				os.close();
 			}
 			// 读取服务器端返回的内容
 			InputStream is = conn.getInputStream();
-			InputStreamReader isr = new InputStreamReader(is, "utf-8");
+			InputStreamReader isr = new InputStreamReader(is, "gbk");
 			BufferedReader br = new BufferedReader(isr);
 			buffer = new StringBuffer();
 			String line = null;
