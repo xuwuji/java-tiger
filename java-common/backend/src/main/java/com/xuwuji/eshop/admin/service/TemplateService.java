@@ -1,6 +1,5 @@
 package com.xuwuji.eshop.admin.service;
 
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +16,7 @@ import com.xuwuji.eshop.model.OrderItem;
 import com.xuwuji.eshop.model.template.TemplateConstants;
 import com.xuwuji.eshop.model.template.TemplateData;
 import com.xuwuji.eshop.model.template.WechatTemplate;
+import com.xuwuji.eshop.util.HttpUtil;
 import com.xuwuji.eshop.util.PayUtil;
 import com.xuwuji.eshop.util.TimeUtil;
 import com.xuwuji.eshop.util.TokenUtil;
@@ -43,9 +43,8 @@ public class TemplateService {
 	 * 用提交订单时的得到formId做formId，只会发送一次
 	 * 
 	 * @throws JsonProcessingException
-	 * @throws UnsupportedEncodingException 
 	 */
-	public String handleWaitPay(Order order) throws JsonProcessingException, UnsupportedEncodingException {
+	public String handleWaitPay(Order order) throws JsonProcessingException {
 		String orderId = order.getOrderId();
 		orderItemDao = new OrderItemDao();
 		List<OrderItem> items = orderItemDao.getByOrderId(orderId);
@@ -57,7 +56,6 @@ public class TemplateService {
 		String amount = String.valueOf(order.getAmount());
 		String orderDate = String.valueOf(TimeUtil.dateToFormatString(order.getTime()));
 		String tip = "您有一笔订单未支付，请尽快支付，超时将自动关闭，若已支付，请忽略；如需使用支付宝或花呗付款，请询问客服";
-		tip = new String(tip.getBytes("utf-8"), "utf-8");
 		// 构造模板消息
 		WechatTemplate WechatTemplate = new WechatTemplate();
 		WechatTemplate.setForm_id(order.getFormId());
@@ -96,9 +94,8 @@ public class TemplateService {
 	 * 用统一支付得到的prepay_id当做formId
 	 * 
 	 * @throws JsonProcessingException
-	 * @throws UnsupportedEncodingException 
 	 */
-	public String handlePayed(Order order) throws JsonProcessingException, UnsupportedEncodingException {
+	public String handlePayed(Order order) throws JsonProcessingException {
 		String orderId = order.getOrderId();
 		List<OrderItem> items = orderItemDao.getByOrderId(orderId);
 		String orderName = "";
@@ -108,7 +105,6 @@ public class TemplateService {
 		String openId = order.getOpenId();
 		String amount = String.valueOf(order.getAmount());
 		String tip = "您可以在小程序中查看物流信息";
-		tip = new String(tip.getBytes("utf-8"), "utf-8");
 		// 构造模板消息
 		WechatTemplate WechatTemplate = new WechatTemplate();
 		String prepayId = order.getPrepayId();
@@ -152,9 +148,8 @@ public class TemplateService {
 	 * 用统一支付得到的prepay_id当做formId
 	 * 
 	 * @throws JsonProcessingException
-	 * @throws UnsupportedEncodingException
 	 */
-	public String handleDelivered(String orderId) throws JsonProcessingException, UnsupportedEncodingException {
+	public String handleDelivered(String orderId) throws JsonProcessingException {
 		orderDao = new OrderDao();
 		orderItemDao = new OrderItemDao();
 		Order order = orderDao.getOrderInfoByOrderId(orderId);
@@ -167,7 +162,6 @@ public class TemplateService {
 		String logisticsName = String.valueOf(order.getLogisticsName());
 		String logisticsId = String.valueOf(order.getLogisticsId());
 		String tip = "请您在收到后仔细检查；如有问题请联系在线客服";
-		tip = new String(tip.getBytes("utf-8"), "utf-8");
 		// 构造模板消息
 		WechatTemplate WechatTemplate = new WechatTemplate();
 		String prepayId = order.getPrepayId();
@@ -210,7 +204,7 @@ public class TemplateService {
 		return result;
 	}
 
-	public static void main(String[] args) throws JsonProcessingException, UnsupportedEncodingException {
+	public static void main(String[] args) throws JsonProcessingException {
 		TemplateService TemplateService = new TemplateService();
 		OrderDao orderDao = new OrderDao();
 		OrderItemDao orderItemDao = new OrderItemDao();
