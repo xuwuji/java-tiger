@@ -16,7 +16,6 @@ import com.xuwuji.eshop.model.OrderItem;
 import com.xuwuji.eshop.model.template.TemplateConstants;
 import com.xuwuji.eshop.model.template.TemplateData;
 import com.xuwuji.eshop.model.template.WechatTemplate;
-import com.xuwuji.eshop.util.HttpUtil;
 import com.xuwuji.eshop.util.PayUtil;
 import com.xuwuji.eshop.util.TimeUtil;
 import com.xuwuji.eshop.util.TokenUtil;
@@ -55,7 +54,8 @@ public class TemplateService {
 		String openId = order.getOpenId();
 		String amount = String.valueOf(order.getAmount());
 		String orderDate = String.valueOf(TimeUtil.dateToFormatString(order.getTime()));
-		String tip = "您有一笔订单未支付，请尽快支付，超时将自动关闭，若已支付，请忽略；如需使用支付宝或花呗付款，请询问客服";
+	   // String tip = "您有一笔订单未支付，请尽快支付，超时将自动关闭，若已支付，请忽略；如需使用支付宝或花呗付款，请询问客服";
+		String tip = "XIAO CHAI SELECT - You Derserve It !";
 		// 构造模板消息
 		WechatTemplate WechatTemplate = new WechatTemplate();
 		WechatTemplate.setForm_id(order.getFormId());
