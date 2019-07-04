@@ -35,7 +35,7 @@ public class TemplateService {
 
 	private static final String BASE_URL = "https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token="
 			+ TokenUtil.getAccessToken();
-
+	private static final String TIP = "XIAO CHAI SELECT - You Deserve It !";
 	/**
 	 * 对待支付的订单进行提醒
 	 * 
@@ -55,7 +55,6 @@ public class TemplateService {
 		String amount = String.valueOf(order.getAmount());
 		String orderDate = String.valueOf(TimeUtil.dateToFormatString(order.getTime()));
 	   // String tip = "您有一笔订单未支付，请尽快支付，超时将自动关闭，若已支付，请忽略；如需使用支付宝或花呗付款，请询问客服";
-		String tip = "XIAO CHAI SELECT - You Derserve It !";
 		// 构造模板消息
 		WechatTemplate WechatTemplate = new WechatTemplate();
 		WechatTemplate.setForm_id(order.getFormId());
@@ -76,7 +75,7 @@ public class TemplateService {
 		templateData4.setValue(orderDate);
 		data.put(TemplateConstants.KEYWORD4, templateData4);
 		TemplateData templateData5 = new TemplateData();
-		templateData5.setValue(tip);
+		templateData5.setValue(TIP);
 		data.put(TemplateConstants.KEYWORD5, templateData5);
 		WechatTemplate.setData(data);
 		// 向微信后端发送消息
@@ -104,7 +103,7 @@ public class TemplateService {
 		}
 		String openId = order.getOpenId();
 		String amount = String.valueOf(order.getAmount());
-		String tip = "您可以在小程序中查看物流信息";
+		//String tip = "您可以在小程序中查看物流信息";
 		// 构造模板消息
 		WechatTemplate WechatTemplate = new WechatTemplate();
 		String prepayId = order.getPrepayId();
@@ -130,7 +129,7 @@ public class TemplateService {
 		templateData3.setValue(amount);
 		data.put(TemplateConstants.KEYWORD3, templateData3);
 		TemplateData templateData4 = new TemplateData();
-		templateData4.setValue(tip);
+		templateData4.setValue(TIP);
 		data.put(TemplateConstants.KEYWORD4, templateData4);
 		WechatTemplate.setData(data);
 		// 向微信后端发送消息
@@ -161,7 +160,7 @@ public class TemplateService {
 		String openId = order.getOpenId();
 		String logisticsName = String.valueOf(order.getLogisticsName());
 		String logisticsId = String.valueOf(order.getLogisticsId());
-		String tip = "请您在收到后仔细检查；如有问题请联系在线客服";
+		//String tip = "请您在收到后仔细检查；如有问题请联系在线客服";
 		// 构造模板消息
 		WechatTemplate WechatTemplate = new WechatTemplate();
 		String prepayId = order.getPrepayId();
@@ -192,7 +191,7 @@ public class TemplateService {
 		data.put(TemplateConstants.KEYWORD4, templateData4);
 		WechatTemplate.setData(data);
 		TemplateData templateData5 = new TemplateData();
-		templateData5.setValue(tip);
+		templateData5.setValue(TIP);
 		data.put(TemplateConstants.KEYWORD5, templateData5);
 		WechatTemplate.setData(data);
 		// 向微信后端发送消息
