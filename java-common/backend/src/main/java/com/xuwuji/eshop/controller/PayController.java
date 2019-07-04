@@ -31,7 +31,6 @@ import com.xuwuji.eshop.model.TranscationTypeEnum;
 import com.xuwuji.eshop.model.User;
 import com.xuwuji.eshop.model.WxTradeState;
 import com.xuwuji.eshop.util.PayUtil;
-import com.xuwuji.eshop.util.TimeUtil;
 import com.xuwuji.eshop.util.TokenUtil;
 
 @RestController
@@ -39,7 +38,6 @@ import com.xuwuji.eshop.util.TokenUtil;
 public class PayController {
 	private static final String SUCCESS = "SUCCESS";
 	private static final String FAIL = "FAIL";
-	private static final String INVALID_REQUEST = "INVALID_REQUEST";
 	@Autowired
 	private UserDao userDao;
 	@Autowired
@@ -80,7 +78,9 @@ public class PayController {
 			// 如果是老用户，则查看是否有余额，有的话，减掉余额
 			if (user.getId() > 0) {
 				double balance = user.getBalance();
-				amount = String.valueOf((int) ((orderAmount - balance) * 100));
+				if (balance > 0) {
+					amount = String.valueOf((int) ((orderAmount - balance) * 100));
+				}
 			}
 			// 添加此条流水记录
 			String transcationId = System.nanoTime() + TranscationTypeEnum.WXPAY.getCode() + amount;
@@ -344,25 +344,6 @@ public class PayController {
 		order.setOrderItemsList(orderItemDao.getByOrderId(order.getOrderId()));
 		String result = TemplateService.handleWaitPay(order);
 		return result;
-	}
-
-	// 获取IP
-	private String getIpAddr(HttpServletRequest request) {
-		String ip = request.getHeader("X-Forwarded-For");
-		if (!ip.isEmpty() && !"unKnown".equalsIgnoreCase(ip)) {
-			// 多次反向代理后会有多个ip值，第一个ip才是真实ip
-			int index = ip.indexOf(",");
-			if (index != -1) {
-				return ip.substring(0, index);
-			} else {
-				return ip;
-			}
-		}
-		ip = request.getHeader("X-Real-IP");
-		if (!ip.isEmpty() && !"unKnown".equalsIgnoreCase(ip)) {
-			return ip;
-		}
-		return request.getRemoteAddr();
 	}
 
 	/**
