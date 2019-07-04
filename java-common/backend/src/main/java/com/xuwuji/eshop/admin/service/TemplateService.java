@@ -57,7 +57,7 @@ public class TemplateService {
 		String amount = String.valueOf(order.getAmount());
 		String orderDate = String.valueOf(TimeUtil.dateToFormatString(order.getTime()));
 		String tip = "您有一笔订单未支付，请尽快支付，超时将自动关闭，若已支付，请忽略；如需使用支付宝或花呗付款，请询问客服";
-		tip = new String(tip.getBytes("utf-8"), "utf-8");
+		tip = new String(tip.getBytes("ISO-8859-1"), "gbk");
 		// 构造模板消息
 		WechatTemplate WechatTemplate = new WechatTemplate();
 		WechatTemplate.setForm_id(order.getFormId());
