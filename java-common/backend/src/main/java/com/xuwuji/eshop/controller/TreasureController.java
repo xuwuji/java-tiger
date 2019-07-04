@@ -15,12 +15,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.xuwuji.eshop.db.dao.FormatDao;
+import com.xuwuji.eshop.db.dao.ProductDao;
 import com.xuwuji.eshop.db.mapper.TreasureItemMapper;
 import com.xuwuji.eshop.db.mapper.TreasureJoinHistoryMapper;
 import com.xuwuji.eshop.db.mapper.TreasureShareMapper;
+import com.xuwuji.eshop.model.Product;
 import com.xuwuji.eshop.model.TreasureItem;
 import com.xuwuji.eshop.model.TreasureJoinHistory;
 import com.xuwuji.eshop.model.TreasureShare;
+import com.xuwuji.eshop.util.EshopConfigUtil;
 import com.xuwuji.eshop.util.QRCodeUtil;
 import com.xuwuji.eshop.util.StringUtil;
 
@@ -35,6 +39,16 @@ public class TreasureController {
 	private TreasureShareMapper treasureShareMapper;
 	@Autowired
 	private QRCodeUtil qRCodeUtil;
+	@Autowired
+	private ProductDao productDao;
+	@Autowired
+	private FormatDao formatDao;
+	private String PRODUCT_IMG_BASE;
+
+	@Autowired
+	public TreasureController(EshopConfigUtil eshopConfigUtil) {
+		this.PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
+	}
 
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
 	public void addJoinHistory(HttpServletRequest request) {
@@ -153,6 +167,23 @@ public class TreasureController {
 		os.write(result);
 		os.flush();
 		os.close();
+	}
+
+	@RequestMapping(value = "/getJoinByOpenId", method = RequestMethod.GET)
+	public List<TreasureJoinHistory> getJoinByOpenId(HttpServletRequest request) {
+		String openId = request.getParameter("openId");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		List<TreasureJoinHistory> result = treasureJoinHistoryMapper.getByOpenId(openId);
+		for (TreasureJoinHistory treasureJoinHistory : result) {
+			String treasureItemId = treasureJoinHistory.getTreasureItemId();
+			TreasureItem treasureItem = treasureItemMapper.getById(treasureItemId);
+			Product product = productDao.getById(treasureItem.getProductId());
+			treasureItem.setMainImgUrl(PRODUCT_IMG_BASE + product.getId() + "-0.jpg");
+			treasureItem.setFormat(formatDao.getById(treasureItem.getFormatId()));
+			treasureItem.setProduct(product);
+			treasureJoinHistory.setTreasureItem(treasureItem);
+		}
+		return result;
 	}
 
 }

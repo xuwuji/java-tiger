@@ -19,4 +19,6 @@ public interface TreasureJoinHistoryMapper {
 
 	public TreasureJoinHistory getById(String id);
 
+	public List<TreasureJoinHistory> getByOpenId(String openId);
+
 }

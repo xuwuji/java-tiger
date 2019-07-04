@@ -34,6 +34,13 @@
 		treasureItemId=#{1};
 	</select>
 
+	<select id="getByOpenId" resultType="TreasureJoinHistory">
+		select * from
+		treasurejoinhistory
+		where
+		openId=#{0};
+	</select>
+
 	<select id="getById" resultType="TreasureJoinHistory">
 		select * from
 		treasurejoinhistory

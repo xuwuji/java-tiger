@@ -9,6 +9,7 @@ public class TreasureJoinHistory {
 	private String openId;
 	private int count;
 	private Date occur;
+	private TreasureItem treasureItem;
 
 	public int getId() {
 		return id;
@@ -48,6 +49,14 @@ public class TreasureJoinHistory {
 
 	public void setCount(int count) {
 		this.count = count;
+	}
+
+	public TreasureItem getTreasureItem() {
+		return treasureItem;
+	}
+
+	public void setTreasureItem(TreasureItem treasureItem) {
+		this.treasureItem = treasureItem;
 	}
 
 }
