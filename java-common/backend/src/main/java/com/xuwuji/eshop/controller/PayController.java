@@ -3,6 +3,7 @@ package com.xuwuji.eshop.controller;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -336,7 +337,7 @@ public class PayController {
 	}
 
 	@RequestMapping(value = "/sendNotice", method = RequestMethod.GET)
-	public String sendNotice(HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
+	public String sendNotice(HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException, UnsupportedEncodingException {
 		String orderId = request.getParameter("orderId");
 		Order order = orderDao.getOrderInfoByOrderId(orderId);
 		TemplateService TemplateService = new TemplateService();
