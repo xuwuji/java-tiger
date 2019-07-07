@@ -54,6 +54,12 @@ public class TreasureController {
 	public void addJoinHistory(HttpServletRequest request) {
 		String openId = request.getParameter("openId");
 		String treasureItemId = request.getParameter("treasureItemId");
+		//double check
+		List<TreasureJoinHistory> list = treasureJoinHistoryMapper.getByOpenIdAndTreasureId(openId, treasureItemId);
+		boolean isJoined = list.size() > 0;
+		if (isJoined) {
+			return;
+		}
 		TreasureJoinHistory treasureJoinHistory = new TreasureJoinHistory();
 		treasureJoinHistory.setOccur(new Date());
 		treasureJoinHistory.setOpenId(openId);
