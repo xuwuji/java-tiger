@@ -114,7 +114,7 @@
 		brand.brandCN as brandNameCN,brand.brandEN as
 		brandNameEN,brand.id from
 		brand) bb on p.brandId=bb.id where
-		p.categoryId=#{categoryId};
+		p.categoryId=#{categoryId} order by p.id desc;
 	</select>
 
 	<select id="getActiveByCategory" resultType="Product"
