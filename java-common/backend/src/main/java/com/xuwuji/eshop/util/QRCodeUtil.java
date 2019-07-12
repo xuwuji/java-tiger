@@ -68,6 +68,7 @@ public class QRCodeUtil {
 		return result;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static byte[] getQRCoderByte(String scene, String page) {
 		RestTemplate rest = new RestTemplate();
 		String url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=" + getAccessToken();

@@ -3,7 +3,11 @@ package com.xuwuji.eshop.controller;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.xuwuji.eshop.db.dao.ProductDao;
 import com.xuwuji.eshop.model.Product;
 import com.xuwuji.eshop.model.SortEnum;
 import com.xuwuji.eshop.util.EshopConfigUtil;
-import com.xuwuji.eshop.util.HttpUtil;
 import com.xuwuji.eshop.util.ProductUtil;
 import com.xuwuji.eshop.util.QRCodeUtil;
 
@@ -37,6 +41,17 @@ public class ProductController {
 
 	@Autowired
 	private EshopConfigUtil eshopConfigUtil;
+
+	private String PRODUCT_IMG_BASE;
+
+	private String PRODUCT_DETAIL_IMG_BASE;
+
+	@Autowired
+	public ProductController(EshopConfigUtil eshopConfigUtil) {
+		PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
+		PRODUCT_DETAIL_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_DETAIL_IMG_BASE);
+
+	}
 
 	/**
 	 * 
@@ -72,12 +87,7 @@ public class ProductController {
 		List<Product> products = new ArrayList<Product>();
 		SortEnum sortRequset = SortEnum.getByCode(sort);
 		products = productDao.getActiveByCategory(id);
-		String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
-		for (Product product : products) {
-			product.setMainImgUrl(PRODUCT_IMG_BASE + product.getId() + "-0.jpg");
-			// product.setMainImgUrl("http://ppf0hsoua.bkt.clouddn.com/product/10-0.jpg");
-
-		}
+		products.forEach((p) -> p.setMainImgUrl(PRODUCT_IMG_BASE + p.getId() + "-0.jpg"));
 		products = productUtil.sort(products, sortRequset);
 		return products;
 	}
@@ -95,47 +105,33 @@ public class ProductController {
 	@ResponseBody
 	public Product getProductById(@PathVariable("id") String id, HttpServletRequest request,
 			HttpServletResponse response) {
-		System.out.println(id);
+		// 特殊情况，显示默认的商品
 		if (id == null || id.equals("undefined")) {
-			id = "1";
+			id = "1648";
 		}
+		String productId = id;
 		Product product = productDao.getById(id);
 		List<String> imgUrls = new ArrayList<String>();
-		String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
-		String PRODUCT_DETAIL_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_DETAIL_IMG_BASE);
-		for (int i = 1; i < 5; i++) {
-			imgUrls.add(PRODUCT_IMG_BASE + id + "-" + i + ".jpg");
-		}
+		Stream.iterate(1, i -> i + 1).limit(4)
+				.forEach(i -> imgUrls.add(PRODUCT_IMG_BASE + productId + "-" + i + ".jpg"));
 		product.setImgUrls(imgUrls);
 		// 获得需要展示详情的分类id
 		String[] showDetailIds = eshopConfigUtil.getParam(eshopConfigUtil.SHOW_DETAIL_IDS).split(";");
+		HashSet<String> detailIdsSet = new HashSet<>();
+		Arrays.stream(showDetailIds).forEach(i -> detailIdsSet.add(i));
 		String categoryId = product.getCategoryId();
-		for (String cid : showDetailIds) {
-			if (cid.equals(categoryId)) {
-				List<String> detailImgUrls = new ArrayList<String>();
-				for (int i = 0; i < 6; i++) {
-					String detailImgUrl = PRODUCT_DETAIL_IMG_BASE + id + "-" + i + ".jpg";
-					// 检查详情图片是否存在
-					if (HttpUtil.checkValid(detailImgUrl)) {
-						detailImgUrls.add(detailImgUrl);
-					}
-					product.setDetailImgUrls(detailImgUrls);
-				}
+		if (detailIdsSet.contains(categoryId)) {
+			List<String> detailImgUrls = new ArrayList<String>();
+			for (int i = 0; i < 6; i++) {
+				String detailImgUrl = PRODUCT_DETAIL_IMG_BASE + productId + "-" + i + ".jpg";
+				// 检查详情图片是否存在
+				// if (HttpUtil.checkValid(detailImgUrl)) {
+				detailImgUrls.add(detailImgUrl);
+				// }
 			}
+			product.setDetailImgUrls(detailImgUrls);
 		}
-		// 由于检查详情图片时间较长，此版本先省略
-		// detail img urls
-		// List<String> detailImgUrls = new ArrayList<String>();
-		// for (int i = 1; i < 6; i++) {
-		// String detailImgUrl = PRODUCT_DETAIL_IMG_BASE + id + "-" + i +
-		// ".jpg";
-		// if (HttpUtil.checkValid(detailImgUrl)) {
-		// detailImgUrls.add(detailImgUrl);
-		// }
-		// }
-		// product.setDetailImgUrls(detailImgUrls);
-		String mainImgUrl = PRODUCT_IMG_BASE + id + "-0.jpg";
-		product.setMainImgUrl(mainImgUrl);
+		product.setMainImgUrl(PRODUCT_IMG_BASE + productId + "-0.jpg");
 		return product;
 	}
 
@@ -165,11 +161,7 @@ public class ProductController {
 		SortEnum sortRequset = SortEnum.getByCode(sort);
 		products = productDao.getActiveByBrandId(id);
 		products = productUtil.sort(products, sortRequset);
-		String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
-		for (Product product : products) {
-			String mainImgUrl = PRODUCT_IMG_BASE + product.getId() + "-0.jpg";
-			product.setMainImgUrl(mainImgUrl);
-		}
+		products.forEach(product -> setMainImgUrl(product));
 		return products;
 	}
 
@@ -177,26 +169,18 @@ public class ProductController {
 	@ResponseBody
 	public Integer getActiveProductNumByBrandId(@RequestParam("id") String id, HttpServletRequest request,
 			HttpServletResponse response) {
-		List<Product> products = new ArrayList<Product>();
-		products = productDao.getActiveByBrandId(id);
+		List<Product> products = productDao.getActiveByBrandId(id);
 		return products.size();
 	}
 
-	@SuppressWarnings("static-access")
 	@RequestMapping(value = "/getActiveByFlash", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Product> getActiveByFlash(HttpServletRequest request, HttpServletResponse response) {
-		List<Product> products = new ArrayList<Product>();
-		products = productDao.getActiveByFlash();
-		String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
-		for (Product product : products) {
-			String mainImgUrl = PRODUCT_IMG_BASE + product.getId() + "-0.jpg";
-			product.setMainImgUrl(mainImgUrl);
-		}
+		List<Product> products = productDao.getActiveByFlash();
+		products.forEach(product -> setMainImgUrl(product));
 		return products;
 	}
 
-	@SuppressWarnings("static-access")
 	@RequestMapping(value = "/getMultiByIds", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Product> getMultiByIds(HttpServletRequest request, HttpServletResponse response) {
@@ -205,19 +189,14 @@ public class ProductController {
 		if (idString == null || idString.isEmpty()) {
 			return products;
 		}
-		List<Integer> ids = new ArrayList<Integer>();
-		String[] temp = idString.split(";");
-		for (String id : temp) {
-			ids.add(Integer.valueOf(id));
-		}
+		List<Integer> ids = Arrays.asList(idString.split(";")).stream().map(i -> Integer.valueOf(i))
+				.collect(Collectors.toList());
 		products = productDao.getMultiByIds(ids);
-		for (Product product : products) {
+		products.forEach(product -> {
 			if (product.getMainImgUrl() == null || product.getMainImgUrl().isEmpty()) {
-				String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
-				String mainImgUrl = PRODUCT_IMG_BASE + product.getId() + "-0.jpg";
-				product.setMainImgUrl(mainImgUrl);
+				setMainImgUrl(product);
 			}
-		}
+		});
 		return products;
 	}
 
@@ -230,12 +209,12 @@ public class ProductController {
 		SortEnum sortRequset = SortEnum.getByCode(sort);
 		result = productDao.getActiveGift(budget);
 		result = productUtil.sort(result, sortRequset);
-		String PRODUCT_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.PRODUCT_IMG_BASE);
-		for (Product product : result) {
-			String mainImgUrl = PRODUCT_IMG_BASE + product.getId() + "-0.jpg";
-			product.setMainImgUrl(mainImgUrl);
-		}
+		result.forEach(product -> setMainImgUrl(product));
 		return result;
+	}
+
+	private void setMainImgUrl(Product product) {
+		product.setMainImgUrl(PRODUCT_IMG_BASE + product.getId() + "-0.jpg");
 	}
 
 }
