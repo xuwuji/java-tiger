@@ -423,7 +423,7 @@
 								title : '港币进货价格',
 								align : 'center',
 								formatter : function(value, row, index) {
-									return value + "(" + value * 0.87 + ")";
+									return value + "(" + value * 0.9 + ")";
 								}
 							},
 							{
