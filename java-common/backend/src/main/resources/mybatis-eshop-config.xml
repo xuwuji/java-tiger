@@ -126,7 +126,9 @@
 		<mapper resource="mapper/TreasureItemMapper.xml" />
 		<mapper resource="mapper/TreasureJoinHistoryMapper.xml" />
 		<mapper resource="mapper/TreasureShareMapper.xml" />
+		<mapper resource="mapper/EntityMapper.xml" />
+		<mapper resource="mapper/EntityUserMapper.xml" />
+		<mapper resource="mapper/EntityTranscationMapper.xml" />
 	</mappers>
-
 
 </configuration>

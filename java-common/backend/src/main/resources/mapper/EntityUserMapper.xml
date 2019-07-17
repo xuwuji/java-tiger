@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuwuji.eshop.db.mapper.EntityUserMapper">
+
+	<resultMap type="EntityUser" id="EntityUserResult">
+		<id property="id" column="id"></id>
+		<result property="entityId" column="type"></result>
+		<result property="wechatId" column="type"></result>
+		<result property="openId" column="type"></result>
+		<result property="phone" column="type"></result>
+		<result property="balance" column="type"></result>
+		<result property="level" column="type"></result>
+		<result property="points" column="type"></result>
+	</resultMap>
+
+	<insert id="add" parameterType="EntityUser"
+		useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		insert into
+		entityuser
+		(entityId,wechatId,openId,phone,balance,level,points)
+		values(#{entityId},#{wechatId},#{openId},#{phone},#{balance},'0',0)
+	</insert>
+
+	<update id="updateUserInfo">
+		update
+		entityuser
+		set entityId=#{entityId},
+		wechatId=#{wechatId},phone=#{phone},balance=#{balance},level=#{level},points=#{points}
+		where
+		id=#{id};
+	</update>
+
+	<select id="getById" resultType="EntityUser">
+		select * from
+		entityuser
+		where
+		id=#{id};
+	</select>
+
+	<select id="getByPhoneAndEntityId" resultType="EntityUser">
+		select * from
+		entityuser
+		where
+		phone=#{0} and entityId=#{1};
+	</select>
+
+	<select id="getByWechatId" resultType="EntityUser">
+		select * from
+		entityuser
+		where
+		wechatId=#{wechatId};
+	</select>
+
+	<select id="getByOpenIdAndEntityId" resultType="EntityUser">
+		select * from
+		entityuser
+		where
+		openId=#{0} and entityId=#{1};
+	</select>
+
+	<select id="getAllByEntityId" resultType="EntityUser">
+		select * from
+		entityuser
+		where
+		entityId=#{entityId};
+	</select>
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.xuwuji.eshop.db.mapper.EntityTranscationMapper">
+
+	<resultMap type="EntityTranscation"
+		id="EntityTranscationResult">
+		<id property="id" column="id"></id>
+		<result property="entityId" column="type"></result>
+		<result property="entityUserId" column="type"></result>
+		<result property="type" column="type"></result>
+		<result property="amount" column="type"></result>
+		<result property="item" column="type"></result>
+		<result property="occur" column="java.util.Date"></result>
+	</resultMap>
+
+	<insert id="add" parameterType="EntityTranscation"
+		useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		insert into
+		entitytranscation
+		(entityId,entityUserId,type,amount,item,occur)
+		values(#{entityId},#{entityUserId},#{type},#{amount},#{item},now())
+	</insert>
+
+	<select id="getByEntityIdAndOpenId" resultType="Entity">
+		select * from
+		entitytranscation
+		where
+		entityId=#{0} and openId=#{1} order by id desc;
+	</select>
+
+</mapper>

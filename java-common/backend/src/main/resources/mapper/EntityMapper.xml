@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuwuji.eshop.db.mapper.EntityMapper">
+
+
+	<resultMap type="Entity" id="EntityResult">
+		<id property="id" column="id"></id>
+		<result property="name" column="type"></result>
+		<result property="address" column="type"></result>
+		<result property="phone" column="type"></result>
+		<result property="city" column="type"></result>
+		<result property="category" column="type"></result>
+		<result property="state" column="type"></result>
+	</resultMap>
+
+	<insert id="add" parameterType="Entity" useGeneratedKeys="true"
+		keyProperty="id" keyColumn="id">
+		insert into
+		entity
+		(name,address,phone,city,category,state)
+		values(#{name},#{address},#{phone},#{city},#{category},'0')
+	</insert>
+
+	<update id="update">
+		update
+		entity
+		set name=#{name},
+		address=#{address},phone=#{phone},city=#{city},category=#{category}
+		where
+		id=#{id};
+	</update>
+
+	<select id="getActiveAll" resultType="Entity">
+		select * from
+		entity
+		where
+		state='1';
+	</select>
+
+	<select id="getById" resultType="Entity">
+		select * from
+		entity
+		where
+		id=#{id};
+	</select>
+
+	<select id="getByPhone" resultType="Entity">
+		select * from
+		entity
+		where
+		phone=#{phone};
+	</select>
+
+	<select id="getAll" resultType="Entity">
+		select * from
+		entity
+	</select>
+
+	<update id="disable">
+		update entity set state
+		='0'
+		where id=#{id}
+	</update>
+
+	<update id="reactive">
+		update entity set state
+		='1'
+		where id=#{id}
+	</update>
+</mapper>
