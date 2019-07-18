@@ -15,21 +15,34 @@
 		<result property="amount" column="type"></result>
 		<result property="item" column="type"></result>
 		<result property="occur" column="java.util.Date"></result>
+		<result property="phone" column="type"></result>
 	</resultMap>
 
 	<insert id="add" parameterType="EntityTranscation"
 		useGeneratedKeys="true" keyProperty="id" keyColumn="id">
 		insert into
 		entitytranscation
-		(entityId,entityUserId,type,amount,item,occur)
-		values(#{entityId},#{entityUserId},#{type},#{amount},#{item},now())
+		(entityId,entityUserId,type,amount,item,occur,phone)
+		values(#{entityId},#{entityUserId},#{type},#{amount},#{item},now(),#{phone})
 	</insert>
 
-	<select id="getByEntityIdAndOpenId" resultType="Entity">
+	<select id="getByEntityIdAndOpenId"
+		resultType="EntityTranscation">
 		select * from
 		entitytranscation
 		where
-		entityId=#{0} and openId=#{1} order by id desc;
+		entityId=#{0} and
+		openId=#{1} order by id desc;
 	</select>
+
+	<select id="getTranscationByPhoneAndEntityId"
+		resultType="EntityTranscation">
+		select * from
+		entitytranscation
+		where
+		phone=#{0} and
+		entityId=#{1} order by id desc;
+	</select>
+
 
 </mapper>

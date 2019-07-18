@@ -65,6 +65,7 @@ public class EntityUserController {
 		entityTranscation.setEntityId(entityId);
 		entityTranscation.setType(EntityTranscationType.TOPUP.getCode());
 		entityTranscation.setEntityUserId(String.valueOf(entityUser.getId()));
+		entityTranscation.setPhone(phone);
 		entityTranscationMapper.add(entityTranscation);
 	}
 
@@ -81,51 +82,17 @@ public class EntityUserController {
 		String phone = request.getParameter("phone");
 		String entityId = request.getParameter("entityId");
 		String amount = request.getParameter("amount");
-		EntityUser entityUser = entityUserMapper.getByPhoneAndEntityId(phone, entityId);
-		entityUser.setBalance(entityUser.getBalance() + Integer.valueOf(amount));
-		entityUserMapper.updateUserInfo(entityUser);
-		// 记录
-		EntityTranscation entityTranscation = new EntityTranscation();
-		entityTranscation.setAmount(Integer.valueOf(amount));
-		entityTranscation.setEntityId(entityId);
-		entityTranscation.setType(EntityTranscationType.TOPUP.getCode());
-		entityTranscation.setEntityUserId(String.valueOf(entityUser.getId()));
-		entityTranscationMapper.add(entityTranscation);
-	}
-
-	/**
-	 * 用户进行消费
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	@RequestMapping(value = "/addEntityTranscation", method = RequestMethod.GET)
-	@ResponseBody
-	public void addEntityTranscation(HttpServletRequest request, HttpServletResponse response) {
-		String phone = request.getParameter("phone");
-		int amount = Integer.valueOf(request.getParameter("amount"));
 		String item = request.getParameter("item");
-		String entityId = request.getParameter("entityId");
 		EntityUser entityUser = entityUserMapper.getByPhoneAndEntityId(phone, entityId);
-		// 更新客户的信息
-		// 余额用完或者单次消费不进行充值
-		if (entityUser.getBalance() == 0) {
-			entityUser.setPoints(entityUser.getPoints() + amount);
-		} else if (entityUser.getBalance() >= amount) {
-			entityUser.setBalance(entityUser.getBalance() - amount);
-			entityUser.setPoints(entityUser.getPoints() + amount);
-		}
-		// 优先使用余额，进行清0，不够的钱额外线下进行付款
-		else if (entityUser.getBalance() < amount) {
-			entityUser.setBalance(0);
-			entityUser.setPoints(entityUser.getPoints() + amount);
-		}
+		entityUser.setBalance(entityUser.getBalance() - Double.valueOf(amount));
+		entityUser.setPoints(entityUser.getPoints() + Double.valueOf(amount));
 		entityUserMapper.updateUserInfo(entityUser);
 		// 记录
 		EntityTranscation entityTranscation = new EntityTranscation();
-		entityTranscation.setAmount(amount);
-		entityTranscation.setItem(item);
+		entityTranscation.setAmount(Double.valueOf(amount));
 		entityTranscation.setEntityId(entityId);
+		entityTranscation.setItem(item);
+		entityTranscation.setPhone(phone);
 		entityTranscation.setType(EntityTranscationType.PAY.getCode());
 		entityTranscation.setEntityUserId(String.valueOf(entityUser.getId()));
 		entityTranscationMapper.add(entityTranscation);
@@ -164,7 +131,20 @@ public class EntityUserController {
 			HttpServletResponse response) {
 		String openId = request.getParameter("openId");
 		String entityId = request.getParameter("entityId");
-		List<EntityTranscation> transcations = entityTranscationMapper.getByEntityIdAndOpenId(entityId, openId);
+		String phone = entityUserMapper.getByOpenIdAndEntityId(openId, entityId).get(0).getPhone();
+		List<EntityTranscation> transcations = entityTranscationMapper.getTranscationByPhoneAndEntityId(phone,
+				entityId);
+		return transcations;
+	}
+
+	@RequestMapping(value = "/getTranscationByPhoneAndEntityId", method = RequestMethod.GET)
+	@ResponseBody
+	public List<EntityTranscation> getTranscationByPhoneAndEntityId(HttpServletRequest request,
+			HttpServletResponse response) {
+		String phone = request.getParameter("phone");
+		String entityId = request.getParameter("entityId");
+		List<EntityTranscation> transcations = entityTranscationMapper.getTranscationByPhoneAndEntityId(phone,
+				entityId);
 		return transcations;
 	}
 

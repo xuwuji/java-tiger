@@ -10,6 +10,7 @@ public class EntityTranscation {
 	private String item;
 	private Date occur;
 	private double amount;
+	private String phone;
 
 	public int getId() {
 		return id;
@@ -43,9 +44,6 @@ public class EntityTranscation {
 		this.type = type;
 	}
 
-	public void setAmount(int amount) {
-	}
-
 	public Date getOccur() {
 		return occur;
 	}
@@ -68,6 +66,14 @@ public class EntityTranscation {
 
 	public void setAmount(double amount) {
 		this.amount = amount;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 }

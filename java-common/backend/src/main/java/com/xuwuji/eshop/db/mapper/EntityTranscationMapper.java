@@ -10,4 +10,5 @@ public interface EntityTranscationMapper {
 
 	public List<EntityTranscation> getByEntityIdAndOpenId(String entityId, String openId);
 
+	public List<EntityTranscation> getTranscationByPhoneAndEntityId(String phone, String entityId);
 }

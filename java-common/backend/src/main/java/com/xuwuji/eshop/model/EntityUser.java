@@ -7,9 +7,9 @@ public class EntityUser {
 	private String openId;
 	private String wechatId;
 	private String phone;
-	private int balance;
+	private double balance;
 	private String level;
-	private int points;
+	private double points;
 
 	public int getId() {
 		return id;
@@ -43,11 +43,11 @@ public class EntityUser {
 		this.phone = phone;
 	}
 
-	public int getBalance() {
+	public double getBalance() {
 		return balance;
 	}
 
-	public void setBalance(int balance) {
+	public void setBalance(double balance) {
 		this.balance = balance;
 	}
 
@@ -67,11 +67,11 @@ public class EntityUser {
 		this.level = level;
 	}
 
-	public int getPoints() {
+	public double getPoints() {
 		return points;
 	}
 
-	public void setPoints(int points) {
+	public void setPoints(double points) {
 		this.points = points;
 	}
 

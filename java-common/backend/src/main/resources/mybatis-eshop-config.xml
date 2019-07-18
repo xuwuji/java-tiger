@@ -129,6 +129,7 @@
 		<mapper resource="mapper/EntityMapper.xml" />
 		<mapper resource="mapper/EntityUserMapper.xml" />
 		<mapper resource="mapper/EntityTranscationMapper.xml" />
+		<mapper resource="mapper/EntitySaleMapper.xml" />
 	</mappers>
 
 </configuration>

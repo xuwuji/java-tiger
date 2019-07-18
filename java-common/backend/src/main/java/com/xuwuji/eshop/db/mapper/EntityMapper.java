@@ -9,4 +9,6 @@ public interface EntityMapper {
 	public List<Entity> getActiveAll();
 
 	public Entity getByPhone(String phone);
+
+	public Entity getById(String id);
 }

@@ -100,4 +100,11 @@
 			value="com.xuwuji.eshop.db.mapper.EntityTranscationMapper" />
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
+
+	<bean id="entitySaleMapper"
+		class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface"
+			value="com.xuwuji.eshop.db.mapper.EntitySaleMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
 </beans>
