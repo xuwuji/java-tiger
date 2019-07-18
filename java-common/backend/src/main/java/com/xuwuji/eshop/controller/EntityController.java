@@ -82,14 +82,14 @@ public class EntityController {
 		entitySaleMapper.add(entitySale);
 	}
 
-	@RequestMapping(value = "/reactiveSale", method = RequestMethod.GET)
+	@RequestMapping(value = "/sale/reActive", method = RequestMethod.GET)
 	@ResponseBody
 	public void reactiveSale(HttpServletRequest request, HttpServletResponse response) {
 		String id = request.getParameter("id");
 		entitySaleMapper.reactive(id);
 	}
 
-	@RequestMapping(value = "/disableSale", method = RequestMethod.GET)
+	@RequestMapping(value = "/sale/disable", method = RequestMethod.GET)
 	@ResponseBody
 	public void disableSale(HttpServletRequest request, HttpServletResponse response) {
 		String id = request.getParameter("id");

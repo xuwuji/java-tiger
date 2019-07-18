@@ -504,23 +504,25 @@
 	function disable(id) {
 		if (confirm("确定下架此分类吗？")) {
 			$.ajax({
-				url : "/backend/entity/disable?id=" + id, //url
+				url : "/backend/entity/sale/disable?id=" + id, //url
 				type : "get",
 				success : function(status) {
 					$table.bootstrapTable('refresh');
+					initSaleTable()
 				}
 			});
 		}
 	}
 
 	//上架操作
-	function reActive(id) {
+	function reactive(id) {
 		if (confirm("确定上架此分类吗？")) {
 			$.ajax({
-				url : "/backend/entity/reActive?id=" + id, //url
+				url : "/backend/entity/sale/reActive?id=" + id, //url
 				type : "get",
 				success : function(status) {
 					$table.bootstrapTable('refresh');
+					initSaleTable()
 				}
 			});
 		}
