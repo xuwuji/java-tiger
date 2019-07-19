@@ -10,6 +10,8 @@ public class Entity {
 	private String category;
 	private String state;
 	private String mainImgUrl;
+	// 给前端使用，为用户显示是否已经加入此entity的会员
+	private boolean join;
 
 	public int getId() {
 		return id;
@@ -73,6 +75,14 @@ public class Entity {
 
 	public void setMainImgUrl(String mainImgUrl) {
 		this.mainImgUrl = mainImgUrl;
+	}
+
+	public boolean isJoin() {
+		return join;
+	}
+
+	public void setJoin(boolean join) {
+		this.join = join;
 	}
 
 }

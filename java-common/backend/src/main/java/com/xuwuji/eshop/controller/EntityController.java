@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.xuwuji.eshop.db.mapper.EntityMapper;
 import com.xuwuji.eshop.db.mapper.EntitySaleMapper;
+import com.xuwuji.eshop.db.mapper.EntityUserMapper;
 import com.xuwuji.eshop.model.Entity;
 import com.xuwuji.eshop.model.EntitySale;
 import com.xuwuji.eshop.util.EshopConfigUtil;
@@ -25,6 +26,9 @@ public class EntityController {
 
 	@Autowired
 	private EntityMapper entityMapper;
+
+	@Autowired
+	private EntityUserMapper entityUserMapper;
 
 	@Autowired
 	private EntitySaleMapper entitySaleMapper;
@@ -40,9 +44,17 @@ public class EntityController {
 	@RequestMapping(value = "/getActiveAll", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Entity> getActiveAll(HttpServletRequest request, HttpServletResponse response) {
+		String openId = request.getParameter("openId");
 		List<Entity> list = new ArrayList<Entity>();
 		list = entityMapper.getActiveAll();
-		list.forEach(entity -> entity.setMainImgUrl(ENTITY_IMG_BASE + entity.getId() + ".jpg"));
+		list.forEach(entity -> {
+			entity.setMainImgUrl(ENTITY_IMG_BASE + entity.getId() + ".jpg");
+			if (entityUserMapper.getByOpenIdAndEntityId(openId, String.valueOf(entity.getId())).size() > 0) {
+				entity.setJoin(true);
+			} else {
+				entity.setJoin(false);
+			}
+		});
 		return list;
 	}
 
@@ -61,7 +73,7 @@ public class EntityController {
 		list = entitySaleMapper.getActiveAllByEntityId(entityId);
 		return list;
 	}
-	
+
 	@RequestMapping(value = "/getSaleAllByEntityId", method = RequestMethod.GET)
 	@ResponseBody
 	public List<EntitySale> getSaleAllByEntityId(HttpServletRequest request, HttpServletResponse response) {
