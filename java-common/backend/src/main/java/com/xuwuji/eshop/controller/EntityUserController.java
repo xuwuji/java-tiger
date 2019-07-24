@@ -70,7 +70,7 @@ public class EntityUserController {
 	}
 
 	/**
-	 * 给用户充值
+	 * 给用户消费
 	 * 
 	 * @param request
 	 * @param response
@@ -78,13 +78,24 @@ public class EntityUserController {
 	@RequestMapping(value = "/pay", method = RequestMethod.POST)
 	@ResponseBody
 	public void pay(HttpServletRequest request, HttpServletResponse response) {
-		// 为用户充值
+		// 用户消费
 		String phone = request.getParameter("phone");
 		String entityId = request.getParameter("entityId");
 		String amount = request.getParameter("amount");
 		String item = request.getParameter("item");
 		EntityUser entityUser = entityUserMapper.getByPhoneAndEntityId(phone, entityId);
-		entityUser.setBalance(entityUser.getBalance() - Double.valueOf(amount));
+		// 用户无余额
+		if (entityUser.getBalance() == 0) {
+			entityUser.setBalance(0);
+		}
+		// 优先把余额使用完
+		else if (entityUser.getBalance() < Double.valueOf(amount)) {
+			entityUser.setBalance(0);
+		}
+		// 从余额中扣除
+		else if (entityUser.getBalance() >= Double.valueOf(amount)) {
+			entityUser.setBalance(entityUser.getBalance() - Double.valueOf(amount));
+		}
 		entityUser.setPoints(entityUser.getPoints() + Double.valueOf(amount));
 		entityUserMapper.updateUserInfo(entityUser);
 		// 记录
