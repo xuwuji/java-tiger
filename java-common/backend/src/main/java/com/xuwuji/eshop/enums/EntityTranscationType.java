@@ -2,7 +2,7 @@ package com.xuwuji.eshop.enums;
 
 public enum EntityTranscationType {
 
-	TOPUP("充值", "topup"), PAY("消费", "pay");
+	TOPUP("充值", "topup"), PAY("消费", "pay"),POINTS_PAY("积分消费","pointsPay");
 
 	private String desc;
 	private String code;

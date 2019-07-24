@@ -159,4 +159,24 @@ public class EntityUserController {
 		return transcations;
 	}
 
+	@RequestMapping(value = "/updatePoints", method = RequestMethod.POST)
+	@ResponseBody
+	public void updatePoints(HttpServletRequest request, HttpServletResponse response) {
+		String phone = request.getParameter("phone");
+		String entityId = request.getParameter("entityId");
+		String points = request.getParameter("points");
+		EntityUser entityUser = entityUserMapper.getByPhoneAndEntityId(phone, entityId);
+		entityUser.setPoints(entityUser.getPoints() - Double.valueOf(points));
+		entityUserMapper.updateUserInfo(entityUser);
+		// 记录
+		EntityTranscation entityTranscation = new EntityTranscation();
+		entityTranscation.setAmount(Double.valueOf(points));
+		entityTranscation.setEntityId(entityId);
+		entityTranscation.setItem("消费积分");
+		entityTranscation.setPhone(phone);
+		entityTranscation.setType(EntityTranscationType.POINTS_PAY.getCode());
+		entityTranscation.setEntityUserId(String.valueOf(entityUser.getId()));
+		entityTranscationMapper.add(entityTranscation);
+	}
+
 }

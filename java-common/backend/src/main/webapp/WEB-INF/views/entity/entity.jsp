@@ -171,6 +171,42 @@
 	</div>
 	<!-- 消费用的modal -->
 
+	<!-- 积分用的modal -->
+	<div class="modal fade" id="pointsModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">编辑</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="txt_departmentname">手机号</label> <input type="text"
+							class="form-control" id="points-phone" placeholder="手机号">
+					</div>
+					<div class="form-group">
+						<label for="txt_departmentname">此次消费积分</label> <input type="text"
+							class="form-control" id="points-points" placeholder="积分">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭
+					</button>
+					<button type="button" id="btn_points_submit" class="btn btn-primary"
+						data-dismiss="modal">
+						<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>确认
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 积分用的modal -->
+
 </body>
 
 <script type="text/javascript">
@@ -243,6 +279,8 @@
 									+ ')">充值</a>';
 							html += '　<a href="javascript:pay(' + id
 									+ ')">消费</a>';
+							html += '　<a href="javascript:updatePoints(' + id
+									+ ')">消费积分</a>';
 							html += '　<a href="javascript:initRecordTable('
 									+ phone + ')">查看记录</a>';
 							return html;
@@ -547,6 +585,35 @@
 			success : function(status) {
 				$sale_table.bootstrapTable('destroy');
 				initSaleTable()
+			}
+		});
+	});
+
+	//更改积分
+	function updatePoints(id) {
+		var row = $table.bootstrapTable('getRowByUniqueId', id);
+		$("#pointsModal").modal().on("shown.bs.modal", function() {
+			$('#points-phone').val(row.phone);
+		});
+	}
+
+	//更改积分
+	$('#btn_points_submit').on("click", function() {
+		var phone = $("#points-phone").val();
+		var points = $("#points-points").val();
+		$.ajax({
+			url : "/backend/entityUser/updatePoints",
+			type : "post",
+			data : {
+				phone : phone,
+				points : points,
+				entityId : entityId,
+			},
+			success : function(status) {
+				$table.bootstrapTable('destroy');
+				initTable(phone);
+				$record_table.bootstrapTable('destroy');
+				initRecordTable(phone)
 			}
 		});
 	});
