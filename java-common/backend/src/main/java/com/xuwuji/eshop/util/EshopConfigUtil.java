@@ -43,6 +43,7 @@ public class EshopConfigUtil {
 	public static final String SHARE_GROUP_IMG="shareGroupImg";
 	public static final String WECHAT_CODE="wechatCode";
 	public static final String ENTITY_IMG_BASE="entityImgBase";
+	public static final String ENTITY_ABLUM_BASE="entityAblumBase";
 	public static Map<String, Object> configMap = new HashMap<String, Object>();
 
 	public String getParam(String paramName) {
