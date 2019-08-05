@@ -89,7 +89,7 @@ public class EntityUserController {
 			entityUser.setBalance(0);
 		}
 		// 优先把余额使用完
-		else if (entityUser.getBalance() < Double.valueOf(amount)) {
+		else if (entityUser.getBalance() > 0 && entityUser.getBalance() < Double.valueOf(amount)) {
 			entityUser.setBalance(0);
 		}
 		// 从余额中扣除
@@ -142,7 +142,11 @@ public class EntityUserController {
 			HttpServletResponse response) {
 		String openId = request.getParameter("openId");
 		String entityId = request.getParameter("entityId");
-		String phone = entityUserMapper.getByOpenIdAndEntityId(openId, entityId).get(0).getPhone();
+		List<EntityUser> users = entityUserMapper.getByOpenIdAndEntityId(openId, entityId);
+		if (users.size() == 0) {
+			return null;
+		}
+		String phone = users.get(0).getPhone();
 		List<EntityTranscation> transcations = entityTranscationMapper.getTranscationByPhoneAndEntityId(phone,
 				entityId);
 		return transcations;
