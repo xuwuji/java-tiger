@@ -35,10 +35,13 @@ public class EntityController {
 
 	private String ENTITY_IMG_BASE;
 
+	private String ENTITY_ABLUM_BASE;
+
 	@SuppressWarnings("static-access")
 	@Autowired
 	public EntityController(EshopConfigUtil eshopConfigUtil) {
 		ENTITY_IMG_BASE = eshopConfigUtil.getParam(eshopConfigUtil.ENTITY_IMG_BASE);
+		ENTITY_ABLUM_BASE = eshopConfigUtil.getParam(eshopConfigUtil.ENTITY_ABLUM_BASE);
 	}
 
 	@RequestMapping(value = "/getActiveAll", method = RequestMethod.GET)
@@ -106,5 +109,17 @@ public class EntityController {
 	public void disableSale(HttpServletRequest request, HttpServletResponse response) {
 		String id = request.getParameter("id");
 		entitySaleMapper.disable(id);
+	}
+
+	@RequestMapping(value = "/getPics", method = RequestMethod.GET)
+	@ResponseBody
+	public List<String> getPics(HttpServletRequest request, HttpServletResponse response) {
+		String entityId = request.getParameter("entityId");
+		List<String> result = new ArrayList<>();
+		for (int i = 1; i < 21; i++) {
+			String url = ENTITY_ABLUM_BASE + entityId + "-" + String.valueOf(i) + ".jpg";
+			result.add(url);
+		}
+		return result;
 	}
 }
