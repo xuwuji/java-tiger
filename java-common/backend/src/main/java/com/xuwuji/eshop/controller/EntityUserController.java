@@ -116,7 +116,7 @@ public class EntityUserController {
 		String entityId = request.getParameter("entityId");
 		Map<String, Object> result = new HashMap<String, Object>();
 		List<EntityUser> user = entityUserMapper.getByOpenIdAndEntityId(openId, entityId);
-		if (user.size() == 1) {
+		if (user.size() >= 1) {
 			result.put("exist", true);
 			result.put("user", user.get(0));
 			return result;
